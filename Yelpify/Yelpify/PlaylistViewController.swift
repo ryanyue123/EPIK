@@ -33,6 +33,7 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
             }, failureSearch: { (error) -> Void in
                 print(error)
         })
+
         
     }
     
@@ -41,10 +42,15 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+        dispatch_async(dispatch_get_main_queue(), {
+            self.locationManager.startUpdatingLocation()
+        })
         
-        var lat = String(locationManager.location!.coordinate.latitude)
-        var long = String(locationManager.location!.coordinate.longitude)
+        var lat = String(self.locationManager.location!.coordinate.latitude)
+        var long = String(self.locationManager.location!.coordinate.longitude)
+    
+        
+        
         
         var ll = lat + "," + long
         return ll
