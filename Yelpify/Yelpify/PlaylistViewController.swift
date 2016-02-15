@@ -27,7 +27,9 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
         
         client.searchPlacesWithParameters(parameters, successSearch: {
             (data, response) -> Void in
-            print(NSString(data: data, encoding: NSUTF8StringEncoding)!)
+            //print(NSString(data: data, encoding: NSUTF8StringEncoding)!)
+            print(client.extractData(data))
+        
             }, failureSearch: { (error) -> Void in
                 print(error)
         })

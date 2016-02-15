@@ -56,12 +56,34 @@ class YelpAPIClient: NSObject {
         clientOAuth!.get(searchUrl, parameters: searchParameters, success: successSearch, failure: failureSearch)
     }
     
+    func extractData(data: NSData?){
+        if let data = data{
+            //print(NSString(data: data, encoding: NSUTF8StringEncoding))
+            
+            // EXTRACT JSON DATA
+            do{ let jsonResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+                if jsonResult.count > 0 {
+                    if let businesses = jsonResult["businesses"] as? NSArray {
+                        if businesses.count > 0{
+                            for business in businesses {
+                                print(business["name"] as! String)
+                            }
+                        }
+                        
+                    }
+                }
+                //print(jsonResult)
+            } catch {}
+        }
+    }
+
+
     /*
-    
+
     getBusinessInformationOf: Retrieve all the business data using the id of the place
-    
+
     Arguments:
-    
+
         businessId: String
         localeParameters: Dictionary<String, String>, optional (See https://www.yelp.co.uk/developers/documentation/v2/business )
         successSearch: success callback with data (NSData) and response (NSHTTPURLResponse) as parameters
