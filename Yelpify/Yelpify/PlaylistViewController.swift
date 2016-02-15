@@ -10,15 +10,56 @@ import UIKit
 import Parse
 import ParseUI
 
-class PlaylistViewController: UICollectionViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate {
+class PlaylistViewController: UICollectionViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate {
 
     private let reuseIdentifier = "PlaylistCell"
     private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
+    
+    var locationManager = CLLocationManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        var parameters = ["ll": findCurrentLocation(), "category_filter": "pizza", "radius_filter": "3000", "sort": "0"]
+        
+        var client = YelpAPIClient()
+        
+        client.searchPlacesWithParameters(parameters, successSearch: {
+            (data, response) -> Void in
+            print(NSString(data: data, encoding: NSUTF8StringEncoding)!)
+            }, failureSearch: { (error) -> Void in
+                print(error)
+        })
+        
     }
+    
+    func findCurrentLocation() -> String{
+        // GET LOCATION OF USER
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
+        var lat = String(locationManager.location!.coordinate.latitude)
+        var long = String(locationManager.location!.coordinate.longitude)
+        
+        var ll = lat + "," + long
+        return ll
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        var userLocation: CLLocation = locations[0]
+        
+        var latitude = userLocation.coordinate.latitude
+        var longitude = userLocation.coordinate.longitude
+        
+        var latDelta: CLLocationDegrees = 0.01
+        // Difference between latitudes from one side to the screen to the other
+        // Will zoom in
+        var lonDelta: CLLocationDegrees = 0.01
+        
+    }
+    
     override func viewDidAppear(animated: Bool) {
         
         if (PFUser.currentUser() == nil)
@@ -51,15 +92,15 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
     func logInViewController(logInController: PFLogInViewController, didFailToLogInWithError error: NSError?) {
         print("failed to login")
     }
-    func signUpViewController(signUpController: PFSignUpViewController, shouldBeginSignUp info: [NSObject : AnyObject]) -> Bool {
-        if let password = info["password"] as? String{
-            return password.utf16.count >= 8
-        }
-        else
-        {
-            return false
-        }
-    }
+//    func signUpViewController(signUpController: PFSignUpViewController, shouldBeginSignUp info: [NSObject : AnyObject]) -> Bool {
+//        if let password = info["password"] as? String{
+//            return password.utf16.count >= 8
+//        }
+//        else
+//        {
+//            return false
+//        }
+//    }
     func signUpViewController(signUpController: PFSignUpViewController, didSignUpUser user: PFUser) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
