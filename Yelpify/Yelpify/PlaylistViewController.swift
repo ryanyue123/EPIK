@@ -43,11 +43,15 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
-        var lat = String(locationManager.location!.coordinate.latitude)
-        var long = String(locationManager.location!.coordinate.longitude)
+        var lat = locationManager.location?.coordinate.latitude
+        var long = locationManager.location?.coordinate.longitude
         
-        var ll = lat + "," + long
-        return ll
+        if lat != nil && long != nil{
+            var ll = String(lat) + "," + String(long)
+            return ll
+        }else{
+            return "-"
+        }
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -55,11 +59,6 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
         
         var latitude = userLocation.coordinate.latitude
         var longitude = userLocation.coordinate.longitude
-        
-        var latDelta: CLLocationDegrees = 0.01
-        // Difference between latitudes from one side to the screen to the other
-        // Will zoom in
-        var lonDelta: CLLocationDegrees = 0.01
         
     }
     

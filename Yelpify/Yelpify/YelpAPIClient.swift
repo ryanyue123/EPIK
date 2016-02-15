@@ -72,7 +72,7 @@ class YelpAPIClient: NSObject {
                         
                     }
                 }
-                //print(jsonResult)
+                print(jsonResult)
             } catch {}
         }
     }
