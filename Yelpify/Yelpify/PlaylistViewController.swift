@@ -93,15 +93,16 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
     func logInViewController(logInController: PFLogInViewController, didFailToLogInWithError error: NSError?) {
         print("failed to login")
     }
-//    func signUpViewController(signUpController: PFSignUpViewController, shouldBeginSignUp info: [NSObject : AnyObject]) -> Bool {
-//        if let password = info["password"] as? String{
-//            return password.utf16.count >= 8
-//        }
-//        else
-//        {
-//            return false
-//        }
-//    }
+    func signUpViewController(signUpController: PFSignUpViewController, shouldBeginSignUp info: [String : String]) -> Bool {
+        if let password = info["password"]
+        {
+            return password.utf16.count >= 8
+        }
+        else
+        {
+            return false
+        }
+    }
     func signUpViewController(signUpController: PFSignUpViewController, didSignUpUser user: PFUser) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
