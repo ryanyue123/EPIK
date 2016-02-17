@@ -49,20 +49,8 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
         var lat = String(self.locationManager.location!.coordinate.latitude)
         var long = String(self.locationManager.location!.coordinate.longitude)
     
-        
-        
-<<<<<<< HEAD
-        var lat = locationManager.location?.coordinate.latitude
-        var long = locationManager.location?.coordinate.longitude
-=======
->>>>>>> refs/remotes/origin/master
-        
-        if lat != nil && long != nil{
-            var ll = String(lat) + "," + String(long)
-            return ll
-        }else{
-            return "-"
-        }
+        var ll = lat + "," + long
+        return ll
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
