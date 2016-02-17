@@ -47,6 +47,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         tableView.dataSource = self
     }
     //hello world
+    
+
     func performYelpSearch(parameters: Dictionary<String, String>){
         let client = YelpAPIClient()
         

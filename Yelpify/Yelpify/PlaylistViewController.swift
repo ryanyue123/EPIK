@@ -38,8 +38,7 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
         search()
     }
     
-    func search()
-    {
+    func search(){
         client.searchPlacesWithParameters(parameters, successSearch: {
             (data, response) -> Void in
             //print(NSString(data: data, encoding: NSUTF8StringEncoding)!)
