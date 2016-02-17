@@ -32,7 +32,7 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
         
         let latitude = userLocation.coordinate.latitude
         let longitude = userLocation.coordinate.longitude
-        
+        print(userLocation.coordinate)
         parameters["ll"] = String(latitude) + "," + String(longitude)
         print(parameters)
         search()
