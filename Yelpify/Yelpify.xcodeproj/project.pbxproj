@@ -17,6 +17,7 @@
 		3CE2EE9F1C6C5EC8000C9088 /* YelpifyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE2EE9E1C6C5EC8000C9088 /* YelpifyUITests.swift */; };
 		523E599553F6100C5348857C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68ACAEFF88A59BB74B411CE0 /* Pods.framework */; };
 		90DC57B91C72843A001F1891 /* YelpAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DC57B81C72843A001F1891 /* YelpAPIClient.swift */; };
+		90DC57BC1C72A1D0001F1891 /* SearchBusinessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		3CE2EEA01C6C5EC8000C9088 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68ACAEFF88A59BB74B411CE0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90DC57B81C72843A001F1891 /* YelpAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpAPIClient.swift; sourceTree = "<group>"; };
+		90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBusinessViewController.swift; sourceTree = "<group>"; };
 		981001A34CAB5A147D7CB122 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B140D093A1A89D68777F3561 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -110,6 +112,7 @@
 			children = (
 				3CE2EE7E1C6C5EC8000C9088 /* AppDelegate.swift */,
 				3CE2EE821C6C5EC8000C9088 /* Main.storyboard */,
+				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
 				3CB947401C7196110035A8EB /* ModalViewController.swift */,
 				3CB9473E1C7192780035A8EB /* PlaylistViewController.swift */,
 				3CE2EE851C6C5EC8000C9088 /* Assets.xcassets */,
@@ -234,7 +237,7 @@
 				TargetAttributes = {
 					3CE2EE7A1C6C5EC8000C9088 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = G6YM58LRJE;
+						DevelopmentTeam = CQD8Z7UVJ4;
 					};
 					3CE2EE8E1C6C5EC8000C9088 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -349,6 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CB947411C7196110035A8EB /* ModalViewController.swift in Sources */,
+				90DC57BC1C72A1D0001F1891 /* SearchBusinessViewController.swift in Sources */,
 				90DC57B91C72843A001F1891 /* YelpAPIClient.swift in Sources */,
 				3CE2EE7F1C6C5EC8000C9088 /* AppDelegate.swift in Sources */,
 				3CB9473F1C7192780035A8EB /* PlaylistViewController.swift in Sources */,

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="UL9-SW-wCG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="OFK-3P-Zbm">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
@@ -54,7 +53,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PwF-Ht-UBF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1178" y="362"/>
+            <point key="canvasLocation" x="1092" y="362"/>
         </scene>
         <!--Title-->
         <scene sceneID="JXt-qM-p4Y">
@@ -95,7 +94,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PT1-PN-GOM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1912" y="362"/>
+            <point key="canvasLocation" x="1836" y="362"/>
         </scene>
         <!--Modal View Controller-->
         <scene sceneID="V8Y-W6-m06">
@@ -141,12 +140,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Z9-KY-AOC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2586" y="362"/>
+            <point key="canvasLocation" x="2552" y="362"/>
         </scene>
-        <!--View Controller-->
+        <!--Search Business View Controller-->
         <scene sceneID="vdw-Ia-rLx">
             <objects>
-                <viewController id="hzi-hz-39z" sceneMemberID="viewController">
+                <viewController id="hzi-hz-39z" customClass="SearchBusinessViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="oi4-Nj-cjg"/>
                         <viewControllerLayoutGuide type="bottom" id="0bI-OS-QHu"/>
@@ -190,6 +189,10 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="hzi-hz-39z" id="2aM-CQ-71P"/>
+                                    <outlet property="delegate" destination="hzi-hz-39z" id="lQQ-84-kjC"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -201,12 +204,19 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <action selector="didEnterNewLocation:" destination="hzi-hz-39z" eventType="editingDidEnd" id="Kga-BQ-lny"/>
+                            </connections>
                         </textField>
                     </navigationItem>
+                    <connections>
+                        <outlet property="locationTextField" destination="DVo-P6-dqo" id="Ezl-DX-tvF"/>
+                        <outlet property="tableView" destination="0eM-Bd-byN" id="SCj-CQ-u99"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wJO-Js-5jv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4072" y="348"/>
+            <point key="canvasLocation" x="4072" y="362"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="11G-9v-T9Q">
@@ -242,7 +252,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DUF-NC-Z7t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3260" y="348"/>
+            <point key="canvasLocation" x="3288" y="362"/>
         </scene>
     </scenes>
 </document>
