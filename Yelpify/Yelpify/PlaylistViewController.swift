@@ -17,48 +17,48 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
     private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     
     var locationManager = CLLocationManager()
-    
+    let client = YelpAPIClient()
+    var parameters = ["ll": "", "category_filter": "pizza", "radius_filter": "3000", "sort": "0"]
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        var parameters = ["ll": findCurrentLocation(), "category_filter": "pizza", "radius_filter": "3000", "sort": "0"]
-        
-        var client = YelpAPIClient()
-        
-        client.searchPlacesWithParameters(parameters, successSearch: {
-            (data, response) -> Void in
-            //print(NSString(data: data, encoding: NSUTF8StringEncoding)!)
-            print(client.extractData(data))
-        
-            }, failureSearch: { (error) -> Void in
-                print(error)
-        })
-
-        
-    }
-    
-    func findCurrentLocation() -> String{
-        // GET LOCATION OF USER
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
-        dispatch_async(dispatch_get_main_queue(), {
-            self.locationManager.startUpdatingLocation()
-        })
-        
-        var lat = String(self.locationManager.location!.coordinate.latitude)
-        var long = String(self.locationManager.location!.coordinate.longitude)
-    
-        var ll = lat + "," + long
-        return ll
+        locationManager.requestLocation()
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        var userLocation: CLLocation = locations[0]
+        let userLocation: CLLocation = locations[0]
         
-        var latitude = userLocation.coordinate.latitude
-        var longitude = userLocation.coordinate.longitude
+        let latitude = userLocation.coordinate.latitude
+        let longitude = userLocation.coordinate.longitude
         
+        parameters["ll"] = String(latitude) + "," + String(longitude)
+        print(parameters)
+        search()
+    }
+    
+    func search()
+    {
+        client.searchPlacesWithParameters(parameters, successSearch: {
+            (data, response) -> Void in
+            //print(NSString(data: data, encoding: NSUTF8StringEncoding)!)
+            print(self.client.extractData(data))
+            
+            }, failureSearch: { (error) -> Void in
+                print(error)
+        })
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print(error.description)
+    }
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == .AuthorizedWhenInUse
+        {
+            print("Authorized")
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
