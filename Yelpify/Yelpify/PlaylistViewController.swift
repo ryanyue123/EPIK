@@ -31,20 +31,8 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
         print(userLocation.coordinate)
         parameters["ll"] = String(latitude) + "," + String(longitude)
         print(parameters)
-        search()
     }
     
-    func search(){
-        client.searchPlacesWithParameters(parameters, successSearch: {
-            (data, response) -> Void in
-            //print(NSString(data: data, encoding: NSUTF8StringEncoding)!)
-            print(self.client.extractData(data))
-            
-            }, failureSearch: { (error) -> Void in
-                print(error)
-        })
-    }
-
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print(error.description)
     }
