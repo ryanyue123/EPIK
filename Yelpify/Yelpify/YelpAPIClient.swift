@@ -56,7 +56,10 @@ class YelpAPIClient: NSObject {
         clientOAuth!.get(searchUrl, parameters: searchParameters, success: successSearch, failure: failureSearch)
     }
     
-    func extractData(data: NSData?){
+    func createBusinessArray(data: NSData?) -> Array<Business>{
+        
+        var businessArray = [Business]()
+        
         if let data = data{
             //print(NSString(data: data, encoding: NSUTF8StringEncoding))
             
@@ -67,7 +70,30 @@ class YelpAPIClient: NSObject {
                         if businesses.count > 0{
                             for business in businesses {
                                 print(business["name"] as! String)
+                                
+                                // Handle Address
+                                var businessAddress = ""
+                                if let businessLocation = business["location"] as? NSDictionary{
+                                    businessAddress = businessLocation["address"]![0] as! String
+                                }
+                            
+                                // Handle Name
+                                let businessName = business["name"] as! String
+                                
+                                // Handle ImageURL
+                                let businessImageURL = business["image_url"] as! String
+                                //var businessImage: UIImage! = UIImage(named: "restaurantImage - InNOut")
+                                
+//                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                                    if let checkedURL = NSURL(string: businessImageURL) {
+//                                        businessImage = self.downloadImage(checkedURL)
+//                                    }
+//                                })
+                                
+                                businessArray.append(Business(name: businessName, address: businessAddress, imageURL: businessImageURL))
+                                
                             }
+                            return businessArray
                         }
                         
                     }
@@ -75,7 +101,44 @@ class YelpAPIClient: NSObject {
                 //print(jsonResult)
             } catch {}
         }
+        return businessArray
     }
+    
+//    func getDataFromUrl(url: NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
+//        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
+//            completion(data: data, response: response, error: error)
+//            }.resume()
+//    }
+//    
+//    func downloadImage(url: NSURL) -> UIImage{
+//        var imageFile: UIImage! = UIImage(named: "restaurantImage - InNOut")
+//        
+//        getDataFromUrl(url) { (data, response, error)  in
+//            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+//                guard let data = NSData(contentsOfURL: url) where error == nil else { return }
+//                imageFile = UIImage(data: data)!
+//            }
+//        }
+//        return imageFile
+//    }
+    
+//    func downloadBusinessImage(url: String) -> UIImage{
+//        let url = NSURL(string: url)
+//        var imageFile: UIImage!
+//
+//        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {
+//            (data, response, error) -> Void in
+//            if error != nil {
+//                print(error)
+//            } else {
+//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                    imageFile = UIImage(data: data!)!
+//                })
+//            }
+//        }
+//        task.resume()
+//        return imageFile
+//    }
 
 
     /*
@@ -85,7 +148,7 @@ class YelpAPIClient: NSObject {
     Arguments:
 
         businessId: String
-        localeParameters: Dictionary<String, String>, optional (See https://www.yelp.co.uk/developers/documentation/v2/business )
+        localeParameters: Dictionary<String, String>, optional (See https:www.yelp.co.uk/developers/documentation/v2/business )
         successSearch: success callback with data (NSData) and response (NSHTTPURLResponse) as parameters
         failureSearch: error callback with error (NSError) as parameter
     

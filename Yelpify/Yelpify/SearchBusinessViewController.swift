@@ -9,118 +9,144 @@
 import UIKit
 import CoreLocation
 
+
 class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    var location: String = "San Francisco"
+    // MARK: - GLOBAL VARIABLES
+    
+    var client = YelpAPIClient()
     var locationManager = CLLocationManager()
+    var searchParameters = ["ll": "", "category_filter": "pizza", "radius_filter": "10000", "sort": "0"]
+    
+    // MARK: - OUTLETS
     
     @IBOutlet weak var locationTextField: UITextField!
     
+    
+    // MARK: - ACTIONS
+    
     @IBAction func didEnterNewLocation(sender: AnyObject) {
-        location = locationTextField.text!
-        //let parameters = ["location": location, "category_filter": "pizza", "radius_filter": "3000", "sort": "0"]
-        //performYelpSearch(parameters)
+        searchParameters["location"] = locationTextField.text!
+        searchBusinesses()
     }
+    
+    // MARK: - DATA TASKS
+    
+    func getCurrentLocation(){
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print(error.description)
+    }
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == .AuthorizedWhenInUse
+        {
+            print("Authorized")
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let userLocation: CLLocation = locations[0]
+        
+        let latitude = userLocation.coordinate.latitude
+        let longitude = userLocation.coordinate.longitude
+        
+        searchParameters["ll"] = String(latitude) + "," + String(longitude)
+        print(String(latitude) + "," + String(longitude))
+        searchBusinesses()
+    }
+    
+    func searchBusinesses(){
+        //var businessArray = [Business]()
+        
+        client.searchPlacesWithParameters(self.searchParameters, successSearch: {
+            (data, response) -> Void in
+            //print(NSString(data: data, encoding: NSUTF8StringEncoding)!)
+            self.businesses = self.client.createBusinessArray(data)
+            
+            self.tableView.reloadData()
+            
+            }, failureSearch: { (error) -> Void in
+                print(error)
+        })
+        print(businesses)
+    }
+    
+    // MARK: - DOWNLOAD IMAGES
+    
+    func updateImages(cell: BusinessTableViewCell, indexPath: NSIndexPath, business: Business){
+        let url = NSURL(string: business.businessImageURL)!
+        var imageFile: UIImage! = UIImage(named: "restaurantImage - InNOut")
+        
+        getDataFromUrl(url) { (data, response, error)  in
+            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                guard let data = NSData(contentsOfURL: url) where error == nil else { return }
+                imageFile = UIImage(data: data)!
+                cell.businessBackgroundImage.image = imageFile
+            }
+        }
+        //self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+    }
+    
+    func getDataFromUrl(url: NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
+        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
+            completion(data: data, response: response, error: error)
+            }.resume()
+    }
+    
+    func downloadImage(urlString: String, business: Business){
+       
+    }
+    
+    
+    // MARK: - TABLEVIEW VARIABLES
+    
+    var businesses = [Business]()    
+    
+    // MARK: - TABLEVIEW FUNCTIONS
+    
     @IBOutlet weak var tableView: UITableView!
+
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return businesses.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        
+        let cellIdentifier = "businessCell"
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BusinessTableViewCell
+        
+        // Fetches the appropriate business for the data source layout.
+        let business = businesses[indexPath.row]
+        
+        cell.businessTitleLabel.text = business.businessName
+        self.updateImages(cell, indexPath: indexPath, business: business)
+        
+        //cell.businessBackgroundImage.image = downloadImage(business.businessImageURL)
+        // self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        
+        return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
     }
-    override func viewDidAppear(animated: Bool) {
-        print(locationManager.location!.coordinate)
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-//        let parameters = ["ll": findCurrentLocation(), "category_filter": "pizza", "radius_filter": "3000", "sort": "0"]
-//        
-//        performYelpSearch(parameters)
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-    }
-    //hello world
-<<<<<<< HEAD
     
-
-    func performYelpSearch(parameters: Dictionary<String, String>){
-        let client = YelpAPIClient()
-        
-        client.searchPlacesWithParameters(parameters, successSearch: {
-            (data, response) -> Void in
-            //print(NSString(data: data, encoding: NSUTF8StringEncoding)!)
-            print(client.extractData(data))
-            
-            }, failureSearch: { (error) -> Void in
-                print(error)
-        })
-
+    // MARK: - VIEWDIDLOAD
+    
+    override func viewDidLoad(){
+        getCurrentLocation()
     }
     
-    func findCurrentLocation() -> String{
-        // GET LOCATION OF USER
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        dispatch_async(dispatch_get_main_queue(), {
-            self.locationManager.startUpdatingLocation()
-        })
-        
-        let lat = String(self.locationManager.location!.coordinate.latitude)
-        let long = String(self.locationManager.location!.coordinate.longitude)
-        
-        let ll = lat + "," + long
-        return ll
-    }
-    
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-=======
-//    func performYelpSearch(parameters: Dictionary<String, String>){
-//        let client = YelpAPIClient()
-//        
-//        client.searchPlacesWithParameters(parameters, successSearch: {
-//            (data, response) -> Void in
-//            //print(NSString(data: data, encoding: NSUTF8StringEncoding)!)
-//            print(client.extractData(data))
-//            
-//            }, failureSearch: { (error) -> Void in
-//                print(error)
-//        })
-//
-//    }
-//    func findCurrentLocation() -> String{
-//        // GET LOCATION OF USER
-//        locationManager.delegate = self
-//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//        locationManager.requestWhenInUseAuthorization()
-//        dispatch_async(dispatch_get_main_queue(), {
-//            self.locationManager.startUpdatingLocation()
-//        })
-//        
-//        let lat = String(self.locationManager.location!.coordinate.latitude)
-//        let long = String(self.locationManager.location!.coordinate.longitude)
-//        
-//        let ll = lat + "," + long
-//        return ll
-//    }
-//    
-//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
->>>>>>> 7b65fae1b64e1cf647f969f573d6f8becba19a93
-//        let userLocation: CLLocation = locations[0]
-//        
-//        let latitude = userLocation.coordinate.latitude
-//        let longitude = userLocation.coordinate.longitude
-//        
-//    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
