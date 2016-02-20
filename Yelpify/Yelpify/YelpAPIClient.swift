@@ -95,13 +95,6 @@ class YelpAPIClient: NSObject {
                                 
                                 // Handle ImageURL
                                 let businessImageURL = business["image_url"] as! String
-                                //var businessImage: UIImage! = UIImage(named: "restaurantImage - InNOut")
-                                
-//                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                                    if let checkedURL = NSURL(string: businessImageURL) {
-//                                        businessImage = self.downloadImage(checkedURL)
-//                                    }
-//                                })
                                 
                                 businessArray.append(Business(name: businessName, address: businessAddress, imageURL: businessImageURL))
                                 
@@ -117,42 +110,6 @@ class YelpAPIClient: NSObject {
         return businessArray
     }
     
-//    func getDataFromUrl(url: NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
-//        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
-//            completion(data: data, response: response, error: error)
-//            }.resume()
-//    }
-//    
-//    func downloadImage(url: NSURL) -> UIImage{
-//        var imageFile: UIImage! = UIImage(named: "restaurantImage - InNOut")
-//        
-//        getDataFromUrl(url) { (data, response, error)  in
-//            dispatch_async(dispatch_get_main_queue()) { () -> Void in
-//                guard let data = NSData(contentsOfURL: url) where error == nil else { return }
-//                imageFile = UIImage(data: data)!
-//            }
-//        }
-//        return imageFile
-//    }
-    
-//    func downloadBusinessImage(url: String) -> UIImage{
-//        let url = NSURL(string: url)
-//        var imageFile: UIImage!
-//
-//        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {
-//            (data, response, error) -> Void in
-//            if error != nil {
-//                print(error)
-//            } else {
-//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                    imageFile = UIImage(data: data!)!
-//                })
-//            }
-//        }
-//        task.resume()
-//        return imageFile
-//    }
-
 
     /*
 

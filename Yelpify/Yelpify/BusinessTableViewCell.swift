@@ -11,6 +11,7 @@ import UIKit
 class BusinessTableViewCell: UITableViewCell {
     
     
+    @IBOutlet weak var addToPlaylist: UIButton!
     @IBOutlet weak var businessTitleLabel: UILabel!
     @IBOutlet weak var businessBackgroundImage: UIImageView!
 
@@ -21,8 +22,7 @@ class BusinessTableViewCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
-
 }

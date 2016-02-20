@@ -32,7 +32,6 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
         parameters["ll"] = String(latitude) + "," + String(longitude)
         print(parameters)
     }
-    
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print(error.description)
     }

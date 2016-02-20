@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreLocation
-
+import Parse
 
 class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
@@ -23,7 +23,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var locuSearchParameters = []
     
     // MARK: - OUTLETS
-    
     @IBOutlet weak var locationTextField: UITextField!
     
     
@@ -109,10 +108,14 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     // MARK: - TABLEVIEW VARIABLES
     
-    var businesses = [Business]()    
+    var businesses = [Business]()
+    var index: NSIndexPath!
+    var playlistObject:PFObject!
+    var playlistArray = [String]()
     
     // MARK: - TABLEVIEW FUNCTIONS
     
+    @IBOutlet weak var addToPlaylist: UIButton!
     @IBOutlet weak var tableView: UITableView!
 
     
@@ -129,6 +132,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         let cellIdentifier = "businessCell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BusinessTableViewCell
         
+        
         // Fetches the appropriate business for the data source layout.
         let business = businesses[indexPath.row]
         
@@ -138,20 +142,42 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         //cell.businessBackgroundImage.image = downloadImage(business.businessImageURL)
         // self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         
+        cell.addToPlaylist.tag = indexPath.row
+        cell.addToPlaylist.addTarget(self, action: "addTrackToPlaylist:", forControlEvents: .TouchUpInside)
         return cell
     }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func addTrackToPlaylist(button: UIButton)
+    {
+        print("pressed")
+        let index = button.tag
+        let object = businesses[index].businessName
+        playlistArray.append(object)
+    }
         
+    @IBAction func finishedAddingToPlaylist(sender: UIBarButtonItem) {
+        playlistObject = PFObject(className: (PFUser.currentUser()?.username)!)
+        playlistObject["Playlist"] = playlistArray
+        playlistObject.saveEventually {(success, error) -> Void in
+            if (error == nil)
+            {
+                
+            }
+            else
+            {
+                print(error?.userInfo)
+            }
+        }
     }
 
+    
+    
     
     // MARK: - VIEWDIDLOAD
     
     override func viewDidLoad(){
-        //getCurrentLocation()
-        //googlePlacesClient.pullMediaObject()
-        //googlePlacesClient.pullPlacePhoto()
+        getCurrentLocation()
+        playlistObject = PFObject(className: (PFUser.currentUser()?.username)!)
+        playlistArray.removeAll()
     }
     
     override func didReceiveMemoryWarning() {
