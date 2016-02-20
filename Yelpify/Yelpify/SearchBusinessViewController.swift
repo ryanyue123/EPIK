@@ -14,9 +14,13 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     // MARK: - GLOBAL VARIABLES
     
-    var client = YelpAPIClient()
+    var yelpClient = YelpAPIClient()
+    var locuClient = LocuAPIClient()
+    var googlePlacesClient = GooglePlacesAPIClient()
+    
     var locationManager = CLLocationManager()
     var searchParameters = ["ll": "", "category_filter": "pizza", "radius_filter": "10000", "sort": "0"]
+    var locuSearchParameters = []
     
     // MARK: - OUTLETS
     
@@ -27,7 +31,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     @IBAction func didEnterNewLocation(sender: AnyObject) {
         searchParameters["location"] = locationTextField.text!
-        searchBusinesses()
+        //searchBusinesses()
     }
     
     // MARK: - DATA TASKS
@@ -57,24 +61,24 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         
         searchParameters["ll"] = String(latitude) + "," + String(longitude)
         print(String(latitude) + "," + String(longitude))
-        searchBusinesses()
+        //searchBusinesses()
     }
     
-    func searchBusinesses(){
-        //var businessArray = [Business]()
-        
-        client.searchPlacesWithParameters(self.searchParameters, successSearch: {
-            (data, response) -> Void in
-            //print(NSString(data: data, encoding: NSUTF8StringEncoding)!)
-            self.businesses = self.client.createBusinessArray(data)
-            
-            self.tableView.reloadData()
-            
-            }, failureSearch: { (error) -> Void in
-                print(error)
-        })
-        print(businesses)
-    }
+//    func searchBusinesses(){
+//        //var businessArray = [Business]()
+//        
+//        yelpClient.searchPlacesWithParameters(self.searchParameters, successSearch: {
+//            (data, response) -> Void in
+//            //print(NSString(data: data, encoding: NSUTF8StringEncoding)!)
+//            self.businesses = self.yelpClient.createBusinessArray(data)
+//            
+//            self.tableView.reloadData()
+//            
+//            }, failureSearch: { (error) -> Void in
+//                print(error)
+//        })
+//        print(businesses)
+//    }
     
     // MARK: - DOWNLOAD IMAGES
     
@@ -140,11 +144,14 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
     }
+
     
     // MARK: - VIEWDIDLOAD
     
     override func viewDidLoad(){
-        getCurrentLocation()
+        //getCurrentLocation()
+        //googlePlacesClient.pullMediaObject()
+        //googlePlacesClient.pullPlacePhoto()
     }
     
     override func didReceiveMemoryWarning() {

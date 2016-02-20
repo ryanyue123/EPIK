@@ -16,6 +16,10 @@
 		3CE2EE941C6C5EC8000C9088 /* YelpifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE2EE931C6C5EC8000C9088 /* YelpifyTests.swift */; };
 		3CE2EE9F1C6C5EC8000C9088 /* YelpifyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE2EE9E1C6C5EC8000C9088 /* YelpifyUITests.swift */; };
 		523E599553F6100C5348857C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68ACAEFF88A59BB74B411CE0 /* Pods.framework */; };
+		907E0CE51C76768D00872135 /* LocuAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907E0CE41C76768D00872135 /* LocuAPIClient.swift */; };
+		907E0CE71C77F34100872135 /* GooglePlacesAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907E0CE61C77F34100872135 /* GooglePlacesAPIClient.swift */; };
+		907E0CE91C78184400872135 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907E0CE81C78184400872135 /* TestViewController.swift */; };
+		907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907E0CEA1C7828E100872135 /* APIDataHandler.swift */; };
 		908481801C7504AF009B6099 /* BusinessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */; };
 		908481841C750816009B6099 /* BusinessObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908481831C750816009B6099 /* BusinessObject.swift */; };
 		90DC57B91C72843A001F1891 /* YelpAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DC57B81C72843A001F1891 /* YelpAPIClient.swift */; };
@@ -55,6 +59,10 @@
 		3CE2EE9E1C6C5EC8000C9088 /* YelpifyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpifyUITests.swift; sourceTree = "<group>"; };
 		3CE2EEA01C6C5EC8000C9088 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68ACAEFF88A59BB74B411CE0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		907E0CE41C76768D00872135 /* LocuAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocuAPIClient.swift; sourceTree = "<group>"; };
+		907E0CE61C77F34100872135 /* GooglePlacesAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GooglePlacesAPIClient.swift; sourceTree = "<group>"; };
+		907E0CE81C78184400872135 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		907E0CEA1C7828E100872135 /* APIDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIDataHandler.swift; sourceTree = "<group>"; };
 		9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessTableViewCell.swift; sourceTree = "<group>"; };
 		908481831C750816009B6099 /* BusinessObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessObject.swift; sourceTree = "<group>"; };
 		90DC57B81C72843A001F1891 /* YelpAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpAPIClient.swift; sourceTree = "<group>"; };
@@ -121,6 +129,7 @@
 				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
 				9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */,
 				3CE2EE821C6C5EC8000C9088 /* Main.storyboard */,
+				907E0CE81C78184400872135 /* TestViewController.swift */,
 				3CE2EE851C6C5EC8000C9088 /* Assets.xcassets */,
 				3CE2EE871C6C5EC8000C9088 /* LaunchScreen.storyboard */,
 				3CE2EE8A1C6C5EC8000C9088 /* Info.plist */,
@@ -158,7 +167,10 @@
 		90DC57BA1C72844B001F1891 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				907E0CEA1C7828E100872135 /* APIDataHandler.swift */,
 				90DC57B81C72843A001F1891 /* YelpAPIClient.swift */,
+				907E0CE61C77F34100872135 /* GooglePlacesAPIClient.swift */,
+				907E0CE41C76768D00872135 /* LocuAPIClient.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -357,8 +369,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				907E0CE91C78184400872135 /* TestViewController.swift in Sources */,
 				3CB947411C7196110035A8EB /* ModalViewController.swift in Sources */,
 				90DC57BC1C72A1D0001F1891 /* SearchBusinessViewController.swift in Sources */,
+				907E0CE51C76768D00872135 /* LocuAPIClient.swift in Sources */,
+				907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */,
+				907E0CE71C77F34100872135 /* GooglePlacesAPIClient.swift in Sources */,
 				90DC57B91C72843A001F1891 /* YelpAPIClient.swift in Sources */,
 				3CE2EE7F1C6C5EC8000C9088 /* AppDelegate.swift in Sources */,
 				3CB9473F1C7192780035A8EB /* PlaylistViewController.swift in Sources */,

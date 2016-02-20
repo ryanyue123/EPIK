@@ -51,10 +51,23 @@ class YelpAPIClient: NSObject {
     
     */
     
-    func searchPlacesWithParameters(searchParameters: Dictionary<String, String>, successSearch: (data: NSData, response: NSHTTPURLResponse) -> Void, failureSearch: (error: NSError) -> Void) {
+    func searchPlacesWithParameters(searchParameters: Dictionary<String, String>, completion: (result: NSDictionary) -> Void){
+        
+        initializePlacesWithParameters(searchParameters, successSearch: {
+            (data, response) -> Void in
+            do{ let jsonResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+                completion(result: jsonResult)
+            }catch{}
+            }, failureSearch: { (error) -> Void in
+                print(error)
+        })
+    }
+    
+    private func initializePlacesWithParameters(searchParameters: Dictionary<String, String>, successSearch: (data: NSData, response: NSHTTPURLResponse) -> Void, failureSearch: (error: NSError) -> Void) {
         let searchUrl = APIBaseUrl + "search/"
         clientOAuth!.get(searchUrl, parameters: searchParameters, success: successSearch, failure: failureSearch)
     }
+    
     
     func createBusinessArray(data: NSData?) -> Array<Business>{
         

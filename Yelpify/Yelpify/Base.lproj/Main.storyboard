@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="OFK-3P-Zbm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="B3l-a1-cLL">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -262,6 +262,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DUF-NC-Z7t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3288" y="362"/>
+        </scene>
+        <!--Test View Controller-->
+        <scene sceneID="HJB-he-Aan">
+            <objects>
+                <viewController id="B3l-a1-cLL" customClass="TestViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="j8O-3a-7Pa"/>
+                        <viewControllerLayoutGuide type="bottom" id="0v7-21-jdL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Vbk-fn-lKr">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="restaurantImage - MCD" translatesAutoresizingMaskIntoConstraints="NO" id="aKq-tc-uxs">
+                                <rect key="frame" x="172" y="179" width="256" height="220"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aKq-tc-uxs" firstAttribute="centerY" secondItem="Vbk-fn-lKr" secondAttribute="centerY" id="FRB-ZK-a0J"/>
+                            <constraint firstItem="aKq-tc-uxs" firstAttribute="centerX" secondItem="Vbk-fn-lKr" secondAttribute="centerX" id="IgY-qg-MJ1"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="aKq-tc-uxs" id="cBs-RZ-emb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="q5b-bM-qgz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3542" y="1160"/>
         </scene>
     </scenes>
     <resources>
