@@ -12,10 +12,6 @@ import ParseUI
 
 class PlaylistViewController: UICollectionViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate {
 
-    // SDFJSDKFSDF
-    private let reuseIdentifier = "PlaylistCell"
-    private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
-    
     var locationManager = CLLocationManager()
     let client = YelpAPIClient()
     var parameters = ["ll": "", "category_filter": "pizza", "radius_filter": "3000", "sort": "0"]
@@ -35,18 +31,6 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
         print(userLocation.coordinate)
         parameters["ll"] = String(latitude) + "," + String(longitude)
         print(parameters)
-        search()
-    }
-    
-    func search(){
-        client.searchPlacesWithParameters(parameters, successSearch: {
-            (data, response) -> Void in
-            //print(NSString(data: data, encoding: NSUTF8StringEncoding)!)
-            print(self.client.extractData(data))
-            
-            }, failureSearch: { (error) -> Void in
-                print(error)
-        })
     }
 
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
@@ -61,9 +45,7 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
     }
     
     override func viewDidAppear(animated: Bool) {
-        
-        if (PFUser.currentUser() == nil)
-        {
+        if (PFUser.currentUser() == nil) {
             let logInViewController = PFLogInViewController()
             logInViewController.delegate = self
             

@@ -56,7 +56,10 @@ class YelpAPIClient: NSObject {
         clientOAuth!.get(searchUrl, parameters: searchParameters, success: successSearch, failure: failureSearch)
     }
     
-    func extractData(data: NSData?){
+    func createBusinessArray(data: NSData?) -> Array<Business>{
+        
+        var businessArray = [Business]()
+        
         if let data = data{
             //print(NSString(data: data, encoding: NSUTF8StringEncoding))
             
@@ -67,7 +70,23 @@ class YelpAPIClient: NSObject {
                         if businesses.count > 0{
                             for business in businesses {
                                 print(business["name"] as! String)
+                                
+                                // Handle Address
+                                var businessAddress = ""
+                                if let businessLocation = business["location"] as? NSDictionary{
+                                    businessAddress = businessLocation["address"]![0] as! String
+                                }
+                            
+                                // Handle Name
+                                let businessName = business["name"] as! String
+                                
+                                // Handle ImageURL
+                                let businessImageURL = business["image_url"] as! String
+                                
+                                businessArray.append(Business(name: businessName, address: businessAddress, imageURL: businessImageURL))
+                                
                             }
+                            return businessArray
                         }
                         
                     }
@@ -75,8 +94,9 @@ class YelpAPIClient: NSObject {
                 //print(jsonResult)
             } catch {}
         }
+        return businessArray
     }
-
+    
 
     /*
 
@@ -85,7 +105,7 @@ class YelpAPIClient: NSObject {
     Arguments:
 
         businessId: String
-        localeParameters: Dictionary<String, String>, optional (See https://www.yelp.co.uk/developers/documentation/v2/business )
+        localeParameters: Dictionary<String, String>, optional (See https:www.yelp.co.uk/developers/documentation/v2/business )
         successSearch: success callback with data (NSData) and response (NSHTTPURLResponse) as parameters
         failureSearch: error callback with error (NSError) as parameter
     
