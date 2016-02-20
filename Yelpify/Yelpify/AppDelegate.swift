@@ -8,8 +8,6 @@
 
 import UIKit
 import Parse
-import GoogleMaps
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -24,8 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             clientKey: "CPDodCFeYryaK1aq2VfgGy8eok1LXNwXGntkxW00")
         // Override point for customization after application launch.
         
-        // Google API Key
-        GMSServices.provideAPIKey("AIzaSyCUshtuFKA7atj3jvbdOvl5DMpUMi8pazs")
         return true
     }
 

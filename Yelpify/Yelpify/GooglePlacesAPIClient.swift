@@ -9,11 +9,8 @@
 import Foundation
 import OAuthSwift
 import Alamofire
-import GoogleMaps
 
 class GooglePlacesAPIClient: NSObject {
-    
-    var placesClient: GMSPlacesClient?
     
     var photoParameters = [
         "key" : "AIzaSyAZ1KUrHPxY36keuRlZ4Yu6ZMBNhyLcgfs",
