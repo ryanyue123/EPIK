@@ -170,8 +170,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     }
 
     
-    
-    
     // MARK: - VIEWDIDLOAD
     
     override func viewDidLoad(){
