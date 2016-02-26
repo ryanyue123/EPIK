@@ -11,6 +11,7 @@ import Foundation
 struct debugPrint{
     static var RAW_JSON = false
     static var BUSINESS_ARRAY = false
+    static var BUSINESS_DICT = true
 }
 
 class APIDataHandler {
@@ -25,36 +26,56 @@ class APIDataHandler {
     /*
     
     FLOW
-    1) Search through the Yelp, Google, and Locu API
-    2) Create a master Business Object with data from API
-    3) Return Business Object
+    1) Take parameters for both APIs
+    2) Pass parameters to individual APIs and recieve JSON data
+    3) Parse the data into arrays of businesses from APIs
+    4) Compare both arrays and match up businesses
+    5) If match is good, combine data into one business object
+    6) Return the array of business objects that contains data from all APIs used
     
     */
     
     func performAPISearch(yelpParameters: Dictionary<String, String>, gpParameters: Dictionary<String, String>, completion: (businessObject: [NSDictionary]) -> Void) {
+        
+        var finalBusinessesArray: NSArray!
+        var yBusinessArray: NSArray!
+        var gPlacesArray: NSArray!
+        
+        // result is NSDictionary
 
         yelpClient.searchPlacesWithParameters(yelpParameters) { (result) -> Void in
             
             self.parseYelpJSON(result) { (yelpBusinessArray) -> Void in
-                
+                yBusinessArray = yelpBusinessArray
             }
             
             if debugPrint.RAW_JSON == true{
                 print("YELP JSON:\n", result)
             }
-        }
-        
-        gpClient.searchPlacesWithParameters(gpParameters) { (result) -> Void in
             
-            self.parseGPlacesJSON(result) { (googlePlacesArray) -> Void in
+            self.gpClient.searchPlacesWithParameters(gpParameters) { (result) -> Void in
+                
+                self.parseGPlacesJSON(result) { (googlePlacesArray) -> Void in
+                    gPlacesArray = googlePlacesArray
+                }
+                
+                if debugPrint.RAW_JSON == true{
+                    print("GOOGLE PLACES JSON:\n", result)
+                }
+                
+                // Create business object
+                self.combineJSONData(yBusinessArray, googlePlaceArray: gPlacesArray, completion: { (businessObject) -> Void in
+                    finalBusinessesArray = businessObject
+                    
+                    if debugPrint.BUSINESS_DICT == true{
+                        print(finalBusinessesArray)
+                    }
+                    
+                })
                 
             }
-            
-            if debugPrint.RAW_JSON == true{
-                print("GOOGLE PLACES JSON:\n", result)
-            }
-
         }
+        
         
         completion(businessObject: [])
     }
@@ -131,20 +152,57 @@ class APIDataHandler {
     
     // This function takes the two dictionarys from the APIs and compares them, favoring the YELP API over GP
     // Also used to add in the image reference links from GPlaces API to form a uniform Business Object
-    private func combineJSONData(yelpBusinessDict: NSDictionary, googlePlaceDict: NSDictionary, completion: (businessObject: Business) -> Void){
+    private func combineJSONData(yelpBusinessArray: NSArray, googlePlaceArray: NSArray, completion: (businessObject: NSArray) -> Void){
         
-        var yelpBusinesses: NSArray! = []
-        var googlePlaces: NSArray! = []
-        
-        parseYelpJSON(yelpBusinessDict) { (yelpBusinessArray) -> Void in
-            yelpBusinesses = yelpBusinessArray
-        }
-        
-        parseGPlacesJSON(googlePlaceDict) { (googlePlacesArray) -> Void in
-            googlePlaces = googlePlacesArray
-        }
+        var grandBusinessArray: NSMutableArray! = []
+        var businessDict: NSMutableDictionary!
+        businessDict = NSMutableDictionary()
         
         // Comparing business statements
+        for business in yelpBusinessArray{
+            for place in googlePlaceArray{
+                let businessAddress = business["address"] as! String
+                let placeAddress = place["address"] as! String
+                let placePrefix = String(placeAddress.characters.prefix(4))
+                
+                if businessAddress.hasPrefix(placePrefix){
+                    let businessID = business["businessID"] as! String
+                    //businessDict.setValue(["name": String(business["name"])], forKey: "businessID")
+                    businessDict["\(businessID)"] = ["name": String(business["name"])]
+                    grandBusinessArray.addObject(businessDict)
+                }
+            }
+        }
+        completion(businessObject: grandBusinessArray)
+        
+        
+        
+//        parseYelpJSON(yelpBusinessDict) { (yelpBusinessArray) -> Void in
+//            yelpBusinesses = yelpBusinessArray
+//            
+//            self.parseGPlacesJSON(googlePlaceDict) { (googlePlacesArray) -> Void in
+//                googlePlaces = googlePlacesArray
+//                
+//                var businessDict: NSMutableDictionary!
+//                
+//                // Comparing business statements
+//                for business in yelpBusinesses{
+//                    for place in googlePlaces{
+//                        let businessAddress = business["address"] as! String
+//                        let placeAddress = place["address"] as! String
+//                        let placePrefix = String(placeAddress.characters.prefix(5))
+//                        
+//                        if businessAddress.hasPrefix(placePrefix){
+//                            let businessID = business["id"] as! String
+//                            businessDict[businessID] = ["name": String(business["name"])]
+//                        }
+//                    }
+//                }
+//                completion(businessObject: businessDict)
+//                
+//            }
+//        }
+        
         
     }
     

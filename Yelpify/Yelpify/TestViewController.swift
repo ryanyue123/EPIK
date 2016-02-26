@@ -15,15 +15,15 @@ class TestViewController: UIViewController {
     var yelpSearchParameters = [
         "ll": "33.64496794563093,-117.83725295740864",
         "category_filter": "pizza",
-        "radius_filter": "10000",
+        "radius_filter": "25000",
         "sort": "1"]
     
     var gpParameters = [
         "key" : "AIzaSyAZ1KUrHPxY36keuRlZ4Yu6ZMBNhyLcgfs",
-        "name": "pizza",
+        "keyword": "pizza",
         "location" : "33.64496794563093,-117.83725295740864",
-        "radius" : "10000",
-        "rankBy": "distance"
+        //"radius" : "50000", // DO NOT USE RADIUS IF RANKBY = DISTANCE
+        "rankby": "distance"
         //"query" : "pizza"
     ]
     
