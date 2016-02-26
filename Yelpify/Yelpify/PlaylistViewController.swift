@@ -15,7 +15,57 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
     var locationManager = CLLocationManager()
     let client = YelpAPIClient()
     var parameters = ["ll": "", "category_filter": "pizza", "radius_filter": "3000", "sort": "0"]
+    var playlists = []
+    var userlatitude: Double!
+    var userlongitude: Double!
+    
+    
+    func fetchAllObjectsFromDataStore()
+    {
+        let query:PFQuery = PFQuery(className: "Playlists")
+        query.fromLocalDatastore()
+        
+        query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: userlatitude, longitude: userlongitude), withinMiles: 20.0)
+        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
+            if ((error) == nil)
+            {
+                self.playlists = objects! as NSArray
+            }
+            else
+            {
+                print(error?.userInfo)
+            }
+        }
+        
+    }
+    
+    func fetchAllObjects()
+    {
+        PFObject.unpinAllObjectsInBackgroundWithBlock(nil)
+        let query:PFQuery = PFQuery(className: (PFUser.currentUser()?.username)!)
+        query.fromLocalDatastore()
+        
+        query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: userlatitude, longitude: userlongitude), withinMiles: 20.0)
+        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
+            if ((error) == nil)
+            {
+                PFObject.pinAllInBackground(objects, block: { (success, error) -> Void in
+                    print(objects)
+                    
+                    if (error == nil)
+                    {
+                        self.fetchAllObjectsFromDataStore()
+                    }
+                })
 
+            }
+            else
+            {
+                print(error?.userInfo)
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
@@ -29,6 +79,8 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
         let latitude = userLocation.coordinate.latitude
         let longitude = userLocation.coordinate.longitude
         print(userLocation.coordinate)
+        userlatitude = latitude
+        userlongitude = longitude
         parameters["ll"] = String(latitude) + "," + String(longitude)
         print(parameters)
     }

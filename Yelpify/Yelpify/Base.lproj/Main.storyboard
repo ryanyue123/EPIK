@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="OFK-3P-Zbm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="OFK-3P-Zbm">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -231,11 +231,62 @@
                     <connections>
                         <outlet property="locationTextField" destination="DVo-P6-dqo" id="Ezl-DX-tvF"/>
                         <outlet property="tableView" destination="0eM-Bd-byN" id="SCj-CQ-u99"/>
+                        <segue destination="dGC-Xt-SMc" kind="show" identifier="showBusinessDetail" id="PGD-v2-bge"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wJO-Js-5jv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4072" y="362"/>
+        </scene>
+        <!--Business Detail View Controller-->
+        <scene sceneID="QLg-Xu-qke">
+            <objects>
+                <viewController id="dGC-Xt-SMc" customClass="BusinessDetailViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bJE-9w-3Gj"/>
+                        <viewControllerLayoutGuide type="bottom" id="WI9-cf-eaD"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="t6a-kv-cal">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mYC-Xs-hDp">
+                                <rect key="frame" x="279" y="143" width="42" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3pe-ia-826">
+                                <rect key="frame" x="279" y="218" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eOZ-0R-kPR">
+                                <rect key="frame" x="279" y="72" width="42" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mYC-Xs-hDp" firstAttribute="top" secondItem="eOZ-0R-kPR" secondAttribute="bottom" constant="51" id="JJU-ik-a7l"/>
+                            <constraint firstItem="eOZ-0R-kPR" firstAttribute="top" secondItem="bJE-9w-3Gj" secondAttribute="bottom" constant="8" id="Kc7-Bn-msz"/>
+                            <constraint firstItem="eOZ-0R-kPR" firstAttribute="centerX" secondItem="t6a-kv-cal" secondAttribute="centerX" id="U2i-C2-ZlX"/>
+                            <constraint firstItem="mYC-Xs-hDp" firstAttribute="centerX" secondItem="t6a-kv-cal" secondAttribute="centerX" id="cXc-9z-0TB"/>
+                            <constraint firstItem="3pe-ia-826" firstAttribute="centerX" secondItem="t6a-kv-cal" secondAttribute="centerX" id="iTn-OC-nKd"/>
+                            <constraint firstItem="3pe-ia-826" firstAttribute="top" secondItem="mYC-Xs-hDp" secondAttribute="bottom" constant="53" id="pVe-hS-deQ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="addressLabel" destination="mYC-Xs-hDp" id="hNk-EI-RR6"/>
+                        <outlet property="nameLabel" destination="eOZ-0R-kPR" id="Jmy-Bk-crp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hRI-Fv-V8q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4734" y="362"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="11G-9v-T9Q">

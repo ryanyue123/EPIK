@@ -15,6 +15,8 @@
 		3CE2EE891C6C5EC8000C9088 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CE2EE871C6C5EC8000C9088 /* LaunchScreen.storyboard */; };
 		3CE2EE941C6C5EC8000C9088 /* YelpifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE2EE931C6C5EC8000C9088 /* YelpifyTests.swift */; };
 		3CE2EE9F1C6C5EC8000C9088 /* YelpifyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE2EE9E1C6C5EC8000C9088 /* YelpifyUITests.swift */; };
+		3CF3B1311C7D15E000029000 /* BusinessDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF3B1301C7D15E000029000 /* BusinessDetailViewController.swift */; };
+		3CF480BC1C80011100698857 /* SinglePlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF480BB1C80011100698857 /* SinglePlaylistViewController.swift */; };
 		523E599553F6100C5348857C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68ACAEFF88A59BB74B411CE0 /* Pods.framework */; };
 		907E0CE51C76768D00872135 /* LocuAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907E0CE41C76768D00872135 /* LocuAPIClient.swift */; };
 		907E0CE71C77F34100872135 /* GooglePlacesAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907E0CE61C77F34100872135 /* GooglePlacesAPIClient.swift */; };
@@ -58,6 +60,8 @@
 		3CE2EE9A1C6C5EC8000C9088 /* YelpifyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YelpifyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CE2EE9E1C6C5EC8000C9088 /* YelpifyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpifyUITests.swift; sourceTree = "<group>"; };
 		3CE2EEA01C6C5EC8000C9088 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3CF3B1301C7D15E000029000 /* BusinessDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessDetailViewController.swift; sourceTree = "<group>"; };
+		3CF480BB1C80011100698857 /* SinglePlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePlaylistViewController.swift; sourceTree = "<group>"; };
 		68ACAEFF88A59BB74B411CE0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		907E0CE41C76768D00872135 /* LocuAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocuAPIClient.swift; sourceTree = "<group>"; };
 		907E0CE61C77F34100872135 /* GooglePlacesAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GooglePlacesAPIClient.swift; sourceTree = "<group>"; };
@@ -127,8 +131,10 @@
 				3CB947401C7196110035A8EB /* ModalViewController.swift */,
 				908481831C750816009B6099 /* BusinessObject.swift */,
 				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
+				3CF3B1301C7D15E000029000 /* BusinessDetailViewController.swift */,
 				9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */,
 				3CE2EE821C6C5EC8000C9088 /* Main.storyboard */,
+				3CF480BB1C80011100698857 /* SinglePlaylistViewController.swift */,
 				907E0CE81C78184400872135 /* TestViewController.swift */,
 				3CE2EE851C6C5EC8000C9088 /* Assets.xcassets */,
 				3CE2EE871C6C5EC8000C9088 /* LaunchScreen.storyboard */,
@@ -372,8 +378,10 @@
 				907E0CE91C78184400872135 /* TestViewController.swift in Sources */,
 				3CB947411C7196110035A8EB /* ModalViewController.swift in Sources */,
 				90DC57BC1C72A1D0001F1891 /* SearchBusinessViewController.swift in Sources */,
+				3CF3B1311C7D15E000029000 /* BusinessDetailViewController.swift in Sources */,
 				907E0CE51C76768D00872135 /* LocuAPIClient.swift in Sources */,
 				907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */,
+				3CF480BC1C80011100698857 /* SinglePlaylistViewController.swift in Sources */,
 				907E0CE71C77F34100872135 /* GooglePlacesAPIClient.swift in Sources */,
 				90DC57B91C72843A001F1891 /* YelpAPIClient.swift in Sources */,
 				3CE2EE7F1C6C5EC8000C9088 /* AppDelegate.swift in Sources */,

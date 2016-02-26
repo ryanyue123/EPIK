@@ -60,21 +60,24 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         
         searchParameters["ll"] = String(latitude) + "," + String(longitude)
         print(String(latitude) + "," + String(longitude))
-        //searchBusinesses()
+//        searchBusinesses()
     }
-    
+//    
 //    func searchBusinesses(){
 //        //var businessArray = [Business]()
-//        
-//        yelpClient.searchPlacesWithParameters(self.searchParameters, successSearch: {
+//        yelpClient.searchPlacesWithParameters(self.searchParameters, successSearch:
+//        {
 //            (data, response) -> Void in
 //            //print(NSString(data: data, encoding: NSUTF8StringEncoding)!)
 //            self.businesses = self.yelpClient.createBusinessArray(data)
 //            
 //            self.tableView.reloadData()
 //            
-//            }, failureSearch: { (error) -> Void in
-//                print(error)
+//        }
+//        ,failureSearch:
+//        {
+//            (error) -> Void in
+//            print(error)
 //        })
 //        print(businesses)
 //    }
@@ -112,6 +115,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var index: NSIndexPath!
     var playlistObject:PFObject!
     var playlistArray = [String]()
+    var geopoint:PFGeoPoint!
     
     // MARK: - TABLEVIEW FUNCTIONS
     
@@ -146,17 +150,40 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         cell.addToPlaylist.addTarget(self, action: "addTrackToPlaylist:", forControlEvents: .TouchUpInside)
         return cell
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.performSegueWithIdentifier("showBusinessDetail", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
+        
+        if (segue.identifier == "showBusinessDetail")
+        {
+            let indexPath = tableView.indexPathForSelectedRow
+            let object = businesses[indexPath!.row]
+            upcoming.object = object
+            self.tableView.deselectRowAtIndexPath(indexPath!, animated: true)
+        }
+    }
+    
     func addTrackToPlaylist(button: UIButton)
     {
         print("pressed")
         let index = button.tag
-        let object = businesses[index].businessName
-        playlistArray.append(object)
+        let object = businesses[index]
+        if (geopoint == nil)
+        {
+            geopoint = PFGeoPoint(latitude: object.businessLatitude, longitude: object.businessLongitude)
+        }
+        playlistArray.append(object.businessName)
     }
         
     @IBAction func finishedAddingToPlaylist(sender: UIBarButtonItem) {
-        playlistObject = PFObject(className: (PFUser.currentUser()?.username)!)
-        playlistObject["Playlist"] = playlistArray
+        playlistObject = PFObject(className: "Playlists")
+        playlistObject["playlist"] = playlistArray
+        playlistObject["createdBy"] = PFUser.currentUser()?.username
+        playlistObject["location"] = geopoint
         playlistObject.saveEventually {(success, error) -> Void in
             if (error == nil)
             {
