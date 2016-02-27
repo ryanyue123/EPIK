@@ -18,6 +18,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var locuClient = LocuAPIClient()
     var googlePlacesClient = GooglePlacesAPIClient()
     
+    var dataHandler = APIDataHandler()
+    
     var locationManager = CLLocationManager()
     var searchParameters = ["ll": "", "category_filter": "pizza", "radius_filter": "10000", "sort": "0"]
     var locuSearchParameters = []
@@ -63,55 +65,33 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         //searchBusinesses()
     }
     
-//    func searchBusinesses(){
-//        //var businessArray = [Business]()
-//        
-//        yelpClient.searchPlacesWithParameters(self.searchParameters, successSearch: {
-//            (data, response) -> Void in
-//            //print(NSString(data: data, encoding: NSUTF8StringEncoding)!)
-//            self.businesses = self.yelpClient.createBusinessArray(data)
-//            
-//            self.tableView.reloadData()
-//            
-//            }, failureSearch: { (error) -> Void in
-//                print(error)
-//        })
-//        print(businesses)
-//    }
-    
-    // MARK: - DOWNLOAD IMAGES
-    
-    func updateImages(cell: BusinessTableViewCell, indexPath: NSIndexPath, business: Business){
-        let url = NSURL(string: business.businessImageURL)!
-        var imageFile: UIImage! = UIImage(named: "restaurantImage - InNOut")
-        
-        getDataFromUrl(url) { (data, response, error)  in
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                guard let data = NSData(contentsOfURL: url) where error == nil else { return }
-                imageFile = UIImage(data: data)!
-                cell.businessBackgroundImage.image = imageFile
-            }
-        }
-        //self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-    }
-    
-    func getDataFromUrl(url: NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
-        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
-            completion(data: data, response: response, error: error)
-            }.resume()
-    }
-    
-    func downloadImage(urlString: String, business: Business){
-       
+    func firstDictFromDict(dict: NSDictionary) -> NSDictionary{
+        let key = dict.allKeys[0] as! String
+        return dict[key] as! NSDictionary
     }
     
     
     // MARK: - TABLEVIEW VARIABLES
     
-    var businesses = [Business]()
+    var businesses: [NSDictionary] = []
     var index: NSIndexPath!
     var playlistObject:PFObject!
     var playlistArray = [String]()
+    
+    var yelpSearchParameters = [
+        "ll": "33.64496794563093,-117.83725295740864",
+        "term": "pizza",
+        "radius_filter": "10000",
+        "sort": "1"]
+    
+    var gPlacesParameters = [
+        "key" : "AIzaSyAZ1KUrHPxY36keuRlZ4Yu6ZMBNhyLcgfs",
+        "keyword": "pizza",
+        "location" : "33.64496794563093,-117.83725295740864",
+        //"radius" : "50000", // DO NOT USE RADIUS IF RANKBY = DISTANCE
+        "rankby": "distance"
+        //"query" : "pizza"
+    ]
     
     // MARK: - TABLEVIEW FUNCTIONS
     
@@ -131,13 +111,27 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         
         let cellIdentifier = "businessCell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BusinessTableViewCell
+    
+        let outerBusinessDict = businesses[indexPath.row]
+        let businessDict = self.firstDictFromDict(outerBusinessDict)
+        
+        let photoReference = businessDict["photoReference"] as! String
+        
+        cell.businessTitleLabel.text = businessDict["name"] as! String
+        
+        googlePlacesClient.getImageFromPhotoReference(photoReference, completion: { (photo) -> Void in
+            dispatch_async(dispatch_get_main_queue(), {
+                cell.businessBackgroundImage.image = photo
+            })
+            //self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        })
         
         
-        // Fetches the appropriate business for the data source layout.
-        let business = businesses[indexPath.row]
-        
-        cell.businessTitleLabel.text = business.businessName
-        self.updateImages(cell, indexPath: indexPath, business: business)
+//        // Fetches the appropriate business for the data source layout.
+//        let business = businesses[indexPath.row]
+//        
+//        cell.businessTitleLabel.text = business.businessName
+//        self.updateImages(cell, indexPath: indexPath, business: business)
         
         //cell.businessBackgroundImage.image = downloadImage(business.businessImageURL)
         // self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
@@ -150,8 +144,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     {
         print("pressed")
         let index = button.tag
-        let object = businesses[index].businessName
-        playlistArray.append(object)
+        //let object = businesses[index].businessName
+        //playlistArray.append(object)
     }
         
     @IBAction func finishedAddingToPlaylist(sender: UIBarButtonItem) {
@@ -174,6 +168,13 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     override func viewDidLoad(){
         getCurrentLocation()
+        
+        // Performs an API search and returns a master array of businesses (as dictionaries)
+        dataHandler.performAPISearch(yelpSearchParameters, gpParameters: gPlacesParameters) { (masterBusinessArray) -> Void in
+            self.businesses = masterBusinessArray
+            self.tableView.reloadData()
+        }
+        
         playlistObject = PFObject(className: (PFUser.currentUser()?.username)!)
         playlistArray.removeAll()
     }
@@ -194,3 +195,4 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     */
 
 }
+

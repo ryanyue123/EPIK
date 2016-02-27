@@ -37,6 +37,25 @@ class GooglePlacesAPIClient: NSObject {
         }
     }
     
+    func getImageFromPhotoReference(photoReference: String, completion: (photo: UIImage) -> Void){
+        let photoRequestParams = ["key": "AIzaSyAZ1KUrHPxY36keuRlZ4Yu6ZMBNhyLcgfs", "photoreference": photoReference, "maxheight": "1600"]
+        
+        let photoRequestURL = NSURL(string: buildPlacePhotoURLString(photoRequestParams))!
+        
+        self.getDataFromUrl(photoRequestURL) { (data, response, error) -> Void in
+            guard let data = NSData(contentsOfURL: photoRequestURL) where error == nil else { return }
+            let imageFile = UIImage(data: data)!
+
+            completion(photo: imageFile)
+        }
+    }
+    
+    private func getDataFromUrl(url: NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
+        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
+            completion(data: data, response: response, error: error)
+            }.resume()
+    }
+    
     private func buildURLString(parameters: Dictionary<String, String>) -> String!{
         var result = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
         //"https://maps.googleapis.com/maps/api/place/textsearch/json?"
