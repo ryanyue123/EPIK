@@ -13,7 +13,6 @@ import Parse
 class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - GLOBAL VARIABLES
-    
     var yelpClient = YelpAPIClient()
     var locuClient = LocuAPIClient()
     var googlePlacesClient = GooglePlacesAPIClient()
@@ -29,14 +28,12 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     
     // MARK: - ACTIONS
-    
     @IBAction func didEnterNewLocation(sender: AnyObject) {
         searchParameters["location"] = locationTextField.text!
         //searchBusinesses()
     }
     
     // MARK: - DATA TASKS
-    
     func getCurrentLocation(){
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -62,7 +59,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         
         searchParameters["ll"] = String(latitude) + "," + String(longitude)
         print(String(latitude) + "," + String(longitude))
-//        searchBusinesses()
     }
     func firstDictFromDict(dict: NSDictionary) -> NSDictionary{
         let key = dict.allKeys[0] as! String
@@ -71,7 +67,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     
     // MARK: - TABLEVIEW VARIABLES
-    
     var businesses: [NSDictionary] = []
     var businessObjects: [Business]!
     var index: NSIndexPath!
@@ -87,32 +82,11 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         "radius_filter": "10000",
         "sort": "1"]
     
-//    var gPlacesParameters = [
-//        "key" : "AIzaSyAZ1KUrHPxY36keuRlZ4Yu6ZMBNhyLcgfs",
-//        "keyword": "pizza",
-//        "location" : "33.64496794563093,-117.83725295740864",
-//        //"radius" : "50000", // DO NOT USE RADIUS IF RANKBY = DISTANCE
-//        "rankby": "distance"
-//        //"query" : "pizza"
-//
     // MARK: - TABLEVIEW FUNCTIONS
-    
+
     @IBOutlet weak var addToPlaylist: UIButton!
     @IBOutlet weak var tableView: UITableView!
-    
-//    
-//    func updateImages(cell: BusinessTableViewCell, indexPath: NSIndexPath, business: NSDictionary){
-//        
-//        let photoReference = business["photoReference"] as! String
-//        
-//        googlePlacesClient.getImageFromPhotoReference(photoReference, completion: { (photo) -> Void in
-//            dispatch_async(dispatch_get_main_queue()) { () -> Void in
-//                cell.businessBackgroundImage.image = photo
-//            }
-//            print("grabbed photo")
-//        })
-//    }
-    
+
     func updateImages(cell: BusinessTableViewCell, indexPath: NSIndexPath, business: Business){
         
         let photoReference = business.businessPhotoReference
@@ -130,12 +104,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
                     cell.setNeedsLayout() // need to reload the view, which won't happen otherwise since this is in an async call
                 }
             })
-            
-            //                        dispatch_async(dispatch_get_main_queue(), {
-            //                            cell.businessBackgroundImage.image = photo
-            //                            print("grabbed photo")
-            //                        })
-            
         })
 
     }
@@ -167,96 +135,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             businessShown[indexPath.row] = true
         }
         
-//        if businessShown[indexPath.row] != true{
-//            if self.businesses.xcount >= indexPath.row{
-//                let businessDict = self.businesses[indexPath.row]
-//                let business = self.firstDictFromDict(businessDict)
-//                
-//                print(business)
-//                
-//                let photoReference = business["photoReference"] as! String
-//                cell.businessTitleLabel.text = business["name"] as! String
-//                cell.businessBackgroundImage.image = nil
-//                
-//                googlePlacesClient.getImageFromPhotoReference(photoReference, completion: { (photo, error) -> Void in
-//                    
-//                    if error != nil {
-//                        print(error)
-//                        cell.businessBackgroundImage.image = UIImage(named: "restaurantImage - InNOut")
-//                    }
-//                    
-//                    let cellToUpdate = self.tableView.cellForRowAtIndexPath(indexPath) as! BusinessTableViewCell
-//                    
-//                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                        if cellToUpdate.businessBackgroundImage.image == nil{
-//                            if(cell.tag == indexPath.row) {
-//                                cell.businessBackgroundImage.image = photo
-//                                cell.setNeedsLayout() // need to reload the view, which won't happen otherwise since this is in an async call
-//                            }
-//                        }
-//                    })
-//                    
-//                    //                        dispatch_async(dispatch_get_main_queue(), {
-//                    //                            cell.businessBackgroundImage.image = photo
-//                    //                            print("grabbed photo")
-//                    //                        })
-//
-//                })
-//                
-//                businessShown[indexPath.row] = true
-//                
-//            }else{
-//                
-//            }
-//            
-//
-//        }
-//        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-//        cell.tag = indexPath.row
-//    
-//        let outerBusinessDict = businesses[indexPath.row]
-//        let businessDict = self.firstDictFromDict(outerBusinessDict)
-//        
-//        if businessShown[indexPath.row] != true{
-//
-//            let photoReference = businessDict["photoReference"] as! String
-//            cell.businessTitleLabel.text = businessDict["name"] as! String
-//            
-//            googlePlacesClient.getImageFromPhotoReference(photoReference, completion: { (photo, error) -> Void in
-//                dispatch_async(dispatch_get_main_queue(), {
-//                    if (cell.tag == indexPath.row){
-//                        cell.businessBackgroundImage.image = photo
-//                        print("grabbed photo")
-//                    }else{
-//                        print("not same row")
-//                    }
-//                })
-//                //self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-//            })
-//            
-//            businessShown[indexPath.row] = true
-//        }else{
-//            
-//        }
-        
-//        // Fetches the appropriate business for the data source layout.
-//        let business = businesses[indexPath.row]
-//        
-//        cell.businessTitleLabel.text = business.businessName
-//        self.updateImages(cell, indexPath: indexPath, business: business)
-        
-        //cell.businessBackgroundImage.image = downloadImage(business.businessImageURL)
-        // self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        
         cell.addToPlaylist.tag = indexPath.row
         cell.addToPlaylist.addTarget(self, action: "addTrackToPlaylist:", forControlEvents: .TouchUpInside)
         return cell
@@ -272,7 +150,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         if (segue.identifier == "showBusinessDetail")
         {
             let indexPath = tableView.indexPathForSelectedRow
-            let object = businesses[indexPath!.row]
+            let object = businessObjects[indexPath!.row]
             upcoming.object = object
             self.tableView.deselectRowAtIndexPath(indexPath!, animated: true)
         }
@@ -282,14 +160,12 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     {
         print("pressed")
         let index = button.tag
-        let object = businesses[index]
+        let object = businessObjects[index]
         if (geopoint == nil)
         {
             geopoint = PFGeoPoint(latitude: object.businessLatitude, longitude: object.businessLongitude)
         }
         playlistArray.append(object.businessName)
-        //let object = businesses[index].businessName
-        //playlistArray.append(object)
     }
         
     @IBAction func finishedAddingToPlaylist(sender: UIBarButtonItem) {
@@ -329,10 +205,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             })
         }
         
-        
-        
-        //playlistObject = PFObject(className: (PFUser.currentUser()?.username)!)
-        //playlistArray.removeAll()
+        geopoint = nil
+        playlistArray.removeAll()
     }
     
     override func didReceiveMemoryWarning() {
