@@ -74,30 +74,71 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     // MARK: - TABLEVIEW VARIABLES
     
     var businesses: [NSDictionary] = []
+    var businessObjects: [Business]!
     var index: NSIndexPath!
     var playlistObject:PFObject!
     var playlistArray = [String]()
-    
+    var businessShown: [Bool] = []
+
     var yelpSearchParameters = [
         "ll": "33.64496794563093,-117.83725295740864",
         "term": "pizza",
         "radius_filter": "10000",
         "sort": "1"]
     
-    var gPlacesParameters = [
-        "key" : "AIzaSyAZ1KUrHPxY36keuRlZ4Yu6ZMBNhyLcgfs",
-        "keyword": "pizza",
-        "location" : "33.64496794563093,-117.83725295740864",
-        //"radius" : "50000", // DO NOT USE RADIUS IF RANKBY = DISTANCE
-        "rankby": "distance"
-        //"query" : "pizza"
-    ]
+//    var gPlacesParameters = [
+//        "key" : "AIzaSyAZ1KUrHPxY36keuRlZ4Yu6ZMBNhyLcgfs",
+//        "keyword": "pizza",
+//        "location" : "33.64496794563093,-117.83725295740864",
+//        //"radius" : "50000", // DO NOT USE RADIUS IF RANKBY = DISTANCE
+//        "rankby": "distance"
+//        //"query" : "pizza"
+//    ]
     
     // MARK: - TABLEVIEW FUNCTIONS
     
     @IBOutlet weak var addToPlaylist: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    
+//    
+//    func updateImages(cell: BusinessTableViewCell, indexPath: NSIndexPath, business: NSDictionary){
+//        
+//        let photoReference = business["photoReference"] as! String
+//        
+//        googlePlacesClient.getImageFromPhotoReference(photoReference, completion: { (photo) -> Void in
+//            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+//                cell.businessBackgroundImage.image = photo
+//            }
+//            print("grabbed photo")
+//        })
+//    }
+    
+    func updateImages(cell: BusinessTableViewCell, indexPath: NSIndexPath, business: Business){
+        
+        let photoReference = business.businessPhotoReference
+        
+        googlePlacesClient.getImageFromPhotoReference(photoReference, completion: { (photo, error) -> Void in
+            
+            if error != nil {
+                print(error)
+                cell.businessBackgroundImage.image = UIImage(named: "restaurantImage - InNOut")
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if(cell.tag == indexPath.row) {
+                    cell.businessBackgroundImage.image = photo
+                    cell.setNeedsLayout() // need to reload the view, which won't happen otherwise since this is in an async call
+                }
+            })
+            
+            //                        dispatch_async(dispatch_get_main_queue(), {
+            //                            cell.businessBackgroundImage.image = photo
+            //                            print("grabbed photo")
+            //                        })
+            
+        })
 
+    }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -108,24 +149,104 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         let cellIdentifier = "businessCell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BusinessTableViewCell
-    
-        let outerBusinessDict = businesses[indexPath.row]
-        let businessDict = self.firstDictFromDict(outerBusinessDict)
+        cell.tag = indexPath.row
         
-        let photoReference = businessDict["photoReference"] as! String
+        if businessShown[indexPath.row] != true{
+            if self.businessObjects.count >= indexPath.row{
+                let business = self.businessObjects[indexPath.row]
+                print(business, "\n")
+                
+                //let photoReference = business.businessPhotoReference
+                
+                cell.businessTitleLabel.text = business.businessName
+                updateImages(cell, indexPath: indexPath, business: business)
+
+            }
+            businessShown[indexPath.row] = true
+        }
         
-        cell.businessTitleLabel.text = businessDict["name"] as! String
+//        if businessShown[indexPath.row] != true{
+//            if self.businesses.xcount >= indexPath.row{
+//                let businessDict = self.businesses[indexPath.row]
+//                let business = self.firstDictFromDict(businessDict)
+//                
+//                print(business)
+//                
+//                let photoReference = business["photoReference"] as! String
+//                cell.businessTitleLabel.text = business["name"] as! String
+//                cell.businessBackgroundImage.image = nil
+//                
+//                googlePlacesClient.getImageFromPhotoReference(photoReference, completion: { (photo, error) -> Void in
+//                    
+//                    if error != nil {
+//                        print(error)
+//                        cell.businessBackgroundImage.image = UIImage(named: "restaurantImage - InNOut")
+//                    }
+//                    
+//                    let cellToUpdate = self.tableView.cellForRowAtIndexPath(indexPath) as! BusinessTableViewCell
+//                    
+//                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                        if cellToUpdate.businessBackgroundImage.image == nil{
+//                            if(cell.tag == indexPath.row) {
+//                                cell.businessBackgroundImage.image = photo
+//                                cell.setNeedsLayout() // need to reload the view, which won't happen otherwise since this is in an async call
+//                            }
+//                        }
+//                    })
+//                    
+//                    //                        dispatch_async(dispatch_get_main_queue(), {
+//                    //                            cell.businessBackgroundImage.image = photo
+//                    //                            print("grabbed photo")
+//                    //                        })
+//
+//                })
+//                
+//                businessShown[indexPath.row] = true
+//                
+//            }else{
+//                
+//            }
+//            
+//
+//        }
+//        
         
-        googlePlacesClient.getImageFromPhotoReference(photoReference, completion: { (photo) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                cell.businessBackgroundImage.image = photo
-            })
-            //self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        })
         
+        
+        
+        
+        
+        
+        
+        
+//        cell.tag = indexPath.row
+//    
+//        let outerBusinessDict = businesses[indexPath.row]
+//        let businessDict = self.firstDictFromDict(outerBusinessDict)
+//        
+//        if businessShown[indexPath.row] != true{
+//
+//            let photoReference = businessDict["photoReference"] as! String
+//            cell.businessTitleLabel.text = businessDict["name"] as! String
+//            
+//            googlePlacesClient.getImageFromPhotoReference(photoReference, completion: { (photo, error) -> Void in
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    if (cell.tag == indexPath.row){
+//                        cell.businessBackgroundImage.image = photo
+//                        print("grabbed photo")
+//                    }else{
+//                        print("not same row")
+//                    }
+//                })
+//                //self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+//            })
+//            
+//            businessShown[indexPath.row] = true
+//        }else{
+//            
+//        }
         
 //        // Fetches the appropriate business for the data source layout.
 //        let business = businesses[indexPath.row]
@@ -167,16 +288,26 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     // MARK: - VIEWDIDLOAD
     
     override func viewDidLoad(){
-        getCurrentLocation()
+        //getCurrentLocation()
+        
         
         // Performs an API search and returns a master array of businesses (as dictionaries)
-        dataHandler.performAPISearch(yelpSearchParameters, gpParameters: gPlacesParameters) { (masterBusinessArray) -> Void in
-            self.businesses = masterBusinessArray
-            self.tableView.reloadData()
+        dataHandler.performAPISearch(yelpSearchParameters) { (masterBusinessArray, masterBusinessObjArray) -> Void in
+            self.businesses = masterBusinessArray as! [NSDictionary]
+            self.businessObjects = masterBusinessObjArray
+            for _ in masterBusinessObjArray{
+                self.businessShown.append(false)
+            }
+            //self.tableView.reloadData()
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.tableView.reloadData()
+            })
         }
         
-        playlistObject = PFObject(className: (PFUser.currentUser()?.username)!)
-        playlistArray.removeAll()
+        
+        
+        //playlistObject = PFObject(className: (PFUser.currentUser()?.username)!)
+        //playlistArray.removeAll()
     }
     
     override func didReceiveMemoryWarning() {

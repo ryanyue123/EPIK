@@ -14,7 +14,7 @@ class GooglePlacesAPIClient: NSObject {
     var photoParameters = [
         "key" : "AIzaSyAZ1KUrHPxY36keuRlZ4Yu6ZMBNhyLcgfs",
         "photoreference" : "...",
-        "maxheight" : "1600"
+        "maxheight" : "800"
     ]
     
     override init() {
@@ -37,16 +37,43 @@ class GooglePlacesAPIClient: NSObject {
         }
     }
     
-    func getImageFromPhotoReference(photoReference: String, completion: (photo: UIImage) -> Void){
-        let photoRequestParams = ["key": "AIzaSyAZ1KUrHPxY36keuRlZ4Yu6ZMBNhyLcgfs", "photoreference": photoReference, "maxheight": "1600"]
+    func searchPlaceWithName(nameString: String, completion: (result: NSDictionary) -> Void){
+        var parameters = [
+            "key" : "AIzaSyAZ1KUrHPxY36keuRlZ4Yu6ZMBNhyLcgfs",
+            "keyword": nameString,
+            "location" : "33.64496794563093,-117.83725295740864",
+            //"radius" : "50000", // DO NOT USE RADIUS IF RANKBY = DISTANCE
+            "rankby": "distance"
+            //"query" : "pizza"
+        ]
+
+        Alamofire.request(.GET, buildURLString(parameters))
+            .responseJSON { response in
+                //                print(self.parameters)
+                //                print(response.request)  // original URL request
+                //                print(response.response) // URL response
+                //                print(response.data)     // server data
+                //                print(response.result)   // result of response serialization
+                
+                do { let data = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                    completion(result: data!)
+                }catch{}
+        }
+    }
+    
+    func getImageFromPhotoReference(photoReference: String, completion: (photo: UIImage, error: NSError?) -> Void){
+        let photoRequestParams = ["key": "AIzaSyAZ1KUrHPxY36keuRlZ4Yu6ZMBNhyLcgfs", "photoreference": photoReference, "maxheight": "800"]
         
         let photoRequestURL = NSURL(string: buildPlacePhotoURLString(photoRequestParams))!
         
+        
         self.getDataFromUrl(photoRequestURL) { (data, response, error) -> Void in
-            guard let data = NSData(contentsOfURL: photoRequestURL) where error == nil else { return }
-            let imageFile = UIImage(data: data)!
-
-            completion(photo: imageFile)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                guard let data = NSData(contentsOfURL: photoRequestURL) where error == nil else { return }
+                let imageFile = UIImage(data: data)!
+                
+                completion(photo: imageFile, error: error)
+            })
         }
     }
     

@@ -34,8 +34,8 @@ class TestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        APIClient.performAPISearch(self.yelpSearchParameters, gpParameters: gpParameters) { (businessObject) -> Void in
-            
+        APIClient.performAPISearch(self.yelpSearchParameters) { (businessObject) -> Void in
+            print(businessObject)
         }
         
         
