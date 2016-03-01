@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import OAuthSwift
 import Alamofire
 
 class GooglePlacesAPIClient: NSObject {
