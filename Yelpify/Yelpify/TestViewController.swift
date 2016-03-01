@@ -14,8 +14,8 @@ class TestViewController: UIViewController {
     
     var yelpSearchParameters = [
         "ll": "33.64496794563093,-117.83725295740864",
-        "category_filter": "pizza",
-        "radius_filter": "25000",
+        "term": "pizza",
+        "radius_filter": "10000",
         "sort": "1"]
     
     var gpParameters = [
@@ -34,8 +34,8 @@ class TestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        APIClient.performAPISearch(self.yelpSearchParameters, gpParameters: gpParameters) { (businessObject) -> Void in
-            
+        APIClient.performAPISearch(self.yelpSearchParameters) { (businessObject) -> Void in
+            print(businessObject)
         }
         
         

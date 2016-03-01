@@ -21,7 +21,6 @@ struct Business {
         businessAddress = address
         businessImageURL = imageURL
         businessPhotoReference = photoRef
-        
     }
     
 }

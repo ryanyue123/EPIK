@@ -96,7 +96,7 @@ class YelpAPIClient: NSObject {
                                 // Handle ImageURL
                                 let businessImageURL = business["image_url"] as! String
                                 
-                                //businessArray.append(Business(name: businessName, address: businessAddress, imageURL: businessImageURL))
+                                businessArray.append(Business(name: businessName, address: businessAddress, imageURL: businessImageURL, photoRef: ""))
                                 
                             }
                             return businessArray
