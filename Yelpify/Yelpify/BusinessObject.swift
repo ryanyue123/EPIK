@@ -15,12 +15,15 @@ struct Business {
     var businessAddress: String
     var businessImageURL: String
     var businessPhotoReference: String
+    var businessPhoto: UIImage?
     
     init(name: String, address: String, imageURL: String, photoRef: String){
         businessName = name
         businessAddress = address
         businessImageURL = imageURL
         businessPhotoReference = photoRef
+        businessPhoto = nil
     }
+
     
 }

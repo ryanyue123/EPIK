@@ -10,10 +10,32 @@ import UIKit
 
 class BusinessTableViewCell: UITableViewCell {
     
-    
     @IBOutlet weak var addToPlaylist: UIButton!
     @IBOutlet weak var businessTitleLabel: UILabel!
     @IBOutlet weak var businessBackgroundImage: UIImageView!
+    
+    let googlePlacesClient = GooglePlacesAPIClient()
+    
+    func downloadPhotoFromReference(photoRef: String, completion: (photo: UIImage, error: NSError?) -> Void){
+        
+        googlePlacesClient.getImageFromPhotoReference(photoRef) { (photo, error) -> Void in
+            completion(photo: photo, error: error)
+        }
+    }
+    
+    func configureCellWith(business: Business){
+        businessTitleLabel.text = business.businessName
+        
+        let photoReference = business.businessPhotoReference
+        
+        downloadPhotoFromReference(photoReference) { (photo, error) -> Void in
+            if error != nil{
+                self.businessBackgroundImage.image = UIImage(named: "restaurantImage - InNOut")
+            }else{
+                self.businessBackgroundImage.image = photo
+            }
+        }
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
