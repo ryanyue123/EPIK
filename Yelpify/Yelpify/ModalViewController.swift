@@ -26,7 +26,7 @@ class ModalViewController: UIViewController, UIPickerViewDelegate{
         // Do any additional setup after loading the view.\
         pickerData = ["Teenagers", "Young Aduilts", "Adults", "Old People"]
         
-        self.playlistObject = PFObject(className: (PFUser.currentUser()?.username)!)
+        self.playlistObject = PFObject(className: "Playlists")
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,12 +50,12 @@ class ModalViewController: UIViewController, UIPickerViewDelegate{
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.playlistObject["AgeGroup"] = pickerData[row]
+        self.playlistObject["ageGroup"] = pickerData[row]
         
     }
     @IBAction func createPlaylist(sender: UIButton) {
-        self.playlistObject["Name"] = self.playlistName.text
-        self.playlistObject["Mood"] = self.playlistMood.text
+        self.playlistObject["name"] = self.playlistName.text
+        self.playlistObject["mood"] = self.playlistMood.text
         self.playlistObject.saveInBackgroundWithBlock{(success, error) -> Void in
             if success == true
             {

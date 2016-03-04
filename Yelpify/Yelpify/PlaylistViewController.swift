@@ -15,12 +15,63 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
     var locationManager = CLLocationManager()
     let client = YelpAPIClient()
     var parameters = ["ll": "", "category_filter": "pizza", "radius_filter": "3000", "sort": "0"]
+    var playlists = []
+    var userlatitude: Double!
+    var userlongitude: Double!
+    
+    
+    func fetchAllObjectsFromDataStore()
+    {
+        let query:PFQuery = PFQuery(className: "Playlists")
+        query.fromLocalDatastore()
+        query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: userlatitude, longitude: userlongitude), withinMiles: 50.0)
+        query.orderByAscending("location")
+        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
+            if ((error) == nil)
+            {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.playlists = objects! as NSArray
+                    print(self.playlists)
+                })
+            }
+            else
+            {
+                print(error?.userInfo)
+            }
+        }
+        
+    }
+    
+    func fetchAllObjects()
+    {
+        PFObject.unpinAllObjectsInBackgroundWithBlock(nil)
+        let query:PFQuery = PFQuery(className:"Playlists")
+        print(userlatitude)
+        print(userlongitude)
+        query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: userlatitude, longitude: userlongitude), withinMiles: 50.0)
+        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
+            if ((error) == nil)
+            {
+                PFObject.pinAllInBackground(objects, block: { (success, error) -> Void in
+                    
+                    if (error == nil)
+                    {
+                        self.fetchAllObjectsFromDataStore()
+                    }
+                })
 
+            }
+            else
+            {
+                print(error?.userInfo)
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
-        locationManager.requestLocation()
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -29,8 +80,10 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
         let latitude = userLocation.coordinate.latitude
         let longitude = userLocation.coordinate.longitude
         print(userLocation.coordinate)
+        userlatitude = latitude
+        userlongitude = longitude
+        fetchAllObjects()
         parameters["ll"] = String(latitude) + "," + String(longitude)
-        print(parameters)
     }
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print(error.description)
@@ -39,7 +92,7 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .AuthorizedWhenInUse
         {
-            print("Authorized")
+            //print("Authorized")
         }
     }
     
@@ -55,6 +108,7 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
             
             self.presentViewController(logInViewController, animated: true, completion: nil)
         }
+        locationManager.requestLocation()
     }
     
     func logInViewController(logInController: PFLogInViewController, shouldBeginLogInWithUsername username: String, password: String) -> Bool {

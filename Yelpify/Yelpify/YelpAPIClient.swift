@@ -69,46 +69,46 @@ class YelpAPIClient: NSObject {
     }
     
     
-    func createBusinessArray(data: NSData?) -> Array<Business>{
-        
-        var businessArray = [Business]()
-        
-        if let data = data{
-            //print(NSString(data: data, encoding: NSUTF8StringEncoding))
-            
-            // EXTRACT JSON DATA
-            do{ let jsonResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
-                if jsonResult.count > 0 {
-                    if let businesses = jsonResult["businesses"] as? NSArray {
-                        if businesses.count > 0{
-                            for business in businesses {
-                                print(business["name"] as! String)
-                                
-                                // Handle Address
-                                var businessAddress = ""
-                                if let businessLocation = business["location"] as? NSDictionary{
-                                    businessAddress = businessLocation["address"]![0] as! String
-                                }
-                            
-                                // Handle Name
-                                let businessName = business["name"] as! String
-                                
-                                // Handle ImageURL
-                                let businessImageURL = business["image_url"] as! String
-                                
-                                businessArray.append(Business(name: businessName, address: businessAddress, imageURL: businessImageURL, photoRef: ""))
-                                
-                            }
-                            return businessArray
-                        }
-                        
-                    }
-                }
-                //print(jsonResult)
-            } catch {}
-        }
-        return businessArray
-    }
+//    func createBusinessArray(data: NSData?) -> Array<Business>{
+//        
+//        var businessArray = [Business]()
+//        
+//        if let data = data{
+//            //print(NSString(data: data, encoding: NSUTF8StringEncoding))
+//            
+//            // EXTRACT JSON DATA
+//            do{ let jsonResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+//                if jsonResult.count > 0 {
+//                    if let businesses = jsonResult["businesses"] as? NSArray {
+//                        if businesses.count > 0{
+//                            for business in businesses {
+//                                print(business["name"] as! String)
+//                                
+//                                // Handle Address
+//                                var businessAddress = ""
+//                                if let businessLocation = business["location"] as? NSDictionary{
+//                                    businessAddress = businessLocation["address"]![0] as! String
+//                                }
+//                            
+//                                // Handle Name
+//                                let businessName = business["name"] as! String
+//                                
+//                                // Handle ImageURL
+//                                let businessImageURL = business["image_url"] as! String
+//                                
+//                                businessArray.append(Business(name: businessName, address: businessAddress, imageURL: businessImageURL, photoRef: ""))
+//                                
+//                            }
+//                            return businessArray
+//                        }
+//                        
+//                    }
+//                }
+//                //print(jsonResult)
+//            } catch {}
+//        }
+//        return businessArray
+//    }
     
 
     /*
