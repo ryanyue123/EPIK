@@ -323,6 +323,24 @@ class APIDataHandler {
         let yelpImageURL = business.businessImageURL
         let yelpLat = business.businessLatitude
         let yelpLong = business.businessLongitude
+        
+        let gPlaceID = ""
+        let gPlacePhotoRef = ""
+        
+        let businessObject = Business(name: yelpName, address: yelpAddress, imageURL: yelpImageURL, photoRef: gPlacePhotoRef, latitude: yelpLat, longitude: yelpLong, businessID: yelpID, placeID: gPlaceID)
+        
+        return businessObject
+
+    }
+    
+    private func mergeYelpAndGoogleObjects(place: GooglePlace, business: YelpBusiness, completion:(businessObject: Business)-> Void){
+        
+        let yelpID = business.businessID
+        let yelpAddress = business.businessAddress
+        let yelpName = business.businessName
+        let yelpImageURL = business.businessImageURL
+        let yelpLat = business.businessLatitude
+        let yelpLong = business.businessLongitude
         let yelpDist = business.businessDistance
         let yelpZip = business.businessZip
         let yelpCity = business.businessCity
