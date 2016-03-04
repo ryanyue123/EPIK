@@ -93,6 +93,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var geopoint:PFGeoPoint!
     var businessShown: [Bool] = []
 
+
     // MARK: - TABLEVIEW FUNCTIONS
 
     @IBOutlet weak var addToPlaylist: UIButton!
@@ -107,6 +108,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
         //cell.tag = indexPath.row
         
