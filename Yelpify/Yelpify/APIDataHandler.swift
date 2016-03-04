@@ -90,7 +90,28 @@ class APIDataHandler {
             
                         }
                         
-                        let yelpBusinessObject = YelpBusiness(id: businessID, name: businessName, address: businessAddress, imageURL: businessImageURL, latitude: businessLatitude, longitude: businessLongitude)
+                        let businessPhone = business["phone"] as! String
+                        var businessZip = ""
+                        var businessCity = ""
+                        if let businessLocation = business["location"] as? NSDictionary{
+                            businessZip = business["postal_code"] as! String
+                            businessCity = businiess["city"] as! String
+                        }
+                        let businessDistance = business["distance"] as! String
+                        let businessCategory = business["categories"] as? NSArray
+                        let businessRating = business["rating"] as! Double
+                        var businessStatus: Bool!
+                        
+                        if let businessAvail = String(business["is_claimed"]){
+                            if businessAvail == String(1){
+                                businessStatus = true
+                            }else{
+                                businessStatus = false
+                            }
+                        }
+
+                
+                        let yelpBusinessObject = YelpBusiness(id: businessID, name: businessName, address: businessAddress, city: businessCity, zip: businessZip, phone: businessPhone, imageURL: businessImageURL, latitude: businessLatitude, longitude: businessLongitude, distance: businessDistance, rating: businessRating, categories: businessCategory, status: businessStatus)
                         
                         arrayOfYelpBusinesses.append(yelpBusinessObject)
                     }
@@ -235,11 +256,16 @@ class APIDataHandler {
         let yelpImageURL = business.businessImageURL
         let yelpLat = business.businessLatitude
         let yelpLong = business.businessLongitude
-        
+        let yelpDist = business.businessDistance
+        let yelpZip = business.businessZip
+        let yelpCity = business.businessCity
+        let yelpCategor = business.businessCategories
+        let yelpStatus = business.businessStatus
+        let yelpRating = business.businessRating
         let gPlaceID = place.placeID
         let gPlacePhotoRef = place.placePhotoReference
         
-        let businessObject = Business(name: yelpName, address: yelpAddress, imageURL: yelpImageURL, photoRef: gPlacePhotoRef, latitude: yelpLat, longitude: yelpLong, businessID: yelpID, placeID: gPlaceID)
+        let businessObject = Business(name: yelpName, address: yelpAddress, city: yelpCity, zip: yelpZip, phone: yelpPhone, imageURL: yelpImageURL, photoRef: gPlacePhotoRef, latitude: yelpLat, longitude: yelpLong, distance: yelpDist, rating: yelpRating, categories: yelpCategor, status: yelpStatus, businessID: yelpID, placeID: gPlaceID)
         
         completion(businessObject: businessObject)
         
