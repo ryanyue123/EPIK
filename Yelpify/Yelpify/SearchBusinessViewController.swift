@@ -179,14 +179,10 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             for _ in businessObjectArray{
                 self.businessShown.append(false)
             }
-            
-            for business in self.businessObjects{
-                print(business.businessName)
-            }
             self.tableView.reloadData()
         }
-        geopoint = nil
-        playlistArray.removeAll()
+//        geopoint = nil
+//        playlistArray.removeAll()
     }
     
     override func didReceiveMemoryWarning() {
