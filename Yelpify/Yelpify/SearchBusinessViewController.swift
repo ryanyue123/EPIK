@@ -18,13 +18,15 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var locuClient = LocuAPIClient()
     var googlePlacesClient = GooglePlacesAPIClient()
     
+    let cache = Shared.imageCache
+    
     var dataHandler = APIDataHandler()
     
     var locationManager = CLLocationManager()
     var searchParameters = ["ll": "", "category_filter": "pizza", "radius_filter": "10000", "sort": "0"]
     var yelpSearchParameters = [
         "ll": "33.64496794563093,-117.83725295740864",
-        "term": "pizza",
+        "term": "tacos",
         "radius_filter": "10000",
         "sort": "1"]
 
@@ -33,7 +35,27 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     // MARK: - OUTLETS
     @IBOutlet weak var locationTextField: UITextField!
     
-    
+    @IBAction func didFinishEditingLocation(sender: AnyObject) {
+        locationTextField.resignFirstResponder()
+        let query = locationTextField.text
+        //let queryArr = query!.characters.split{$0 == " "}.map(String.init)
+        yelpSearchParameters["term"] = query as String!
+        
+        self.businessShown.removeAll()
+        self.businessObjects.removeAll()
+        cache.removeAll()
+        self.tableView.reloadData()
+        
+        print("grabbing new data")
+        dataHandler.performAPISearch(yelpSearchParameters) { (businessObjectArray) -> Void in
+            for _ in businessObjectArray{
+                self.businessShown.append(false)
+            }
+            self.businessObjects = businessObjectArray
+            self.tableView.reloadData()
+        }
+
+    }
     // MARK: - DATA TASKS
     func getCurrentLocation(){
         locationManager.delegate = self
@@ -78,7 +100,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var playlistObject:PFObject!
     var playlistArray = [NSDictionary]()
     var geopoint:PFGeoPoint!
-    
 
     // MARK: - TABLEVIEW FUNCTIONS
 
@@ -99,8 +120,18 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         cell.tag = indexPath.row
         
         let business = self.businessObjects[indexPath.row]
-        cell.configureCellWith(business)
         
+        cell.configureCellWith(business) { () -> Void in
+            print("reloading cell", indexPath.row)
+            //self.businessShown[indexPath.row] = true
+            //self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
+        }
+//        
+//        if !businessShown.contains(false){
+//            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+//            businessShown[indexPath.row] = true
+//        }
+//        
         cell.addToPlaylist.tag = indexPath.row
         cell.addToPlaylist.addTarget(self, action: "addTrackToPlaylist:", forControlEvents: .TouchUpInside)
         return cell

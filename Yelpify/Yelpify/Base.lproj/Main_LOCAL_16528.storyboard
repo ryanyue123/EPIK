@@ -155,19 +155,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="159" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0eM-Bd-byN">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="126" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0eM-Bd-byN">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="businessCell" rowHeight="159" id="vxX-pQ-LBu" customClass="BusinessTableViewCell" customModule="Yelpify" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="600" height="159"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="businessCell" rowHeight="126" id="vxX-pQ-LBu" customClass="BusinessTableViewCell" customModule="Yelpify" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="92" width="600" height="126"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vxX-pQ-LBu" id="Zfz-NU-X5V">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="159"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="126"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_restaurant" translatesAutoresizingMaskIntoConstraints="NO" id="Uuw-ni-McR">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="159"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="125"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="McDonald's" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="7gG-fa-wts">
                                                     <rect key="frame" x="25" y="26" width="418" height="30"/>
@@ -193,9 +193,10 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="ldS-zq-ey5" firstAttribute="centerY" secondItem="Uuw-ni-McR" secondAttribute="centerY" constant="-16.5" id="1Cu-XO-Hnp"/>
+                                                <constraint firstItem="ldS-zq-ey5" firstAttribute="centerY" secondItem="Uuw-ni-McR" secondAttribute="centerY" id="1Cu-XO-Hnp"/>
+                                                <constraint firstItem="ldS-zq-ey5" firstAttribute="leading" secondItem="Uuw-ni-McR" secondAttribute="trailing" constant="-52" id="2Qq-WA-I67"/>
                                                 <constraint firstItem="ldS-zq-ey5" firstAttribute="leading" secondItem="7gG-fa-wts" secondAttribute="trailing" constant="105" id="6Tp-Nb-gzD"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="fRf-Lg-MMj" secondAttribute="bottom" constant="71" id="JF2-Pn-G24"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="fRf-Lg-MMj" secondAttribute="bottom" constant="37.5" id="JF2-Pn-G24"/>
                                                 <constraint firstItem="Uuw-ni-McR" firstAttribute="top" secondItem="Zfz-NU-X5V" secondAttribute="topMargin" constant="-8" id="aQ7-11-7cQ"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Uuw-ni-McR" secondAttribute="bottom" constant="-7.5" id="eNG-kd-Sts"/>
                                                 <constraint firstItem="Uuw-ni-McR" firstAttribute="leading" secondItem="Zfz-NU-X5V" secondAttribute="leadingMargin" constant="-8" id="eRz-TJ-eql"/>
@@ -206,7 +207,6 @@
                                                 <constraint firstItem="7gG-fa-wts" firstAttribute="top" secondItem="Zfz-NU-X5V" secondAttribute="topMargin" constant="18" id="tJT-ug-jg8"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="addToPlaylist" destination="ldS-zq-ey5" id="t01-S7-Qrc"/>
                                             <outlet property="businessAddressLabel" destination="fRf-Lg-MMj" id="AFw-Nn-ZRk"/>
@@ -379,8 +379,20 @@
                     <view key="view" contentMode="scaleToFill" id="Vbk-fn-lKr">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="restaurantImage - MCD" translatesAutoresizingMaskIntoConstraints="NO" id="aKq-tc-uxs">
+                                <rect key="frame" x="172" y="179" width="256" height="220"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aKq-tc-uxs" firstAttribute="centerY" secondItem="Vbk-fn-lKr" secondAttribute="centerY" id="FRB-ZK-a0J"/>
+                            <constraint firstItem="aKq-tc-uxs" firstAttribute="centerX" secondItem="Vbk-fn-lKr" secondAttribute="centerX" id="IgY-qg-MJ1"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="aKq-tc-uxs" id="cBs-RZ-emb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q5b-bM-qgz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -389,5 +401,6 @@
     </scenes>
     <resources>
         <image name="default_restaurant" width="640" height="426"/>
+        <image name="restaurantImage - MCD" width="1080" height="540"/>
     </resources>
 </document>

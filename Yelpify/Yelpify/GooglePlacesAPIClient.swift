@@ -49,7 +49,7 @@ class GooglePlacesAPIClient: NSObject {
             "key" : googleAPIKey,
             "query": name,
             "location" : location,
-            "radius" : "100" ]
+            "radius" : "50" ]
         
         Alamofire.request(.GET, buildURLString(parameters))
             .responseJSON { response in
@@ -63,30 +63,6 @@ class GooglePlacesAPIClient: NSObject {
                 }catch{}
             }
     }
-//    
-//    func searchPlaceWithName(nameString: String, completion: (result: NSDictionary) -> Void){
-//        var parameters = [
-//            "key" : googleAPIKey,
-//            "keyword": nameString,
-//            "location" : "33.64496794563093,-117.83725295740864",
-//            //"radius" : "50000", // DO NOT USE RADIUS IF RANKBY = DISTANCE
-//            "rankby": "distance"
-//            //"query" : "pizza"
-//        ]
-//
-//        Alamofire.request(.GET, buildURLString(parameters))
-//            .responseJSON { response in
-//                //                print(self.parameters)
-//                //                print(response.request)  // original URL request
-//                //                print(response.response) // URL response
-//                //                print(response.data)     // server data
-//                //                print(response.result)   // result of response serialization
-//                
-//                do { let data = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
-//                    completion(result: data!)
-//                }catch{}
-//        }
-//    }
     
     func getImageFromPhotoReference(photoReference: String, completion: (key: String) -> Void){
         
