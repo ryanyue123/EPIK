@@ -11,8 +11,8 @@ import Foundation
 struct debugPrint{
     static var RAW_GOOGLE_JSON = false
     static var RAW_JSON = false
-    static var BUSINESS_ARRAY = true
-    static var GRAND_BUSINESS_ARRAY = true
+    static var BUSINESS_ARRAY = false
+    static var GRAND_BUSINESS_ARRAY = false
 }
 
 class APIDataHandler {
@@ -41,11 +41,12 @@ class APIDataHandler {
         yelpClient.searchPlacesWithParameters(yelpParameters) { (result) -> Void in
             
             self.parseYelpJSON(result, completion: { (yelpBusinessArray) -> Void in
+                
                 self.matchYelpBusinessesWithGPlaces(yelpBusinessArray, completion: { (businessObjects) -> Void in
                     completion(businessObjectArray: businessObjects)
                     
                     if debugPrint.GRAND_BUSINESS_ARRAY == true{
-                        print("")
+                        print("GRAND BUSINESS ARRAY")
                         for business in businessObjects{
                             print(business.businessName)
                         }
@@ -60,20 +61,26 @@ class APIDataHandler {
         }
     }
     
-    private func parseYelpJSON(data: NSDictionary, completion: (yelpBusinessArray: [YelpBusiness]) -> Void){
+    func parseYelpJSON(data: NSDictionary, completion: (yelpBusinessArray: [YelpBusiness]) -> Void){
         
         if data.count > 0 {
             
             var arrayOfYelpBusinesses: [YelpBusiness] = []
             
             if let businesses = data["businesses"] as? NSArray {
+                
                 if businesses.count > 0{
                     for business in businesses {
                         // Handle Address
                         
                         let businessID = business["id"] as! String
                         let businessName = business["name"] as! String
-                        let businessImageURL = business["image_url"] as! String
+                        
+                        var businessImageURL = ""
+                        
+                        if let imageURL = business["image_url"] as? String{
+                            businessImageURL = imageURL
+                        }
                         
                         var businessAddress = ""
                         
@@ -81,9 +88,15 @@ class APIDataHandler {
                         var businessLatitude: Double!
                         
                         if let businessLocation = business["location"] as? NSDictionary{
-                            let displayAddress = businessLocation["address"] as? NSArray
-                            businessAddress = displayAddress![0] as! String
-                            
+                            if let addressArray = businessLocation["address"] as? NSArray{
+                                if addressArray.count > 0{
+                                    businessAddress = addressArray[0] as! String
+                                }else{
+                                    if let displayAdressArray = businessLocation["display_address"] as? NSArray{
+                                        businessAddress = displayAdressArray[0] as! String
+                                    }
+                                }
+                            }
                             if let businessCoordinate = businessLocation["coordinate"] as? NSDictionary{
                                 businessLatitude = businessCoordinate["latitude"] as! Double
                                 businessLongitude = businessCoordinate["longitude"] as! Double
@@ -108,12 +121,14 @@ class APIDataHandler {
                         
                 }else{
                     // Do this if no businesses show up
+                    
+                    completion(yelpBusinessArray: arrayOfYelpBusinesses)
                 }
             }
         }
     }
     
-    private func parseGPlacesJSON(data: NSDictionary, completion: (googlePlacesArray: [GooglePlace]) -> Void){
+    func parseGPlacesJSON(data: NSDictionary, completion: (googlePlacesArray: [GooglePlace]) -> Void){
         if data.count > 0 {
             var arrayOfGPlaces: [GooglePlace] = []
             
@@ -135,6 +150,9 @@ class APIDataHandler {
                         
                         arrayOfGPlaces.append(placeObject)
                     }
+                }else{
+                    // If there are no results
+                    completion(googlePlacesArray: arrayOfGPlaces)
                 }
                 
                 completion(googlePlacesArray: arrayOfGPlaces)
@@ -156,65 +174,39 @@ class APIDataHandler {
         
         var arrayOfBusinesses: [Business] = []
         
-        for (index, element) in yelpBusinessArray.enumerate(){
-            let business = element
+        // businessChecked makes sure that if there is a match, the for loop is broken out of
+        var businessAdded: [Bool] = []
+        
+        for business in yelpBusinessArray{
+            arrayOfBusinesses.append(convertYelpObjectToBusinessObject(business))
+            businessAdded.append(false)
+        }
+        
+        for (index, business) in yelpBusinessArray.enumerate(){
             
             let searchName = business.businessName
             let coordinates = [business.businessLatitude, business.businessLongitude]
             
+//            arrayOfBusinesses.append(self.convertYelpObjectToBusinessObject(business))
+//            
+//            if index == yelpBusinessArray.count - 1{
+//                completion(businessObjects: arrayOfBusinesses)
+//            }
+            
             gpClient.searchPlaceWithNameAndCoordinates(searchName, coordinates: coordinates, completion: { (JSONdata) -> Void in
                 self.parseGPlacesJSON(JSONdata, completion: { (googlePlacesArray) -> Void in
                     
-                    if googlePlacesArray.count > 0{
+                    self.iterateThroughGPlacesArray(business, googlePlacesArray: googlePlacesArray, completion: { (businessObject) -> Void in
+                        arrayOfBusinesses[index] = businessObject
+                        //arrayOfBusinesses.insert(businessObject, atIndex: index)
                         
-                        let place = googlePlacesArray[0]
+                        businessAdded[index] = true
                         
-                        if searchName.characters.count > 5{
-                            let charIndex = searchName.startIndex.advancedBy(5)
-                            let nameSubstring = searchName.substringToIndex(charIndex)
-                            
-                            if place.placeName.hasPrefix(nameSubstring){
-                                
-                                self.mergeYelpAndGoogleObjects(place, business: business, completion: { (businessObject) -> Void in
-                                    
-                                    arrayOfBusinesses.append(businessObject)
-                                    
-                                    if index == (yelpBusinessArray.count - 1){
-                                        completion(businessObjects: arrayOfBusinesses)
-                                    }
-                                })
-                                
-                            }
-                        }else{
-                            // ADD: If name is less than 5 characters, do this
-                            print("no match")
+                        // Returns once all businesses have been added
+                        if !businessAdded.contains(false){
+                            completion(businessObjects: arrayOfBusinesses)
                         }
-
-//                        for place in googlePlacesArray{
-//                            if searchName.characters.count > 5{
-//                                let index = searchName.startIndex.advancedBy(5)
-//                                let nameSubstring = searchName.substringToIndex(index)
-//                                
-//                                if place.placeName.hasPrefix(nameSubstring){
-//                                    
-//                                    self.mergeYelpAndGoogleObjects(place, business: business, completion: { (businessObject) -> Void in
-//                                        
-//                                        arrayOfBusinesses.append(businessObject)
-//                                        
-//                                    })
-//                                    
-//                                }
-//                            }else{
-//                                // ADD: If name is less than 5 characters, do this
-//                            }
-//                        }
-                        //completion(businessObjects: arrayOfBusinesses)
-                        
-                    } else{
-                        // ADD: If google search turns up empty, return empty values for GPlaces
-                        
-                        //completion(businessObjects: arrayOfBusinesses)
-                    }
+                    })
                 })
 
             })
@@ -223,11 +215,86 @@ class APIDataHandler {
     
     }
     
-    private func createBusinessObjectFromGoogleMatches(gPlaceArray: [GooglePlace], searchName: String, coordinates: NSArray){
-        
+    private func iterateThroughGPlacesArray(business: YelpBusiness, googlePlacesArray: [GooglePlace], completion:(businessObject: Business) -> Void){
+        if googlePlacesArray.count > 0{
+            
+            var placeAdded = false
+            
+            for place in googlePlacesArray{
+                
+                if placeAdded == false{
+                    self.checkIfNamesAreSimilar(business, place: place, completion: { (namesMatch) -> Void in
+                        
+                        if namesMatch == true{
+                            self.mergeYelpAndGoogleObjects(place, business: business, completion: { (businessObject) -> Void in
+                                
+                                completion(businessObject: businessObject)
+                                placeAdded = true
+                            })
+                            
+                        }else{
+                            let businessObject = self.convertYelpObjectToBusinessObject(business)
+                            completion(businessObject: businessObject)
+                            placeAdded = true
+                        }
+                    })
+                }else{
+                    break
+                }
+            
+            } // for loop closure
+            
+        }else{
+            // NO MATCH : There are no results by Google Places API
+            let businessObject = self.convertYelpObjectToBusinessObject(business)
+            completion(businessObject: businessObject)
+            //print("no results, empty place added")
+        }
     }
     
-    private func mergeYelpAndGoogleObjects(place: GooglePlace, business: YelpBusiness, completion: (businessObject: Business) -> Void){
+    private func checkIfNamesAreSimilar(business: YelpBusiness, place: GooglePlace, completion:(namesMatch:Bool) -> Void){
+        
+        let yelpBusinessName = business.businessName
+        
+        if yelpBusinessName.characters.count > 5{
+            let charIndex = yelpBusinessName.startIndex.advancedBy(5)
+            let nameSubstring = yelpBusinessName.substringToIndex(charIndex)
+            
+            if place.placeName.hasPrefix(nameSubstring){
+                
+                completion(namesMatch: true)
+                
+            }else{
+                // NO MATCH : The prefix is not matching
+                completion(namesMatch: false)
+            }
+            
+        }else{
+            // NO MATCH : The character count is less than 5
+            completion(namesMatch: false)
+        }
+
+    }
+    
+    private func convertYelpObjectToBusinessObject(business: YelpBusiness) -> Business{
+        
+        let yelpID = business.businessID
+        let yelpAddress = business.businessAddress
+        let yelpName = business.businessName
+        let yelpImageURL = business.businessImageURL
+        let yelpLat = business.businessLatitude
+        let yelpLong = business.businessLongitude
+        
+        let gPlaceID = ""
+        let gPlacePhotoRef = ""
+        
+        let businessObject = Business(name: yelpName, address: yelpAddress, imageURL: yelpImageURL, photoRef: gPlacePhotoRef, latitude: yelpLat, longitude: yelpLong, businessID: yelpID, placeID: gPlaceID)
+        
+        return businessObject
+
+    }
+    
+    private func mergeYelpAndGoogleObjects(place: GooglePlace, business: YelpBusiness, completion:(businessObject: Business)-> Void){
         
         let yelpID = business.businessID
         let yelpAddress = business.businessAddress
