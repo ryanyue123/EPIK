@@ -8,18 +8,21 @@
 
 import UIKit
 
-class BusinessDetailViewController: UIViewController {
+class BusinessDetailViewController: UITableViewController {
 
     var object: Business!
-    
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     
+    @IBAction func showBusinessList(sender: UIBarButtonItem) {
+        navigationController?.popViewControllerAnimated(true)
+
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Details"
         nameLabel.text = object.businessName
-        addressLabel.text = object.businessAddress
         // Do any additional setup after loading the view.
     }
 
@@ -28,6 +31,9 @@ class BusinessDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func addItemToPlaylist(sender: UIBarButtonItem) {
+        
+    }
 
     /*
     // MARK: - Navigation
@@ -38,5 +44,4 @@ class BusinessDetailViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }

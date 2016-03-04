@@ -11,8 +11,8 @@ import Foundation
 struct debugPrint{
     static var RAW_GOOGLE_JSON = false
     static var RAW_JSON = false
-    static var BUSINESS_ARRAY = false
-    static var GRAND_BUSINESS_ARRAY = false
+    static var BUSINESS_ARRAY = true
+    static var GRAND_BUSINESS_ARRAY = true
 }
 
 class APIDataHandler {
@@ -45,6 +45,7 @@ class APIDataHandler {
                     completion(businessObjectArray: businessObjects)
                     
                     if debugPrint.GRAND_BUSINESS_ARRAY == true{
+                        print("")
                         for business in businessObjects{
                             print(business.businessName)
                         }
@@ -100,7 +101,6 @@ class APIDataHandler {
                         print("Yelp Businesses")
                         for business in arrayOfYelpBusinesses{
                             print(business.businessName)
-                            print("\n")
                         }
                     }
                     

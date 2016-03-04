@@ -33,21 +33,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     // MARK: - OUTLETS
     @IBOutlet weak var locationTextField: UITextField!
     
-    func textFieldDidEndEditing(textField: UITextField) {
-        locationTextField.resignFirstResponder()
-        let query = locationTextField.text
-        //let queryArr = query!.characters.split{$0 == " "}.map(String.init)
-        yelpSearchParameters["term"] = query as String!
-        
-        self.businessObjects.removeAll()
-        self.tableView.reloadData()
-        
-        dataHandler.performAPISearch(yelpSearchParameters) { (businessObjectArray) -> Void in
-            self.businessObjects = businessObjectArray
-            self.tableView.reloadData()
-        }
-
-    }
+    
     // MARK: - DATA TASKS
     func getCurrentLocation(){
         locationManager.delegate = self
@@ -84,14 +70,15 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     // MARK: - TABLEVIEW VARIABLES
     var businesses: [NSDictionary] = []
     var businessObjects: [Business] = []
-    
+    var businessShown: [Bool] = []
+
+    // Parse variables
     var index: NSIndexPath!
     var object: PFObject!
     var playlistObject:PFObject!
-    var playlistArray = [String]()
+    var playlistArray = [NSDictionary]()
     var geopoint:PFGeoPoint!
-    var businessShown: [Bool] = []
-
+    
 
     // MARK: - TABLEVIEW FUNCTIONS
 
@@ -109,7 +96,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-        //cell.tag = indexPath.row
+        cell.tag = indexPath.row
         
         let business = self.businessObjects[indexPath.row]
         cell.configureCellWith(business)
@@ -140,22 +127,25 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         print("pressed")
         let index = button.tag
         let object = businessObjects[index]
+        print(object.businessName)
+        print(object.businessAddress)
         if (geopoint == nil)
         {
-            geopoint = PFGeoPoint(latitude: object.businessLatitude, longitude: object.businessLongitude)
+            //geopoint = PFGeoPoint(latitude: 0, longitude: 0)
         }
-        playlistArray.append(object.businessName)
+        let arraydict = ["name": object.businessName, "address": object.businessAddress, "yelp-id": object.yelpID]
+        playlistArray.append(arraydict)
     }
         
     @IBAction func finishedAddingToPlaylist(sender: UIBarButtonItem) {
         playlistObject = PFObject(className: "Playlists")
         playlistObject["playlist"] = playlistArray
         playlistObject["createdBy"] = PFUser.currentUser()?.username
-        playlistObject["location"] = geopoint
+        //playlistObject["location"] = geopoint
         playlistObject.saveEventually {(success, error) -> Void in
             if (error == nil)
             {
-                
+
             }
             else
             {
@@ -178,14 +168,10 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             for _ in businessObjectArray{
                 self.businessShown.append(false)
             }
-            
-            for business in self.businessObjects{
-                print(business.businessName)
-            }
             self.tableView.reloadData()
         }
-        geopoint = nil
-        playlistArray.removeAll()
+//        geopoint = nil
+//        playlistArray.removeAll()
     }
     
     override func didReceiveMemoryWarning() {
@@ -203,7 +189,21 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         return true
         // Will allow user to press "return" button to close keyboard
     }
-
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        let query = locationTextField.text
+        //let queryArr = query!.characters.split{$0 == " "}.map(String.init)
+        yelpSearchParameters["term"] = query as String!
+        
+        self.businessObjects.removeAll()
+        self.tableView.reloadData()
+        
+        dataHandler.performAPISearch(yelpSearchParameters) { (businessObjectArray) -> Void in
+            self.businessObjects = businessObjectArray
+            self.tableView.reloadData()
+        }
+        
+    }
     /*
     // MARK: - Navigation
 
