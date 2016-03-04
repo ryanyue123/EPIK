@@ -14,9 +14,6 @@ public class OAuth2Swift: OAuthSwift {
     // set value to true (default: false)
     public var accessTokenBasicAuthentification = false
 
-    // Set to true to deactivate state check. Be careful of CSRF
-    public var allowMissingStateCheck: Bool = false
-
     var consumer_key: String
     var consumer_secret: String
     var authorize_url: String
@@ -71,22 +68,10 @@ public class OAuth2Swift: OAuthSwift {
                 responseParameters += fragment.parametersFromQueryString()
             }
             if let accessToken = responseParameters["access_token"] {
-                self.client.credential.oauth_token = accessToken.safeStringByRemovingPercentEncoding
+                self.client.credential.oauth_token = accessToken
                 success(credential: self.client.credential, response: nil, parameters: responseParameters)
             }
             else if let code = responseParameters["code"] {
-                if !self.allowMissingStateCheck {
-                    guard let responseState = responseParameters["state"] else {
-                        let errorInfo = [NSLocalizedDescriptionKey: "Missing state"]
-                        failure(error: NSError(domain: OAuthSwiftErrorDomain, code: -1, userInfo: errorInfo))
-                        return
-                    }
-                    if responseState != state {
-                        let errorInfo = [NSLocalizedDescriptionKey: "state not equals"]
-                        failure(error: NSError(domain: OAuthSwiftErrorDomain, code: -1, userInfo: errorInfo))
-                        return
-                    }
-                }
                 self.postOAuthAccessTokenWithRequestTokenByCode(code.safeStringByRemovingPercentEncoding,
                     callbackURL:callbackURL, success: success, failure: failure)
             }
@@ -99,30 +84,25 @@ public class OAuth2Swift: OAuthSwift {
                 failure(error: NSError(domain: OAuthSwiftErrorDomain, code: -1, userInfo: errorInfo))
             }
         }
+        //let authorizeURL = NSURL(string: )
+        var urlString = String()
+        urlString += self.authorize_url
+        urlString += (self.authorize_url.has("?") ? "&" : "?") + "client_id=\(self.consumer_key)"
+        urlString += "&redirect_uri=\(callbackURL.absoluteString)"
+        urlString += "&response_type=\(self.response_type)"
+        if (scope != "") {
+          urlString += "&scope=\(scope)"
+        }
+        if (state != "") {
+            urlString += "&state=\(state)"
+        }
 
-        
-        var queryString = "client_id=\(self.consumer_key)"
-        queryString += "&redirect_uri=\(callbackURL.absoluteString)"
-        queryString += "&response_type=\(self.response_type)"
-        if !scope.isEmpty {
-            queryString += "&scope=\(scope)"
-        }
-        if !state.isEmpty {
-            queryString += "&state=\(state)"
-        }
         for param in params {
-            queryString += "&\(param.0)=\(param.1)"
+            urlString += "&\(param.0)=\(param.1)"
         }
-        
-        var urlString = self.authorize_url
-        urlString += (self.authorize_url.has("?") ? "&" : "?")
-        
-        if let encodedQuery = queryString.urlQueryEncoded, queryURL = NSURL(string: urlString + encodedQuery) {
-            self.authorize_url_handler.handle(queryURL)
-        }
-        else {
-            let errorInfo = [NSLocalizedFailureReasonErrorKey: NSLocalizedString("Failed to create URL", comment: "\(urlString) or \(queryString) not convertible to URL, please check encoding")]
-            failure(error: NSError(domain: OAuthSwiftErrorDomain, code: -1, userInfo: errorInfo))
+
+        if let queryURL = NSURL(string: urlString) {
+           self.authorize_url_handler.handle(queryURL)
         }
     }
     
@@ -154,7 +134,7 @@ public class OAuth2Swift: OAuthSwift {
                 }
                 return
             }
-            self.client.credential.oauth_token = accessToken.safeStringByRemovingPercentEncoding
+            self.client.credential.oauth_token = accessToken
             success(credential: self.client.credential, response: response, parameters: responseParameters)
         }
 
@@ -170,13 +150,7 @@ public class OAuth2Swift: OAuthSwift {
                     headers = ["Authorization": "Basic \(base64Encoded)"]
                 }
             }
-            if let access_token_url = access_token_url {
-                self.client.request(access_token_url, method: .POST, parameters: parameters, headers: headers, success: successHandler, failure: failure)
-            }
-            else {
-                let errorInfo = [NSLocalizedFailureReasonErrorKey: NSLocalizedString("access token url not defined", comment: "access token url not defined with code type auth")]
-                failure?(error: NSError(domain: OAuthSwiftErrorDomain, code: -1, userInfo: errorInfo))
-            }
+            self.client.request(self.access_token_url!, method: .POST, parameters: parameters, headers: headers, success: successHandler, failure: failure)
         }
     }
     

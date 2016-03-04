@@ -33,7 +33,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     // MARK: - OUTLETS
     @IBOutlet weak var locationTextField: UITextField!
     
-    @IBAction func didFinishEditingLocation(sender: AnyObject) {
+    func textFieldDidEndEditing(textField: UITextField) {
         locationTextField.resignFirstResponder()
         let query = locationTextField.text
         //let queryArr = query!.characters.split{$0 == " "}.map(String.init)
@@ -48,7 +48,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         }
 
     }
-    
     // MARK: - DATA TASKS
     func getCurrentLocation(){
         locationManager.delegate = self

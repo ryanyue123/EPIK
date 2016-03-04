@@ -39,27 +39,18 @@ public class OAuthSwift: NSObject {
     public class func handleOpenURL(url: NSURL) {
         let notification = NSNotification(name: CallbackNotification.notificationName, object: nil,
             userInfo: [CallbackNotification.optionsURLKey: url])
-        notificationCenter.postNotification(notification)
+        NSNotificationCenter.defaultCenter().postNotification(notification)
     }
-
+    
     var observer: AnyObject?
-    class var notificationCenter: NSNotificationCenter {
-        return NSNotificationCenter.defaultCenter()
-    }
 
     func observeCallback(block: (url: NSURL) -> Void) {
-        self.observer = OAuthSwift.notificationCenter.addObserverForName(CallbackNotification.notificationName, object: nil, queue: NSOperationQueue.mainQueue()){
+        self.observer = NSNotificationCenter.defaultCenter().addObserverForName(CallbackNotification.notificationName, object: nil, queue: NSOperationQueue.mainQueue()){
             notification in
-            self.removeCallbackNotificationObserver()
+            NSNotificationCenter.defaultCenter().removeObserver(self.observer!)
 
             let urlFromUserInfo = notification.userInfo![CallbackNotification.optionsURLKey] as! NSURL
             block(url: urlFromUserInfo)
-        }
-    }
-
-    public func removeCallbackNotificationObserver() {
-      	if let observer = self.observer {
-            OAuthSwift.notificationCenter.removeObserver(observer)
         }
     }
 
