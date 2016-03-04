@@ -8,6 +8,7 @@
 
 import Foundation
 import OAuthSwift
+import Haneke
 
 struct YelpAPIConsole {
     let consumerKey = "RZKQlWV3nqdB-74fZZRQeg"
@@ -17,6 +18,8 @@ struct YelpAPIConsole {
 }
 
 class YelpAPIClient: NSObject {
+    
+    let cache = Shared.imageCache
     
     let APIBaseUrl = "https://api.yelp.com/v2/"
     let clientOAuth: OAuthSwiftClient?
@@ -67,48 +70,6 @@ class YelpAPIClient: NSObject {
         let searchUrl = APIBaseUrl + "search/"
         clientOAuth!.get(searchUrl, parameters: searchParameters, success: successSearch, failure: failureSearch)
     }
-    
-    
-//    func createBusinessArray(data: NSData?) -> Array<Business>{
-//        
-//        var businessArray = [Business]()
-//        
-//        if let data = data{
-//            //print(NSString(data: data, encoding: NSUTF8StringEncoding))
-//            
-//            // EXTRACT JSON DATA
-//            do{ let jsonResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
-//                if jsonResult.count > 0 {
-//                    if let businesses = jsonResult["businesses"] as? NSArray {
-//                        if businesses.count > 0{
-//                            for business in businesses {
-//                                print(business["name"] as! String)
-//                                
-//                                // Handle Address
-//                                var businessAddress = ""
-//                                if let businessLocation = business["location"] as? NSDictionary{
-//                                    businessAddress = businessLocation["address"]![0] as! String
-//                                }
-//                            
-//                                // Handle Name
-//                                let businessName = business["name"] as! String
-//                                
-//                                // Handle ImageURL
-//                                let businessImageURL = business["image_url"] as! String
-//                                
-//                                businessArray.append(Business(name: businessName, address: businessAddress, imageURL: businessImageURL, photoRef: ""))
-//                                
-//                            }
-//                            return businessArray
-//                        }
-//                        
-//                    }
-//                }
-//                //print(jsonResult)
-//            } catch {}
-//        }
-//        return businessArray
-//    }
     
 
     /*
@@ -172,5 +133,18 @@ class YelpAPIClient: NSObject {
         parameters!["phone"] = phoneNumber
         
         clientOAuth!.get(phoneSearchUrl, parameters: parameters!, success: successSearch, failure: failureSearch)
+    }
+    
+    func getImageFromURL(urlString: String, setKeyAs: String, completion:(key:String) -> Void){
+        let URL = NSURL(string: urlString)!
+        
+        let fetcher = NetworkFetcher<UIImage>(URL: URL)
+        cache.fetch(fetcher: fetcher).onSuccess { image in
+            
+            self.cache.set(value: image, key: setKeyAs)
+            
+            completion(key: setKeyAs)
+        }
+        
     }
 }
