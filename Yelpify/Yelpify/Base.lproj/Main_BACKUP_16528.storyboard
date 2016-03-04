@@ -193,7 +193,12 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
+<<<<<<< HEAD
+                                                <constraint firstItem="ldS-zq-ey5" firstAttribute="centerY" secondItem="Uuw-ni-McR" secondAttribute="centerY" id="1Cu-XO-Hnp"/>
+                                                <constraint firstItem="ldS-zq-ey5" firstAttribute="leading" secondItem="Uuw-ni-McR" secondAttribute="trailing" constant="-52" id="2Qq-WA-I67"/>
+=======
                                                 <constraint firstItem="ldS-zq-ey5" firstAttribute="centerY" secondItem="Uuw-ni-McR" secondAttribute="centerY" constant="-16.5" id="1Cu-XO-Hnp"/>
+>>>>>>> 3bd1ff5b5a7608a75ac36283bd76cce7d182ba03
                                                 <constraint firstItem="ldS-zq-ey5" firstAttribute="leading" secondItem="7gG-fa-wts" secondAttribute="trailing" constant="105" id="6Tp-Nb-gzD"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="fRf-Lg-MMj" secondAttribute="bottom" constant="71" id="JF2-Pn-G24"/>
                                                 <constraint firstItem="Uuw-ni-McR" firstAttribute="top" secondItem="Zfz-NU-X5V" secondAttribute="topMargin" constant="-8" id="aQ7-11-7cQ"/>
@@ -264,26 +269,6 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="152" sectionHeaderHeight="28" sectionFooterHeight="28" id="5BC-hU-gkU">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mYC-Xs-hDp">
-                                <rect key="frame" x="279" y="143" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3pe-ia-826">
-                                <rect key="frame" x="279" y="218" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eOZ-0R-kPR">
-                                <rect key="frame" x="279" y="72" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
                             <tableViewSection headerTitle="" id="y1K-sq-e9E">
