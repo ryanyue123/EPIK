@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import GoogleMaps
 
 class PerformSearchViewController: UIViewController, UITextFieldDelegate {
     

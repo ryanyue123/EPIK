@@ -12,17 +12,13 @@ class BusinessDetailViewController: UITableViewController {
 
     var object: Business!
     
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var addressLabel: UILabel!
-    
     @IBAction func showBusinessList(sender: UIBarButtonItem) {
         navigationController?.popViewControllerAnimated(true)
-
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Details"
-        nameLabel.text = object.businessName
+        //nameLabel.text = object.businessName
         // Do any additional setup after loading the view.
     }
 
