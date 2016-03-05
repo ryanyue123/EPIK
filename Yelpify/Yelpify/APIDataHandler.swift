@@ -208,8 +208,8 @@ class APIDataHandler {
         
         for (index, business) in yelpBusinessArray.enumerate(){
             
-            let searchName = business.businessName
-            let coordinates = [business.businessLatitude, business.businessLongitude]
+            let searchName = business.businessName!
+            let coordinates = [business.businessLatitude!, business.businessLongitude!]
             
             //            arrayOfBusinesses.append(self.convertYelpObjectToBusinessObject(business))
             //
@@ -278,13 +278,13 @@ class APIDataHandler {
     
     private func checkIfNamesAreSimilar(business: YelpBusiness, place: GooglePlace, completion:(namesMatch:Bool) -> Void){
         
-        let yelpBusinessName = business.businessName
+        let yelpBusinessName = business.businessName!
         
         if yelpBusinessName.characters.count > 5{
             let charIndex = yelpBusinessName.startIndex.advancedBy(5)
             let nameSubstring = yelpBusinessName.substringToIndex(charIndex)
             
-            if place.placeName.hasPrefix(nameSubstring){
+            if place.placeName!.hasPrefix(nameSubstring){
                 
                 completion(namesMatch: true)
                 

@@ -10,7 +10,7 @@ import UIKit
 import Parse
 import ParseUI
 
-class PlaylistViewController: UICollectionViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate {
+class PlaylistViewController: UICollectionViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
 
     var locationManager = CLLocationManager()
     let client = YelpAPIClient()
@@ -18,7 +18,27 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
     var playlists = []
     var userlatitude: Double!
     var userlongitude: Double!
+    var inputTextField: UITextField!
     
+    @IBAction func showPlaylistAlert(sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: "Create new playlist", message: "Enter the name of your new playlsit", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alertController.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
+            textField.placeholder = "Playlist Name"
+            textField.secureTextEntry = false
+            self.inputTextField = textField
+        })
+        let deleteAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Destructive, handler: {(alert :UIAlertAction!) in
+            print("Delete button tapped")
+        })
+        alertController.addAction(deleteAction)
+        let okAction = UIAlertAction(title: "Enter", style: UIAlertActionStyle.Default, handler: {(alert :UIAlertAction!) in
+            self.performSegueWithIdentifier("showList", sender: self)
+        })
+        alertController.addAction(okAction)
+        presentViewController(alertController, animated: true, completion: nil)
+        
+    }
     
     func fetchAllObjectsFromDataStore()
     {
@@ -31,7 +51,7 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
             {
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlists = objects! as NSArray
-                    print(self.playlists)
+                    //print(self.playlists)
                 })
             }
             else

@@ -100,6 +100,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var playlistObject:PFObject!
     var playlistArray = [NSDictionary]()
     var geopoint:PFGeoPoint!
+    var playlistname: String!
 
     // MARK: - TABLEVIEW FUNCTIONS
 
@@ -141,17 +142,17 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         self.performSegueWithIdentifier("showBusinessDetail", sender: self)
     }
 //    
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
-//        
-//        if (segue.identifier == "showBusinessDetail")
-//        {
-//            let indexPath = tableView.indexPathForSelectedRow
-//            let object = businessObjects[indexPath!.row]
-//            upcoming.object = object
-//            self.tableView.deselectRowAtIndexPath(indexPath!, animated: true)
-//        }
-//    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
+        
+        if (segue.identifier == "showBusinessDetail")
+        {
+            let indexPath = tableView.indexPathForSelectedRow
+            let object = businessObjects[indexPath!.row]
+            upcoming.object = object
+            self.tableView.deselectRowAtIndexPath(indexPath!, animated: true)
+        }
+    }
     
     func addTrackToPlaylist(button: UIButton)
     {
@@ -162,17 +163,20 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         print(object.businessAddress)
         if (geopoint == nil)
         {
-            //geopoint = PFGeoPoint(latitude: 0, longitude: 0)
+            geopoint = PFGeoPoint(latitude: object.businessLatitude!, longitude: object.businessLongitude!)
         }
-        let arraydict = ["name": object.businessName, "address": object.businessAddress, "yelp-id": object.yelpID]
+        let arraydict = ["name": object.businessName!, "address": object.businessAddress!, "yelp-id": object.yelpID!]
         playlistArray.append(arraydict)
     }
         
     @IBAction func finishedAddingToPlaylist(sender: UIBarButtonItem) {
+        
+        let username = PFUser.currentUser()?.username!
+        
         playlistObject = PFObject(className: "Playlists")
+        playlistObject["createdbyuser"] = username! as String
         playlistObject["playlist"] = playlistArray
-        playlistObject["createdBy"] = PFUser.currentUser()?.username
-        //playlistObject["location"] = geopoint
+        playlistObject["location"] = geopoint
         playlistObject.saveEventually {(success, error) -> Void in
             if (error == nil)
             {
@@ -184,12 +188,13 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             }
         }
     }
-
+    override func viewDidAppear(animated: Bool) {
+        
+    }
     
     // MARK: - VIEWDIDLOAD
     
     override func viewDidLoad(){
-        
         locationTextField.delegate = self
         //getCurrentLocation()
         

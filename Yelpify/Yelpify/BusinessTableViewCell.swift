@@ -34,10 +34,10 @@ class BusinessTableViewCell: UITableViewCell {
         // If Business Object contains photo reference
         if photoReference != ""{
             
-            googlePlacesClient.getImageFromPhotoReference(photoReference) { (key) -> Void in
+            googlePlacesClient.getImageFromPhotoReference(photoReference!) { (key) -> Void in
                 
                 self.cache.fetch(key: key).onSuccess { image in
-                    self.businessBackgroundImage.hnk_setImage(image, key: photoReference)
+                    self.businessBackgroundImage.hnk_setImage(image, key: photoReference!)
                     self.businessBackgroundImage.setNeedsDisplay()
                     self.businessBackgroundImage.setNeedsLayout()
                     
@@ -53,8 +53,8 @@ class BusinessTableViewCell: UITableViewCell {
         }else{
             // If Business Object Doesn't contain photo reference
             
-            let imageURL = business.businessImageURL
-            let businessID = business.yelpID
+            let imageURL = business.businessImageURL!
+            let businessID = business.yelpID!
             
             if imageURL != ""{
                 yelpBusinessClient.getImageFromURL(imageURL, setKeyAs: businessID, completion: { (key) -> Void in
