@@ -11,7 +11,7 @@ import CoreLocation
 import Parse
 import Haneke
 
-class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - GLOBAL VARIABLES
     var yelpClient = YelpAPIClient()
@@ -33,6 +33,16 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var locuSearchParameters = []
     
     // MARK: - OUTLETS
+    
+    @IBAction func searchWithGPlaces(sender: AnyObject) {
+    }
+    
+    
+    @IBAction func unwindToSearchBusinessVC(segue: UIStoryboardSegue) {
+        
+    }
+    
+    @IBOutlet weak var navBarTitleLabel: UINavigationItem!
     @IBOutlet weak var locationTextField: UITextField!
     
     @IBAction func didFinishEditingLocation(sender: AnyObject) {
@@ -164,7 +174,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         {
             //geopoint = PFGeoPoint(latitude: 0, longitude: 0)
         }
-        let arraydict = ["name": object.businessName, "address": object.businessAddress, "yelp-id": object.yelpID]
+        let arraydict = ["name": object.businessName!, "address": object.businessAddress!, "yelp-id": object.yelpID!]
         playlistArray.append(arraydict)
     }
         
@@ -184,13 +194,38 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             }
         }
     }
-
+    
+    override func didMoveToParentViewController(parent: UIViewController?) {
+        super.didMoveToParentViewController(parent)
+        
+        if parent != nil && self.navigationItem.titleView == nil {
+            initNavigationItemTitleView()
+        }
+    }
+    
+    private func initNavigationItemTitleView() {
+        let titleView = UILabel()
+        titleView.text = "Hello World"
+        titleView.font = UIFont(name: "HelveticaNeue-Medium", size: 17)
+        let width = titleView.sizeThatFits(CGSizeMake(CGFloat.max, CGFloat.max)).width
+        titleView.frame = CGRect(origin:CGPointZero, size:CGSizeMake(width, 44))
+        self.navigationItem.titleView = titleView
+        
+        let recognizer = UITapGestureRecognizer(target: self, action: "titleWasTapped")
+        titleView.userInteractionEnabled = true
+        titleView.addGestureRecognizer(recognizer)
+    }
+    
+    func titleWasTapped(){
+        performSegueWithIdentifier("presentSearchVC", sender: nil)
+    }
     
     // MARK: - VIEWDIDLOAD
     
     override func viewDidLoad(){
+        initNavigationItemTitleView()
         
-        locationTextField.delegate = self
+        //locationTextField.delegate = self
         //getCurrentLocation()
         
         // Performs an API search and returns a master array of businesses (as dictionaries)
@@ -246,4 +281,3 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     */
 
 }
-

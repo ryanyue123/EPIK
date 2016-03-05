@@ -33,8 +33,8 @@ class TestTableViewController: UITableViewController {
             self.dataHandler.parseYelpJSON(result, completion: { (yelpBusinessArray) -> Void in
                 for business in yelpBusinessArray{
                     
-                    searchName = business.businessName
-                    searchCoordinate = [business.businessLatitude, business.businessLongitude]
+                    searchName = business.businessName!
+                    searchCoordinate = [business.businessLatitude!, business.businessLongitude!]
                     
                     print(business.businessName)
                     print(business.businessAddress)

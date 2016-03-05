@@ -29,7 +29,7 @@ class BusinessTableViewCell: UITableViewCell {
         
         self.businessBackgroundImage.image = UIImage(named:"default_restaurant")
         
-        let photoReference = business.businessPhotoReference
+        let photoReference = business.businessPhotoReference!
         
         // If Business Object contains photo reference
         if photoReference != ""{
@@ -53,8 +53,8 @@ class BusinessTableViewCell: UITableViewCell {
         }else{
             // If Business Object Doesn't contain photo reference
             
-            let imageURL = business.businessImageURL
-            let businessID = business.yelpID
+            let imageURL = business.businessImageURL!
+            let businessID = business.yelpID!
             
             if imageURL != ""{
                 yelpBusinessClient.getImageFromURL(imageURL, setKeyAs: businessID, completion: { (key) -> Void in
