@@ -37,7 +37,7 @@ class APIDataHandler {
     */
     
     func performAPISearch(yelpParameters: Dictionary<String, String>, completion:(businessObjectArray: [Business]) -> Void) {
-
+        
         yelpClient.searchPlacesWithParameters(yelpParameters) { (result) -> Void in
             
             self.parseYelpJSON(result, completion: { (yelpBusinessArray) -> Void in
@@ -57,7 +57,7 @@ class APIDataHandler {
             if debugPrint.RAW_JSON == true{
                 print("YELP JSON:\n", result)
             }
-        
+            
         }
     }
     
@@ -98,34 +98,37 @@ class APIDataHandler {
                                 }
                             }
                             if let businessCoordinate = businessLocation["coordinate"] as? NSDictionary{
-                                businessLatitude = businessCoordinate["latitude"] as! Double
-                                businessLongitude = businessCoordinate["longitude"] as! Double
+                                businessLatitude = businessCoordinate["latitude"] as? Double
+                                businessLongitude = businessCoordinate["longitude"] as? Double
                             }
-            
+                            
                         }
                         
-                        let businessPhone = business["phone"] as! String
                         var businessZip = ""
                         var businessCity = ""
                         if let businessLocation = business["location"] as? NSDictionary{
-                            businessZip = business["postal_code"] as! String
-                            businessCity = businiess["city"] as! String
+                            businessZip = businessLocation["postal_code"] as! String
+                            businessCity = businessLocation["city"] as! String
                         }
-                        let businessDistance = business["distance"] as! String
+                        
+                        let businessPhone = business["phone"] as? String
+                        let businessDistance = business["distance"] as! Double
                         let businessCategory = business["categories"] as? NSArray
                         let businessRating = business["rating"] as! Double
-                        var businessStatus: Bool!
                         
-                        if let businessAvail = String(business["is_claimed"]){
-                            if businessAvail == String(1){
+                        
+                        var businessStatus: Bool? = true
+                        
+                        if let businessAvail = business["is_closed"] as? Int{
+                            if businessAvail == 0{
                                 businessStatus = true
                             }else{
                                 businessStatus = false
                             }
                         }
-
-                
-                        let yelpBusinessObject = YelpBusiness(id: businessID, name: businessName, address: businessAddress, city: businessCity, zip: businessZip, phone: businessPhone, imageURL: businessImageURL, latitude: businessLatitude, longitude: businessLongitude, distance: businessDistance, rating: businessRating, categories: businessCategory, status: businessStatus)
+                        
+                        
+                        let yelpBusinessObject = YelpBusiness(id: businessID, name: businessName, address: businessAddress, city: businessCity, zip: businessZip, phone: businessPhone, imageURL: businessImageURL, latitude: businessLatitude, longitude: businessLongitude, distance: businessDistance, rating: businessRating, categories: businessCategory!, status: businessStatus!)
                         
                         arrayOfYelpBusinesses.append(yelpBusinessObject)
                     }
@@ -139,7 +142,7 @@ class APIDataHandler {
                     }
                     
                     completion(yelpBusinessArray: arrayOfYelpBusinesses)
-                        
+                    
                 }else{
                     // Do this if no businesses show up
                     
@@ -178,9 +181,9 @@ class APIDataHandler {
                 
                 completion(googlePlacesArray: arrayOfGPlaces)
                 
-//                if debugPrint.BUSINESS_ARRAY == true{
-//                    print(arrayOfGPlaces)
-//                }
+                //                if debugPrint.BUSINESS_ARRAY == true{
+                //                    print(arrayOfGPlaces)
+                //                }
                 
             }else{
                 // Do this if no places found in data
@@ -208,11 +211,11 @@ class APIDataHandler {
             let searchName = business.businessName
             let coordinates = [business.businessLatitude, business.businessLongitude]
             
-//            arrayOfBusinesses.append(self.convertYelpObjectToBusinessObject(business))
-//            
-//            if index == yelpBusinessArray.count - 1{
-//                completion(businessObjects: arrayOfBusinesses)
-//            }
+            //            arrayOfBusinesses.append(self.convertYelpObjectToBusinessObject(business))
+            //
+            //            if index == yelpBusinessArray.count - 1{
+            //                completion(businessObjects: arrayOfBusinesses)
+            //            }
             
             gpClient.searchPlaceWithNameAndCoordinates(searchName, coordinates: coordinates, completion: { (JSONdata) -> Void in
                 self.parseGPlacesJSON(JSONdata, completion: { (googlePlacesArray) -> Void in
@@ -229,11 +232,11 @@ class APIDataHandler {
                         }
                     })
                 })
-
+                
             })
             
         }
-    
+        
     }
     
     private func iterateThroughGPlacesArray(business: YelpBusiness, googlePlacesArray: [GooglePlace], completion:(businessObject: Business) -> Void){
@@ -262,7 +265,7 @@ class APIDataHandler {
                 }else{
                     break
                 }
-            
+                
             } // for loop closure
             
         }else{
@@ -294,7 +297,7 @@ class APIDataHandler {
             // NO MATCH : The character count is less than 5
             completion(namesMatch: false)
         }
-
+        
     }
     
     private func convertYelpObjectToBusinessObject(business: YelpBusiness) -> Business{
@@ -309,28 +312,10 @@ class APIDataHandler {
         let gPlaceID = ""
         let gPlacePhotoRef = ""
         
-        let businessObject = Business(name: yelpName, address: yelpAddress, imageURL: yelpImageURL, photoRef: gPlacePhotoRef, latitude: yelpLat, longitude: yelpLong, businessID: yelpID, placeID: gPlaceID)
+        let businessObject = Business(name: yelpName, address: yelpAddress, city: "", zip: "", phone: "", imageURL: yelpImageURL, photoRef: gPlacePhotoRef, latitude: yelpLat, longitude: yelpLong, distance: 0, rating: 0, categories: [], status: true, businessID: yelpID, placeID: gPlaceID)
         
         return businessObject
-
-    }
-    
-    private func mergeYelpAndGoogleObjects(place: GooglePlace, business: YelpBusiness, completion:(businessObject: Business)-> Void){
         
-        let yelpID = business.businessID
-        let yelpAddress = business.businessAddress
-        let yelpName = business.businessName
-        let yelpImageURL = business.businessImageURL
-        let yelpLat = business.businessLatitude
-        let yelpLong = business.businessLongitude
-        
-        let gPlaceID = ""
-        let gPlacePhotoRef = ""
-        
-        let businessObject = Business(name: yelpName, address: yelpAddress, imageURL: yelpImageURL, photoRef: gPlacePhotoRef, latitude: yelpLat, longitude: yelpLong, businessID: yelpID, placeID: gPlaceID)
-        
-        return businessObject
-
     }
     
     private func mergeYelpAndGoogleObjects(place: GooglePlace, business: YelpBusiness, completion:(businessObject: Business)-> Void){
@@ -343,10 +328,12 @@ class APIDataHandler {
         let yelpLong = business.businessLongitude
         let yelpDist = business.businessDistance
         let yelpZip = business.businessZip
+        let yelpPhone = business.businessPhone
         let yelpCity = business.businessCity
         let yelpCategor = business.businessCategories
         let yelpStatus = business.businessStatus
         let yelpRating = business.businessRating
+        
         let gPlaceID = place.placeID
         let gPlacePhotoRef = place.placePhotoReference
         
@@ -389,7 +376,7 @@ class APIDataHandler {
             }else{
                 return -1
             }
-
+            
         }
     }
     

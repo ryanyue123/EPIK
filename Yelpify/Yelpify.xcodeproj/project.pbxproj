@@ -15,7 +15,6 @@
 		3CE2EE891C6C5EC8000C9088 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CE2EE871C6C5EC8000C9088 /* LaunchScreen.storyboard */; };
 		3CE2EE941C6C5EC8000C9088 /* YelpifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE2EE931C6C5EC8000C9088 /* YelpifyTests.swift */; };
 		3CE2EE9F1C6C5EC8000C9088 /* YelpifyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE2EE9E1C6C5EC8000C9088 /* YelpifyUITests.swift */; };
-		3CF3B1311C7D15E000029000 /* BusinessDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF3B1301C7D15E000029000 /* BusinessDetailViewController.swift */; };
 		3CF480BC1C80011100698857 /* SinglePlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF480BB1C80011100698857 /* SinglePlaylistViewController.swift */; };
 		523E599553F6100C5348857C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68ACAEFF88A59BB74B411CE0 /* Pods.framework */; };
 		906CAA311C8977B700AF3515 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906CAA301C8977B700AF3515 /* TestViewController.swift */; };
@@ -24,6 +23,7 @@
 		907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907E0CEA1C7828E100872135 /* APIDataHandler.swift */; };
 		908481801C7504AF009B6099 /* BusinessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */; };
 		908481841C750816009B6099 /* BusinessObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908481831C750816009B6099 /* BusinessObject.swift */; };
+		90B9B7D91C8A696F002D4BB1 /* BusinessDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */; };
 		90BAD1C11C8662ED0047277E /* TestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BAD1C01C8662ED0047277E /* TestTableViewController.swift */; };
 		90BAD1C31C86639E0047277E /* TestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BAD1C21C86639E0047277E /* TestTableViewCell.swift */; };
 		90DC57B91C72843A001F1891 /* YelpAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DC57B81C72843A001F1891 /* YelpAPIClient.swift */; };
@@ -62,7 +62,6 @@
 		3CE2EE9A1C6C5EC8000C9088 /* YelpifyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YelpifyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CE2EE9E1C6C5EC8000C9088 /* YelpifyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpifyUITests.swift; sourceTree = "<group>"; };
 		3CE2EEA01C6C5EC8000C9088 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3CF3B1301C7D15E000029000 /* BusinessDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessDetailViewController.swift; sourceTree = "<group>"; };
 		3CF480BB1C80011100698857 /* SinglePlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePlaylistViewController.swift; sourceTree = "<group>"; };
 		68ACAEFF88A59BB74B411CE0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9025184D1C8825E700BB3E05 /* Haneke.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Haneke.framework; path = "Pods/../build/Debug-iphoneos/Haneke.framework"; sourceTree = "<group>"; };
@@ -72,6 +71,7 @@
 		907E0CEA1C7828E100872135 /* APIDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIDataHandler.swift; sourceTree = "<group>"; };
 		9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessTableViewCell.swift; sourceTree = "<group>"; };
 		908481831C750816009B6099 /* BusinessObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessObject.swift; sourceTree = "<group>"; };
+		90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessDetailViewController.swift; sourceTree = "<group>"; };
 		90BAD1C01C8662ED0047277E /* TestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTableViewController.swift; sourceTree = "<group>"; };
 		90BAD1C21C86639E0047277E /* TestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTableViewCell.swift; sourceTree = "<group>"; };
 		90DC57B81C72843A001F1891 /* YelpAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpAPIClient.swift; sourceTree = "<group>"; };
@@ -135,12 +135,12 @@
 				3CE2EE821C6C5EC8000C9088 /* Main.storyboard */,
 				908481831C750816009B6099 /* BusinessObject.swift */,
 				9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */,
+				90DC57BA1C72844B001F1891 /* API */,
 				9025184F1C88276C00BB3E05 /* View Controllers */,
 				902518501C88277B00BB3E05 /* Testing VCs */,
 				3CE2EE851C6C5EC8000C9088 /* Assets.xcassets */,
 				3CE2EE871C6C5EC8000C9088 /* LaunchScreen.storyboard */,
 				3CE2EE8A1C6C5EC8000C9088 /* Info.plist */,
-				90DC57BA1C72844B001F1891 /* API */,
 			);
 			path = Yelpify;
 			sourceTree = "<group>";
@@ -176,7 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
-				3CF3B1301C7D15E000029000 /* BusinessDetailViewController.swift */,
+				90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */,
 				3CF480BB1C80011100698857 /* SinglePlaylistViewController.swift */,
 				3CB9473E1C7192780035A8EB /* PlaylistViewController.swift */,
 				3CB947401C7196110035A8EB /* ModalViewController.swift */,
@@ -285,7 +285,7 @@
 				TargetAttributes = {
 					3CE2EE7A1C6C5EC8000C9088 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = G6YM58LRJE;
+						DevelopmentTeam = CQD8Z7UVJ4;
 					};
 					3CE2EE8E1C6C5EC8000C9088 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -401,7 +401,6 @@
 			files = (
 				3CB947411C7196110035A8EB /* ModalViewController.swift in Sources */,
 				90DC57BC1C72A1D0001F1891 /* SearchBusinessViewController.swift in Sources */,
-				3CF3B1311C7D15E000029000 /* BusinessDetailViewController.swift in Sources */,
 				907E0CE51C76768D00872135 /* LocuAPIClient.swift in Sources */,
 				907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */,
 				3CF480BC1C80011100698857 /* SinglePlaylistViewController.swift in Sources */,
@@ -409,6 +408,7 @@
 				90DC57B91C72843A001F1891 /* YelpAPIClient.swift in Sources */,
 				90BAD1C31C86639E0047277E /* TestTableViewCell.swift in Sources */,
 				3CE2EE7F1C6C5EC8000C9088 /* AppDelegate.swift in Sources */,
+				90B9B7D91C8A696F002D4BB1 /* BusinessDetailViewController.swift in Sources */,
 				906CAA311C8977B700AF3515 /* TestViewController.swift in Sources */,
 				3CB9473F1C7192780035A8EB /* PlaylistViewController.swift in Sources */,
 				908481841C750816009B6099 /* BusinessObject.swift in Sources */,

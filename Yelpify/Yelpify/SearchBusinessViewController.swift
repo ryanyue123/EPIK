@@ -140,18 +140,18 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.performSegueWithIdentifier("showBusinessDetail", sender: self)
     }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
-        
-        if (segue.identifier == "showBusinessDetail")
-        {
-            let indexPath = tableView.indexPathForSelectedRow
-            let object = businessObjects[indexPath!.row]
-            upcoming.object = object
-            self.tableView.deselectRowAtIndexPath(indexPath!, animated: true)
-        }
-    }
+//    
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
+//        
+//        if (segue.identifier == "showBusinessDetail")
+//        {
+//            let indexPath = tableView.indexPathForSelectedRow
+//            let object = businessObjects[indexPath!.row]
+//            upcoming.object = object
+//            self.tableView.deselectRowAtIndexPath(indexPath!, animated: true)
+//        }
+//    }
     
     func addTrackToPlaylist(button: UIButton)
     {
