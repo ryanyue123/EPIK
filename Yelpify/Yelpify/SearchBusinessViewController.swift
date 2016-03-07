@@ -93,6 +93,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         searchParameters["ll"] = String(latitude) + "," + String(longitude)
         print(String(latitude) + "," + String(longitude))
     }
+    
     func firstDictFromDict(dict: NSDictionary) -> NSDictionary{
         let key = dict.allKeys[0] as! String
         return dict[key] as! NSDictionary
@@ -151,14 +152,25 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     }
 //    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
         
-        if (segue.identifier == "showBusinessDetail")
-        {
+        if (segue.identifier == "showBusinessDetail"){
+            let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
             let indexPath = tableView.indexPathForSelectedRow
             let object = businessObjects[indexPath!.row]
             upcoming.object = object
             self.tableView.deselectRowAtIndexPath(indexPath!, animated: true)
+            
+        }else if (segue.identifier == "presentPlaceSearchVC"){
+            let navVC: UINavigationController = segue.destinationViewController as! UINavigationController
+            let destVC: GPlacesSearchViewController = navVC.viewControllers.first as! GPlacesSearchViewController
+            
+            destVC.searchType = "Business"
+            
+        }else if (segue.identifier == "presentLocationSearchVC"){
+            let navVC: UINavigationController = segue.destinationViewController as! UINavigationController
+            let destVC: GPlacesSearchViewController = navVC.viewControllers.first as! GPlacesSearchViewController
+            
+            destVC.searchType = "Location"
         }
     }
     
@@ -222,7 +234,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     private func initNavigationItemTitleView() {
         let titleView = UILabel()
-        titleView.text = "Hello World"
+        titleView.text = "Search Businesses"
         titleView.font = UIFont(name: "HelveticaNeue-Medium", size: 17)
         let width = titleView.sizeThatFits(CGSizeMake(CGFloat.max, CGFloat.max)).width
         titleView.frame = CGRect(origin:CGPointZero, size:CGSizeMake(width, 44))
@@ -234,7 +246,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     }
     
     func titleWasTapped(){
-        performSegueWithIdentifier("presentSearchVC", sender: nil)
+        performSegueWithIdentifier("presentPlaceSearchVC", sender: nil)
     }
     
     // MARK: - VIEWDIDLOAD

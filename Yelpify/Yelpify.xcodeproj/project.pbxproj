@@ -28,6 +28,8 @@
 		90BAD1C31C86639E0047277E /* TestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BAD1C21C86639E0047277E /* TestTableViewCell.swift */; };
 		90DC57B91C72843A001F1891 /* YelpAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DC57B81C72843A001F1891 /* YelpAPIClient.swift */; };
 		90DC57BC1C72A1D0001F1891 /* SearchBusinessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */; };
+		90E505DD1C8E1C3800F47285 /* LocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E505DC1C8E1C3800F47285 /* LocationSearchViewController.swift */; };
+		90E505DF1C8E375200F47285 /* GPlacesSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E505DE1C8E375200F47285 /* GPlacesSearchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +78,8 @@
 		90BAD1C21C86639E0047277E /* TestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTableViewCell.swift; sourceTree = "<group>"; };
 		90DC57B81C72843A001F1891 /* YelpAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpAPIClient.swift; sourceTree = "<group>"; };
 		90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBusinessViewController.swift; sourceTree = "<group>"; };
+		90E505DC1C8E1C3800F47285 /* LocationSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchViewController.swift; sourceTree = "<group>"; };
+		90E505DE1C8E375200F47285 /* GPlacesSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPlacesSearchViewController.swift; sourceTree = "<group>"; };
 		981001A34CAB5A147D7CB122 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B140D093A1A89D68777F3561 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -176,6 +180,8 @@
 			isa = PBXGroup;
 			children = (
 				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
+				90E505DC1C8E1C3800F47285 /* LocationSearchViewController.swift */,
+				90E505DE1C8E375200F47285 /* GPlacesSearchViewController.swift */,
 				90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */,
 				90B9B7DA1C8ADFB2002D4BB1 /* PerformSearchViewController.swift */,
 				3CF480BB1C80011100698857 /* SinglePlaylistViewController.swift */,
@@ -400,12 +406,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				90DC57BC1C72A1D0001F1891 /* SearchBusinessViewController.swift in Sources */,
+				90E505DF1C8E375200F47285 /* GPlacesSearchViewController.swift in Sources */,
 				907E0CE51C76768D00872135 /* LocuAPIClient.swift in Sources */,
 				907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */,
 				3CF480BC1C80011100698857 /* SinglePlaylistViewController.swift in Sources */,
 				907E0CE71C77F34100872135 /* GooglePlacesAPIClient.swift in Sources */,
 				90DC57B91C72843A001F1891 /* YelpAPIClient.swift in Sources */,
 				90BAD1C31C86639E0047277E /* TestTableViewCell.swift in Sources */,
+				90E505DD1C8E1C3800F47285 /* LocationSearchViewController.swift in Sources */,
 				3CE2EE7F1C6C5EC8000C9088 /* AppDelegate.swift in Sources */,
 				90B9B7DB1C8ADFB2002D4BB1 /* PerformSearchViewController.swift in Sources */,
 				90B9B7D91C8A696F002D4BB1 /* BusinessDetailViewController.swift in Sources */,
