@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="UL9-SW-wCG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="OFK-3P-Zbm">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -57,7 +57,54 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PwF-Ht-UBF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3182" y="338"/>
+            <point key="canvasLocation" x="3236" y="362"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="clV-2v-BQs">
+            <objects>
+                <navigationController id="vcf-Mf-wue" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pKJ-fu-Uir">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="ezL-aH-dW9">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="yju-Dj-JQn" kind="relationship" relationship="rootViewController" id="hF2-H7-CXB"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="up5-nO-e7D" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5669" y="-427"/>
+        </scene>
+        <!--Places Search View Controller-->
+        <scene sceneID="DpG-32-Qpg">
+            <objects>
+                <viewController id="yju-Dj-JQn" customClass="GPlacesSearchViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NrW-oX-fyU"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ozg-ms-cdl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1AJ-Vn-USh">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="VAd-PS-Sq2">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="rewind" id="bcb-fr-q6s">
+                            <connections>
+                                <segue destination="MaZ-WG-NVz" kind="unwind" unwindAction="unwindToSearchBusinessVC:" id="RYR-MW-n2I"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rFe-V7-JC5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="MaZ-WG-NVz" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="6411" y="-427"/>
         </scene>
         <!--Search Business View Controller-->
         <scene sceneID="vdw-Ia-rLx">
@@ -85,16 +132,6 @@
                                                 <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="default_restaurant" translatesAutoresizingMaskIntoConstraints="NO" id="Uuw-ni-McR">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="159"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="McDonald's" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="7gG-fa-wts">
-                                                    <rect key="frame" x="25" y="26" width="418" height="30"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="418" id="HEl-je-2od"/>
-                                                        <constraint firstAttribute="height" constant="30" id="dUB-vj-aGZ"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="23"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ldS-zq-ey5">
                                                     <rect key="frame" x="548" y="52" width="22" height="22"/>
                                                 </button>
@@ -105,6 +142,16 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="McDonald's" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="7gG-fa-wts">
+                                                    <rect key="frame" x="25" y="26" width="418" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="418" id="HEl-je-2od"/>
+                                                        <constraint firstAttribute="height" constant="30" id="dUB-vj-aGZ"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="23"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -154,7 +201,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="search" id="V02-Ig-bsD">
                             <connections>
-                                <action selector="searchWithGPlaces:" destination="hzi-hz-39z" id="e1W-4x-kKo"/>
+                                <segue destination="vcf-Mf-wue" kind="presentation" identifier="presentLocationSearchVC" modalTransitionStyle="crossDissolve" id="gR5-SX-nfW"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -162,11 +209,12 @@
                         <outlet property="navBarTitleLabel" destination="3s0-7b-ONU" id="k3n-eW-7AC"/>
                         <outlet property="tableView" destination="0eM-Bd-byN" id="SCj-CQ-u99"/>
                         <segue destination="a1s-cq-qJD" kind="show" identifier="showBusinessDetail" id="QgL-VR-Xl5"/>
+                        <segue destination="vcf-Mf-wue" kind="presentation" identifier="presentPlaceSearchVC" modalTransitionStyle="crossDissolve" id="0di-zA-dhq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wJO-Js-5jv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4884" y="362"/>
+            <point key="canvasLocation" x="4857" y="362"/>
         </scene>
         <!--Details-->
         <scene sceneID="HJ7-DM-4Ke">
@@ -232,11 +280,19 @@
                                 <action selector="showBusinessList:" destination="a1s-cq-qJD" id="q1U-JG-tKA"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="hdr-g2-qFo">
+                            <textField key="customView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" id="dMb-eb-pI0">
+                                <rect key="frame" x="447" y="7" width="133" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Obf-kV-cZr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5588" y="362"/>
+            <point key="canvasLocation" x="5669" y="362"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="11G-9v-T9Q">
@@ -254,7 +310,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7kR-gr-QFq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2194" y="338"/>
+            <point key="canvasLocation" x="2304" y="362"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Tf1-7N-Rpw">
@@ -272,7 +328,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DUF-NC-Z7t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4100" y="362"/>
+            <point key="canvasLocation" x="4097" y="362"/>
         </scene>
         <!--Test View Controller-->
         <scene sceneID="HJB-he-Aan">
@@ -296,4 +352,7 @@
     <resources>
         <image name="default_restaurant" width="640" height="426"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="gR5-SX-nfW"/>
+    </inferredMetricsTieBreakers>
 </document>
