@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="UL9-SW-wCG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="UL9-SW-wCG">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -112,6 +112,7 @@
                                                 <constraint firstItem="ldS-zq-ey5" firstAttribute="centerY" secondItem="Uuw-ni-McR" secondAttribute="centerY" constant="-16.5" id="1Cu-XO-Hnp"/>
                                                 <constraint firstItem="ldS-zq-ey5" firstAttribute="leading" secondItem="7gG-fa-wts" secondAttribute="trailing" constant="105" id="6Tp-Nb-gzD"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="fRf-Lg-MMj" secondAttribute="bottom" constant="71" id="JF2-Pn-G24"/>
+                                                <constraint firstItem="ldS-zq-ey5" firstAttribute="leading" secondItem="Uuw-ni-McR" secondAttribute="trailing" constant="-52" id="aOp-DB-cPi"/>
                                                 <constraint firstItem="Uuw-ni-McR" firstAttribute="top" secondItem="Zfz-NU-X5V" secondAttribute="topMargin" constant="-8" id="aQ7-11-7cQ"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Uuw-ni-McR" secondAttribute="bottom" constant="-7.5" id="eNG-kd-Sts"/>
                                                 <constraint firstItem="Uuw-ni-McR" firstAttribute="leading" secondItem="Zfz-NU-X5V" secondAttribute="leadingMargin" constant="-8" id="eRz-TJ-eql"/>
@@ -149,7 +150,7 @@
                     <navigationItem key="navigationItem" id="3s0-7b-ONU">
                         <barButtonItem key="leftBarButtonItem" systemItem="done" id="emJ-kc-uDV">
                             <connections>
-                                <action selector="finishedAddingToPlaylist:" destination="hzi-hz-39z" id="pG7-rO-kaa"/>
+                                <action selector="finishedEditingPlaylist:" destination="hzi-hz-39z" id="2DY-wz-yIJ"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="search" id="V02-Ig-bsD">

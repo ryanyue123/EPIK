@@ -10,6 +10,11 @@ import UIKit
 import Parse
 import ParseUI
 
+struct playlist
+{
+    static var playlistname: String!
+    static var playlistID: String!
+}
 class PlaylistViewController: UICollectionViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
 
     var locationManager = CLLocationManager()
@@ -21,7 +26,7 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
     var inputTextField: UITextField!
     
     @IBAction func showPlaylistAlert(sender: UIBarButtonItem) {
-        let alertController = UIAlertController(title: "Create new playlist", message: "Enter the name of your new playlsit", preferredStyle: UIAlertControllerStyle.Alert)
+        let alertController = UIAlertController(title: "Create new playlist", message: "Enter name of playlist.", preferredStyle: UIAlertControllerStyle.Alert)
         
         alertController.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
             textField.placeholder = "Playlist Name"
@@ -33,13 +38,47 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
         })
         alertController.addAction(deleteAction)
         let okAction = UIAlertAction(title: "Enter", style: UIAlertActionStyle.Default, handler: {(alert :UIAlertAction!) in
-            self.performSegueWithIdentifier("showList", sender: self)
+            let query = PFQuery(className: "Playlists")
+            query.whereKey("createdbyuser", equalTo: (PFUser.currentUser()?.username!)!)
+            query.whereKey("playlistName", equalTo: self.inputTextField.text!)
+            query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
+                if ((error) == nil)
+                {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        if (objects!.count == 0)
+                        {
+                            let object = PFObject(className: "Playlists")
+                            object["playlistName"] = self.inputTextField.text!
+                            object["createdbyuser"] = PFUser.currentUser()?.username!
+                            object.saveInBackgroundWithBlock {(success, error) -> Void in
+                                if (error == nil)
+                                {
+                                    playlist.playlistname = self.inputTextField.text!
+                                    self.performSegueWithIdentifier("showList", sender: self)
+                                }
+                                else
+                                {
+                                    print(error?.userInfo)
+                                }
+                            }
+                        }
+                        else
+                        {
+                            print("You have already created this playlist")
+                        }
+                    })
+                }
+                else
+                {
+                    print(error?.description)
+                }
+            }
         })
         alertController.addAction(okAction)
         presentViewController(alertController, animated: true, completion: nil)
         
     }
-    
+
     func fetchAllObjectsFromDataStore()
     {
         let query:PFQuery = PFQuery(className: "Playlists")

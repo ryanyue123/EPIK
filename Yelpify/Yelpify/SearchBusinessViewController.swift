@@ -107,10 +107,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     // Parse variables
     var index: NSIndexPath!
     var object: PFObject!
-    var playlistObject:PFObject!
     var playlistArray = [NSDictionary]()
     var geopoint:PFGeoPoint!
-    var playlistname: String!
 
     // MARK: - TABLEVIEW FUNCTIONS
 
@@ -177,20 +175,35 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         }
         let arraydict = ["name": object.businessName!, "address": object.businessAddress!, "yelp-id": object.yelpID!]
         playlistArray.append(arraydict)
+       
     }
-        
-    @IBAction func finishedAddingToPlaylist(sender: UIBarButtonItem) {
-        
-        let username = PFUser.currentUser()?.username!
-        
-        playlistObject = PFObject(className: "Playlists")
-        playlistObject["createdbyuser"] = username! as String
-        playlistObject["playlist"] = playlistArray
-        playlistObject["location"] = geopoint
-        playlistObject.saveEventually {(success, error) -> Void in
-            if (error == nil)
+    
+    @IBAction func finishedEditingPlaylist(sender: UIBarButtonItem) {
+        let query = PFQuery(className: "Playlists")
+        query.whereKey("createdbyuser", equalTo: (PFUser.currentUser()?.username)!)
+        query.whereKey("playlistName", equalTo: playlist.playlistname)
+        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
+            if ((error) == nil)
             {
-
+                dispatch_async(dispatch_get_main_queue(), {
+                    print(objects)
+                    let playlistObject = objects![0]
+                    playlistObject["track"] = self.playlistArray
+                    if (self.geopoint != nil)
+                    {
+                        playlistObject["location"] = self.geopoint
+                    }
+                    playlistObject.saveInBackgroundWithBlock {(success, error) -> Void in
+                        if (error == nil)
+                        {
+                            print("hello")
+                        }
+                        else
+                        {
+                            print(error?.userInfo)
+                        }
+                    }
+                })
             }
             else
             {
