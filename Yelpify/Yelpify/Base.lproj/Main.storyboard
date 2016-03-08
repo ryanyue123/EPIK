@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vcf-Mf-wue">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="OFK-3P-Zbm">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -60,24 +60,20 @@
             <point key="canvasLocation" x="3236" y="362"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="clV-2v-BQs">
+        <scene sceneID="pbW-sH-FoZ">
             <objects>
-                <navigationController id="vcf-Mf-wue" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pKJ-fu-Uir">
+                <navigationController id="tvs-Kb-9f9" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="oMO-9h-KvS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="ezL-aH-dW9">
-                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
                     <connections>
-                        <segue destination="yju-Dj-JQn" kind="relationship" relationship="rootViewController" id="hF2-H7-CXB"/>
+                        <segue destination="yju-Dj-JQn" kind="relationship" relationship="rootViewController" id="4Zt-4A-0Oh"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="up5-nO-e7D" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8DH-cU-31C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5669" y="-427"/>
+            <point key="canvasLocation" x="5650" y="-392"/>
         </scene>
         <!--Places Search View Controller-->
         <scene sceneID="DpG-32-Qpg">
@@ -110,12 +106,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="VAd-PS-Sq2">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="r3U-Sl-HUS">
-                            <connections>
-                                <segue destination="MaZ-WG-NVz" kind="unwind" unwindAction="unwindToSearchBusinessVC:" id="QLt-C3-NX7"/>
-                            </connections>
-                        </barButtonItem>
-                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search for places, food, etc" textAlignment="center" minimumFontSize="17" id="Xx0-8q-ghg">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="Y8S-ty-r3h"/>
+                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search for places, food, etc" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" id="Xx0-8q-ghg">
                             <rect key="frame" x="133" y="7" width="334" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -124,7 +116,12 @@
                                 <action selector="mainSearchEditingDidChange:" destination="yju-Dj-JQn" eventType="editingChanged" id="hCJ-2E-xLK"/>
                             </connections>
                         </textField>
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="qaq-Sj-snL"/>
+                        <barButtonItem key="rightBarButtonItem" title="Search" id="qaq-Sj-snL">
+                            <connections>
+                                <action selector="searchButtonTapped:" destination="yju-Dj-JQn" id="9S3-AO-z3E"/>
+                                <segue destination="MaZ-WG-NVz" kind="unwind" identifier="unwindToSearch" unwindAction="unwindToSearchBusinessVCWithSearch:" id="Wbs-P9-upg"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="mainSearchTextField" destination="Xx0-8q-ghg" id="Qx3-pW-nvB"/>
@@ -134,7 +131,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rFe-V7-JC5" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="MaZ-WG-NVz" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6411" y="-427"/>
+            <point key="canvasLocation" x="6315" y="-377"/>
         </scene>
         <!--Search Business View Controller-->
         <scene sceneID="vdw-Ia-rLx">
@@ -156,19 +153,20 @@
                                         <rect key="frame" x="0.0" y="92" width="600" height="159"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vxX-pQ-LBu" id="Zfz-NU-X5V">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="158.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="159"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="default_restaurant" translatesAutoresizingMaskIntoConstraints="NO" id="Uuw-ni-McR">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="159"/>
+                                                <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_restaurant" translatesAutoresizingMaskIntoConstraints="NO" id="Uuw-ni-McR">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="158"/>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ldS-zq-ey5">
-                                                    <rect key="frame" x="548" y="52" width="22" height="22"/>
+                                                    <rect key="frame" x="548" y="51" width="22" height="22"/>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123 Adress Street" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRf-Lg-MMj">
                                                     <rect key="frame" x="25" y="59" width="308" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="308" id="krP-3M-2Xz"/>
+                                                        <constraint firstAttribute="width" constant="308" id="MKK-Y9-o7B"/>
+                                                        <constraint firstAttribute="height" constant="21" id="bv4-hG-T2e"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -177,8 +175,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="McDonald's" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="7gG-fa-wts">
                                                     <rect key="frame" x="25" y="26" width="418" height="30"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="418" id="HEl-je-2od"/>
-                                                        <constraint firstAttribute="height" constant="30" id="dUB-vj-aGZ"/>
+                                                        <constraint firstAttribute="width" constant="418" id="Nzw-17-lSq"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="23"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -186,18 +183,17 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="ldS-zq-ey5" firstAttribute="centerY" secondItem="Uuw-ni-McR" secondAttribute="centerY" constant="-16.5" id="1Cu-XO-Hnp"/>
-                                                <constraint firstItem="ldS-zq-ey5" firstAttribute="leading" secondItem="7gG-fa-wts" secondAttribute="trailing" constant="105" id="6Tp-Nb-gzD"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="fRf-Lg-MMj" secondAttribute="bottom" constant="71" id="JF2-Pn-G24"/>
-                                                <constraint firstItem="ldS-zq-ey5" firstAttribute="leading" secondItem="Uuw-ni-McR" secondAttribute="trailing" constant="-52" id="aOp-DB-cPi"/>
-                                                <constraint firstItem="Uuw-ni-McR" firstAttribute="top" secondItem="Zfz-NU-X5V" secondAttribute="topMargin" constant="-8" id="aQ7-11-7cQ"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="Uuw-ni-McR" secondAttribute="bottom" constant="-7.5" id="eNG-kd-Sts"/>
-                                                <constraint firstItem="Uuw-ni-McR" firstAttribute="leading" secondItem="Zfz-NU-X5V" secondAttribute="leadingMargin" constant="-8" id="eRz-TJ-eql"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Uuw-ni-McR" secondAttribute="trailing" constant="-8" id="ggd-p0-8Vh"/>
-                                                <constraint firstItem="7gG-fa-wts" firstAttribute="leading" secondItem="fRf-Lg-MMj" secondAttribute="leading" id="i0H-e1-aD6"/>
-                                                <constraint firstItem="fRf-Lg-MMj" firstAttribute="top" secondItem="7gG-fa-wts" secondAttribute="bottom" constant="3" id="s3B-PZ-zlC"/>
-                                                <constraint firstItem="7gG-fa-wts" firstAttribute="leading" secondItem="Zfz-NU-X5V" secondAttribute="leadingMargin" constant="17" id="sGW-cC-8Fe"/>
-                                                <constraint firstItem="7gG-fa-wts" firstAttribute="top" secondItem="Zfz-NU-X5V" secondAttribute="topMargin" constant="18" id="tJT-ug-jg8"/>
+                                                <constraint firstItem="fRf-Lg-MMj" firstAttribute="top" secondItem="7gG-fa-wts" secondAttribute="bottom" constant="3" id="6an-So-ecE"/>
+                                                <constraint firstItem="Uuw-ni-McR" firstAttribute="top" secondItem="Zfz-NU-X5V" secondAttribute="top" id="9kn-xQ-RS6"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="ldS-zq-ey5" secondAttribute="trailing" constant="22" id="Bp3-d8-mOl"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="fRf-Lg-MMj" secondAttribute="bottom" constant="70.5" id="CXS-Ws-Dbj"/>
+                                                <constraint firstItem="7gG-fa-wts" firstAttribute="top" secondItem="Zfz-NU-X5V" secondAttribute="topMargin" constant="18" id="DSQ-OV-oiH"/>
+                                                <constraint firstItem="7gG-fa-wts" firstAttribute="leading" secondItem="fRf-Lg-MMj" secondAttribute="leading" id="MHh-8b-Gob"/>
+                                                <constraint firstItem="ldS-zq-ey5" firstAttribute="top" secondItem="Zfz-NU-X5V" secondAttribute="topMargin" constant="43" id="Mha-TB-Sgh"/>
+                                                <constraint firstItem="Uuw-ni-McR" firstAttribute="centerY" secondItem="Zfz-NU-X5V" secondAttribute="centerY" id="Rj2-ZA-1Dk"/>
+                                                <constraint firstAttribute="trailing" secondItem="Uuw-ni-McR" secondAttribute="trailing" id="c8q-05-8SL"/>
+                                                <constraint firstItem="Uuw-ni-McR" firstAttribute="leading" secondItem="Zfz-NU-X5V" secondAttribute="leading" id="paW-Ue-RrJ"/>
+                                                <constraint firstItem="7gG-fa-wts" firstAttribute="leading" secondItem="Zfz-NU-X5V" secondAttribute="leadingMargin" constant="17" id="rDL-ki-MUd"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -233,7 +229,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="search" id="V02-Ig-bsD">
                             <connections>
-                                <segue destination="vcf-Mf-wue" kind="presentation" identifier="presentLocationSearchVC" modalTransitionStyle="crossDissolve" id="gR5-SX-nfW"/>
+                                <segue destination="tvs-Kb-9f9" kind="presentation" modalTransitionStyle="crossDissolve" id="LJY-RO-ffD"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -241,7 +237,6 @@
                         <outlet property="navBarTitleLabel" destination="3s0-7b-ONU" id="k3n-eW-7AC"/>
                         <outlet property="tableView" destination="0eM-Bd-byN" id="SCj-CQ-u99"/>
                         <segue destination="a1s-cq-qJD" kind="show" identifier="showBusinessDetail" id="QgL-VR-Xl5"/>
-                        <segue destination="vcf-Mf-wue" kind="presentation" identifier="presentPlaceSearchVC" modalTransitionStyle="crossDissolve" id="0di-zA-dhq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wJO-Js-5jv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -308,11 +303,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Details" id="ZkG-WE-SLz">
-                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="fuE-1o-r8o">
-                            <connections>
-                                <action selector="showBusinessList:" destination="a1s-cq-qJD" id="q1U-JG-tKA"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="backBarButtonItem" title="Back" id="A70-m8-7Ax"/>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Obf-kV-cZr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -377,7 +368,4 @@
     <resources>
         <image name="default_restaurant" width="640" height="426"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="gR5-SX-nfW"/>
-    </inferredMetricsTieBreakers>
 </document>

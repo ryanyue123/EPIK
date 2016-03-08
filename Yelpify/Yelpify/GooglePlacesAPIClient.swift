@@ -91,8 +91,8 @@ class GooglePlacesAPIClient: NSObject {
     }
     
     func buildURLString(parameters: Dictionary<String, String>) -> String!{
-        var result = "https://maps.googleapis.com/maps/api/place/textsearch/json?"
-        //"https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
+        var result = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
+        // "https://maps.googleapis.com/maps/api/place/textsearch/json?"
         for (key, value) in parameters{
             let addString = key + "=" + value + "&"
             result += addString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!

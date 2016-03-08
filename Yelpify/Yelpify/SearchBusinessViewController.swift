@@ -31,6 +31,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         "term": "tacos",
         "radius_filter": "10000",
         "sort": "1"]
+    
+    var googleParameters = ["key": "AIzaSyDkxzICx5QqztP8ARvq9z0DxNOF_1Em8Qc", "location": "33.64496794563093,-117.83725295740864", "rankby":"distance", "keyword": "food"]
 
     var locuSearchParameters = []
     
@@ -40,9 +42,34 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     }
     
     
-    @IBAction func unwindToSearchBusinessVC(segue: UIStoryboardSegue) {
+    @IBAction func unwindToSearchBusinessVC(sender: UIStoryboardSegue) {
+
+    }
+    
+    @IBAction func unwindToSearchBusinessVCWithSearch(segue: UIStoryboardSegue) {
+        if (segue.identifier != nil) {
+            if segue.identifier == "unwindToSearch" {
+                
+                let gPlacesVC = segue.sourceViewController as! GPlacesSearchViewController
+                
+                if let searchQuery = gPlacesVC.searchQuery{
+                    self.locationTextField.text = searchQuery
+                    passedInformation.searchQuery = searchQuery
+                }
+                
+                let searchTerm = passedInformation.searchQuery
+                print(searchTerm)
+                //locationTextField.text = searchTerm
+            }
+        }
+
         
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        //locationTextField.text = passedInformation.searchQuery
+    }
+
     
     @IBOutlet weak var navBarTitleLabel: UINavigationItem!
     @IBOutlet weak var locationTextField: UITextField!
@@ -134,7 +161,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         let business = self.businessObjects[indexPath.row]
         
         cell.configureCellWith(business) { () -> Void in
-            print("reloading cell", indexPath.row)
+            //print("reloading cell", indexPath.row)
             //self.businessShown[indexPath.row] = true
             //self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
         }
@@ -263,7 +290,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         //getCurrentLocation()
         
         // Performs an API search and returns a master array of businesses (as dictionaries)
-        dataHandler.performAPISearch(yelpSearchParameters) { (businessObjectArray) -> Void in
+        dataHandler.performAPISearch(googleParameters) { (businessObjectArray) -> Void in
             self.businessObjects = businessObjectArray
             for _ in businessObjectArray{
                 self.businessShown.append(false)

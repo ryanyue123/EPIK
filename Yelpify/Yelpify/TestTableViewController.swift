@@ -29,31 +29,6 @@ class TestTableViewController: UITableViewController {
         
         var searchName = ""
         var searchCoordinate = []
-        yelpClient.searchPlacesWithParameters(yelpSearchParameters) { (result) -> Void in
-            self.dataHandler.parseYelpJSON(result, completion: { (yelpBusinessArray) -> Void in
-                for business in yelpBusinessArray{
-                    
-                    searchName = business.businessName!
-                    searchCoordinate = [business.businessLatitude!, business.businessLongitude!]
-                    
-                    print(business.businessName)
-                    print(business.businessAddress)
-                    print(business.businessLatitude, business.businessLongitude)
-                    print("\n")
-                    
-                    self.googleClient.searchPlaceWithNameAndCoordinates(searchName, coordinates: searchCoordinate, completion: { (JSONdata) -> Void in
-                        self.dataHandler.parseGPlacesJSON(JSONdata, completion: { (googlePlacesArray) -> Void in
-                            for place in googlePlacesArray{
-                                
-                                print(place.placeName)
-                                print(place.placeAddress)
-                                print("\n")
-                            }
-                        })
-                    })
-                }
-            })
-        }
         
         self.tableView.delegate = self
         self.tableView.dataSource = self

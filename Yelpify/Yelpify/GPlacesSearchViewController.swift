@@ -1,6 +1,11 @@
 import UIKit
 import GoogleMaps
 
+struct passedInformation{
+    static var searchQuery: String = ""
+    static var location: String = ""
+}
+
 class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate, UITableViewDelegate, CustomSearchControllerDelegate {
     
     @IBOutlet weak var resultsTableView: UITableView!
@@ -16,8 +21,18 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
     
     var searchType: String! = "Location"
     
+    var currentLocation: String! = "Current Location"
+    
+    var searchQuery: String?
+    
+    @IBAction func searchButtonTapped(sender: AnyObject) {
+        //searchQuery = mainSearchTextField.text
+        
+    }
+
     @IBAction func mainSearchEditingDidChange(sender: AnyObject) {
         let searchText = mainSearchTextField.text
+        
         searchType = "Business"
         configureFilterType()
         tableDataSource?.sourceTextHasChanged(searchText)
@@ -92,6 +107,7 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
     func didStartSearching() {
         searchType = "Location"
         configureFilterType()
+        customSearchController.customSearchBar.placeholder = "Search Location"
         
         shouldShowSearchResults = true
         resultsTableView.reloadData()
@@ -111,6 +127,7 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
     
     func didChangeSearchText(searchText: String) {
         tableDataSource?.sourceTextHasChanged(searchText)
+        passedInformation.searchQuery = searchText
         // Reload the tableview.
         resultsTableView.reloadData()
     }
@@ -134,16 +151,43 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
         resultsTableView.reloadData()
     }
     
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if segue.destinationViewController.isKindOfClass(SearchBusinessViewController){
+//            let searchBusinessVC: SearchBusinessViewController! = segue.destinationViewController as! SearchBusinessViewController
+//            searchBusinessVC.locationTextField.text = passedInformation.searchQuery
+//        }
+//    }
+//    
+    
+    deinit{
+        self.customSearchController.view.removeFromSuperview()
+        self.resultsTableView.removeFromSuperview()
+    }
     
 }
 
 extension GPlacesSearchViewController: GMSAutocompleteTableDataSourceDelegate {
     func tableDataSource(tableDataSource: GMSAutocompleteTableDataSource, didAutocompleteWithPlace place: GMSPlace) {
         customSearchController?.active = false
+        
         // Do something with the selected place.
+        if searchType == "Location"{
+            currentLocation = place.formattedAddress!
+            customSearchController.customSearchBar.resignFirstResponder()
+            customSearchController.customSearchBar.text = ""
+            customSearchController.customSearchBar.placeholder = place.formattedAddress!
+        }else if searchType == "Business"{
+            mainSearchTextField.resignFirstResponder()
+            mainSearchTextField.text = place.name
+        }
+        
         print("Place name: \(place.name)")
         print("Place address: \(place.formattedAddress)")
         print("Place attributions: \(place.attributions)")
+        
+        passedInformation.searchQuery = mainSearchTextField.text!
+        
+        performSegueWithIdentifier("unwindToSearch:", sender: self)
     }
     
     func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String?) -> Bool {

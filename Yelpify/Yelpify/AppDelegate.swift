@@ -28,11 +28,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         // Set navigation bar tint / background colour
-        UINavigationBar.appearance().barTintColor = UIColor.whiteColor()
-        
-        UINavigationBar.appearance().backgroundColor = UIColor.whiteColor()
-        UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        
+//        UINavigationBar.appearance().barTintColor = UIColor.whiteColor()
+//        
+//        UINavigationBar.appearance().backgroundColor = UIColor.whiteColor()
+//        UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarMetrics: .Default)
+//        
         // Set navigation bar ItemButton tint colour
         //UIBarButtonItem.appearance().tintColor = UIColor.orangeColor()
         

@@ -50,32 +50,6 @@ class BusinessTableViewCell: UITableViewCell {
         
                 }
             }
-        }else{
-            // If Business Object Doesn't contain photo reference
-            
-            let imageURL = business.businessImageURL!
-            let businessID = business.yelpID!
-            
-            if imageURL != ""{
-                yelpBusinessClient.getImageFromURL(imageURL, setKeyAs: businessID, completion: { (key) -> Void in
-                    
-                    self.cache.fetch(key: key).onSuccess { image in
-                        
-                        self.businessBackgroundImage.hnk_setImage(image, key: key)
-                        self.setNeedsLayout()
-                        
-                        completion()
-    //                    
-    //                    self.applyBlurEffect(image, completion: { (blurredImage) -> Void in
-    //                        self.businessBackgroundImage.hnk_setImage(blurredImage, key: key)
-    //                        self.businessBackgroundImage.setNeedsLayout()
-    //                    })
-                        
-                    }
-                })
-            }else{
-                
-            }
         }
     }
     
