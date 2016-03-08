@@ -39,6 +39,7 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
             self.inputTextField = textField
         })
         let deleteAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Destructive, handler: {(alert :UIAlertAction!) in
+            self.view.endEditing(true)
             print("Delete button tapped")
         })
         alertController.addAction(deleteAction)
