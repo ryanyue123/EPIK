@@ -25,6 +25,11 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
     var userlongitude: Double!
     var inputTextField: UITextField!
     
+    @IBAction func unwindToPlaylistVC(segue: UIStoryboardSegue) {
+        
+    }
+    
+    
     @IBAction func showPlaylistAlert(sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: "Create new playlist", message: "Enter name of playlist.", preferredStyle: UIAlertControllerStyle.Alert)
         
