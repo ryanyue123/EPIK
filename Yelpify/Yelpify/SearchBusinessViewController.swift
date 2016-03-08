@@ -18,6 +18,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var locuClient = LocuAPIClient()
     var googlePlacesClient = GooglePlacesAPIClient()
     
+    var customSearchController: CustomSearchController!
+    
     let cache = Shared.imageCache
     
     var dataHandler = APIDataHandler()
@@ -164,13 +166,13 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             let navVC: UINavigationController = segue.destinationViewController as! UINavigationController
             let destVC: GPlacesSearchViewController = navVC.viewControllers.first as! GPlacesSearchViewController
             
-            destVC.searchType = "Business"
+            //destVC.searchType = "Business"
             
         }else if (segue.identifier == "presentLocationSearchVC"){
             let navVC: UINavigationController = segue.destinationViewController as! UINavigationController
             let destVC: GPlacesSearchViewController = navVC.viewControllers.first as! GPlacesSearchViewController
             
-            destVC.searchType = "Location"
+            //destVC.searchType = "Location"
         }
     }
     
@@ -254,6 +256,9 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     override func viewDidLoad(){
         initNavigationItemTitleView()
         
+        //configureCustomSearchController()
+        
+        
         //locationTextField.delegate = self
         //getCurrentLocation()
         
@@ -267,6 +272,13 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         }
 //        geopoint = nil
 //        playlistArray.removeAll()
+    }
+    
+    func configureCustomSearchController() {
+        customSearchController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, self.tableView.frame.size.width, 50.0), searchBarFont: UIFont(name: "Futura", size: 16.0)!, searchBarTextColor: UIColor.orangeColor(), searchBarTintColor: UIColor.blackColor())
+        
+        customSearchController.customSearchBar.placeholder = "Search in this awesome bar..."
+        self.tableView.tableHeaderView = customSearchController.customSearchBar
     }
     
     override func didReceiveMemoryWarning() {
