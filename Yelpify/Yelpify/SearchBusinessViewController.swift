@@ -25,16 +25,19 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var dataHandler = APIDataHandler()
     
     var locationManager = CLLocationManager()
-    var searchParameters = ["ll": "", "category_filter": "pizza", "radius_filter": "10000", "sort": "0"]
-    var yelpSearchParameters = [
-        "ll": "33.64496794563093,-117.83725295740864",
-        "term": "tacos",
-        "radius_filter": "10000",
-        "sort": "1"]
+//    var searchParameters = ["ll": "", "category_filter": "pizza", "radius_filter": "10000", "sort": "0"]
+//    var yelpSearchParameters = [
+//        "ll": "33.64496794563093,-117.83725295740864",
+//        "term": "tacos",
+//        "radius_filter": "10000",
+//        "sort": "1"]
     
-    var googleParameters = ["key": "AIzaSyDkxzICx5QqztP8ARvq9z0DxNOF_1Em8Qc", "location": "33.64496794563093,-117.83725295740864", "rankby":"distance", "keyword": "food"]
+    var googleParameters = ["key": "AIzaSyDkxzICx5QqztP8ARvq9z0DxNOF_1Em8Qc", "location": "33.64496794563093,-117.83725295740864", "rankby":"distance", "keyword": ""]
+    
+    var searchDidChange = false
+    var searchQuery = ""
 
-    var locuSearchParameters = []
+    //var locuSearchParameters = []
     
     // MARK: - OUTLETS
     
@@ -53,32 +56,24 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
                 let gPlacesVC = segue.sourceViewController as! GPlacesSearchViewController
                 
                 if let searchQuery = gPlacesVC.searchQuery{
-                    self.locationTextField.text = searchQuery
-                    passedInformation.searchQuery = searchQuery
+                    if searchQuery != ""{
+                        self.navigationItem.title = searchQuery
+                    }else{
+                        self.navigationItem.title = "Around You"
+                    }
+                    searchWithKeyword(searchQuery)
+                    
                 }
-                
-                let searchTerm = passedInformation.searchQuery
-                print(searchTerm)
-                //locationTextField.text = searchTerm
             }
         }
-
-        
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        //locationTextField.text = passedInformation.searchQuery
-    }
-
     
     @IBOutlet weak var navBarTitleLabel: UINavigationItem!
     @IBOutlet weak var locationTextField: UITextField!
     
-    @IBAction func didFinishEditingLocation(sender: AnyObject) {
-        locationTextField.resignFirstResponder()
-        let query = locationTextField.text
-        //let queryArr = query!.characters.split{$0 == " "}.map(String.init)
-        yelpSearchParameters["term"] = query as String!
+    
+    func searchWithKeyword(keyword: String){
+        googleParameters["keyword"] = keyword
         
         self.businessShown.removeAll()
         self.businessObjects.removeAll()
@@ -86,7 +81,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         self.tableView.reloadData()
         
         print("grabbing new data")
-        dataHandler.performAPISearch(yelpSearchParameters) { (businessObjectArray) -> Void in
+        dataHandler.performAPISearch(googleParameters) { (businessObjectArray) -> Void in
             for _ in businessObjectArray{
                 self.businessShown.append(false)
             }
@@ -95,6 +90,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         }
 
     }
+    
     // MARK: - DATA TASKS
     func getCurrentLocation(){
         locationManager.delegate = self
@@ -119,13 +115,23 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         let latitude = userLocation.coordinate.latitude
         let longitude = userLocation.coordinate.longitude
         
-        searchParameters["ll"] = String(latitude) + "," + String(longitude)
+        //searchParameters["ll"] = String(latitude) + "," + String(longitude)
         print(String(latitude) + "," + String(longitude))
     }
     
     func firstDictFromDict(dict: NSDictionary) -> NSDictionary{
         let key = dict.allKeys[0] as! String
         return dict[key] as! NSDictionary
+    }
+    
+    func performInitialSearch(){
+        dataHandler.performAPISearch(googleParameters) { (businessObjectArray) -> Void in
+            self.businessObjects = businessObjectArray
+            for _ in businessObjectArray{
+                self.businessShown.append(false)
+            }
+            self.tableView.reloadData()
+        }
     }
     
     
@@ -179,7 +185,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.performSegueWithIdentifier("showBusinessDetail", sender: self)
     }
-//    
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if (segue.identifier == "showBusinessDetail"){
@@ -188,18 +194,14 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             let object = businessObjects[indexPath!.row]
             upcoming.object = object
             self.tableView.deselectRowAtIndexPath(indexPath!, animated: true)
+        }else if (segue.identifier == "presentGPlacesVC"){
             
-        }else if (segue.identifier == "presentPlaceSearchVC"){
-            let navVC: UINavigationController = segue.destinationViewController as! UINavigationController
-            let destVC: GPlacesSearchViewController = navVC.viewControllers.first as! GPlacesSearchViewController
+            let navController = segue.destinationViewController as! UINavigationController
+            let upcoming = navController.topViewController as! GPlacesSearchViewController
             
-            //destVC.searchType = "Business"
-            
-        }else if (segue.identifier == "presentLocationSearchVC"){
-            let navVC: UINavigationController = segue.destinationViewController as! UINavigationController
-            let destVC: GPlacesSearchViewController = navVC.viewControllers.first as! GPlacesSearchViewController
-            
-            //destVC.searchType = "Location"
+            if self.navigationItem.title != "Around You"{
+                upcoming.searchQuery = self.navigationItem.title
+            }
         }
     }
     
@@ -214,7 +216,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         {
             geopoint = PFGeoPoint(latitude: object.businessLatitude!, longitude: object.businessLongitude!)
         }
-        let arraydict = ["name": object.businessName!, "address": object.businessAddress!, "yelp-id": object.yelpID!]
+        let arraydict = ["name": object.businessName!, "address": object.businessAddress!, "google-id": object.gPlaceID!] // Yelp ID not in use -> "yelp-id": object.yelpID!]
         playlistArray.append(arraydict)
        
     }
@@ -252,51 +254,15 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             }
         }
     }
-    
-    override func didMoveToParentViewController(parent: UIViewController?) {
-        super.didMoveToParentViewController(parent)
-        
-        if parent != nil && self.navigationItem.titleView == nil {
-            initNavigationItemTitleView()
-        }
-    }
-    
-    private func initNavigationItemTitleView() {
-        let titleView = UILabel()
-        titleView.text = "Search Businesses"
-        titleView.font = UIFont(name: "HelveticaNeue-Medium", size: 17)
-        let width = titleView.sizeThatFits(CGSizeMake(CGFloat.max, CGFloat.max)).width
-        titleView.frame = CGRect(origin:CGPointZero, size:CGSizeMake(width, 44))
-        self.navigationItem.titleView = titleView
-        
-        let recognizer = UITapGestureRecognizer(target: self, action: "titleWasTapped")
-        titleView.userInteractionEnabled = true
-        titleView.addGestureRecognizer(recognizer)
-    }
-    
-    func titleWasTapped(){
-        performSegueWithIdentifier("presentPlaceSearchVC", sender: nil)
-    }
-    
+
     // MARK: - VIEWDIDLOAD
     
     override func viewDidLoad(){
-        initNavigationItemTitleView()
-        
-        //configureCustomSearchController()
-        
-        
-        //locationTextField.delegate = self
         //getCurrentLocation()
+        //self.navigationController?.navigationBar.set
         
         // Performs an API search and returns a master array of businesses (as dictionaries)
-        dataHandler.performAPISearch(googleParameters) { (businessObjectArray) -> Void in
-            self.businessObjects = businessObjectArray
-            for _ in businessObjectArray{
-                self.businessShown.append(false)
-            }
-            self.tableView.reloadData()
-        }
+        performInitialSearch()
 //        geopoint = nil
 //        playlistArray.removeAll()
     }
@@ -324,20 +290,22 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         // Will allow user to press "return" button to close keyboard
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
-        let query = locationTextField.text
-        //let queryArr = query!.characters.split{$0 == " "}.map(String.init)
-        yelpSearchParameters["term"] = query as String!
-        
-        self.businessObjects.removeAll()
-        self.tableView.reloadData()
-        
-        dataHandler.performAPISearch(yelpSearchParameters) { (businessObjectArray) -> Void in
-            self.businessObjects = businessObjectArray
-            self.tableView.reloadData()
-        }
-        
-    }
+//    func textFieldDidEndEditing(textField: UITextField) {
+//        let query = locationTextField.text
+//        //let queryArr = query!.characters.split{$0 == " "}.map(String.init)
+//        //yelpSearchParameters["term"] = query as String!
+//        
+//        self.businessObjects.removeAll()
+//        self.tableView.reloadData()
+//        
+////        dataHandler.performAPISearch(yelpSearchParameters) { (businessObjectArray) -> Void in
+////            self.businessObjects = businessObjectArray
+////            self.tableView.reloadData()
+////        }
+//        
+//    }
+    
+    
     /*
     // MARK: - Navigation
 

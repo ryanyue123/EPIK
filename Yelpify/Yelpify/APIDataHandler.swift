@@ -186,11 +186,20 @@ class APIDataHandler {
                             placePhotoRef = photos[0]["photo_reference"] as! String
                         }
                         
+                        var placeLat: Double?
+                        var placeLng: Double?
+                        if let placeGeometry = place["geometry"] as? NSDictionary{
+                            if let placeLocation = placeGeometry["location"] as? NSDictionary{
+                                placeLat = placeLocation["lat"] as? Double
+                                placeLng = placeLocation["lng"] as? Double
+                            }
+                        }
+                        
                         // Create GooglePlace Object
                         //let placeObject = GooglePlace(id: placeID, name: placeName, address: placeAddress, photoRef: placePhotoRef)
                         
                         // Create Business Object
-                        let businessObject = Business(name: placeName, address: placeAddress, city: nil, zip: nil, phone: nil, imageURL: nil, photoRef: placePhotoRef, latitude: nil, longitude: nil, distance: nil, rating: nil, categories: nil, status: nil, businessID: nil, placeID: placeID)
+                        let businessObject = Business(name: placeName, address: placeAddress, city: nil, zip: nil, phone: nil, imageURL: nil, photoRef: placePhotoRef, latitude: placeLat, longitude: placeLng, distance: nil, rating: nil, categories: nil, status: nil, businessID: nil, placeID: placeID)
                         
                         arrayOfBusinesses.append(businessObject)
                         

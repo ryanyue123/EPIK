@@ -107,18 +107,23 @@
                     <navigationItem key="navigationItem" id="VAd-PS-Sq2">
                         <nil key="title"/>
                         <barButtonItem key="backBarButtonItem" title="Back" id="Y8S-ty-r3h"/>
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="hew-gb-kJm">
+                            <connections>
+                                <segue destination="MaZ-WG-NVz" kind="unwind" unwindAction="unwindToSearchBusinessVC:" id="gWO-Gz-rns"/>
+                            </connections>
+                        </barButtonItem>
                         <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search for places, food, etc" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" id="Xx0-8q-ghg">
                             <rect key="frame" x="133" y="7" width="334" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="search"/>
                             <connections>
                                 <action selector="mainSearchEditingDidChange:" destination="yju-Dj-JQn" eventType="editingChanged" id="hCJ-2E-xLK"/>
+                                <action selector="mainSearchEditingEnded:" destination="yju-Dj-JQn" eventType="editingDidEndOnExit" id="ic4-1J-DPQ"/>
                             </connections>
                         </textField>
                         <barButtonItem key="rightBarButtonItem" title="Search" id="qaq-Sj-snL">
                             <connections>
-                                <action selector="searchButtonTapped:" destination="yju-Dj-JQn" id="9S3-AO-z3E"/>
                                 <segue destination="MaZ-WG-NVz" kind="unwind" identifier="unwindToSearch" unwindAction="unwindToSearchBusinessVCWithSearch:" id="Wbs-P9-upg"/>
                             </connections>
                         </barButtonItem>
@@ -131,9 +136,9 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rFe-V7-JC5" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="MaZ-WG-NVz" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6315" y="-377"/>
+            <point key="canvasLocation" x="6315" y="-392"/>
         </scene>
-        <!--Search Business View Controller-->
+        <!--Around You-->
         <scene sceneID="vdw-Ia-rLx">
             <objects>
                 <viewController id="hzi-hz-39z" customClass="SearchBusinessViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
@@ -145,19 +150,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="159" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0eM-Bd-byN">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="130" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0eM-Bd-byN">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="businessCell" rowHeight="159" id="vxX-pQ-LBu" customClass="BusinessTableViewCell" customModule="Yelpify" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="600" height="159"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="businessCell" rowHeight="130" id="vxX-pQ-LBu" customClass="BusinessTableViewCell" customModule="Yelpify" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="92" width="600" height="130"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vxX-pQ-LBu" id="Zfz-NU-X5V">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="159"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="129.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_restaurant" translatesAutoresizingMaskIntoConstraints="NO" id="Uuw-ni-McR">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="158"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="129.5"/>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ldS-zq-ey5">
                                                     <rect key="frame" x="548" y="51" width="22" height="22"/>
@@ -168,7 +173,7 @@
                                                         <constraint firstAttribute="width" constant="308" id="MKK-Y9-o7B"/>
                                                         <constraint firstAttribute="height" constant="21" id="bv4-hG-T2e"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -177,7 +182,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="418" id="Nzw-17-lSq"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="23"/>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="23"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -186,7 +191,7 @@
                                                 <constraint firstItem="fRf-Lg-MMj" firstAttribute="top" secondItem="7gG-fa-wts" secondAttribute="bottom" constant="3" id="6an-So-ecE"/>
                                                 <constraint firstItem="Uuw-ni-McR" firstAttribute="top" secondItem="Zfz-NU-X5V" secondAttribute="top" id="9kn-xQ-RS6"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="ldS-zq-ey5" secondAttribute="trailing" constant="22" id="Bp3-d8-mOl"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="fRf-Lg-MMj" secondAttribute="bottom" constant="70.5" id="CXS-Ws-Dbj"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="fRf-Lg-MMj" secondAttribute="bottom" constant="41.5" id="CXS-Ws-Dbj"/>
                                                 <constraint firstItem="7gG-fa-wts" firstAttribute="top" secondItem="Zfz-NU-X5V" secondAttribute="topMargin" constant="18" id="DSQ-OV-oiH"/>
                                                 <constraint firstItem="7gG-fa-wts" firstAttribute="leading" secondItem="fRf-Lg-MMj" secondAttribute="leading" id="MHh-8b-Gob"/>
                                                 <constraint firstItem="ldS-zq-ey5" firstAttribute="top" secondItem="Zfz-NU-X5V" secondAttribute="topMargin" constant="43" id="Mha-TB-Sgh"/>
@@ -220,7 +225,7 @@
                             <constraint firstItem="0eM-Bd-byN" firstAttribute="leading" secondItem="gxa-fR-orC" secondAttribute="leadingMargin" constant="-20" id="fDn-CU-SH7"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="3s0-7b-ONU">
+                    <navigationItem key="navigationItem" title="Around You" id="3s0-7b-ONU">
                         <barButtonItem key="leftBarButtonItem" systemItem="done" id="emJ-kc-uDV">
                             <connections>
                                 <action selector="finishedEditingPlaylist:" destination="hzi-hz-39z" id="2DY-wz-yIJ"/>
@@ -229,7 +234,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="search" id="V02-Ig-bsD">
                             <connections>
-                                <segue destination="tvs-Kb-9f9" kind="presentation" modalTransitionStyle="crossDissolve" id="LJY-RO-ffD"/>
+                                <segue destination="tvs-Kb-9f9" kind="presentation" identifier="presentGPlacesVC" modalTransitionStyle="crossDissolve" id="LJY-RO-ffD"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

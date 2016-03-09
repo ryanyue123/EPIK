@@ -1,12 +1,7 @@
 import UIKit
 import GoogleMaps
 
-struct passedInformation{
-    static var searchQuery: String = ""
-    static var location: String = ""
-}
-
-class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate, UITableViewDelegate, CustomSearchControllerDelegate {
+class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate, UITableViewDelegate, CustomSearchControllerDelegate{
     
     @IBOutlet weak var resultsTableView: UITableView!
     
@@ -17,26 +12,26 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
     var tableDataSource: GMSAutocompleteTableDataSource?
     
     var customSearchController: CustomSearchController!
-    var customSearchPlaceController : CustomSearchController!
+    //var customSearchPlaceController : CustomSearchController!
     
     var searchType: String! = "Location"
     
     var currentLocation: String! = "Current Location"
     
-    var searchQuery: String?
+    var searchQuery: String! = ""
     
-    @IBAction func searchButtonTapped(sender: AnyObject) {
-        //searchQuery = mainSearchTextField.text
-        
-    }
-
     @IBAction func mainSearchEditingDidChange(sender: AnyObject) {
         let searchText = mainSearchTextField.text
+        
+        searchQuery = searchText
         
         searchType = "Business"
         configureFilterType()
         tableDataSource?.sourceTextHasChanged(searchText)
         resultsTableView.reloadData()
+    }
+    @IBAction func mainSearchEditingEnded(sender: AnyObject) {
+        performSegueWithIdentifier("unwindToSearch", sender: self)
     }
     
     override func viewDidLoad() {
@@ -46,6 +41,11 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
         configureFilterType()
         configureCustomSearchController()
 
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.mainSearchTextField.text = searchQuery
+        self.mainSearchTextField.becomeFirstResponder()
     }
     
     func configureFilterType(){
@@ -127,7 +127,6 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
     
     func didChangeSearchText(searchText: String) {
         tableDataSource?.sourceTextHasChanged(searchText)
-        passedInformation.searchQuery = searchText
         // Reload the tableview.
         resultsTableView.reloadData()
     }
@@ -151,17 +150,10 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
         resultsTableView.reloadData()
     }
     
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if segue.destinationViewController.isKindOfClass(SearchBusinessViewController){
-//            let searchBusinessVC: SearchBusinessViewController! = segue.destinationViewController as! SearchBusinessViewController
-//            searchBusinessVC.locationTextField.text = passedInformation.searchQuery
-//        }
-//    }
-//    
-    
-    deinit{
-        self.customSearchController.view.removeFromSuperview()
-        self.resultsTableView.removeFromSuperview()
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.destinationViewController.isKindOfClass(SearchBusinessViewController){
+            let searchBusinessVC: SearchBusinessViewController! = segue.destinationViewController as! SearchBusinessViewController
+        }
     }
     
 }
@@ -185,9 +177,9 @@ extension GPlacesSearchViewController: GMSAutocompleteTableDataSourceDelegate {
         print("Place address: \(place.formattedAddress)")
         print("Place attributions: \(place.attributions)")
         
-        passedInformation.searchQuery = mainSearchTextField.text!
-        
-        performSegueWithIdentifier("unwindToSearch:", sender: self)
+        searchQuery = place.name
+        performSegueWithIdentifier("unwindToSearch", sender: self)
+        //dismissViewControllerAnimated(true, completion: nil)
     }
     
     func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String?) -> Bool {
