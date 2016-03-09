@@ -1,4 +1,4 @@
-//
+    //
 //  AppDelegate.swift
 //  Yelpify
 //
@@ -8,6 +8,8 @@
 
 import UIKit
 import Parse
+import GoogleMaps
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -21,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.setApplicationId("VGI8bzJyUoObJ7fI1sRSnkCkpH9K452EP4tHPdUi",
             clientKey: "CPDodCFeYryaK1aq2VfgGy8eok1LXNwXGntkxW00")
         // Override point for customization after application launch.
+        
+        GMSServices.provideAPIKey("AIzaSyCKY_SOq4ivZp9b3oB8mmkBaKqHbLrbDlg")
         
         return true
     }

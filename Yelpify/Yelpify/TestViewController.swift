@@ -34,8 +34,8 @@ class TestViewController: UIViewController {
             self.dataHandler.parseYelpJSON(result, completion: { (yelpBusinessArray) -> Void in
                 let business = yelpBusinessArray[0]
                 print("\n")
-                searchName = business.businessName
-                searchCoordinate = [business.businessLatitude, business.businessLongitude]
+                searchName = business.businessName!
+                searchCoordinate = [business.businessLatitude!, business.businessLongitude!]
                 
                 print(business.businessName)
                 print(business.businessAddress)

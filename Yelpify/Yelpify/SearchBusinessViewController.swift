@@ -11,7 +11,7 @@ import CoreLocation
 import Parse
 import Haneke
 
-class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - GLOBAL VARIABLES
     var yelpClient = YelpAPIClient()
@@ -33,6 +33,16 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var locuSearchParameters = []
     
     // MARK: - OUTLETS
+    
+    @IBAction func searchWithGPlaces(sender: AnyObject) {
+    }
+    
+    
+    @IBAction func unwindToSearchBusinessVC(segue: UIStoryboardSegue) {
+        
+    }
+    
+    @IBOutlet weak var navBarTitleLabel: UINavigationItem!
     @IBOutlet weak var locationTextField: UITextField!
     
     @IBAction func didFinishEditingLocation(sender: AnyObject) {
@@ -83,6 +93,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         searchParameters["ll"] = String(latitude) + "," + String(longitude)
         print(String(latitude) + "," + String(longitude))
     }
+    
     func firstDictFromDict(dict: NSDictionary) -> NSDictionary{
         let key = dict.allKeys[0] as! String
         return dict[key] as! NSDictionary
@@ -97,7 +108,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     // Parse variables
     var index: NSIndexPath!
     var object: PFObject!
-    var playlistObject:PFObject!
     var playlistArray = [NSDictionary]()
     var geopoint:PFGeoPoint!
 
@@ -141,17 +151,28 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         self.performSegueWithIdentifier("showBusinessDetail", sender: self)
     }
 //    
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
-//        
-//        if (segue.identifier == "showBusinessDetail")
-//        {
-//            let indexPath = tableView.indexPathForSelectedRow
-//            let object = businessObjects[indexPath!.row]
-//            upcoming.object = object
-//            self.tableView.deselectRowAtIndexPath(indexPath!, animated: true)
-//        }
-//    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if (segue.identifier == "showBusinessDetail"){
+            let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
+            let indexPath = tableView.indexPathForSelectedRow
+            let object = businessObjects[indexPath!.row]
+            upcoming.object = object
+            self.tableView.deselectRowAtIndexPath(indexPath!, animated: true)
+            
+        }else if (segue.identifier == "presentPlaceSearchVC"){
+            let navVC: UINavigationController = segue.destinationViewController as! UINavigationController
+            let destVC: GPlacesSearchViewController = navVC.viewControllers.first as! GPlacesSearchViewController
+            
+            destVC.searchType = "Business"
+            
+        }else if (segue.identifier == "presentLocationSearchVC"){
+            let navVC: UINavigationController = segue.destinationViewController as! UINavigationController
+            let destVC: GPlacesSearchViewController = navVC.viewControllers.first as! GPlacesSearchViewController
+            
+            destVC.searchType = "Location"
+        }
+    }
     
     func addTrackToPlaylist(button: UIButton)
     {
@@ -162,21 +183,39 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         print(object.businessAddress)
         if (geopoint == nil)
         {
-            //geopoint = PFGeoPoint(latitude: 0, longitude: 0)
+            geopoint = PFGeoPoint(latitude: object.businessLatitude!, longitude: object.businessLongitude!)
         }
-        let arraydict = ["name": object.businessName, "address": object.businessAddress, "yelp-id": object.yelpID]
+        let arraydict = ["name": object.businessName!, "address": object.businessAddress!, "yelp-id": object.yelpID!]
         playlistArray.append(arraydict)
+       
     }
-        
-    @IBAction func finishedAddingToPlaylist(sender: UIBarButtonItem) {
-        playlistObject = PFObject(className: "Playlists")
-        playlistObject["playlist"] = playlistArray
-        playlistObject["createdBy"] = PFUser.currentUser()?.username
-        //playlistObject["location"] = geopoint
-        playlistObject.saveEventually {(success, error) -> Void in
-            if (error == nil)
+    
+    @IBAction func finishedEditingPlaylist(sender: UIBarButtonItem) {
+        let query = PFQuery(className: "Playlists")
+        query.whereKey("createdbyuser", equalTo: (PFUser.currentUser()?.username)!)
+        query.whereKey("playlistName", equalTo: playlist.playlistname)
+        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
+            if ((error) == nil)
             {
-
+                dispatch_async(dispatch_get_main_queue(), {
+                    print(objects)
+                    let playlistObject = objects![0]
+                    playlistObject["track"] = self.playlistArray
+                    if (self.geopoint != nil)
+                    {
+                        playlistObject["location"] = self.geopoint
+                    }
+                    playlistObject.saveInBackgroundWithBlock {(success, error) -> Void in
+                        if (error == nil)
+                        {
+                            print("hello")
+                        }
+                        else
+                        {
+                            print(error?.userInfo)
+                        }
+                    }
+                })
             }
             else
             {
@@ -184,13 +223,38 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             }
         }
     }
-
+    
+    override func didMoveToParentViewController(parent: UIViewController?) {
+        super.didMoveToParentViewController(parent)
+        
+        if parent != nil && self.navigationItem.titleView == nil {
+            initNavigationItemTitleView()
+        }
+    }
+    
+    private func initNavigationItemTitleView() {
+        let titleView = UILabel()
+        titleView.text = "Search Businesses"
+        titleView.font = UIFont(name: "HelveticaNeue-Medium", size: 17)
+        let width = titleView.sizeThatFits(CGSizeMake(CGFloat.max, CGFloat.max)).width
+        titleView.frame = CGRect(origin:CGPointZero, size:CGSizeMake(width, 44))
+        self.navigationItem.titleView = titleView
+        
+        let recognizer = UITapGestureRecognizer(target: self, action: "titleWasTapped")
+        titleView.userInteractionEnabled = true
+        titleView.addGestureRecognizer(recognizer)
+    }
+    
+    func titleWasTapped(){
+        performSegueWithIdentifier("presentPlaceSearchVC", sender: nil)
+    }
     
     // MARK: - VIEWDIDLOAD
     
     override func viewDidLoad(){
+        initNavigationItemTitleView()
         
-        locationTextField.delegate = self
+        //locationTextField.delegate = self
         //getCurrentLocation()
         
         // Performs an API search and returns a master array of businesses (as dictionaries)
@@ -246,4 +310,3 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     */
 
 }
-

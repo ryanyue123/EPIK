@@ -27,7 +27,7 @@ struct Business {
     var yelpID: String? = ""
     var gPlaceID: String? = ""
     
-    init(name: String?, address: String?, city: String?, zip: String?, phone: String?, imageURL: String?, photoRef: String?, latitude:Double?, longitude: Double?, distance: Double?, rating: Double?, categories: NSArray?, status: Bool?, businessID: String?, placeID: String?){
+    init(name: String?, address: String?, city: String?, zip: String?, phone: String?, imageURL: String?, photoRef: String?, latitude: Double?, longitude: Double?, distance: Double?, rating: Double?, categories: NSArray?, status: Bool?, businessID: String?, placeID: String?){
         businessName = name
         businessAddress = address
         businessImageURL = imageURL

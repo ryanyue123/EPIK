@@ -10,7 +10,12 @@ import UIKit
 import Parse
 import ParseUI
 
-class PlaylistViewController: UICollectionViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate {
+struct playlist
+{
+    static var playlistname: String!
+    static var playlistID: String!
+}
+class PlaylistViewController: UICollectionViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
 
     var locationManager = CLLocationManager()
     let client = YelpAPIClient()
@@ -18,8 +23,68 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
     var playlists = []
     var userlatitude: Double!
     var userlongitude: Double!
+    var inputTextField: UITextField!
+    
+    @IBAction func unwindToPlaylistVC(segue: UIStoryboardSegue) {
+        
+    }
     
     
+    @IBAction func showPlaylistAlert(sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: "Create new playlist", message: "Enter name of playlist.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alertController.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
+            textField.placeholder = "Playlist Name"
+            textField.secureTextEntry = false
+            self.inputTextField = textField
+        })
+        let deleteAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Destructive, handler: {(alert :UIAlertAction!) in
+            self.view.endEditing(true)
+            print("Delete button tapped")
+        })
+        alertController.addAction(deleteAction)
+        let okAction = UIAlertAction(title: "Enter", style: UIAlertActionStyle.Default, handler: {(alert :UIAlertAction!) in
+            let query = PFQuery(className: "Playlists")
+            query.whereKey("createdbyuser", equalTo: (PFUser.currentUser()?.username!)!)
+            query.whereKey("playlistName", equalTo: self.inputTextField.text!)
+            query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
+                if ((error) == nil)
+                {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        if (objects!.count == 0)
+                        {
+                            let object = PFObject(className: "Playlists")
+                            object["playlistName"] = self.inputTextField.text!
+                            object["createdbyuser"] = PFUser.currentUser()?.username!
+                            object.saveInBackgroundWithBlock {(success, error) -> Void in
+                                if (error == nil)
+                                {
+                                    playlist.playlistname = self.inputTextField.text!
+                                    self.performSegueWithIdentifier("showList", sender: self)
+                                }
+                                else
+                                {
+                                    print(error?.userInfo)
+                                }
+                            }
+                        }
+                        else
+                        {
+                            print("You have already created this playlist")
+                        }
+                    })
+                }
+                else
+                {
+                    print(error?.description)
+                }
+            }
+        })
+        alertController.addAction(okAction)
+        presentViewController(alertController, animated: true, completion: nil)
+        
+    }
+
     func fetchAllObjectsFromDataStore()
     {
         let query:PFQuery = PFQuery(className: "Playlists")
@@ -31,7 +96,7 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
             {
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlists = objects! as NSArray
-                    print(self.playlists)
+                    //print(self.playlists)
                 })
             }
             else

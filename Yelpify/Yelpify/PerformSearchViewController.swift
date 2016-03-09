@@ -1,24 +1,25 @@
 //
-//  BusinessDetailViewController.swift
+//  PerformSearchViewController.swift
 //  Yelpify
 //
-//  Created by Ryan Yue on 2/23/16.
+//  Created by Jonathan Lam on 3/5/16.
 //  Copyright © 2016 Yelpify. All rights reserved.
 //
 
 import UIKit
 
-class BusinessDetailViewController: UITableViewController {
-
-    var object: Business!
+class PerformSearchViewController: UIViewController, UITextFieldDelegate {
     
-    @IBAction func showBusinessList(sender: UIBarButtonItem) {
-        navigationController?.popViewControllerAnimated(true)
-    }
+    @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var searchTextField: UITextField!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Details"
-        //nameLabel.text = object.businessName
+        
+        searchTextField.delegate = self
+        searchTextField.becomeFirstResponder()
+
         // Do any additional setup after loading the view.
     }
 
@@ -27,9 +28,6 @@ class BusinessDetailViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func addItemToPlaylist(sender: UIBarButtonItem) {
-        
-    }
 
     /*
     // MARK: - Navigation
@@ -40,4 +38,5 @@ class BusinessDetailViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+
 }
