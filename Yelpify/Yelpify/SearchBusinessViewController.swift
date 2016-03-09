@@ -115,7 +115,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         let latitude = userLocation.coordinate.latitude
         let longitude = userLocation.coordinate.longitude
         
-        //searchParameters["ll"] = String(latitude) + "," + String(longitude)
+        googleParameters["location"] = String(latitude) + "," + String(longitude)
         print(String(latitude) + "," + String(longitude))
     }
     
@@ -258,7 +258,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     // MARK: - VIEWDIDLOAD
     
     override func viewDidLoad(){
-        //getCurrentLocation()
+        getCurrentLocation()
         //self.navigationController?.navigationBar.set
         
         // Performs an API search and returns a master array of businesses (as dictionaries)
