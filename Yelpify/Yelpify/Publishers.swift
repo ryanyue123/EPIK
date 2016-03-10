@@ -39,6 +39,26 @@ class Publishers{
                 newPublishers.append(publisher)
             }
         }
+        publishers = newPublishers
     }
+    
+    func movePublisherFromIndexPath(indexPath:NSIndexPath, toIndexPath newIndexPath: NSIndexPath){
+        if indexPath != newIndexPath{
+            let index = absoluteIndexForIndexPath(indexPath)
+            let publisher = publishers[index]
+            publisher.section = sections[newIndexPath.section]
+            let newIndex = absoluteIndexForIndexPath(newIndexPath)
+            publishers.removeAtIndex(index)
+            publishers.insert(publisher, atIndex: newIndex)
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 }
 
