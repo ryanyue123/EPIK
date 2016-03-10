@@ -86,6 +86,10 @@
 		90E505E31C8E946700F47285 /* CustomSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
 		981001A34CAB5A147D7CB122 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B140D093A1A89D68777F3561 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		EDBAE5BF1C8E472100278A33 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		EDBAE5C11C8E49A900278A33 /* Publisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
+		EDBAE5C31C8E4C1C00278A33 /* Publishers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publishers.swift; sourceTree = "<group>"; };
+		EDBAE5C71C8E4F4400278A33 /* Collection View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Collection View.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +145,7 @@
 			children = (
 				3CE2EE7E1C6C5EC8000C9088 /* AppDelegate.swift */,
 				3CE2EE821C6C5EC8000C9088 /* Main.storyboard */,
+				EDBAE5C71C8E4F4400278A33 /* Collection View.xib */,
 				908481831C750816009B6099 /* BusinessObject.swift */,
 				9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */,
 				90DC57BA1C72844B001F1891 /* API */,
@@ -199,6 +204,9 @@
 		902518501C88277B00BB3E05 /* Testing VCs */ = {
 			isa = PBXGroup;
 			children = (
+				EDBAE5BF1C8E472100278A33 /* CollectionViewController.swift */,
+				EDBAE5C11C8E49A900278A33 /* Publisher.swift */,
+				EDBAE5C31C8E4C1C00278A33 /* Publishers.swift */,
 				906CAA301C8977B700AF3515 /* TestViewController.swift */,
 				90BAD1C01C8662ED0047277E /* TestTableViewController.swift */,
 				90BAD1C21C86639E0047277E /* TestTableViewCell.swift */,
@@ -298,7 +306,7 @@
 				TargetAttributes = {
 					3CE2EE7A1C6C5EC8000C9088 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = CQD8Z7UVJ4;
+						DevelopmentTeam = 4SZ665GKZ4;
 					};
 					3CE2EE8E1C6C5EC8000C9088 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -594,7 +602,7 @@
 				INFOPLIST_FILE = Yelpify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Yelpify.Yelpify;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Yelpify.Yelpify1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -615,7 +623,7 @@
 				INFOPLIST_FILE = Yelpify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Yelpify.Yelpify;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Yelpify.Yelpify1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

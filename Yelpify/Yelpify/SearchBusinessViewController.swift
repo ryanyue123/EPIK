@@ -17,27 +17,13 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var yelpClient = YelpAPIClient()
     var locuClient = LocuAPIClient()
     var googlePlacesClient = GooglePlacesAPIClient()
-    
     var customSearchController: CustomSearchController!
-    
     let cache = Shared.imageCache
-    
     var dataHandler = APIDataHandler()
-    
     var locationManager = CLLocationManager()
-//    var searchParameters = ["ll": "", "category_filter": "pizza", "radius_filter": "10000", "sort": "0"]
-//    var yelpSearchParameters = [
-//        "ll": "33.64496794563093,-117.83725295740864",
-//        "term": "tacos",
-//        "radius_filter": "10000",
-//        "sort": "1"]
-    
     var googleParameters = ["key": "AIzaSyDkxzICx5QqztP8ARvq9z0DxNOF_1Em8Qc", "location": "33.64496794563093,-117.83725295740864", "rankby":"distance", "keyword": ""]
-    
     var searchDidChange = false
     var searchQuery = ""
-
-    //var locuSearchParameters = []
     
     // MARK: - OUTLETS
     
@@ -45,7 +31,15 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     }
     
     
-    @IBAction func unwindToSearchBusinessVC(sender: UIStoryboardSegue) {
+    @IBAction func unwindToSearchBusinessVC(segue: UIStoryboardSegue) {
+        if (segue.identifier != nil)
+        {
+            if segue.identifier == "unwindFromDetail"{
+                let bdVC = segue.sourceViewController as! BusinessDetailViewController
+                let indexp = bdVC.index
+                addTrackToPlaylist(indexp)
+            }
+        }
 
     }
     
@@ -67,6 +61,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             }
         }
     }
+    
     
     @IBOutlet weak var navBarTitleLabel: UINavigationItem!
     @IBOutlet weak var locationTextField: UITextField!
@@ -136,7 +131,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     
     // MARK: - TABLEVIEW VARIABLES
-    var businesses: [NSDictionary] = []
     var businessObjects: [Business] = []
     var businessShown: [Bool] = []
 
@@ -148,7 +142,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
 
     // MARK: - TABLEVIEW FUNCTIONS
 
-    @IBOutlet weak var addToPlaylist: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -193,6 +186,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             let indexPath = tableView.indexPathForSelectedRow
             let object = businessObjects[indexPath!.row]
             upcoming.object = object
+            upcoming.index = indexPath!.row
             self.tableView.deselectRowAtIndexPath(indexPath!, animated: true)
         }else if (segue.identifier == "presentGPlacesVC"){
             
@@ -215,13 +209,30 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         let object = businessObjects[index]
         print(object.businessName)
         print(object.businessAddress)
+        print(object.gPlaceID)
+        print(object.yelpID)
         if (geopoint == nil)
         {
             geopoint = PFGeoPoint(latitude: object.businessLatitude!, longitude: object.businessLongitude!)
         }
-        let arraydict = ["name": object.businessName!, "address": object.businessAddress!, "google-id": object.gPlaceID!] // Yelp ID not in use -> "yelp-id": object.yelpID!]
+        let arraydict = ["name": object.businessName!, "address": object.businessAddress!, "google-id": object.gPlaceID!]
+        //"yelp-id": object.yelpID!
         playlistArray.append(arraydict)
        
+    }
+    func addTrackToPlaylist(indx: Int!)
+    {
+        let object = businessObjects[indx]
+        print(object.businessName)
+        print(object.businessAddress)
+        if (geopoint == nil)
+        {
+            geopoint = PFGeoPoint(latitude: object.businessLatitude!, longitude: object.businessLongitude!)
+        }
+        let arraydict = ["name": object.businessName!, "address": object.businessAddress!, "google-id": object.gPlaceID!]
+        //"yelp-id": object.yelpID!
+        playlistArray.append(arraydict)
+        print("added")
     }
     
     @IBAction func finishedEditingPlaylist(sender: UIBarButtonItem) {
@@ -266,8 +277,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         
         // Performs an API search and returns a master array of businesses (as dictionaries)
         performInitialSearch()
-//        geopoint = nil
-//        playlistArray.removeAll()
+        geopoint = nil
+        playlistArray.removeAll()
     }
     
     func configureCustomSearchController() {
