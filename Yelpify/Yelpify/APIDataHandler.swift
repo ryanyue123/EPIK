@@ -76,10 +76,10 @@ class APIDataHandler {
     
     func createYelpParameters(businessObject: Business) -> Dictionary<String, String>{
         let ll = String(businessObject.businessLatitude!) + "," + String(businessObject.businessLongitude!)
-        let name = businessObject.businessName
+        let name = businessObject.businessName!
         let temp =  [
             "ll": ll,
-            "term": name!,
+            "term": name,
             "radius_filter": "500",
             "sort": "1"]
         print(temp)
