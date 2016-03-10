@@ -11,6 +11,9 @@ import Parse
 
 class BusinessDetailViewController: UITableViewController {
 
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak var hoursLabel: UILabel!
     var object: Business!
     var index: Int!
     @IBAction func addToPlaylist(sender: UIBarButtonItem) {
@@ -22,6 +25,8 @@ class BusinessDetailViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Details"
+        nameLabel.text = object.businessName
+        addressLabel.text = object.businessAddress
         //nameLabel.text = object.businessName
         // Do any additional setup after loading the view.
     }
@@ -34,7 +39,8 @@ class BusinessDetailViewController: UITableViewController {
     @IBAction func addItemToPlaylist(sender: UIBarButtonItem) {
         performSegueWithIdentifier("unwindFromDetail", sender: self)
     }
-
+    
+    
     /*
     // MARK: - Navigation
 

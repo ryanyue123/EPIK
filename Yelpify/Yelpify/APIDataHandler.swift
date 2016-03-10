@@ -76,7 +76,7 @@ class APIDataHandler {
 //            
 //        }
     }
-    
+
     func parseYelpJSON(data: NSDictionary, completion: (yelpBusinessArray: [YelpBusiness]) -> Void){
         
         if data.count > 0 {
