@@ -70,23 +70,25 @@ class APIDataHandler {
     func retrieveYelpBusinessFromBusinessObject(business:Business, completion: (yelpBusinessObject: YelpBusiness) -> Void){
         getSingleYelpBusiness(createYelpParameters(business)) { (yelpBusinessObject) -> Void in
             completion(yelpBusinessObject: yelpBusinessObject)
+        
         }
     }
     
     func createYelpParameters(businessObject: Business) -> Dictionary<String, String>{
-        let ll = String(businessObject.businessLatitude) + "," + String(businessObject.businessLongitude)
+        let ll = String(businessObject.businessLatitude!) + "," + String(businessObject.businessLongitude!)
         let name = businessObject.businessName
-        
-        return [
+        let temp =  [
             "ll": ll,
             "term": name!,
             "radius_filter": "500",
             "sort": "1"]
-        
+        print(temp)
+        return temp
     }
     
     
     func getSingleYelpBusiness(yelpParameters: Dictionary<String, String>, completion: (yelpBusinessObject: YelpBusiness)-> Void){
+        
         yelpClient.searchPlacesWithParameters(yelpParameters) { (result) -> Void in
             self.parseSingleYelpBusiness(result, completion: { (yelpBusinessObject) -> Void in
                 completion(yelpBusinessObject: yelpBusinessObject)

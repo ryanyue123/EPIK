@@ -16,17 +16,21 @@ class BusinessDetailViewController: UITableViewController {
     @IBOutlet weak var hoursLabel: UILabel!
     var object: Business!
     var index: Int!
-    @IBAction func addToPlaylist(sender: UIBarButtonItem) {
-        
-    }
+    var yelpClient = APIDataHandler()
+    var yelpObj:YelpBusiness!
+
     @IBAction func showBusinessList(sender: UIBarButtonItem) {
         navigationController?.popViewControllerAnimated(true)
     }
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         self.title = "Details"
-        nameLabel.text = object.businessName
-        addressLabel.text = object.businessAddress
+        yelpClient.retrieveYelpBusinessFromBusinessObject(object) { (yelpBusinessObject) -> Void in
+            self.yelpObj = yelpBusinessObject
+        }
+        nameLabel.text = yelpObj.businessName
+        addressLabel.text = yelpObj.businessAddress
         //nameLabel.text = object.businessName
         // Do any additional setup after loading the view.
     }
