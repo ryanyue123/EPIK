@@ -229,7 +229,7 @@
                         <barButtonItem key="leftBarButtonItem" systemItem="done" id="emJ-kc-uDV">
                             <connections>
                                 <action selector="finishedEditingPlaylist:" destination="hzi-hz-39z" id="2DY-wz-yIJ"/>
-                                <segue destination="Umd-Hh-3gV" kind="unwind" unwindAction="unwindToPlaylistVC:" id="OL1-ql-YWW"/>
+                                <segue destination="UL9-SW-wCG" kind="show" action="showDetailViewController:sender:" id="E9p-cu-wCj"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="search" id="V02-Ig-bsD">
@@ -245,7 +245,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wJO-Js-5jv" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="Umd-Hh-3gV" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4857" y="362"/>
         </scene>
@@ -309,9 +308,16 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Details" id="ZkG-WE-SLz">
                         <barButtonItem key="backBarButtonItem" title="Back" id="A70-m8-7Ax"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="PoA-ws-NoD">
+                            <connections>
+                                <action selector="addToPlaylist:" destination="a1s-cq-qJD" id="U5Y-Vz-sdV"/>
+                                <segue destination="HKr-MV-tFI" kind="unwind" identifier="unwindFromDetail" unwindAction="unwindToSearchBusinessVC:" id="v20-DY-XQO"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Obf-kV-cZr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="HKr-MV-tFI" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="5669" y="362"/>
         </scene>
