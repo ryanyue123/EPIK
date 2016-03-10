@@ -196,6 +196,9 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             if self.navigationItem.title != "Around You"{
                 upcoming.searchQuery = self.navigationItem.title
             }
+            
+            // Pass the location
+            upcoming.currentLocationCoordinates = googleParameters["location"]
         }
     }
     

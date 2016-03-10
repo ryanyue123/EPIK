@@ -17,6 +17,7 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
     var searchType: String! = "Location"
     
     var currentLocation: String! = "Current Location"
+    var currentLocationCoordinates: String! = "-33.0,180.0"
     
     var searchQuery: String! = ""
     
@@ -46,6 +47,8 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
     override func viewWillAppear(animated: Bool) {
         self.mainSearchTextField.text = searchQuery
         self.mainSearchTextField.becomeFirstResponder()
+        
+        self.customSearchController.customSearchBar.placeholder = currentLocationCoordinates
     }
     
     func configureFilterType(){
@@ -67,10 +70,18 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
         tableDataSource = GMSAutocompleteTableDataSource()
         tableDataSource?.delegate = self
         
-        let leftBound = CLLocationCoordinate2D(latitude: 33.3, longitude: -117.9)
-        let rightBound = CLLocationCoordinate2D(latitude: 33.8, longitude: -117.7)
+        let coordArray = currentLocationCoordinates.characters.split{$0 == ","}.map(String.init)
+        let currentLat = Double(coordArray[0])!
+        let currentLng = Double(coordArray[1])!
         
-        tableDataSource?.autocompleteBounds = GMSCoordinateBounds(coordinate: leftBound, coordinate: rightBound)
+    
+        let northEastBound = CLLocationCoordinate2D(latitude: currentLat + 0.1, longitude: currentLng + 0.1)
+        let southWestBound = CLLocationCoordinate2D(latitude: currentLat - 0.1, longitude: currentLng - 0.1)
+        
+        print(northEastBound.latitude, northEastBound.longitude)
+        print(southWestBound.latitude, southWestBound.longitude)
+        
+        tableDataSource?.autocompleteBounds = GMSCoordinateBounds(coordinate: northEastBound, coordinate: southWestBound)
         
         resultsTableView.dataSource = tableDataSource
         resultsTableView.delegate = tableDataSource
