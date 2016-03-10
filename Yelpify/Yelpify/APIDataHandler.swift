@@ -29,15 +29,6 @@ class APIDataHandler {
     //var locuClient = LocuAPIClient()
     
     /*
-    
-    FLOW
-    1) Take parameters for both APIs
-    2) Pass parameters to individual APIs and recieve JSON data
-    3) Parse the data into arrays of businesses from APIs
-    4) Compare both arrays and match up businesses
-    5) If match is good, combine data into one business object
-    6) Return the array of business objects that contains data from all APIs used
-    
     NEW FLOW
     1) Take parameters for Google Places API
     2) Pass parameters to search in Google Places API
