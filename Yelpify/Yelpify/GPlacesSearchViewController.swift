@@ -1,109 +1,199 @@
-//
-//  GPlacesSearchViewController.swift
-//  Yelpify
-//
-//  Created by Jonathan Lam on 3/7/16.
-//  Copyright © 2016 Yelpify. All rights reserved.
-//
-
 import UIKit
 import GoogleMaps
 
-class GPlacesSearchViewController: UIViewController, UISearchDisplayDelegate{
+class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate, UITableViewDelegate, CustomSearchControllerDelegate{
     
-    var resultsViewController: GMSAutocompleteResultsViewController?
-    var searchController: UISearchController?
-    var resultView: UITextView?
+    @IBOutlet weak var resultsTableView: UITableView!
     
-    var searchType: String!
+    @IBOutlet weak var mainSearchTextField: UITextField!
     
-    override func viewDidAppear(animated: Bool) {
-        print(searchType)
+    var shouldShowSearchResults = false
+    var customSearchBar: CustomSearchBar!
+    var tableDataSource: GMSAutocompleteTableDataSource?
+    
+    var customSearchController: CustomSearchController!
+    //var customSearchPlaceController : CustomSearchController!
+    
+    var searchType: String! = "Location"
+    
+    var currentLocation: String! = "Current Location"
+    
+    var searchQuery: String! = ""
+    
+    @IBAction func mainSearchEditingDidChange(sender: AnyObject) {
+        let searchText = mainSearchTextField.text
+        
+        searchQuery = searchText
+        
+        searchType = "Business"
+        configureFilterType()
+        tableDataSource?.sourceTextHasChanged(searchText)
+        resultsTableView.reloadData()
+    }
+    @IBAction func mainSearchEditingEnded(sender: AnyObject) {
+        performSegueWithIdentifier("unwindToSearch", sender: self)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        resultsViewController = GMSAutocompleteResultsViewController()
-        resultsViewController?.delegate = self
+        configureTableDataSource()
+        configureFilterType()
+        configureCustomSearchController()
+
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.mainSearchTextField.text = searchQuery
+        self.mainSearchTextField.becomeFirstResponder()
+    }
+    
+    func configureFilterType(){
         
-        let leftBound = CLLocationCoordinate2D(latitude: 33.3, longitude: -117.9)
-        let rightBound = CLLocationCoordinate2D(latitude: 33.8, longitude: -117.7)
         let filter = GMSAutocompleteFilter()
-        
         switch searchType{
             case "Location":
                 filter.type = GMSPlacesAutocompleteTypeFilter.Address
             case "Business":
                 filter.type = GMSPlacesAutocompleteTypeFilter.Establishment
             default:
-                filter.type = GMSPlacesAutocompleteTypeFilter.Establishment
+                filter.type = GMSPlacesAutocompleteTypeFilter.NoFilter
         }
-    
-        resultsViewController?.autocompleteBounds = GMSCoordinateBounds(coordinate: leftBound, coordinate: rightBound)
-        resultsViewController?.autocompleteFilter = filter
         
-        configureSearchController()
-        
-        // Put the search bar in the navigation bar.
-        self.navigationItem.titleView = searchController?.searchBar
-        
-        // When UISearchController presents the results view, present it in
-        // this view controller, not one further up the chain.
-        self.definesPresentationContext = true
-        
-        // Prevent the navigation bar from being hidden when searching.
-        searchController?.hidesNavigationBarDuringPresentation = false
+        tableDataSource?.autocompleteFilter = filter
     }
     
-    func configureSearchController() {
-        // Initialize and perform a minimum configuration to the search controller.
-        searchController = UISearchController(searchResultsController: resultsViewController)
-        let searchBar = searchController!.searchBar
+    func configureTableDataSource(){
+        tableDataSource = GMSAutocompleteTableDataSource()
+        tableDataSource?.delegate = self
         
-        searchController?.searchResultsUpdater = resultsViewController
-        searchController!.dimsBackgroundDuringPresentation = true
-        searchBar.placeholder = "Search " + searchType
-        searchBar.sizeToFit()
-        searchBar.showsCancelButton = false
-//        searchBar.showsScopeBar = false
-//        searchBar.showsBookmarkButton = false
+        let leftBound = CLLocationCoordinate2D(latitude: 33.3, longitude: -117.9)
+        let rightBound = CLLocationCoordinate2D(latitude: 33.8, longitude: -117.7)
         
-        // Place the search bar view to the tableview headerview.
-        //self.navigationItem.titleView = searchController?.searchBar
-    }
-    
-    deinit{
-        searchController!.view.removeFromSuperview()
-        resultsViewController?.view.removeFromSuperview()
-    }
-}
+        tableDataSource?.autocompleteBounds = GMSCoordinateBounds(coordinate: leftBound, coordinate: rightBound)
+        
+        resultsTableView.dataSource = tableDataSource
+        resultsTableView.delegate = tableDataSource
 
-
-// Handle the user's selection.
-extension GPlacesSearchViewController: GMSAutocompleteResultsViewControllerDelegate {
-    
-    func resultsController(resultsController: GMSAutocompleteResultsViewController!,
-        didAutocompleteWithPlace place: GMSPlace!) {
-            searchController?.active = false
-            // Do something with the selected place.
-            print("Place name: ", place.name)
-            print("Place address: ", place.formattedAddress)
-            print("Place attributions: ", place.attributions)
     }
     
-    func resultsController(resultsController: GMSAutocompleteResultsViewController!,
-        didFailAutocompleteWithError error: NSError!){
-            // TODO: handle the error.
-            print("Error: ", error.description)
+    func configureCustomSearchController() {
+        customSearchController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, resultsTableView.frame.size.width, 35.0), searchBarFont: UIFont(name: "Futura", size: 12.0)!, searchBarTextColor: UIColor.orangeColor(), searchBarTintColor: UIColor.blackColor())
+        
+        customSearchController.customSearchBar.showsCancelButton = false
+        customSearchController.customSearchBar.showsScopeBar = false
+        customSearchController.customSearchBar.placeholder = "Current Location"
+        
+        // CHANGE MAGNIFYING GLASS IMAGE HERE
+        //customSearchController.customSearchBar.setImage(UIImage(), forSearchBarIcon: UISearchBarIcon.Search, state: UIControlState.Normal)
+        
+        resultsTableView.tableHeaderView = customSearchController.customSearchBar
+        
+        customSearchController.customDelegate = self
+        
+//        // NAV SEARCH BAR
+//        customSearchPlaceController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, (self.navigationController?.navigationBar.frame.size.width)!, 44.0), searchBarFont: UIFont(name: "Futura", size: 16.0)!, searchBarTextColor: UIColor.orangeColor(), searchBarTintColor: UIColor.blackColor())
+//        
+//        customSearchPlaceController.customSearchBar.showsCancelButton = false
+//        customSearchPlaceController.customSearchBar.showsScopeBar = false
+//        customSearchPlaceController.customSearchBar.placeholder = "Search Places"
+//        
+//        customSearchPlaceController.customDelegate = self
+//        
+//        self.navigationItem.titleView = customSearchPlaceController.customSearchBar
+        
     }
     
-    // Turn the network activity indicator on and off again.
-    func didRequestAutocompletePredictionsForResultsController(resultsController: GMSAutocompleteResultsViewController!) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+    func didStartSearching() {
+        searchType = "Location"
+        configureFilterType()
+        customSearchController.customSearchBar.placeholder = "Search Location"
+        
+        shouldShowSearchResults = true
+        resultsTableView.reloadData()
     }
     
-    func didUpdateAutocompletePredictionsForResultsController(resultsController: GMSAutocompleteResultsViewController!) {
+    func didTapOnSearchButton() {
+        if !shouldShowSearchResults {
+            shouldShowSearchResults = true
+            resultsTableView.reloadData()
+        }
+    }
+    
+    func didTapOnCancelButton() {
+        shouldShowSearchResults = false
+        resultsTableView.reloadData()
+    }
+    
+    func didChangeSearchText(searchText: String) {
+        tableDataSource?.sourceTextHasChanged(searchText)
+        // Reload the tableview.
+        resultsTableView.reloadData()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func didUpdateAutocompletePredictionsForTableDataSource(tableDataSource: GMSAutocompleteTableDataSource) {
+        // Turn the network activity indicator off.
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        // Reload table data.
+        resultsTableView.reloadData()
+    }
+    
+    func didRequestAutocompletePredictionsForTableDataSource(tableDataSource: GMSAutocompleteTableDataSource) {
+        // Turn the network activity indicator on.
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        // Reload table data.
+        resultsTableView.reloadData()
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.destinationViewController.isKindOfClass(SearchBusinessViewController){
+            let searchBusinessVC: SearchBusinessViewController! = segue.destinationViewController as! SearchBusinessViewController
+        }
+    }
+    
+}
+
+extension GPlacesSearchViewController: GMSAutocompleteTableDataSourceDelegate {
+    func tableDataSource(tableDataSource: GMSAutocompleteTableDataSource, didAutocompleteWithPlace place: GMSPlace) {
+        customSearchController?.active = false
+        
+        // Do something with the selected place.
+        if searchType == "Location"{
+            currentLocation = place.formattedAddress!
+            customSearchController.customSearchBar.resignFirstResponder()
+            customSearchController.customSearchBar.text = ""
+            customSearchController.customSearchBar.placeholder = place.formattedAddress!
+        }else if searchType == "Business"{
+            mainSearchTextField.resignFirstResponder()
+            mainSearchTextField.text = place.name
+        }
+        
+        print("Place name: \(place.name)")
+        print("Place address: \(place.formattedAddress)")
+        print("Place attributions: \(place.attributions)")
+        
+        searchQuery = place.name
+        performSegueWithIdentifier("unwindToSearch", sender: self)
+        //dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String?) -> Bool {
+        tableDataSource?.sourceTextHasChanged(searchString)
+        return false
+    }
+    
+    func tableDataSource(tableDataSource: GMSAutocompleteTableDataSource, didFailAutocompleteWithError error: NSError) {
+        // TODO: Handle the error.
+        print("Error: \(error.description)")
+    }
+    
+    func tableDataSource(tableDataSource: GMSAutocompleteTableDataSource, didSelectPrediction prediction: GMSAutocompletePrediction) -> Bool {
+        return true
     }
 }
+

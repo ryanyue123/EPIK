@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import Parse
 
 class BusinessDetailViewController: UITableViewController {
 
     var object: Business!
-    
+    var index: Int!
+    @IBAction func addToPlaylist(sender: UIBarButtonItem) {
+        
+    }
     @IBAction func showBusinessList(sender: UIBarButtonItem) {
         navigationController?.popViewControllerAnimated(true)
     }
@@ -28,7 +32,7 @@ class BusinessDetailViewController: UITableViewController {
     }
     
     @IBAction func addItemToPlaylist(sender: UIBarButtonItem) {
-        
+        performSegueWithIdentifier("unwindFromDetail", sender: self)
     }
 
     /*

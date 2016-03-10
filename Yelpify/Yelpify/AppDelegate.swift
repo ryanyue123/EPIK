@@ -22,9 +22,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize Parse.
         Parse.setApplicationId("VGI8bzJyUoObJ7fI1sRSnkCkpH9K452EP4tHPdUi",
             clientKey: "CPDodCFeYryaK1aq2VfgGy8eok1LXNwXGntkxW00")
-        // Override point for customization after application launch.
         
+        // Initialize Google Places API.
         GMSServices.provideAPIKey("AIzaSyCKY_SOq4ivZp9b3oB8mmkBaKqHbLrbDlg")
+        
+        
+        // Set navigation bar tint / background colour
+//        UINavigationBar.appearance().barTintColor = UIColor.whiteColor()
+//        
+//        UINavigationBar.appearance().backgroundColor = UIColor.whiteColor()
+//        UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarMetrics: .Default)
+//        
+        // Set navigation bar ItemButton tint colour
+        //UIBarButtonItem.appearance().tintColor = UIColor.orangeColor()
+        
+        //Set navigation bar Back button tint colour
+        //UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         
         return true
     }
