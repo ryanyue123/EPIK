@@ -28,8 +28,8 @@ class BusinessDetailViewController: UITableViewController {
         self.title = "Details"
         yelpClient.retrieveYelpBusinessFromBusinessObject(object) { (yelpBusinessObject) -> Void in
             self.yelpObj = yelpBusinessObject
-            self.nameLabel.text = self.yelpObj.businessName
-            self.addressLabel.text = self.yelpObj.businessAddress
+            self.nameLabel.text = self.object.businessName
+            self.addressLabel.text = self.object.businessAddress
 
         }
         //nameLabel.text = object.businessName
