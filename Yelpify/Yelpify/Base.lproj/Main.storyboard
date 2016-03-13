@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="UL9-SW-wCG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="OFK-3P-Zbm">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -528,6 +528,12 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wh5-Mx-ww4">
+                                                    <rect key="frame" x="550" y="96" width="34" height="18"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="15"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="JGI-Eu-KTi" firstAttribute="top" secondItem="9w0-g5-agP" secondAttribute="bottom" constant="47" id="0pW-9c-g95"/>
@@ -538,11 +544,13 @@
                                                 <constraint firstItem="1K2-hq-Ssp" firstAttribute="top" secondItem="9w0-g5-agP" secondAttribute="bottom" constant="47" id="Onp-N9-KSr"/>
                                                 <constraint firstItem="JGI-Eu-KTi" firstAttribute="leading" secondItem="1K2-hq-Ssp" secondAttribute="trailing" constant="8" id="OtP-kH-vFB"/>
                                                 <constraint firstItem="lzG-Qg-Umt" firstAttribute="leading" secondItem="9w0-g5-agP" secondAttribute="trailing" constant="-4" id="ThG-Ik-nyd"/>
+                                                <constraint firstItem="wh5-Mx-ww4" firstAttribute="top" secondItem="vBa-pQ-xB3" secondAttribute="bottom" constant="57" id="ThY-IV-pwI"/>
                                                 <constraint firstItem="sni-DY-lcf" firstAttribute="top" secondItem="JGI-Eu-KTi" secondAttribute="bottom" id="Vx0-On-PFI"/>
                                                 <constraint firstItem="9w0-g5-agP" firstAttribute="leading" secondItem="k0d-zi-NAg" secondAttribute="leadingMargin" constant="10" id="b8D-w2-rAx"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="lzG-Qg-Umt" secondAttribute="trailing" constant="8" id="bgO-ac-n0Q"/>
                                                 <constraint firstAttribute="topMargin" secondItem="lzG-Qg-Umt" secondAttribute="top" id="lH2-yq-eb0"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="vBa-pQ-xB3" secondAttribute="trailing" constant="8" id="m9T-LT-ZRL"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="wh5-Mx-ww4" secondAttribute="trailing" constant="8" id="mkg-wX-tQb"/>
                                                 <constraint firstItem="sni-DY-lcf" firstAttribute="leading" secondItem="hqN-Pv-Jfs" secondAttribute="trailing" constant="8" id="mlo-PH-QJ9"/>
                                                 <constraint firstItem="9w0-g5-agP" firstAttribute="top" secondItem="k0d-zi-NAg" secondAttribute="topMargin" id="reN-Qe-2IL"/>
                                                 <constraint firstItem="1K2-hq-Ssp" firstAttribute="leading" secondItem="k0d-zi-NAg" secondAttribute="leadingMargin" constant="10" id="vAk-aH-bkC"/>
@@ -552,12 +560,39 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.77296602487868904" green="1" blue="0.97386550312594722" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="32" id="zhG-EP-Bad">
-                                        <rect key="frame" x="0.0" y="225" width="600" height="32"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="183" id="zhG-EP-Bad">
+                                        <rect key="frame" x="0.0" y="225" width="600" height="183"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zhG-EP-Bad" id="g6m-eJ-aNg">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="32"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="183"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="He0-wt-CsU">
+                                                    <rect key="frame" x="0.0" y="8" width="600" height="48"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <state key="normal" title="   Directions"/>
+                                                    <connections>
+                                                        <action selector="openInMaps:" destination="a1s-cq-qJD" eventType="touchUpInside" id="u1t-WP-Kxx"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xzW-pV-vr2">
+                                                    <rect key="frame" x="0.0" y="64" width="600" height="48"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <state key="normal" title="   Phone"/>
+                                                    <connections>
+                                                        <action selector="openInPhone:" destination="a1s-cq-qJD" eventType="touchUpInside" id="5X6-rP-Ju8"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PiK-oY-Bda">
+                                                    <rect key="frame" x="0.0" y="120" width="600" height="48"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <state key="normal" title="   Website"/>
+                                                    <connections>
+                                                        <action selector="openInWeb:" destination="a1s-cq-qJD" eventType="touchUpInside" id="u5X-l1-QvE"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.94156986256544506" green="0.94156986256544506" blue="0.94156986256544506" alpha="1" colorSpace="calibratedRGB"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -579,8 +614,12 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addressLabel" destination="JGI-Eu-KTi" id="pj8-Ic-34q"/>
+                        <outlet property="callButton" destination="xzW-pV-vr2" id="KeM-jG-jlP"/>
+                        <outlet property="directionsButton" destination="He0-wt-CsU" id="P1O-0L-bhA"/>
                         <outlet property="hoursLabel" destination="sni-DY-lcf" id="Kme-cT-1lR"/>
                         <outlet property="nameLabel" destination="9w0-g5-agP" id="w9r-oh-uGe"/>
+                        <outlet property="statusLabel" destination="wh5-Mx-ww4" id="jdY-9S-PGt"/>
+                        <outlet property="webButton" destination="PiK-oY-Bda" id="Z7e-dx-nmj"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Obf-kV-cZr" userLabel="First Responder" sceneMemberID="firstResponder"/>
