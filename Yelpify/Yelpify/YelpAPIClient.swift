@@ -57,9 +57,7 @@ class YelpAPIClient: NSObject {
     func searchPlacesWithParameters(searchParameters: Dictionary<String, String>, completion: (result: NSDictionary) -> Void){
         initializePlacesWithParameters(searchParameters, successSearch: {
             (data, response) -> Void in
-            print(data)
             do{ let jsonResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
-                print(jsonResult)
                 completion(result: jsonResult)
                 
             }catch{}
