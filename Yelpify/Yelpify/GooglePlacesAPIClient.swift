@@ -42,6 +42,18 @@ class GooglePlacesAPIClient: NSObject {
         }
     }
     
+    func searchPlaceWithID(id: String, completion: (JSONdata: NSDictionary) -> Void){
+        let parameters = ["key": googleAPIKey, "placeid": id]
+        
+        Alamofire.request(.GET, self.buildDetailedURLString(parameters))
+            .responseJSON { response in
+                do { let data = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                    completion(JSONdata: data!)
+                }catch{}
+        }
+
+    }
+    
     func searchPlaceWithNameAndCoordinates(name: String, coordinates: NSArray, completion: (JSONdata: NSDictionary) -> Void) {
         
         let location = String(coordinates[0]) + "," + String(coordinates[1])
@@ -97,7 +109,16 @@ class GooglePlacesAPIClient: NSObject {
             let addString = key + "=" + value + "&"
             result += addString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
         }
-        //print(result)
+        return result
+    }
+    
+    
+    func buildDetailedURLString(parameters: Dictionary<String, String>) -> String!{
+        var result = "https://maps.googleapis.com/maps/api/place/details/json?"
+        for (key, value) in parameters{
+            let addString = key + "=" + value + "&"
+            result += addString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+        }
         return result
     }
     
