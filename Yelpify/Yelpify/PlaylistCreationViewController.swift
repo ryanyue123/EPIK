@@ -88,11 +88,13 @@ class PlaylistCreationViewController: UIViewController, UITableViewDelegate, UIT
         self.navigationController?.navigationBar.titleTextAttributes = [
             NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(showWhenScrollDownAlpha) ]
         self.navigationItem.title = "A Day in the City"
-        self.navigationController?.navigationBar.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(showWhenScrollDownAlpha)
+        //self.navigationController?.navigationBar.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(showWhenScrollDownAlpha)
         
         // Handle Status Bar
         self.statusBarView.alpha = showWhenScrollDownAlpha
-        self.view.viewWithTag(100)!.alpha = showWhenScrollDownAlpha
+        
+        // Handle Nav Shadow View
+        self.view.viewWithTag(100)!.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(showWhenScrollDownAlpha)
     }
 
     func updateHeaderView(){
@@ -112,9 +114,9 @@ class PlaylistCreationViewController: UIViewController, UITableViewDelegate, UIT
     
     func addShadowToBar() {
         let shadowView = UIView(frame: self.navigationController!.navigationBar.frame)
-        shadowView.backgroundColor = UIColor.darkGrayColor()
+        //shadowView.backgroundColor = UIColor.darkGrayColor()
         shadowView.layer.masksToBounds = false
-        shadowView.layer.shadowOpacity = 1 // your opacity
+        shadowView.layer.shadowOpacity = 0.7 // your opacity
         shadowView.layer.shadowOffset = CGSize(width: 0, height: 3) // your offset
         shadowView.layer.shadowRadius =  10 //your radius
         self.view.addSubview(shadowView)
@@ -136,7 +138,7 @@ class PlaylistCreationViewController: UIViewController, UITableViewDelegate, UIT
     func configureNavigationBar(){
         
         addShadowToBar()
-        
+    
         for parent in self.navigationController!.navigationBar.subviews {
             for childView in parent.subviews {
                 if(childView is UIImageView) {

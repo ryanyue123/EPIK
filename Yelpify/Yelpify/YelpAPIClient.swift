@@ -54,6 +54,21 @@ class YelpAPIClient: NSObject {
     
     */
     
+    func searchBusinessesWithCoordinateAndAddress(latitude: String, longitude: String, address: String, completion: (JSONdata: NSDictionary) -> Void){
+        
+        let coordinate = "latitude" + "," + "longitude"
+        let searchParameters = ["ll": coordinate, "location": address, "radius_filter": "500", "sort": "0"]
+        
+        initializePlacesWithParameters(searchParameters, successSearch: {
+            (data, response) -> Void in
+            do{ let jsonResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+                completion(JSONdata: jsonResult)
+            }catch{}
+            }, failureSearch: { (error) -> Void in
+                print(error)
+        })
+    }
+    
     func searchPlacesWithParameters(searchParameters: Dictionary<String, String>, completion: (result: NSDictionary) -> Void){
         initializePlacesWithParameters(searchParameters, successSearch: {
             (data, response) -> Void in
