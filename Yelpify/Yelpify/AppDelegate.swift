@@ -26,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize Google Places API.
         GMSServices.provideAPIKey("AIzaSyCKY_SOq4ivZp9b3oB8mmkBaKqHbLrbDlg")
         
+        //UINavigationBar.appearance().barStyle = UIBarStyle.Black
+        
         
         // Set navigation bar tint / background colour
 //        UINavigationBar.appearance().barTintColor = UIColor.whiteColor()
