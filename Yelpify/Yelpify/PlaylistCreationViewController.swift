@@ -22,9 +22,22 @@ class PlaylistCreationViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet weak var playlistInfoUser: UIButton!
     
     var businessObjects: [Business] = []
+    var playlistarray = [Business]()
     
     // The apps default color
     let defaultAppColor = UIColor(netHex: 0xFFFFFF)
+    
+    @IBAction func unwindToSinglePlaylist(segue: UIStoryboardSegue)
+    {
+        if(segue.identifier != nil)
+        {
+            if(segue.identifier == "unwindToPlaylist")
+            {
+                let sourceVC = segue.sourceViewController as! SearchBusinessViewController
+                playlistarray = sourceVC.playlistArray
+            }
+        }
+    }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -37,15 +50,6 @@ class PlaylistCreationViewController: UIViewController, UITableViewDelegate, UIT
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-        cell.tag = indexPath.row
-        
-        let business = self.businessObjects[indexPath.row]
-        
-        cell.configureCellWith(business) { () -> Void in
-        cell.addToPlaylist.tag = indexPath.row
-        cell.addToPlaylist.addTarget(self, action: Selector("addTrackToPlaylist:"), forControlEvents: .TouchUpInside)
-
-        }
         return cell
     }
     

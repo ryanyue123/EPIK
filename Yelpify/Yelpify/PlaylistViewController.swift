@@ -13,7 +13,6 @@ import ParseUI
 struct playlist
 {
     static var playlistname: String!
-    static var playlistID: String!
 }
 class PlaylistViewController: UICollectionViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
 
@@ -25,9 +24,7 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
     var userlongitude: Double!
     var inputTextField: UITextField!
     
-    @IBAction func unwindToPlaylistVC(segue: UIStoryboardSegue) {
-        
-    }
+
     
     
     @IBAction func showPlaylistAlert(sender: UIBarButtonItem) {
