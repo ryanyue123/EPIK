@@ -23,6 +23,9 @@ class PlaylistCreationViewController: UIViewController, UITableViewDelegate, UIT
     
     var businessObjects: [Business] = []
     
+    // The apps default color
+    let defaultAppColor = UIColor(netHex: 0xFFFFFF)
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }

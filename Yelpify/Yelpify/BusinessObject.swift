@@ -44,6 +44,25 @@ struct Business {
         gPlaceID = placeID
         yelpID = businessID
     }
+    
+    func getDictionary() -> NSDictionary{
+        let businessDict = NSMutableDictionary()
+        businessDict["name"] = businessName
+        businessDict["address"] = businessAddress
+        businessDict["imageURL"] = businessImageURL
+        businessDict["photoReference"] = businessPhotoReference
+        businessDict["latitude"] = businessLatitude
+        businessDict["longitude"] = businessLongitude
+        businessDict["distance"] = businessDistance
+        businessDict["rating"] = businessRating
+        businessDict["categories"] = businessCategories
+        businessDict["city"] = businessCity
+        businessDict["zip"] = businessZip
+        businessDict["phone"] = businessPhone
+        businessDict["status"] = businessStatus
+        
+        return businessDict
+    }
 }
 
 struct YelpBusiness{
