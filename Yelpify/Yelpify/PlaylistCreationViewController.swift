@@ -40,7 +40,7 @@ class PlaylistCreationViewController: UIViewController, UITableViewDelegate, UIT
         
         cell.configureCellWith(business) { () -> Void in
         cell.addToPlaylist.tag = indexPath.row
-        cell.addToPlaylist.addTarget(self, action: "addTrackToPlaylist:", forControlEvents: .TouchUpInside)
+        cell.addToPlaylist.addTarget(self, action: Selector("addTrackToPlaylist:"), forControlEvents: .TouchUpInside)
 
         }
         return cell

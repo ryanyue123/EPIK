@@ -245,7 +245,11 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
                 dispatch_async(dispatch_get_main_queue(), {
                     print(objects)
                     let playlistObject = objects![0]
-                    playlistObject["track"] = self.playlistArray
+                    
+                    let updatedArray = playlistObject["track"] as! NSMutableArray
+                    updatedArray.addObjectsFromArray(self.playlistArray)
+                    
+                    playlistObject["track"] = updatedArray
                     if (self.geopoint != nil)
                     {
                         playlistObject["location"] = self.geopoint

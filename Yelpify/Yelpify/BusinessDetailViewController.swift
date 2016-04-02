@@ -41,10 +41,10 @@ class BusinessDetailViewController: UITableViewController {
             self.addressLabel.text = self.object.businessAddress
             self.directionsButton.enabled = true
             self.callButton.enabled = true
-//            if(self.object.businessPhone != nil)
-//            {
-//                self.callButton.enabled = true
-//            }
+            if(self.object.businessPhone != nil)
+            {
+                self.callButton.enabled = true
+            }
 //            if(self.object.businessURL != nil)
 //            {
 //                self.webButton.enabled = true
@@ -69,7 +69,10 @@ class BusinessDetailViewController: UITableViewController {
         
         if (UIApplication.sharedApplication().canOpenURL(NSURL(string: "comgooglemaps://")!))
         {
-            let url = NSURL(string: "comgooglemaps://?saddr=&daddr=Jack+in+the+Box&center=\(latitude),\(longitude)&directionsmode=driving")
+            let name = self.object.businessName?.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+            print(name!)
+            let url = NSURL(string: "comgooglemaps://?saddr=&daddr=\(name!)&center=\(latitude),\(longitude)&directionsmode=driving")
+            print(url)
             UIApplication.sharedApplication().openURL(url!)
         }
         else
@@ -80,12 +83,10 @@ class BusinessDetailViewController: UITableViewController {
     
     @IBAction func openInPhone(sender: UIButton)
     {
-        //let telnum = self.object.businessPhone
-        let telnum = "14087685589"
+        let telnum = self.object.businessPhone!
         if(UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel://")!))
         {
             let url = NSURL(string: "tel://\(telnum)")
-            print(url?.absoluteString)
             UIApplication.sharedApplication().openURL(url!)
         }
     }
@@ -93,11 +94,10 @@ class BusinessDetailViewController: UITableViewController {
     {
         //check is self.object.businessURL is nil
         //let url = self.object.businessURL
-        let url = NSURL(string: "http://www.uci.edu")!
-        
-        if (UIApplication.sharedApplication().canOpenURL(url))
+        let url = NSURL(string: "")
+        if (UIApplication.sharedApplication().canOpenURL(url!))
         {
-            UIApplication.sharedApplication().openURL(url)
+            UIApplication.sharedApplication().openURL(url!)
         }
     }
     /*
