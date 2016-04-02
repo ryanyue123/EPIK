@@ -16,10 +16,10 @@
         </mutableArray>
     </customFonts>
     <scenes>
-        <!--Playlist View Controller-->
+        <!--Single Playlist View Controller-->
         <scene sceneID="8Ni-Nh-s1P">
             <objects>
-                <viewController id="7Om-1w-JrL" customClass="PlaylistViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="7Om-1w-JrL" customClass="SinglePlaylistViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Dho-BP-Oh5"/>
                         <viewControllerLayoutGuide type="bottom" id="I9J-vA-BR7"/>
@@ -128,6 +128,10 @@
                                     <rect key="frame" x="0.0" y="522" width="600" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" title="Add Place +"/>
+                                    <connections>
+                                        <action selector="addPlaceButtonAction:" destination="7Om-1w-JrL" eventType="touchUpInside" id="4EW-lW-K8h"/>
+                                        <segue destination="OFK-3P-Zbm" kind="presentation" id="d9p-HI-7Vy"/>
+                                    </connections>
                                 </button>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="businessCell" rowHeight="130" id="DIs-he-Anq" customClass="BusinessTableViewCell" customModule="Yelpify" customModuleProvider="target">
@@ -216,6 +220,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="qxf-Vt-1IM"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="addPlaceButton" destination="ZeY-3K-ehu" id="Ndu-9d-b22"/>
                         <outlet property="playlistInfoBG" destination="sHn-I7-lt4" id="VJs-A6-bV5"/>
                         <outlet property="playlistInfoIcon" destination="dCb-vi-p6V" id="f0c-Je-ftB"/>
                         <outlet property="playlistInfoName" destination="6op-P2-ZsE" id="7GX-WS-fg9"/>
@@ -386,9 +391,6 @@
                                                 <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_restaurant" translatesAutoresizingMaskIntoConstraints="NO" id="Uuw-ni-McR">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="129.5"/>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ldS-zq-ey5">
-                                                    <rect key="frame" x="548" y="52" width="22" height="22"/>
-                                                </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123 Adress Street" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRf-Lg-MMj">
                                                     <rect key="frame" x="25" y="59" width="308" height="21"/>
                                                     <constraints>
@@ -408,6 +410,13 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ldS-zq-ey5">
+                                                    <rect key="frame" x="548" y="54" width="22" height="22"/>
+                                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="addPlace:" destination="vxX-pQ-LBu" eventType="touchUpInside" id="YBW-Jy-co8"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="fRf-Lg-MMj" firstAttribute="top" secondItem="7gG-fa-wts" secondAttribute="bottom" constant="3" id="6an-So-ecE"/>
@@ -425,6 +434,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <outlet property="addPlaceButton" destination="ldS-zq-ey5" id="94z-lF-ooy"/>
                                             <outlet property="addToPlaylist" destination="ldS-zq-ey5" id="t01-S7-Qrc"/>
                                             <outlet property="businessAddressLabel" destination="fRf-Lg-MMj" id="AFw-Nn-ZRk"/>
                                             <outlet property="businessBackgroundImage" destination="Uuw-ni-McR" id="rgK-EO-PGn"/>

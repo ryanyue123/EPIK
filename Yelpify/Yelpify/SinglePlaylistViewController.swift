@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
+class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     @IBOutlet weak var statusBarView: UIView!
 
     @IBOutlet weak var playlistInfoView: UIView!
@@ -21,11 +21,17 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var playlistInfoName: UILabel!
     @IBOutlet weak var playlistInfoUser: UIButton!
     
+    @IBOutlet weak var addPlaceButton: UIButton!
     var businessObjects: [Business] = []
     var playlistarray = [Business]()
     
     // The apps default color
     let defaultAppColor = UIColor(netHex: 0xFFFFFF)
+    
+    @IBAction func addPlaceButtonAction(sender: AnyObject) {
+        
+    }
+    
     
     @IBAction func unwindToSinglePlaylist(segue: UIStoryboardSegue)
     {

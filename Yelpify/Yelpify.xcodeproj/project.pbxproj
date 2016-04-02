@@ -47,7 +47,7 @@
 		90E505DF1C8E375200F47285 /* GPlacesSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E505DE1C8E375200F47285 /* GPlacesSearchViewController.swift */; };
 		90E505E21C8E944100F47285 /* CustomSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E505E11C8E944100F47285 /* CustomSearchController.swift */; };
 		90E505E41C8E946700F47285 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E505E31C8E946700F47285 /* CustomSearchBar.swift */; };
-		90F34CDF1CB0893300CC0870 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F34CDE1CB0893300CC0870 /* PlaylistViewController.swift */; };
+		90F34CDF1CB0893300CC0870 /* SinglePlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */; };
 		90F34CE11CB08BCD00CC0870 /* HomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F34CE01CB08BCD00CC0870 /* HomeCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -116,7 +116,7 @@
 		90E505DE1C8E375200F47285 /* GPlacesSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPlacesSearchViewController.swift; sourceTree = "<group>"; };
 		90E505E11C8E944100F47285 /* CustomSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSearchController.swift; sourceTree = "<group>"; };
 		90E505E31C8E946700F47285 /* CustomSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
-		90F34CDE1CB0893300CC0870 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
+		90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePlaylistViewController.swift; sourceTree = "<group>"; };
 		90F34CE01CB08BCD00CC0870 /* HomeCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewController.swift; sourceTree = "<group>"; };
 		981001A34CAB5A147D7CB122 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B140D093A1A89D68777F3561 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -222,12 +222,12 @@
 		9025184F1C88276C00BB3E05 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				90F34CE01CB08BCD00CC0870 /* HomeCollectionViewController.swift */,
+				90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */,
 				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
 				90E505DE1C8E375200F47285 /* GPlacesSearchViewController.swift */,
-				90F34CDE1CB0893300CC0870 /* PlaylistViewController.swift */,
 				90E505E11C8E944100F47285 /* CustomSearchController.swift */,
 				90E505E31C8E946700F47285 /* CustomSearchBar.swift */,
-				90F34CE01CB08BCD00CC0870 /* HomeCollectionViewController.swift */,
 				90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */,
 			);
 			name = "View Controllers";
@@ -509,7 +509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				90DC57BC1C72A1D0001F1891 /* SearchBusinessViewController.swift in Sources */,
-				90F34CDF1CB0893300CC0870 /* PlaylistViewController.swift in Sources */,
+				90F34CDF1CB0893300CC0870 /* SinglePlaylistViewController.swift in Sources */,
 				90E505DF1C8E375200F47285 /* GPlacesSearchViewController.swift in Sources */,
 				907E0CE51C76768D00872135 /* LocuAPIClient.swift in Sources */,
 				90711BD51CAF4DEA0032A257 /* PlaylistObject.swift in Sources */,
