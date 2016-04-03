@@ -30,6 +30,7 @@ class HomeCollectionViewController: UICollectionViewController, PFLogInViewContr
     
     
     @IBAction func showPlaylistAlert(sender: UIBarButtonItem) {
+        print("hello")
         let alertController = UIAlertController(title: "Create new playlist", message: "Enter name of playlist.", preferredStyle: UIAlertControllerStyle.Alert)
         
         alertController.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
@@ -59,7 +60,7 @@ class HomeCollectionViewController: UICollectionViewController, PFLogInViewContr
                                 if (error == nil)
                                 {
                                     playlist.playlistname = self.inputTextField.text!
-                                    self.performSegueWithIdentifier("showList", sender: self)
+                                    self.performSegueWithIdentifier("createPlaylist", sender: self)
                                 }
                                 else
                                 {
@@ -87,7 +88,7 @@ class HomeCollectionViewController: UICollectionViewController, PFLogInViewContr
     func fetchAllObjects()
     {
         let query:PFQuery = PFQuery(className: "Playlists")
-        query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: userlatitude, longitude: userlongitude), withinMiles: 50.0)
+        query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: userlatitude, longitude: userlongitude), withinMiles: 1000.0)
         query.orderByAscending("location")
         query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
             if ((error) == nil)
