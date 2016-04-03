@@ -62,9 +62,9 @@ public class OAuth1Swift: OAuthSwift {
                 }
                 if (responseParameters["oauth_token"] != nil && (self.allowMissingOauthVerifier || responseParameters["oauth_verifier"] != nil)) {
                     //var credential: OAuthSwiftCredential = self.client.credential
-                    self.client.credential.oauth_token = responseParameters["oauth_token"]!.safeStringByRemovingPercentEncoding
+                    self.client.credential.oauth_token = responseParameters["oauth_token"]!
                     if (responseParameters["oauth_verifier"] != nil) {
-                        self.client.credential.oauth_verifier = responseParameters["oauth_verifier"]!.safeStringByRemovingPercentEncoding
+                        self.client.credential.oauth_verifier = responseParameters["oauth_verifier"]!
                     }
                     self.postOAuthAccessTokenWithRequestToken(success, failure: failure)
                 } else {
@@ -74,13 +74,8 @@ public class OAuth1Swift: OAuthSwift {
                 }
             }
             // 2. Authorize
-            let urlString = self.authorize_url + (self.authorize_url.has("?") ? "&" : "?") + "oauth_token=\(credential.oauth_token)"
-            if let queryURL = NSURL(string: urlString) {
+            if let queryURL = NSURL(string: self.authorize_url + (self.authorize_url.has("?") ? "&" : "?") + "oauth_token=\(credential.oauth_token)") {
                 self.authorize_url_handler.handle(queryURL)
-            }
-            else {
-                let errorInfo = [NSLocalizedFailureReasonErrorKey: NSLocalizedString("Failed to create URL", comment: "\(urlString) not convertible to URL, please encode.")]
-                failure?(error: NSError(domain: OAuthSwiftErrorDomain, code: -1, userInfo: errorInfo))
             }
         }, failure: failure)
     }

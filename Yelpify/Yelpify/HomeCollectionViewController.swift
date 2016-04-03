@@ -16,6 +16,8 @@ struct playlist
 }
 class HomeCollectionViewController: UICollectionViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
 
+    @IBOutlet var playlistCollectionView: UICollectionView!
+    
     var locationManager = CLLocationManager()
     let client = YelpAPIClient()
     var parameters = ["ll": "", "category_filter": "pizza", "radius_filter": "3000", "sort": "0"]
@@ -92,8 +94,10 @@ class HomeCollectionViewController: UICollectionViewController, PFLogInViewContr
             if ((error) == nil)
             {
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.playlists = objects! as NSArray
-                    //print(self.playlists)
+                    //self.playlists = objects!
+                    self.playlists = ["hello","poop","hi"]
+                    print(self.playlists)
+                    self.playlistCollectionView.reloadData()
                 })
             }
             else
@@ -226,14 +230,42 @@ class HomeCollectionViewController: UICollectionViewController, PFLogInViewContr
     */
     
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 0
+        return 1
     }
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        print(playlists.count)
+        return playlists.count
     }
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PlaylistCell", forIndexPath: indexPath)
+        cell.backgroundColor = UIColor.cyanColor()
         return cell
     }
+    
+    var index: NSIndexPath!
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        index = indexPath
+        performSegueWithIdentifier("showPlaylist", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "showPlaylist")
+        {
+            let upcoming = segue.destinationViewController as? SinglePlaylistViewController
+            let name = playlists[index.row] as! String
+            print(name)
+            upcoming?.listname = playlists[index.row] as! String
+        }
+    }
 
+}
+extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout
+{
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CGSize(width: 150, height: 150)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 50.0, left: 10.0, bottom: 50.0, right: 10.0)
+    }
 }
