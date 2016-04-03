@@ -232,7 +232,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bt3-DI-9NP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3907" y="-380"/>
+            <point key="canvasLocation" x="4005" y="-356"/>
         </scene>
         <!--Home Collection View Controller-->
         <scene sceneID="GYO-Gd-aMT">
@@ -278,12 +278,13 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="USy-yM-f0N">
                             <connections>
                                 <action selector="showPlaylistAlert:" destination="f8W-oq-YUx" id="ejG-XY-DOH"/>
-                                <segue destination="7Om-1w-JrL" kind="show" identifier="showPlaylist" id="DtW-dB-EOY"/>
+                                <segue destination="7Om-1w-JrL" kind="show" identifier="createPlaylist" id="DtW-dB-EOY"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="playlistCollectionView" destination="rZr-SX-Dms" id="AuG-rv-w1S"/>
+                        <segue destination="7Om-1w-JrL" kind="show" identifier="showPlaylist" id="WgM-Q9-CDb"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PwF-Ht-UBF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -689,4 +690,7 @@
         <image name="default_restaurant" width="640" height="426"/>
         <image name="restaurantImage - InNOut" width="1702" height="900"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="WgM-Q9-CDb"/>
+    </inferredMetricsTieBreakers>
 </document>
