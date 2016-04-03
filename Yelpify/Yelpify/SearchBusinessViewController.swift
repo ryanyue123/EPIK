@@ -202,6 +202,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     func addTrackToPlaylist(button: UIButton)
     {
+        button.tintColor = UIColor.greenColor()
+        button.imageView?.image = UIImage(named: "checkMark") // Doesn't work for now
         print("pressed")
         let index = button.tag
         playlistArray.append(businessObjects[index])
