@@ -25,6 +25,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var businessObjects: [Business] = []
     var playlistArray = [Business]()
     var object: PFObject!
+    var playlistname = playlist.playlistname
     
     // The apps default color
     let defaultAppColor = UIColor(netHex: 0xFFFFFF)
@@ -172,12 +173,42 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 //        backItem.title = ""
 //        navigationController?.navigationItem.backBarButtonItem = backItem
     }
-
+    
+    func convertPlacesArrayToDictionary(placesArray: [Business])-> [NSDictionary]{
+        var placeDictArray = [NSDictionary]()
+        for business in placesArray{
+            placeDictArray.append(business.getDictionary())
+        }
+        return placeDictArray
+    }
+    
+    func savePlaylistToParse()
+    {
+        let saveobject = PFObject(className: "Playlists")
+        let lat = playlistArray[0].businessLatitude!
+        let long = playlistArray[0].businessLongitude!
+        
+        saveobject["createdbyuser"] = PFUser.currentUser()?.username
+        saveobject["playlistname"] = playlistname
+        saveobject["track"] = convertPlacesArrayToDictionary(playlistArray)
+        saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
+        saveobject.saveInBackgroundWithBlock { (success, error)  -> Void in
+            if (error == nil){
+                print("saved")
+            }
+            else{
+                print(error?.description)
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureNavigationBar()
         configurePlaylistInfoView()
+        
+        
         //performInitialSearch()
         
         //let tableViewPanGesture = UIPanGestureRecognizer(target: self, action: "panTableView:")
