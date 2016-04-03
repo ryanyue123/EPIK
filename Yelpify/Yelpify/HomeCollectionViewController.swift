@@ -83,49 +83,19 @@ class HomeCollectionViewController: UICollectionViewController, PFLogInViewContr
         presentViewController(alertController, animated: true, completion: nil)
         
     }
-
-    func fetchAllObjectsFromDataStore()
+    
+    func fetchAllObjects()
     {
         let query:PFQuery = PFQuery(className: "Playlists")
-        query.fromLocalDatastore()
         query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: userlatitude, longitude: userlongitude), withinMiles: 50.0)
         query.orderByAscending("location")
         query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
             if ((error) == nil)
             {
                 dispatch_async(dispatch_get_main_queue(), {
-                    //self.playlists = objects!
-                    self.playlists = ["hello","poop","hi"]
-                    print(self.playlists)
+                    self.playlists = objects!
                     self.playlistCollectionView.reloadData()
                 })
-            }
-            else
-            {
-                print(error?.userInfo)
-            }
-        }
-        
-    }
-    
-    func fetchAllObjects()
-    {
-        PFObject.unpinAllObjectsInBackgroundWithBlock(nil)
-        let query:PFQuery = PFQuery(className:"Playlists")
-        print(userlatitude)
-        print(userlongitude)
-        query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: userlatitude, longitude: userlongitude), withinMiles: 50.0)
-        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
-            if ((error) == nil)
-            {
-                PFObject.pinAllInBackground(objects, block: { (success, error) -> Void in
-                    
-                    if (error == nil)
-                    {
-                        self.fetchAllObjectsFromDataStore()
-                    }
-                })
-
             }
             else
             {
@@ -252,9 +222,9 @@ class HomeCollectionViewController: UICollectionViewController, PFLogInViewContr
         if (segue.identifier == "showPlaylist")
         {
             let upcoming = segue.destinationViewController as? SinglePlaylistViewController
-            let name = playlists[index.row] as! String
-            print(name)
-            upcoming?.listname = playlists[index.row] as! String
+            let object = playlists[index.row]
+            print(object)
+            upcoming?.object = playlists[index.row] as! PFObject
         }
     }
 

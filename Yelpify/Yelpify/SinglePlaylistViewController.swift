@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
@@ -23,7 +24,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var addPlaceButton: UIButton!
     var businessObjects: [Business] = []
     var playlistArray = [Business]()
-    var listname: String!
+    var object: PFObject!
     
     // The apps default color
     let defaultAppColor = UIColor(netHex: 0xFFFFFF)
