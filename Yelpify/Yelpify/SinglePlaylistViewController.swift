@@ -22,7 +22,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     @IBOutlet weak var addPlaceButton: UIButton!
     var businessObjects: [Business] = []
-    var playlistarray = [Business]()
+    var playlistArray = [Business]()
     var listname: String!
     
     // The apps default color
