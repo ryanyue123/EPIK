@@ -70,7 +70,7 @@ class BusinessTableViewCell: UITableViewCell {
     
 
     @IBAction func addPlace(sender: AnyObject) {
-        addPlaceButton.imageView?.image = UIImage(named: <#T##String#>)
+        addPlaceButton.imageView?.image = UIImage(named: "checkMark")
     }
     
     override func awakeFromNib() {

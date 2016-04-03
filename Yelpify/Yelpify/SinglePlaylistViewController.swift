@@ -9,11 +9,10 @@
 import UIKit
 
 class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
+    
     @IBOutlet weak var statusBarView: UIView!
 
     @IBOutlet weak var playlistInfoView: UIView!
-    
-    
     @IBOutlet weak var playlistTableView: UITableView!
     
     @IBOutlet weak var playlistInfoBG: UIImageView!
@@ -22,8 +21,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var playlistInfoUser: UIButton!
     
     @IBOutlet weak var addPlaceButton: UIButton!
-    var businessObjects: [Business] = []
-    var playlistarray = [Business]()
+    //var businessObjects: [Business] = []
+    var playlistArray = [Business]()
     
     // The apps default color
     let defaultAppColor = UIColor(netHex: 0xFFFFFF)
@@ -40,7 +39,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             if(segue.identifier == "unwindToPlaylist")
             {
                 let sourceVC = segue.sourceViewController as! SearchBusinessViewController
-                playlistarray = sourceVC.playlistArray
+                playlistArray.appendContentsOf(sourceVC.playlistArray)
+                self.playlistTableView.reloadData()
             }
         }
     }
@@ -50,12 +50,15 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return businessObjects.count
+        return playlistArray.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
+        cell.configureCellWith(playlistArray[indexPath.row]) { 
+            self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        }
         return cell
     }
     
@@ -68,7 +71,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func performInitialSearch(){
         dataHandler.performAPISearch(googleParameters) { (businessObjectArray) -> Void in
-            self.businessObjects = businessObjectArray
+            //self.businessObjects = businessObjectArray
             self.playlistTableView.reloadData()
         }
     }
@@ -173,7 +176,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         configureNavigationBar()
         configurePlaylistInfoView()
-        performInitialSearch()
+        //performInitialSearch()
         
         //let tableViewPanGesture = UIPanGestureRecognizer(target: self, action: "panTableView:")
         //self.playlistTableView.addGestureRecognizer(tableViewPanGesture)
