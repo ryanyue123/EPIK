@@ -17,6 +17,7 @@ class BusinessTableViewCell: UITableViewCell {
     @IBOutlet weak var businessTitleLabel: UILabel!
     @IBOutlet weak var businessBackgroundImage: UIImageView!
     @IBOutlet weak var businessAddressLabel: UILabel!
+    @IBOutlet weak var addPlaceButton: UIButton!
     
     let yelpBusinessClient = YelpAPIClient()
     let googlePlacesClient = GooglePlacesAPIClient()
@@ -68,6 +69,10 @@ class BusinessTableViewCell: UITableViewCell {
     }
     
 
+    @IBAction func addPlace(sender: AnyObject) {
+        addPlaceButton.imageView?.image = UIImage(named: "checkMark")
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

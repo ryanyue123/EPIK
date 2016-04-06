@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="OFK-3P-Zbm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="UL9-SW-wCG">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -16,10 +16,10 @@
         </mutableArray>
     </customFonts>
     <scenes>
-        <!--Playlist Creation View Controller-->
+        <!--Single Playlist View Controller-->
         <scene sceneID="8Ni-Nh-s1P">
             <objects>
-                <viewController id="7Om-1w-JrL" customClass="PlaylistCreationViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="7Om-1w-JrL" customClass="SinglePlaylistViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Dho-BP-Oh5"/>
                         <viewControllerLayoutGuide type="bottom" id="I9J-vA-BR7"/>
@@ -39,7 +39,7 @@
                                         <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="restaurantImage - InNOut" translatesAutoresizingMaskIntoConstraints="NO" id="sHn-I7-lt4">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="footprint" translatesAutoresizingMaskIntoConstraints="NO" id="dCb-vi-p6V">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Favorite Icon" translatesAutoresizingMaskIntoConstraints="NO" id="dCb-vi-p6V">
                                             <rect key="frame" x="261" y="56" width="78" height="78"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="78" id="EtP-G4-6bn"/>
@@ -124,6 +124,15 @@
                                         <constraint firstAttribute="bottom" secondItem="sHn-I7-lt4" secondAttribute="bottom" id="y10-pb-NnG"/>
                                     </constraints>
                                 </view>
+                                <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ZeY-3K-ehu">
+                                    <rect key="frame" x="0.0" y="522" width="600" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" title="Add Place +"/>
+                                    <connections>
+                                        <action selector="addPlaceButtonAction:" destination="7Om-1w-JrL" eventType="touchUpInside" id="4EW-lW-K8h"/>
+                                        <segue destination="OFK-3P-Zbm" kind="presentation" id="d9p-HI-7Vy"/>
+                                    </connections>
+                                </button>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="businessCell" rowHeight="130" id="DIs-he-Anq" customClass="BusinessTableViewCell" customModule="Yelpify" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="392" width="600" height="130"/>
@@ -208,9 +217,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="4tR-FW-Hnb">
                         <barButtonItem key="backBarButtonItem" title=" " id="7aE-GB-4pv"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="qxf-Vt-1IM"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="qxf-Vt-1IM"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="addPlaceButton" destination="ZeY-3K-ehu" id="Ndu-9d-b22"/>
                         <outlet property="playlistInfoBG" destination="sHn-I7-lt4" id="VJs-A6-bV5"/>
                         <outlet property="playlistInfoIcon" destination="dCb-vi-p6V" id="f0c-Je-ftB"/>
                         <outlet property="playlistInfoName" destination="6op-P2-ZsE" id="7GX-WS-fg9"/>
@@ -222,15 +232,16 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bt3-DI-9NP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3249" y="-352"/>
+            <point key="canvasLocation" x="4005" y="-356"/>
         </scene>
-        <!--Playlist View Controller-->
+        <!--Home Collection View Controller-->
         <scene sceneID="GYO-Gd-aMT">
             <objects>
-                <collectionViewController id="f8W-oq-YUx" customClass="PlaylistViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController id="f8W-oq-YUx" customClass="HomeCollectionViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="rZr-SX-Dms">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="s3r-yr-PIe">
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -267,17 +278,18 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="USy-yM-f0N">
                             <connections>
                                 <action selector="showPlaylistAlert:" destination="f8W-oq-YUx" id="ejG-XY-DOH"/>
-                                <segue destination="7Om-1w-JrL" kind="show" id="DtW-dB-EOY"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="OFK-3P-Zbm" kind="show" identifier="showList" id="CBR-uN-ba4"/>
+                        <outlet property="playlistCollectionView" destination="rZr-SX-Dms" id="AuG-rv-w1S"/>
+                        <segue destination="7Om-1w-JrL" kind="show" identifier="showPlaylist" id="WgM-Q9-CDb"/>
+                        <segue destination="7Om-1w-JrL" kind="show" identifier="createPlaylist" id="sNV-9I-4bH"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PwF-Ht-UBF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3236" y="362"/>
+            <point key="canvasLocation" x="3329" y="-191"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pbW-sH-FoZ">
@@ -356,7 +368,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rFe-V7-JC5" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="MaZ-WG-NVz" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6315" y="-392"/>
+            <point key="canvasLocation" x="6381" y="-392"/>
         </scene>
         <!--Around You-->
         <scene sceneID="vdw-Ia-rLx">
@@ -384,9 +396,6 @@
                                                 <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_restaurant" translatesAutoresizingMaskIntoConstraints="NO" id="Uuw-ni-McR">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="130"/>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ldS-zq-ey5">
-                                                    <rect key="frame" x="548" y="52" width="22" height="22"/>
-                                                </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123 Adress Street" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRf-Lg-MMj">
                                                     <rect key="frame" x="25" y="59" width="308" height="21"/>
                                                     <constraints>
@@ -406,6 +415,13 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ldS-zq-ey5">
+                                                    <rect key="frame" x="548" y="54" width="22" height="22"/>
+                                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="addPlace:" destination="vxX-pQ-LBu" eventType="touchUpInside" id="YBW-Jy-co8"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="fRf-Lg-MMj" firstAttribute="top" secondItem="7gG-fa-wts" secondAttribute="bottom" constant="3" id="6an-So-ecE"/>
@@ -423,6 +439,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <outlet property="addPlaceButton" destination="ldS-zq-ey5" id="94z-lF-ooy"/>
                                             <outlet property="addToPlaylist" destination="ldS-zq-ey5" id="t01-S7-Qrc"/>
                                             <outlet property="businessAddressLabel" destination="fRf-Lg-MMj" id="AFw-Nn-ZRk"/>
                                             <outlet property="businessBackgroundImage" destination="Uuw-ni-McR" id="rgK-EO-PGn"/>
@@ -448,8 +465,7 @@
                     <navigationItem key="navigationItem" title="Around You" id="3s0-7b-ONU">
                         <barButtonItem key="leftBarButtonItem" systemItem="done" id="emJ-kc-uDV">
                             <connections>
-                                <action selector="finishedEditingPlaylist:" destination="hzi-hz-39z" id="2DY-wz-yIJ"/>
-                                <segue destination="UL9-SW-wCG" kind="show" action="showDetailViewController:sender:" id="E9p-cu-wCj"/>
+                                <segue destination="nyU-rd-931" kind="unwind" identifier="unwindToPlaylist" unwindAction="unwindToSinglePlaylist:" id="mF8-ab-rcQ"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="search" id="V02-Ig-bsD">
@@ -465,8 +481,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wJO-Js-5jv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="nyU-rd-931" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4857" y="362"/>
+            <point key="canvasLocation" x="4837" y="362"/>
         </scene>
         <!--Details-->
         <scene sceneID="HJ7-DM-4Ke">
@@ -665,30 +682,15 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DUF-NC-Z7t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4097" y="362"/>
-        </scene>
-        <!--Test View Controller-->
-        <scene sceneID="HJB-he-Aan">
-            <objects>
-                <viewController id="B3l-a1-cLL" customClass="TestViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="j8O-3a-7Pa"/>
-                        <viewControllerLayoutGuide type="bottom" id="0v7-21-jdL"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Vbk-fn-lKr">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="q5b-bM-qgz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3542" y="1160"/>
+            <point key="canvasLocation" x="4135" y="350"/>
         </scene>
     </scenes>
     <resources>
+        <image name="Favorite Icon" width="500" height="500"/>
         <image name="default_restaurant" width="640" height="426"/>
-        <image name="footprint" width="1200" height="1200"/>
         <image name="restaurantImage - InNOut" width="1702" height="900"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="sNV-9I-4bH"/>
+    </inferredMetricsTieBreakers>
 </document>

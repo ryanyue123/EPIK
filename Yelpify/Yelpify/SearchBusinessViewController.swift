@@ -136,9 +136,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
 
     // Parse variables
     var index: NSIndexPath!
-    var object: PFObject!
-    var playlistArray = [NSDictionary]()
-    var geopoint:PFGeoPoint!
+    var playlistArray = [Business]()
 
     // MARK: - TABLEVIEW FUNCTIONS
 
@@ -204,70 +202,22 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     func addTrackToPlaylist(button: UIButton)
     {
+        button.tintColor = UIColor.greenColor()
+        button.imageView?.image = UIImage(named: "checkMark") // Doesn't work for now
         print("pressed")
         let index = button.tag
-        let object = businessObjects[index]
-        print(object.businessName)
-        print(object.businessAddress)
-        print(object.gPlaceID)
-        print(object.yelpID)
-        if (geopoint == nil)
-        {
-            geopoint = PFGeoPoint(latitude: object.businessLatitude!, longitude: object.businessLongitude!)
-        }
-        let arraydict = ["name": object.businessName!, "address": object.businessAddress!, "google-id": object.gPlaceID!]
-        //"yelp-id": object.yelpID!
-        playlistArray.append(arraydict)
+        playlistArray.append(businessObjects[index])
        
     }
+    
+    
     func addTrackToPlaylist(indx: Int!)
     {
-        let object = businessObjects[indx]
-        print(object.businessName)
-        print(object.businessAddress)
-        if (geopoint == nil)
-        {
-            geopoint = PFGeoPoint(latitude: object.businessLatitude!, longitude: object.businessLongitude!)
-        }
-        let arraydict = ["name": object.businessName!, "address": object.businessAddress!, "google-id": object.gPlaceID!]
-        //"yelp-id": object.yelpID!
-        playlistArray.append(arraydict)
-        print("added")
+        print("pressed")
+        playlistArray.append(businessObjects[indx])
     }
     
-    @IBAction func finishedEditingPlaylist(sender: UIBarButtonItem) {
-        let query = PFQuery(className: "Playlists")
-        query.whereKey("createdbyuser", equalTo: (PFUser.currentUser()?.username)!)
-        query.whereKey("playlistName", equalTo: playlist.playlistname)
-        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
-            if ((error) == nil)
-            {
-                dispatch_async(dispatch_get_main_queue(), {
-                    print(objects)
-                    let playlistObject = objects![0]
-                    playlistObject["track"] = self.playlistArray
-                    if (self.geopoint != nil)
-                    {
-                        playlistObject["location"] = self.geopoint
-                    }
-                    playlistObject.saveInBackgroundWithBlock {(success, error) -> Void in
-                        if (error == nil)
-                        {
-                            print("hello")
-                        }
-                        else
-                        {
-                            print(error?.userInfo)
-                        }
-                    }
-                })
-            }
-            else
-            {
-                print(error?.userInfo)
-            }
-        }
-    }
+
 
     // MARK: - VIEWDIDLOAD
     
@@ -277,7 +227,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         
         // Performs an API search and returns a master array of businesses (as dictionaries)
         performInitialSearch()
-        geopoint = nil
         playlistArray.removeAll()
     }
     
@@ -303,6 +252,9 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         return true
         // Will allow user to press "return" button to close keyboard
     }
+    
+    
+    
     
 //    func textFieldDidEndEditing(textField: UITextField) {
 //        let query = locationTextField.text

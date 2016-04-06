@@ -7,24 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3CB9473F1C7192780035A8EB /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB9473E1C7192780035A8EB /* PlaylistViewController.swift */; };
 		3CE2EE7F1C6C5EC8000C9088 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE2EE7E1C6C5EC8000C9088 /* AppDelegate.swift */; };
 		3CE2EE841C6C5EC8000C9088 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CE2EE821C6C5EC8000C9088 /* Main.storyboard */; };
 		3CE2EE861C6C5EC8000C9088 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3CE2EE851C6C5EC8000C9088 /* Assets.xcassets */; };
 		3CE2EE891C6C5EC8000C9088 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CE2EE871C6C5EC8000C9088 /* LaunchScreen.storyboard */; };
 		3CE2EE941C6C5EC8000C9088 /* YelpifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE2EE931C6C5EC8000C9088 /* YelpifyTests.swift */; };
 		3CE2EE9F1C6C5EC8000C9088 /* YelpifyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE2EE9E1C6C5EC8000C9088 /* YelpifyUITests.swift */; };
-		3CF480BC1C80011100698857 /* SinglePlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF480BB1C80011100698857 /* SinglePlaylistViewController.swift */; };
 		523E599553F6100C5348857C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68ACAEFF88A59BB74B411CE0 /* Pods.framework */; };
 		906CAA311C8977B700AF3515 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906CAA301C8977B700AF3515 /* TestViewController.swift */; };
+		90711BD51CAF4DEA0032A257 /* PlaylistObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90711BD41CAF4DEA0032A257 /* PlaylistObject.swift */; };
 		907E0CE51C76768D00872135 /* LocuAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907E0CE41C76768D00872135 /* LocuAPIClient.swift */; };
 		907E0CE71C77F34100872135 /* GooglePlacesAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907E0CE61C77F34100872135 /* GooglePlacesAPIClient.swift */; };
 		907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907E0CEA1C7828E100872135 /* APIDataHandler.swift */; };
 		908481801C7504AF009B6099 /* BusinessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */; };
 		908481841C750816009B6099 /* BusinessObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908481831C750816009B6099 /* BusinessObject.swift */; };
-		9092A8C41C914D1100D04CB5 /* PlaylistCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9092A8C31C914D1100D04CB5 /* PlaylistCreationViewController.swift */; };
 		90B9B7D91C8A696F002D4BB1 /* BusinessDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */; };
-		90B9B7DB1C8ADFB2002D4BB1 /* PerformSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B9B7DA1C8ADFB2002D4BB1 /* PerformSearchViewController.swift */; };
 		90BAD1C11C8662ED0047277E /* TestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BAD1C01C8662ED0047277E /* TestTableViewController.swift */; };
 		90BAD1C31C86639E0047277E /* TestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BAD1C21C86639E0047277E /* TestTableViewCell.swift */; };
 		90DA32851C93616700D5EBDF /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90DA327B1C93615100D5EBDF /* OpenSans-Bold.ttf */; };
@@ -51,6 +48,8 @@
 		90E505E21C8E944100F47285 /* CustomSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E505E11C8E944100F47285 /* CustomSearchController.swift */; };
 		90E505E41C8E946700F47285 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E505E31C8E946700F47285 /* CustomSearchBar.swift */; };
 		EDA8CEF51CAF506400A5C2ED /* SortMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA8CEF41CAF506400A5C2ED /* SortMethods.swift */; };
+		90F34CDF1CB0893300CC0870 /* SinglePlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */; };
+		90F34CE11CB08BCD00CC0870 /* HomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F34CE01CB08BCD00CC0870 /* HomeCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,7 +70,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3CB9473E1C7192780035A8EB /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		3CE2EE7B1C6C5EC8000C9088 /* Yelpify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yelpify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CE2EE7E1C6C5EC8000C9088 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3CE2EE831C6C5EC8000C9088 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -84,18 +82,16 @@
 		3CE2EE9A1C6C5EC8000C9088 /* YelpifyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YelpifyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CE2EE9E1C6C5EC8000C9088 /* YelpifyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpifyUITests.swift; sourceTree = "<group>"; };
 		3CE2EEA01C6C5EC8000C9088 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3CF480BB1C80011100698857 /* SinglePlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePlaylistViewController.swift; sourceTree = "<group>"; };
 		68ACAEFF88A59BB74B411CE0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9025184D1C8825E700BB3E05 /* Haneke.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Haneke.framework; path = "Pods/../build/Debug-iphoneos/Haneke.framework"; sourceTree = "<group>"; };
 		906CAA301C8977B700AF3515 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		90711BD41CAF4DEA0032A257 /* PlaylistObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistObject.swift; sourceTree = "<group>"; };
 		907E0CE41C76768D00872135 /* LocuAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocuAPIClient.swift; sourceTree = "<group>"; };
 		907E0CE61C77F34100872135 /* GooglePlacesAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GooglePlacesAPIClient.swift; sourceTree = "<group>"; };
 		907E0CEA1C7828E100872135 /* APIDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIDataHandler.swift; sourceTree = "<group>"; };
 		9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessTableViewCell.swift; sourceTree = "<group>"; };
 		908481831C750816009B6099 /* BusinessObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessObject.swift; sourceTree = "<group>"; };
-		9092A8C31C914D1100D04CB5 /* PlaylistCreationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistCreationViewController.swift; sourceTree = "<group>"; };
 		90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessDetailViewController.swift; sourceTree = "<group>"; };
-		90B9B7DA1C8ADFB2002D4BB1 /* PerformSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformSearchViewController.swift; sourceTree = "<group>"; };
 		90BAD1C01C8662ED0047277E /* TestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTableViewController.swift; sourceTree = "<group>"; };
 		90BAD1C21C86639E0047277E /* TestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTableViewCell.swift; sourceTree = "<group>"; };
 		90DA32711C93613600D5EBDF /* Montserrat-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraBold.otf"; sourceTree = "<group>"; };
@@ -121,13 +117,14 @@
 		90E505DE1C8E375200F47285 /* GPlacesSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPlacesSearchViewController.swift; sourceTree = "<group>"; };
 		90E505E11C8E944100F47285 /* CustomSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSearchController.swift; sourceTree = "<group>"; };
 		90E505E31C8E946700F47285 /* CustomSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
+		90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePlaylistViewController.swift; sourceTree = "<group>"; };
+		90F34CE01CB08BCD00CC0870 /* HomeCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewController.swift; sourceTree = "<group>"; };
 		981001A34CAB5A147D7CB122 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B140D093A1A89D68777F3561 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		EDA8CEF41CAF506400A5C2ED /* SortMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortMethods.swift; sourceTree = "<group>"; };
 		EDBAE5BF1C8E472100278A33 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		EDBAE5C11C8E49A900278A33 /* Publisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
 		EDBAE5C31C8E4C1C00278A33 /* Publishers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publishers.swift; sourceTree = "<group>"; };
-		EDBAE5C71C8E4F4400278A33 /* Collection View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Collection View.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,8 +180,8 @@
 			children = (
 				3CE2EE7E1C6C5EC8000C9088 /* AppDelegate.swift */,
 				3CE2EE821C6C5EC8000C9088 /* Main.storyboard */,
-				EDBAE5C71C8E4F4400278A33 /* Collection View.xib */,
 				908481831C750816009B6099 /* BusinessObject.swift */,
+				90711BD41CAF4DEA0032A257 /* PlaylistObject.swift */,
 				9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */,
 				EDA8CEF41CAF506400A5C2ED /* SortMethods.swift */,
 				90DA327A1C93614700D5EBDF /* Fonts */,
@@ -228,15 +225,13 @@
 		9025184F1C88276C00BB3E05 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				90F34CE01CB08BCD00CC0870 /* HomeCollectionViewController.swift */,
+				90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */,
 				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
-				9092A8C31C914D1100D04CB5 /* PlaylistCreationViewController.swift */,
 				90E505DE1C8E375200F47285 /* GPlacesSearchViewController.swift */,
 				90E505E11C8E944100F47285 /* CustomSearchController.swift */,
 				90E505E31C8E946700F47285 /* CustomSearchBar.swift */,
 				90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */,
-				90B9B7DA1C8ADFB2002D4BB1 /* PerformSearchViewController.swift */,
-				3CF480BB1C80011100698857 /* SinglePlaylistViewController.swift */,
-				3CB9473E1C7192780035A8EB /* PlaylistViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -517,22 +512,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				90DC57BC1C72A1D0001F1891 /* SearchBusinessViewController.swift in Sources */,
-				9092A8C41C914D1100D04CB5 /* PlaylistCreationViewController.swift in Sources */,
+				90F34CDF1CB0893300CC0870 /* SinglePlaylistViewController.swift in Sources */,
 				90E505DF1C8E375200F47285 /* GPlacesSearchViewController.swift in Sources */,
 				907E0CE51C76768D00872135 /* LocuAPIClient.swift in Sources */,
+				90711BD51CAF4DEA0032A257 /* PlaylistObject.swift in Sources */,
 				907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */,
-				3CF480BC1C80011100698857 /* SinglePlaylistViewController.swift in Sources */,
 				907E0CE71C77F34100872135 /* GooglePlacesAPIClient.swift in Sources */,
 				90E505E21C8E944100F47285 /* CustomSearchController.swift in Sources */,
 				EDA8CEF51CAF506400A5C2ED /* SortMethods.swift in Sources */,
 				90DC57B91C72843A001F1891 /* YelpAPIClient.swift in Sources */,
+				90F34CE11CB08BCD00CC0870 /* HomeCollectionViewController.swift in Sources */,
 				90BAD1C31C86639E0047277E /* TestTableViewCell.swift in Sources */,
 				3CE2EE7F1C6C5EC8000C9088 /* AppDelegate.swift in Sources */,
 				90E505E41C8E946700F47285 /* CustomSearchBar.swift in Sources */,
-				90B9B7DB1C8ADFB2002D4BB1 /* PerformSearchViewController.swift in Sources */,
 				90B9B7D91C8A696F002D4BB1 /* BusinessDetailViewController.swift in Sources */,
 				906CAA311C8977B700AF3515 /* TestViewController.swift in Sources */,
-				3CB9473F1C7192780035A8EB /* PlaylistViewController.swift in Sources */,
 				908481841C750816009B6099 /* BusinessObject.swift in Sources */,
 				908481801C7504AF009B6099 /* BusinessTableViewCell.swift in Sources */,
 				90BAD1C11C8662ED0047277E /* TestTableViewController.swift in Sources */,

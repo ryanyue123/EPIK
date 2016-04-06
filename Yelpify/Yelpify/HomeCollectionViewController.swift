@@ -13,10 +13,11 @@ import ParseUI
 struct playlist
 {
     static var playlistname: String!
-    static var playlistID: String!
 }
-class PlaylistViewController: UICollectionViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
+class HomeCollectionViewController: UICollectionViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
 
+    @IBOutlet var playlistCollectionView: UICollectionView!
+    
     var locationManager = CLLocationManager()
     let client = YelpAPIClient()
     var parameters = ["ll": "", "category_filter": "pizza", "radius_filter": "3000", "sort": "0"]
@@ -25,12 +26,11 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
     var userlongitude: Double!
     var inputTextField: UITextField!
     
-    @IBAction func unwindToPlaylistVC(segue: UIStoryboardSegue) {
-        
-    }
+
     
     
     @IBAction func showPlaylistAlert(sender: UIBarButtonItem) {
+        print("hello")
         let alertController = UIAlertController(title: "Create new playlist", message: "Enter name of playlist.", preferredStyle: UIAlertControllerStyle.Alert)
         
         alertController.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
@@ -60,7 +60,7 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
                                 if (error == nil)
                                 {
                                     playlist.playlistname = self.inputTextField.text!
-                                    self.performSegueWithIdentifier("showList", sender: self)
+                                    self.performSegueWithIdentifier("createPlaylist", sender: self)
                                 }
                                 else
                                 {
@@ -84,47 +84,19 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
         presentViewController(alertController, animated: true, completion: nil)
         
     }
-
-    func fetchAllObjectsFromDataStore()
+    
+    func fetchAllObjects()
     {
         let query:PFQuery = PFQuery(className: "Playlists")
-        query.fromLocalDatastore()
-        query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: userlatitude, longitude: userlongitude), withinMiles: 50.0)
+        query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: userlatitude, longitude: userlongitude), withinMiles: 1000.0)
         query.orderByAscending("location")
         query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
             if ((error) == nil)
             {
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.playlists = objects! as NSArray
-                    //print(self.playlists)
+                    self.playlists = objects!
+                    self.playlistCollectionView.reloadData()
                 })
-            }
-            else
-            {
-                print(error?.userInfo)
-            }
-        }
-        
-    }
-    
-    func fetchAllObjects()
-    {
-        PFObject.unpinAllObjectsInBackgroundWithBlock(nil)
-        let query:PFQuery = PFQuery(className:"Playlists")
-        print(userlatitude)
-        print(userlongitude)
-        query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: userlatitude, longitude: userlongitude), withinMiles: 50.0)
-        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
-            if ((error) == nil)
-            {
-                PFObject.pinAllInBackground(objects, block: { (success, error) -> Void in
-                    
-                    if (error == nil)
-                    {
-                        self.fetchAllObjectsFromDataStore()
-                    }
-                })
-
             }
             else
             {
@@ -229,14 +201,42 @@ class PlaylistViewController: UICollectionViewController, PFLogInViewControllerD
     */
     
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 0
+        return 1
     }
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        print(playlists.count)
+        return playlists.count
     }
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PlaylistCell", forIndexPath: indexPath)
+        cell.backgroundColor = UIColor.cyanColor()
         return cell
     }
+    
+    var index: NSIndexPath!
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        index = indexPath
+        performSegueWithIdentifier("showPlaylist", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "showPlaylist")
+        {
+            let upcoming = segue.destinationViewController as? SinglePlaylistViewController
+            let object = playlists[index.row]
+            print(object)
+            upcoming?.object = playlists[index.row] as! PFObject
+        }
+    }
 
+}
+extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout
+{
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CGSize(width: 150, height: 150)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 50.0, left: 10.0, bottom: 50.0, right: 10.0)
+    }
 }
