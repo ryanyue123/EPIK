@@ -11,10 +11,12 @@ import Foundation
 class RandomPlaceController: UITableViewController{
     
    
-    let num = Int32(arc4random_uniform(sizeOf(playlist)))
-    func getRandomPlace(num: Int)->Business{
+    
+    func getRandomPlace(playlist: Array<Business>)->Business{
+        let num = Int32(arc4random_uniform(sizeOf(playlist)))
         let randomPlace = playlist[num]
         return randomPlace
     }
    
+    
 }
