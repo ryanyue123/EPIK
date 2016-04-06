@@ -87,7 +87,7 @@ class HomeCollectionViewController: UICollectionViewController, PFLogInViewContr
     func fetchAllObjects()
     {
         let query:PFQuery = PFQuery(className: "Playlists")
-        query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: userlatitude, longitude: userlongitude), withinMiles: 50.0)
+        query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: userlatitude, longitude: userlongitude), withinMiles: 1000000000.0)
         query.orderByAscending("location")
         query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
             if ((error) == nil)
@@ -108,6 +108,8 @@ class HomeCollectionViewController: UICollectionViewController, PFLogInViewContr
         super.viewDidLoad()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -144,7 +146,6 @@ class HomeCollectionViewController: UICollectionViewController, PFLogInViewContr
             
             self.presentViewController(logInViewController, animated: true, completion: nil)
         }
-        locationManager.requestLocation()
     }
     
     func logInViewController(logInController: PFLogInViewController, shouldBeginLogInWithUsername username: String, password: String) -> Bool {

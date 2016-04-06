@@ -176,6 +176,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if (object == nil)
+        {
+            // Automatic edit mode
+        }
+        else if((object["createdbyuser"] as? String) == PFUser.currentUser()?.username) //later incorporate possibility of collaboration
+        {
+            // edit button is enabled
+        }
+        else
+        {
+           // edit button disabled
+        }
+        
         configureNavigationBar()
         configurePlaylistInfoView()
         //performInitialSearch()
