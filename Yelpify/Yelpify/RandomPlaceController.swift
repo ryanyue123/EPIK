@@ -7,16 +7,19 @@
 //
 
 import Foundation
+import UIKit
 
-class RandomPlaceController: UITableViewController{
+class RandomPlaceController: UIViewController{
     
-   
-    
-    func getRandomPlace(playlist: Array<Business>)->Business{
-        let num = Int32(arc4random_uniform(sizeOf(playlist)))
+
+    func getRandomPlace(playlist: NSArray)->Business{
+        let num = Int(arc4random_uniform(UInt32(playlist.count)))
         let randomPlace = playlist[num]
-        return randomPlace
+        return randomPlace as! Business
     }
-   
+    
+    override func viewDidLoad() {
+        
+    }
     
 }
