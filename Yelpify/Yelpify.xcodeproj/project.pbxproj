@@ -49,6 +49,8 @@
 		90E505E41C8E946700F47285 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E505E31C8E946700F47285 /* CustomSearchBar.swift */; };
 		90F34CDF1CB0893300CC0870 /* SinglePlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */; };
 		90F34CE11CB08BCD00CC0870 /* HomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F34CE01CB08BCD00CC0870 /* HomeCollectionViewController.swift */; };
+		EDA8CEF51CAF506400A5C2ED /* SortMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA8CEF41CAF506400A5C2ED /* SortMethods.swift */; };
+		EDD44DAD1CB4BA31008DC4AB /* RandomPlaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD44DAC1CB4BA31008DC4AB /* RandomPlaceController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,9 +122,11 @@
 		90F34CE01CB08BCD00CC0870 /* HomeCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewController.swift; sourceTree = "<group>"; };
 		981001A34CAB5A147D7CB122 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B140D093A1A89D68777F3561 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		EDA8CEF41CAF506400A5C2ED /* SortMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortMethods.swift; sourceTree = "<group>"; };
 		EDBAE5BF1C8E472100278A33 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		EDBAE5C11C8E49A900278A33 /* Publisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
 		EDBAE5C31C8E4C1C00278A33 /* Publishers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publishers.swift; sourceTree = "<group>"; };
+		EDD44DAC1CB4BA31008DC4AB /* RandomPlaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomPlaceController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +185,7 @@
 				908481831C750816009B6099 /* BusinessObject.swift */,
 				90711BD41CAF4DEA0032A257 /* PlaylistObject.swift */,
 				9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */,
+				EDA8CEF41CAF506400A5C2ED /* SortMethods.swift */,
 				90DA327A1C93614700D5EBDF /* Fonts */,
 				90DC57BA1C72844B001F1891 /* API */,
 				9025184F1C88276C00BB3E05 /* View Controllers */,
@@ -229,6 +234,7 @@
 				90E505E11C8E944100F47285 /* CustomSearchController.swift */,
 				90E505E31C8E946700F47285 /* CustomSearchBar.swift */,
 				90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */,
+				EDD44DAC1CB4BA31008DC4AB /* RandomPlaceController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -516,6 +522,7 @@
 				907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */,
 				907E0CE71C77F34100872135 /* GooglePlacesAPIClient.swift in Sources */,
 				90E505E21C8E944100F47285 /* CustomSearchController.swift in Sources */,
+				EDA8CEF51CAF506400A5C2ED /* SortMethods.swift in Sources */,
 				90DC57B91C72843A001F1891 /* YelpAPIClient.swift in Sources */,
 				90F34CE11CB08BCD00CC0870 /* HomeCollectionViewController.swift in Sources */,
 				90BAD1C31C86639E0047277E /* TestTableViewCell.swift in Sources */,
@@ -523,6 +530,7 @@
 				90E505E41C8E946700F47285 /* CustomSearchBar.swift in Sources */,
 				90B9B7D91C8A696F002D4BB1 /* BusinessDetailViewController.swift in Sources */,
 				906CAA311C8977B700AF3515 /* TestViewController.swift in Sources */,
+				EDD44DAD1CB4BA31008DC4AB /* RandomPlaceController.swift in Sources */,
 				908481841C750816009B6099 /* BusinessObject.swift in Sources */,
 				908481801C7504AF009B6099 /* BusinessTableViewCell.swift in Sources */,
 				90BAD1C11C8662ED0047277E /* TestTableViewController.swift in Sources */,
