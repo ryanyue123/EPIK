@@ -278,18 +278,18 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="USy-yM-f0N">
                             <connections>
                                 <action selector="showPlaylistAlert:" destination="f8W-oq-YUx" id="ejG-XY-DOH"/>
-                                <segue destination="7Om-1w-JrL" kind="show" identifier="createPlaylist" id="DtW-dB-EOY"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="playlistCollectionView" destination="rZr-SX-Dms" id="AuG-rv-w1S"/>
                         <segue destination="7Om-1w-JrL" kind="show" identifier="showPlaylist" id="WgM-Q9-CDb"/>
+                        <segue destination="7Om-1w-JrL" kind="show" identifier="createPlaylist" id="sNV-9I-4bH"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PwF-Ht-UBF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3236" y="362"/>
+            <point key="canvasLocation" x="3329" y="-191"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pbW-sH-FoZ">
@@ -691,6 +691,6 @@
         <image name="restaurantImage - InNOut" width="1702" height="900"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="WgM-Q9-CDb"/>
+        <segue reference="sNV-9I-4bH"/>
     </inferredMetricsTieBreakers>
 </document>

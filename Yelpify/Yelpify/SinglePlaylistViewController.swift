@@ -25,6 +25,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var businessObjects: [Business] = []
     var playlistArray = [Business]()
     var object: PFObject!
+    var playlist_name: String!
     
     // The apps default color
     let defaultAppColor = UIColor(netHex: 0xFFFFFF)
@@ -105,7 +106,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         self.navigationController?.navigationBar.titleTextAttributes = [
             NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(showWhenScrollDownAlpha) ]
-        self.navigationItem.title = "A Day in the City"
+        self.navigationItem.title = playlist_name
         //self.navigationController?.navigationBar.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(showWhenScrollDownAlpha)
         
         // Handle Status Bar
@@ -122,7 +123,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             headerRect.origin.y = playlistTableView.contentOffset.y
             headerRect.size.height = -playlistTableView.contentOffset.y
         }else if playlistTableView.contentOffset.y > -playlistTableHeaderHeight{
-            self.navigationItem.title = "A Day in the City"
+            self.navigationItem.title = playlist_name
             self.navigationItem.titleView?.tintColor = UIColor.whiteColor()
 //            headerRect.origin.y = playlistTableView.contentOffset.y
 //            headerRect.size.height = -playlistTableView.contentOffset.y//playlistTableHeaderHeight//playlistTableView.contentOffset.y
@@ -172,7 +173,35 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 //        backItem.title = ""
 //        navigationController?.navigationItem.backBarButtonItem = backItem
     }
-
+    
+    func convertPlacesArrayToDictionary(placesArray: [Business])-> [NSDictionary]{
+        var placeDictArray = [NSDictionary]()
+        for business in placesArray{
+            placeDictArray.append(business.getDictionary())
+        }
+        return placeDictArray
+    }
+    
+    func savePlaylistToParse()
+    {
+        let saveobject = PFObject(className: "Playlists")
+        let lat = playlistArray[0].businessLatitude!
+        let long = playlistArray[0].businessLongitude!
+        
+        saveobject["createdbyuser"] = PFUser.currentUser()?.username
+        saveobject["playlistName"] = playlist_name
+        saveobject["track"] = convertPlacesArrayToDictionary(playlistArray)
+        saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
+        saveobject.saveInBackgroundWithBlock { (success, error)  -> Void in
+            if (error == nil){
+                print("saved")
+            }
+            else{
+                print(error?.description)
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -204,7 +233,18 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         // Dispose of any resources that can be recreated.
     }
     
-
+    override func viewWillAppear(animated: Bool) {
+        if (object == nil)
+        {
+            playlist_name = playlist.playlistname
+        }
+        else
+        {
+            playlist_name = object["playlistName"] as! String
+        }
+        configureNavigationBar()
+        configurePlaylistInfoView()
+    }
     /*
     // MARK: - Navigation
 
