@@ -37,17 +37,6 @@ class APIDataHandler {
     
     */
     
-    /*
-    FLOW WHEN SOMEONE CLICKS ON A BUSINESS IN SEARCHBUSINESSVC
-    1) Make request with ID to Google Places API
-    2) Get phone, photos, rating, price, and reviews from Google Places API
-    3) Search Yelp with latitude, longitude, address
-    4) Get hours, reviews, rating, categories, website, from Yelp API
-    5) Create new YelpBusiness Object with data
-    6) Merge YelpBusiness Object with Business Object
-    7) Return Business Object
-    */
-    
     func performAPISearch(googleParameters: Dictionary<String, String>, completion:(businessObjectArray: [Business]) -> Void) {
         
         gpClient.searchPlacesWithParameters(googleParameters) { (result) -> Void in
