@@ -202,15 +202,15 @@ class HomeCollectionViewController: UICollectionViewController, PFLogInViewContr
     */
     
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 1
+        return 3
     }
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print(playlists.count)
-        return playlists.count
+        return 5
     }
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PlaylistCell", forIndexPath: indexPath)
-        cell.backgroundColor = UIColor.cyanColor()
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PlaylistCell", forIndexPath: indexPath) as! HomeCollectionViewCell
+        cell.label.text = "Sec \(indexPath.section)/ Item \(indexPath.item)"
         return cell
     }
     
