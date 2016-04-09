@@ -92,7 +92,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         handleNavigationBarOnScroll()
     }
     
-    private let playlistTableHeaderHeight: CGFloat = 300.0
+    private let playlistTableHeaderHeight: CGFloat = 230.0
     var headerView: UIView!
     
     func fadePlaylistBG(){
