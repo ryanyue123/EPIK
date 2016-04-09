@@ -51,7 +51,7 @@ class BusinessDetailViewController: UITableViewController {
         }
         
         cache.fetch(key: object.businessPhotoReference!) { (imageData) in
-            <#code#>
+            
         }
         
 //        yelpClient.retrieveYelpBusinessFromBusinessObject(object) { (yelpBusinessObject) -> Void in
