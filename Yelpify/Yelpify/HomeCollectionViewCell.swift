@@ -11,7 +11,7 @@ import UIKit
 
 class HomeCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var label: UILabel!
-    
+    @IBOutlet weak var imageView: UIImageView!
     required init(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)!

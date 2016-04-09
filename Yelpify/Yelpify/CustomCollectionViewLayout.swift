@@ -14,50 +14,55 @@ class CustomCollectionViewLayout: UICollectionViewLayout {
     
     var cellAttrsDictionary = Dictionary<NSIndexPath, UICollectionViewLayoutAttributes>()
     var contentSize = CGSize.zero
+    var dataSourceDidUpdate = true
     
     override func collectionViewContentSize() -> CGSize {
         return self.contentSize
     }
     override func prepareLayout() {
-        if collectionView?.numberOfSections() > 0
+        if dataSourceDidUpdate
         {
-            for section in 0...collectionView!.numberOfSections()-1
+            if collectionView?.numberOfSections() > 0
             {
-                if collectionView?.numberOfItemsInSection(section) > 0
+                for section in 0...collectionView!.numberOfSections()-1
                 {
-                    for item in 0...collectionView!.numberOfItemsInSection(section)-1
+                    if collectionView?.numberOfItemsInSection(section) > 0
                     {
-                        let cellIndex = NSIndexPath(forItem: item, inSection: section)
-                        let xpos = Double(item) * CELL_WIDTH
-                        let ypos = Double(section) * CELL_HEIGHT
-                        
-                        let cellAttributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: cellIndex)
-                        cellAttributes.frame = CGRect(x: xpos, y: ypos, width: CELL_WIDTH, height: CELL_HEIGHT)
-                        
-                        if section == 0 && item == 0
+                        for item in 0...collectionView!.numberOfItemsInSection(section)-1
                         {
-                            cellAttributes.zIndex = 4
+                            let cellIndex = NSIndexPath(forItem: item, inSection: section)
+                            let xpos = Double(item) * CELL_WIDTH
+                            let ypos = Double(section) * CELL_HEIGHT
+                            
+                            let cellAttributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: cellIndex)
+                            cellAttributes.frame = CGRect(x: xpos, y: ypos, width: CELL_WIDTH, height: CELL_HEIGHT)
+                            
+                            if section == 0 && item == 0
+                            {
+                                cellAttributes.zIndex = 4
+                            }
+                            else if section == 0
+                            {
+                                cellAttributes.zIndex = 3
+                            }
+                            else if item == 0
+                            {
+                                cellAttributes.zIndex = 2
+                            }
+                            else
+                            {
+                                cellAttributes.zIndex = 1
+                            }
+                            cellAttrsDictionary[cellIndex] = cellAttributes
                         }
-                        else if section == 0
-                        {
-                            cellAttributes.zIndex = 3
-                        }
-                        else if item == 0
-                        {
-                            cellAttributes.zIndex = 2
-                        }
-                        else
-                        {
-                            cellAttributes.zIndex = 1
-                        }
-                        cellAttrsDictionary[cellIndex] = cellAttributes
                     }
                 }
             }
+            let contentWidth = Double(collectionView!.numberOfItemsInSection(0)) * CELL_WIDTH
+            let contentHeight = Double(collectionView!.numberOfSections()) * CELL_HEIGHT
+            self.contentSize = CGSize(width: contentWidth, height: contentHeight)
+            dataSourceDidUpdate = false
         }
-        let contentWidth = Double(collectionView!.numberOfItemsInSection(0)) * CELL_WIDTH
-        let contentHeight = Double(collectionView!.numberOfSections()) * CELL_HEIGHT
-        self.contentSize = CGSize(width: contentWidth, height: contentHeight)
     }
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var attributesInRect = [UICollectionViewLayoutAttributes]()
@@ -76,7 +81,7 @@ class CustomCollectionViewLayout: UICollectionViewLayout {
         return cellAttrsDictionary[indexPath]!
     }
     override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
-        return false
+        return true
     }
     
 }
