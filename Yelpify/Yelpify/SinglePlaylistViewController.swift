@@ -92,7 +92,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         handleNavigationBarOnScroll()
     }
     
-    private let playlistTableHeaderHeight: CGFloat = 300.0
+    private let playlistTableHeaderHeight: CGFloat = 230.0
     var headerView: UIView!
     
     func fadePlaylistBG(){
@@ -205,8 +205,21 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if (object == nil)
+        {
+            // Automatic edit mode
+        }
+        else if((object["createdbyuser"] as? String) == PFUser.currentUser()?.username) //later incorporate possibility of collaboration
+        {
+            // edit button is enabled
+        }
+        else
+        {
+           // edit button disabled
+        }
         
-        
+        configureNavigationBar()
+        configurePlaylistInfoView()
         //performInitialSearch()
         
         //let tableViewPanGesture = UIPanGestureRecognizer(target: self, action: "panTableView:")
