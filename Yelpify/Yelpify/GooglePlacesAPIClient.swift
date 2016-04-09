@@ -102,7 +102,7 @@ class GooglePlacesAPIClient: NSObject {
             }.resume()
     }
     
-    func buildURLString(parameters: Dictionary<String, String>) -> String!{
+    private func buildURLString(parameters: Dictionary<String, String>) -> String!{
         var result = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
         // "https://maps.googleapis.com/maps/api/place/textsearch/json?"
         for (key, value) in parameters{
@@ -113,7 +113,7 @@ class GooglePlacesAPIClient: NSObject {
     }
     
     
-    func buildDetailedURLString(parameters: Dictionary<String, String>) -> String!{
+    private func buildDetailedURLString(parameters: Dictionary<String, String>) -> String!{
         var result = "https://maps.googleapis.com/maps/api/place/details/json?"
         for (key, value) in parameters{
             let addString = key + "=" + value + "&"
@@ -122,7 +122,7 @@ class GooglePlacesAPIClient: NSObject {
         return result
     }
     
-    func buildPlacePhotoURLString(parameters: Dictionary<String, String>) -> String{
+    private func buildPlacePhotoURLString(parameters: Dictionary<String, String>) -> String{
         var result = "https://maps.googleapis.com/maps/api/place/photo?"
         for (key, value) in parameters{
             let addString = key + "=" + value + "&"

@@ -92,7 +92,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         handleNavigationBarOnScroll()
     }
     
-    private let playlistTableHeaderHeight: CGFloat = 230.0
+    private let playlistTableHeaderHeight: CGFloat = 260.0
     var headerView: UIView!
     
     func fadePlaylistBG(){
@@ -107,7 +107,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.navigationController?.navigationBar.titleTextAttributes = [
             NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(showWhenScrollDownAlpha) ]
         self.navigationItem.title = playlist_name
-        //self.navigationController?.navigationBar.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(showWhenScrollDownAlpha)
         
         // Handle Status Bar
         self.statusBarView.alpha = showWhenScrollDownAlpha
