@@ -29,6 +29,8 @@ class RandomPlaceController: UIViewController{
         
     }
     
+    //
+    
     func viewDidLoad() {
         var randomBusiness = getRandomPlace(businesslist)
         RestaurantName.text = randomBusiness.businessName
