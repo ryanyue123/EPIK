@@ -209,8 +209,8 @@ class HomeCollectionViewController: UICollectionViewController, PFLogInViewContr
         return 5
     }
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PlaylistCell", forIndexPath: indexPath)
-        cell.backgroundColor = UIColor.cyanColor()
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PlaylistCell", forIndexPath: indexPath) as! HomeCollectionViewCell
+        cell.label.text = "Sec \(indexPath.section)/ Item \(indexPath.item)"
         return cell
     }
     
