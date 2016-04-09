@@ -180,9 +180,16 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if (segue.identifier == "showBusinessDetail"){
+            let cache = Shared.dataCache
+            
             let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
+            
+            
             let indexPath = tableView.indexPathForSelectedRow
             let object = businessObjects[indexPath!.row]
+//            cache.fetch(key: object.businessPhotoReference!).onSuccess { image in
+//                upcoming.placePhoto = UIImage(data: image)
+//            }
             upcoming.object = object
             upcoming.index = indexPath!.row
             self.tableView.deselectRowAtIndexPath(indexPath!, animated: true)

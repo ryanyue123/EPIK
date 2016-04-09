@@ -47,6 +47,13 @@ class APIDataHandler {
         
     }
     
+    func performDetailedSearch(googleID: String, completion: (detailedGPlace: GooglePlaceDetail) -> Void){
+        self.gpClient.searchPlaceWithID(googleID) { (JSONdata) in
+            self.parseGoogleDetailedData(JSONdata, completion: { (detailedGPlace) in
+                completion(detailedGPlace: detailedGPlace)
+            })
+        }
+    }
     
     // MARK: - DETAILED REQUEST HANDLING (for use when cell in searchBusinessVC is clicked)
     
@@ -88,15 +95,26 @@ class APIDataHandler {
     // Handled in GoogleAPIClient
 
     // Step 2 - Parse Detailed Info // Returns a NSDictionary containing [phone, price, rating, reviews]
-    func parseGoogleDetailedData(data: NSDictionary, completion: (detailedGPlaceDict: NSDictionary) -> Void){
+    func parseGoogleDetailedData(data: NSDictionary, completion: (detailedGPlace: GooglePlaceDetail) -> Void){
         if data.count > 0 {
             if let place = data["result"] as? NSDictionary{
                 if place.count > 0{
+                    
+                    var placeCity = ""
+                    if let addressComponents = place["address_components"] as? NSArray{
+                        //let addressCity = addressComponents[2] as! NSDictionary
+                    }
+                    
+                    let placeFormattedAddress = place["formatted_address"] as! String
+                    
                     let placePhone = place["formatted_phone_number"] as! String
-                    // let placeIntlPhone = place["international_phone_number"] as! String
-            
-                    // let placeHours = place["weekday_text"] as! NSArray
-                    // let placePermanentlyClosed = place["permanently_closed"] as! Bool
+                    let placeIntlPhone = place["international_phone_number"] as! String
+                    
+                    var placeWeekdayText = []
+                    if let placeHours = place["opening_hours"] as? NSArray{
+                        let placeWeekdayText = place["weekday_text"] as! NSArray
+                        // let placePermanentlyClosed = place["permanently_closed"] as! Bool
+                    }
                     
                     var placePhotoRefArray: [String] = []
                     if let placePhotoArray = place["photos[]"] as? NSArray{
@@ -106,16 +124,18 @@ class APIDataHandler {
                         }
                     }
                     
-                    let placePrice = place["price_level"] as! Int
+                    let placePrice = place["price_level"] as? Int
                     let placeRating = place["rating"] as! Double
                     
-                    let placeReviews = place["reviews[]"] as! NSArray
+                    let placeReviews = place["reviews"] as! NSArray
                     
-                    // let placeTypes = place["types[]"] as! NSArray
+                    let placeTypes = place["types"] as! NSArray
                     
-                    //let placeWebsite = place["url"] as! String
+                    let placeWebsite = place["url"] as! String
                     
-                    completion(detailedGPlaceDict: ["phone": placePhone, "placePrice": placePrice, "placeRating": placeRating, "placeReviews": placeReviews])
+                    completion(detailedGPlace: GooglePlaceDetail(_address: placeFormattedAddress, _phone: placePhone, _website: placeWebsite, _hours: placeWeekdayText, _priceRating: placePrice, _rating: placeRating, _reviews: placeReviews, _photos: placePhotoRefArray))
+                    
+                    //completion(detailedGPlaceDict: ["phone": placePhone, "address": placeFormattedAddress, "website": placeWebsite, "priceRating": placePrice, "hours": placeWeekdayText, "placePhotos": placePhotoRefArray, "rating": placeRating, "reviews": placeReviews])
                     
                 }
             }
@@ -150,8 +170,6 @@ class APIDataHandler {
     private func parseYelpBusinessData(data: NSDictionary, completion: (yelpBusiness: YelpBusiness) -> Void){
         
     }
-    
-    
     
     // END DETAILED
     

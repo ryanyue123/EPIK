@@ -8,17 +8,24 @@
 
 import UIKit
 import Parse
+import Haneke
 
 class BusinessDetailViewController: UITableViewController {
 
+    @IBOutlet weak var placePhotoImageView: UIImageView!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var hoursLabel: UILabel!
+    
+    //var placePhoto: UIImage? = UIImage(named: "default_restaurant")
+    let cache = Shared.dataCache
     var object: Business!
     var index: Int!
-    var yelpClient = APIDataHandler()
-    var yelpObj:YelpBusiness!
+    
+    var APIClient = APIDataHandler()
+    //var yelpClient = APIDataHandler()
+    //var yelpObj:YelpBusiness!
 
     
     @IBOutlet weak var directionsButton: UIButton!
@@ -35,21 +42,33 @@ class BusinessDetailViewController: UITableViewController {
         self.callButton.enabled = false
         self.webButton.enabled = false
         self.title = "Details"
-        yelpClient.retrieveYelpBusinessFromBusinessObject(object) { (yelpBusinessObject) -> Void in
-            self.yelpObj = yelpBusinessObject
+        
+        APIClient.performDetailedSearch(object.gPlaceID!) { (detailedGPlace) in
             self.nameLabel.text = self.object.businessName
-            self.addressLabel.text = self.object.businessAddress
+            self.addressLabel.text = detailedGPlace.address
             self.directionsButton.enabled = true
             self.callButton.enabled = true
-            if(self.object.businessPhone != nil)
-            {
-                self.callButton.enabled = true
-            }
-//            if(self.object.businessURL != nil)
-//            {
-//                self.webButton.enabled = true
-//            }
         }
+        
+        cache.fetch(key: object.businessPhotoReference!) { (imageData) in
+            
+        }
+        
+//        yelpClient.retrieveYelpBusinessFromBusinessObject(object) { (yelpBusinessObject) -> Void in
+//            self.yelpObj = yelpBusinessObject
+//            self.nameLabel.text = self.object.businessName
+//            self.addressLabel.text = self.object.businessAddress
+//            self.directionsButton.enabled = true
+//            self.callButton.enabled = true
+//            if(self.object.businessPhone != nil)
+//            {
+//                self.callButton.enabled = true
+//            }
+////            if(self.object.businessURL != nil)
+////            {
+////                self.webButton.enabled = true
+////            }
+//        }
         //nameLabel.text = object.businessName
         // Do any additional setup after loading the view.
     }
