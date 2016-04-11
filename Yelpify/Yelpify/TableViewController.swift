@@ -1,33 +1,60 @@
 //
-//  PlaylistViewController.swift
+//  TableViewController.swift
 //  Yelpify
 //
-//  Created by Ryan Yue on 2/14/16.
+//  Created by Ryan Yue on 4/9/16.
 //  Copyright © 2016 Yelpify. All rights reserved.
 //
 
 import UIKit
-import Parse
 import ParseUI
+import Parse
 
 struct playlist
 {
     static var playlistname: String!
 }
-class HomeCollectionViewController: UICollectionViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
 
-    @IBOutlet var playlistCollectionView: UICollectionView!
+class TableViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        if (PFUser.currentUser() == nil) {
+            let logInViewController = PFLogInViewController()
+            logInViewController.delegate = self
+            
+            let signUpViewController = PFSignUpViewController()
+            signUpViewController.delegate = self
+            
+            logInViewController.signUpController = signUpViewController
+            
+            self.presentViewController(logInViewController, animated: true, completion: nil)
+            
+            
+        }
+    }
     
     var locationManager = CLLocationManager()
     let client = YelpAPIClient()
     var parameters = ["ll": "", "category_filter": "pizza", "radius_filter": "3000", "sort": "0"]
-    var playlists = []
+    var playlists_location = []
+    var playlists_user = []
+    
     var userlatitude: Double!
     var userlongitude: Double!
     var inputTextField: UITextField!
-    
-
-    
     
     @IBAction func showPlaylistAlert(sender: UIBarButtonItem) {
         print("hello")
@@ -84,8 +111,8 @@ class HomeCollectionViewController: UICollectionViewController, PFLogInViewContr
         presentViewController(alertController, animated: true, completion: nil)
         
     }
-    
-    func fetchAllObjects()
+
+    func fetchNearbyPlaylists()
     {
         let query:PFQuery = PFQuery(className: "Playlists")
         query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: userlatitude, longitude: userlongitude), withinMiles: 1000000000.0)
@@ -94,8 +121,7 @@ class HomeCollectionViewController: UICollectionViewController, PFLogInViewContr
             if ((error) == nil)
             {
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.playlists = objects!
-                    self.playlistCollectionView.reloadData()
+                    self.playlists_location = objects!
                 })
             }
             else
@@ -104,13 +130,24 @@ class HomeCollectionViewController: UICollectionViewController, PFLogInViewContr
             }
         }
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestLocation()
 
+    func fetchUserPlaylists()
+    {
+        let query: PFQuery = PFQuery(className: "Playlists")
+        query.whereKey("createdbyuser", equalTo: (PFUser.currentUser()?.username)!)
+        query.orderByDescending("updatedAt")
+        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
+            if ((error) == nil)
+            {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.playlists_user = objects!
+                })
+            }
+            else
+            {
+                print(error?.userInfo)
+            }
+        }
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -121,7 +158,8 @@ class HomeCollectionViewController: UICollectionViewController, PFLogInViewContr
         print(userLocation.coordinate)
         userlatitude = latitude
         userlongitude = longitude
-        fetchAllObjects()
+        fetchNearbyPlaylists()
+        fetchUserPlaylists()
         parameters["ll"] = String(latitude) + "," + String(longitude)
     }
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
@@ -132,20 +170,6 @@ class HomeCollectionViewController: UICollectionViewController, PFLogInViewContr
         if status == .AuthorizedWhenInUse
         {
             //print("Authorized")
-        }
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        if (PFUser.currentUser() == nil) {
-            let logInViewController = PFLogInViewController()
-            logInViewController.delegate = self
-            
-            let signUpViewController = PFSignUpViewController()
-            signUpViewController.delegate = self
-            
-            logInViewController.signUpController = signUpViewController
-            
-            self.presentViewController(logInViewController, animated: true, completion: nil)
         }
     }
     
@@ -184,59 +208,71 @@ class HomeCollectionViewController: UICollectionViewController, PFLogInViewContr
     func signUpViewControllerDidCancelSignUp(signUpController: PFSignUpViewController) {
         print("signup canceled")
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
 
-    /*
-    // MARK: - Navigation
+    // MARK: - Table view data source
+    let model: [[UIColor]] = generateRandomData()
+    var storedOffsets = [Int: CGFloat]()
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1
+    }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return model.count
     }
-    */
     
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 3
-    }
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
-    }
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PlaylistCell", forIndexPath: indexPath) as! HomeCollectionViewCell
-        //cell.label.text = "Sec \(indexPath.section)/ Item \(indexPath.item)"
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
         return cell
     }
-    
-    var index: NSIndexPath!
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        index = indexPath
-        performSegueWithIdentifier("showPlaylist", sender: self)
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        guard let tableViewCell = cell as? TableViewCell else{return}
+        tableViewCell.setCollectionViewDataSourceDelegate(self, forRow: indexPath.row)
+        tableViewCell.collectionViewOffset = storedOffsets[indexPath.row] ?? 0
     }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "showPlaylist")
-        {
-            let upcoming = segue.destinationViewController as? SinglePlaylistViewController
-            let object = playlists[index.row]
-            print(object)
-            upcoming?.object = playlists[index.row] as! PFObject
-        }
+    override func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath:NSIndexPath) {
+        
+        guard let tableViewCell = cell as? TableViewCell else { return }
+        
+        storedOffsets[indexPath.row] = tableViewCell.collectionViewOffset
     }
-
 }
-extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout
+
+extension TableViewController: UICollectionViewDataSource, UICollectionViewDelegate
 {
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: 150, height: 150)
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return model[collectionView.tag].count
     }
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
+        
+        cell.backgroundColor = model[collectionView.tag][indexPath.item]
+        
+        return cell
+    }
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        print(collectionView.tag)
+        print(indexPath.item)
+    }
+}
+func generateRandomData() -> [[UIColor]] {
+    let numberOfRows = 20
+    let numberOfItemsPerRow = 15
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 50.0, left: 10.0, bottom: 50.0, right: 10.0)
+    return (0..<numberOfRows).map { _ in
+        return (0..<numberOfItemsPerRow).map { _ in UIColor.randomColor() }
+    }
+}
+extension UIColor {
+    class func randomColor() -> UIColor {
+        
+        let hue = CGFloat(arc4random() % 100) / 100
+        let saturation = CGFloat(arc4random() % 100) / 100
+        let brightness = CGFloat(arc4random() % 100) / 100
+        
+        return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1.0)
     }
 }

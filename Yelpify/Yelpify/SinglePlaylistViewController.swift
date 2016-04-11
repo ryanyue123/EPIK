@@ -235,7 +235,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     override func viewWillAppear(animated: Bool) {
         if (object == nil)
         {
-            playlist_name = playlist.playlistname
+           playlist_name = playlist.playlistname
         }
         else
         {
