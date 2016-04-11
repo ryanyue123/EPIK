@@ -20,19 +20,19 @@ class RandomPlaceController: UIViewController{
     @IBOutlet weak var RestaurantAddress: UILabel!
     
     
-//    func getRandomPlace(playlist: [Business])->Business{
-//        let num = Int32(arc4random_uniform(sizeOf(playlist)))
-//        let randomPlace = playlist[num]
-//        return randomPlace
-//        
-//    }
+    func getRandomPlace(playlist: [Business])->Business{
+        let num = Int32(arc4random_uniform(UInt32(playlist.count)))
+        let randomPlace = playlist[Int(num)]
+        return randomPlace
+        
+    }
     
     //
     
     override func viewDidLoad() {
-//        let randomBusiness = getRandomPlace([business1, business2, business2])
-//        RestaurantName.text = randomBusiness.businessName
-//        RestaurantAddress.text = randomBusiness.businessAddress
+        let randomBusiness = getRandomPlace([business1, business2, business2])
+        RestaurantName.text = randomBusiness.businessName
+        RestaurantAddress.text = randomBusiness.businessAddress
 
     }
     
