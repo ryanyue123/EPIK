@@ -92,7 +92,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         handleNavigationBarOnScroll()
     }
     
-    private let playlistTableHeaderHeight: CGFloat = 260.0
+    private var playlistTableHeaderHeight: CGFloat = 250.0
     var headerView: UIView!
     
     func fadePlaylistBG(){
@@ -109,25 +109,47 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.navigationItem.title = playlist_name
         
         // Handle Status Bar
-        self.statusBarView.alpha = showWhenScrollDownAlpha
+        //self.statusBarView.alpha = showWhenScrollDownAlpha
         
         // Handle Nav Shadow View
         self.view.viewWithTag(100)!.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(showWhenScrollDownAlpha)
     }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        playlistTableView.contentOffset.y = -260.0
+        updateHeaderView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        playlistTableView.contentOffset.y = -260.0
+        updateHeaderView()
+    }
 
     func updateHeaderView(){
+        //playlistTableHeaderHeight = playlistInfoView.frame.size.height
         var headerRect = CGRect(x: 0, y: -playlistTableHeaderHeight, width: playlistTableView.frame.size.width, height: playlistTableHeaderHeight)
         
+        //print("Playlist scrolled below offset", playlistTableView.contentOffset.y < -playlistTableHeaderHeight)
+        
         if playlistTableView.contentOffset.y < -playlistTableHeaderHeight{
+            //print("Scrolled above offset")
             headerRect.origin.y = playlistTableView.contentOffset.y
             headerRect.size.height = -playlistTableView.contentOffset.y
+            //print(headerRect.origin.y, headerRect.size.height)
         }else if playlistTableView.contentOffset.y > -playlistTableHeaderHeight{
+            //print("Scrolled below offset")
             self.navigationItem.title = playlist_name
             self.navigationItem.titleView?.tintColor = UIColor.whiteColor()
+            
 //            headerRect.origin.y = playlistTableView.contentOffset.y
 //            headerRect.size.height = -playlistTableView.contentOffset.y//playlistTableHeaderHeight//playlistTableView.contentOffset.y
         }
+        print(headerRect)
+        //print(playlistTableView.contentOffset.y)
         headerView.frame = headerRect
+        //playlistInfoView.frame.size.height = 260.0
     }
     
     func addShadowToBar() {
@@ -138,7 +160,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         shadowView.layer.shadowOffset = CGSize(width: 0, height: 3) // your offset
         shadowView.layer.shadowRadius =  10 //your radius
         self.view.addSubview(shadowView)
-        self.view.bringSubviewToFront(statusBarView)
+        //self.view.bringSubviewToFront(statusBarView)
         
         shadowView.tag = 100
     }
@@ -201,8 +223,15 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+    override func viewDidAppear(animated: Bool) {
+        playlistInfoView.frame.size.height = 260
+        playlistTableHeaderHeight = playlistInfoView.frame.size.height
+        print(playlistInfoView.frame.size.height)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        playlistInfoView.frame.size.height = 260
         
         if (object == nil)
         {
