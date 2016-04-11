@@ -159,8 +159,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         
         cell.configureCellWith(business) { () -> Void in
         }
-        cell.addToPlaylist.tag = indexPath.row
-        cell.addToPlaylist.addTarget(self, action: "addTrackToPlaylist:", forControlEvents: .TouchUpInside)
+        cell.moreButton.tag = indexPath.row
+        cell.moreButton.addTarget(self, action: "addTrackToPlaylist:", forControlEvents: .TouchUpInside)
         return cell
     }
     

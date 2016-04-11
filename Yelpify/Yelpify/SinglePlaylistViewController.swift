@@ -20,8 +20,16 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var playlistInfoIcon: UIImageView!
     @IBOutlet weak var playlistInfoName: UILabel!
     @IBOutlet weak var playlistInfoUser: UIButton!
+    @IBOutlet weak var collaboratorsImageView: UIView!
+    
+    @IBOutlet weak var numOfPlacesLabel: UILabel!
+    @IBOutlet weak var numOfFollowersLabel: UILabel!
+    @IBOutlet weak var averagePriceRating: UILabel!
+    
+    @IBOutlet weak var followListButton: UIButton!
     
     @IBOutlet weak var addPlaceButton: UIButton!
+    
     var businessObjects: [Business] = []
     var playlistArray = [Business]()
     var object: PFObject!
@@ -60,7 +68,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
         cell.configureCellWith(playlistArray[indexPath.row]) { 
-            self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
         return cell
     }

@@ -13,11 +13,15 @@ class BusinessTableViewCell: UITableViewCell {
     
     let cache = Shared.imageCache
     
-    @IBOutlet weak var addToPlaylist: UIButton!
+    @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var businessTitleLabel: UILabel!
+    @IBOutlet weak var ratingImageView: UIImageView!
+    
+    @IBOutlet weak var categoryIcon: UIImageView!
     @IBOutlet weak var businessBackgroundImage: UIImageView!
+    
     @IBOutlet weak var businessAddressLabel: UILabel!
-    @IBOutlet weak var addPlaceButton: UIButton!
+    @IBOutlet weak var businessOpenLabel: UILabel!
     
     let yelpBusinessClient = YelpAPIClient()
     let googlePlacesClient = GooglePlacesAPIClient()
@@ -66,11 +70,6 @@ class BusinessTableViewCell: UITableViewCell {
         let finalImage = UIImage(CIImage: croppedImage)
 
         completion(blurredImage: finalImage)
-    }
-    
-
-    @IBAction func addPlace(sender: AnyObject) {
-        addPlaceButton.imageView?.image = UIImage(named: "checkMark")
     }
     
     override func awakeFromNib() {
