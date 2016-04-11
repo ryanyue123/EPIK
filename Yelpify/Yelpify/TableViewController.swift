@@ -15,7 +15,7 @@ struct playlist
     static var playlistname: String!
 }
 
-class TableViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
+class TableViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -122,6 +122,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
             {
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlists_location = objects!
+                    self.tableView.reloadData()
                 })
             }
             else
@@ -140,7 +141,9 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
             if ((error) == nil)
             {
                 dispatch_async(dispatch_get_main_queue(), {
+                    print("user playlists")
                     self.playlists_user = objects!
+                    self.tableView.reloadData()
                 })
             }
             else
@@ -210,8 +213,8 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     }
 
     // MARK: - Table view data source
-    let model: [[UIColor]] = generateRandomData()
     var storedOffsets = [Int: CGFloat]()
+
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -219,11 +222,12 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return model.count
+        return 3
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! TableViewCell
+        cell.reloadCollectionView()
         return cell
     }
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -243,36 +247,34 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
 {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return model[collectionView.tag].count
+        return 2
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
         
-        cell.backgroundColor = model[collectionView.tag][indexPath.item]
+        if(collectionView.tag == 0 && self.playlists_location.count != 0)
+        {
+            let templist = self.playlists_location[indexPath.row] as! PFObject
+            cell.label.text = templist["playlistName"] as? String
+        }
+        if(collectionView.tag == 1 && self.playlists_user.count != 0)
+        {
+            let templist = self.playlists_user[indexPath.row] as! PFObject
+            cell.label.text = templist["createdbyuser"] as? String
+        }
         
         return cell
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print(collectionView.tag)
-        print(indexPath.item)
+        //performSegueWithIdentifier("showPlaylist", sender: self)
     }
-}
-func generateRandomData() -> [[UIColor]] {
-    let numberOfRows = 20
-    let numberOfItemsPerRow = 15
     
-    return (0..<numberOfRows).map { _ in
-        return (0..<numberOfItemsPerRow).map { _ in UIColor.randomColor() }
-    }
-}
-extension UIColor {
-    class func randomColor() -> UIColor {
-        
-        let hue = CGFloat(arc4random() % 100) / 100
-        let saturation = CGFloat(arc4random() % 100) / 100
-        let brightness = CGFloat(arc4random() % 100) / 100
-        
-        return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1.0)
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "showPlaylist")
+        {
+            let upcoming = segue.destinationViewController as? SinglePlaylistViewController
+            upcoming?.object = playlists_location[0] as! PFObject
+        }
     }
 }
