@@ -28,6 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //UINavigationBar.appearance().barStyle = UIBarStyle.Black
         
+        UILabel.appearance().font = UIFont(name: "Montserrat", size: 14)
+        
         
         // Set navigation bar tint / background colour
 //        UINavigationBar.appearance().barTintColor = UIColor.whiteColor()
