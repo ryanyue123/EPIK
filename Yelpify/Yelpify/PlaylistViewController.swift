@@ -30,7 +30,7 @@ class PlaylistViewController: UIViewController {
         
         headerMaskLayer = CAShapeLayer()
         headerMaskLayer.fillColor = UIColor.blackColor().CGColor
-        headerView.layer.mask = headerMaskLayer
+        //headerView.layer.mask = headerMaskLayer
         
         updateHeaderView()
     }
