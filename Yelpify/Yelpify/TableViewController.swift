@@ -267,7 +267,7 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         return cell
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        performSegueWithIdentifier("showPlaylist", sender: self)
+        //performSegueWithIdentifier("showPlaylist", sender: self)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
