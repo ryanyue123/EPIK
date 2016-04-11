@@ -49,8 +49,8 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     var locationManager = CLLocationManager()
     let client = YelpAPIClient()
     var parameters = ["ll": "", "category_filter": "pizza", "radius_filter": "3000", "sort": "0"]
-    var playlists_location = []
-    var playlists_user = []
+    var playlists_location: NSMutableArray!
+    var playlists_user: NSMutableArray!
     
     var userlatitude: Double!
     var userlongitude: Double!
@@ -121,7 +121,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
             if ((error) == nil)
             {
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.playlists_location = objects!
+                    self.playlists_location.addObjectsFromArray(objects!)
                 })
             }
             else
@@ -140,7 +140,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
             if ((error) == nil)
             {
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.playlists_user = objects!
+                    self.playlists_user.addObjectsFromArray(objects!)
                 })
             }
             else
@@ -210,8 +210,8 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     }
 
     // MARK: - Table view data source
-    let model: [[UIColor]] = generateRandomData()
     var storedOffsets = [Int: CGFloat]()
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -219,7 +219,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return model.count
+        return 3
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -247,32 +247,17 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
-        
-        cell.backgroundColor = model[collectionView.tag][indexPath.item]
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
+
+        if(collectionView.tag == 0)
+        {
+            cell.label.text = self.playlists_location[0]["playlistName"] as String
+        }
         
         return cell
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print(collectionView.tag)
         print(indexPath.item)
-    }
-}
-func generateRandomData() -> [[UIColor]] {
-    let numberOfRows = 20
-    let numberOfItemsPerRow = 15
-    
-    return (0..<numberOfRows).map { _ in
-        return (0..<numberOfItemsPerRow).map { _ in UIColor.randomColor() }
-    }
-}
-extension UIColor {
-    class func randomColor() -> UIColor {
-        
-        let hue = CGFloat(arc4random() % 100) / 100
-        let saturation = CGFloat(arc4random() % 100) / 100
-        let brightness = CGFloat(arc4random() % 100) / 100
-        
-        return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1.0)
     }
 }
