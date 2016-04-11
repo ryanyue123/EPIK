@@ -15,7 +15,7 @@ struct playlist
     static var playlistname: String!
 }
 
-class TableViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
+class TableViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -49,8 +49,8 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     var locationManager = CLLocationManager()
     let client = YelpAPIClient()
     var parameters = ["ll": "", "category_filter": "pizza", "radius_filter": "3000", "sort": "0"]
-    var playlists_location: NSMutableArray!
-    var playlists_user: NSMutableArray!
+    var playlists_location = []
+    var playlists_user = []
     
     var userlatitude: Double!
     var userlongitude: Double!
@@ -121,7 +121,8 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
             if ((error) == nil)
             {
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.playlists_location.addObjectsFromArray(objects!)
+                    self.playlists_location = objects!
+                    self.tableView.reloadData()
                 })
             }
             else
@@ -140,7 +141,9 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
             if ((error) == nil)
             {
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.playlists_user.addObjectsFromArray(objects!)
+                    print("user playlists")
+                    self.playlists_user = objects!
+                    self.tableView.reloadData()
                 })
             }
             else
@@ -211,7 +214,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
 
     // MARK: - Table view data source
     var storedOffsets = [Int: CGFloat]()
-    
+
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -223,7 +226,8 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! TableViewCell
+        cell.reloadCollectionView()
         return cell
     }
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -243,21 +247,34 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
 {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return model[collectionView.tag].count
+        return 2
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
-
-        if(collectionView.tag == 0)
+        
+        if(collectionView.tag == 0 && self.playlists_location.count != 0)
         {
-            cell.label.text = self.playlists_location[0]["playlistName"] as String
+            let templist = self.playlists_location[indexPath.row] as! PFObject
+            cell.label.text = templist["playlistName"] as? String
+        }
+        if(collectionView.tag == 1 && self.playlists_user.count != 0)
+        {
+            let templist = self.playlists_user[indexPath.row] as! PFObject
+            cell.label.text = templist["createdbyuser"] as? String
         }
         
         return cell
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print(collectionView.tag)
-        print(indexPath.item)
+        performSegueWithIdentifier("showPlaylist", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "showPlaylist")
+        {
+            let upcoming = segue.destinationViewController as? SinglePlaylistViewController
+            upcoming?.object = playlists_location[0] as! PFObject
+        }
     }
 }

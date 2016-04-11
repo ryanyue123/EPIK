@@ -41,4 +41,8 @@ class TableViewCell: UITableViewCell {
             collectionView.contentOffset.x = newValue
         }
     }
+    func reloadCollectionView()
+    {
+        collectionView.reloadData()
+    }
 }
