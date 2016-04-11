@@ -26,13 +26,14 @@ extension String {
         get {
             let startIndex = self.startIndex.advancedBy(r.startIndex)
             let endIndex = startIndex.advancedBy(r.endIndex - r.startIndex)
-            return self[startIndex..<endIndex]
+            
+            return self[Range(start: startIndex, end: endIndex)]
         }
     }
 
     func urlEncodedStringWithEncoding(encoding: NSStringEncoding) -> String {
         let originalString: NSString = self
-        let customAllowedSet =  NSCharacterSet(charactersInString:"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~")
+        let customAllowedSet =  NSCharacterSet(charactersInString:" :/?&=;+!@#$()',*=\"#%/<>?@\\^`{|}").invertedSet
         let escapedString = originalString.stringByAddingPercentEncodingWithAllowedCharacters(customAllowedSet)
         return escapedString! as String
     }
@@ -41,20 +42,10 @@ extension String {
         return dictionaryBySplitting("&", keyValueSeparator: "=")
     }
     
-    var urlQueryEncoded: String? {
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-    }
-
     func dictionaryBySplitting(elementSeparator: String, keyValueSeparator: String) -> Dictionary<String, String> {
-		
-		var string = self
-		if(hasPrefix(elementSeparator)) {
-			string = String(characters.dropFirst(1))
-		}
-		
         var parameters = Dictionary<String, String>()
 
-        let scanner = NSScanner(string: string)
+        let scanner = NSScanner(string: self)
 
         var key: NSString?
         var value: NSString?
