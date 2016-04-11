@@ -158,16 +158,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         let business = self.businessObjects[indexPath.row]
         
         cell.configureCellWith(business) { () -> Void in
-            //print("reloading cell", indexPath.row)
-            //self.businessShown[indexPath.row] = true
-            //self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
         }
-//        
-//        if !businessShown.contains(false){
-//            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-//            businessShown[indexPath.row] = true
-//        }
-//        
         cell.addToPlaylist.tag = indexPath.row
         cell.addToPlaylist.addTarget(self, action: "addTrackToPlaylist:", forControlEvents: .TouchUpInside)
         return cell
