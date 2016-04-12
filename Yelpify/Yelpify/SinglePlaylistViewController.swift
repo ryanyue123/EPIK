@@ -45,12 +45,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     @IBAction func editPlaylistButtonAction(sender: AnyObject) {
-//        if self.navigationItem.rightBarButtonItem?.title == "Edit"{
-//            enterEditMode()
-//        }else{
-//            saveChangesToPlaylist()
-//        }
         
+        performSegueWithIdentifier("showActionsMenu", sender: self)
+        
+        /*
         print(self.navigationItem.rightBarButtonItem!.title!)
         switch self.navigationItem.rightBarButtonItem!.title! {
         case "Edit":
@@ -62,20 +60,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         default:
             playlistTableView.setEditing(false, animated: true)
         }
+ */
     }
     
-    // MARK: - Edit Mode Functions
-    
-//    func saveChangesToPlaylist(){
-//        self.navigationItem.rightBarButtonItem = self.navigationItem.backBarButtonItem
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "editPlaylistButtonAction:")
-//    }
-//    
-//    func enterEditMode(){
-//        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Add", style: .Plain, target: self, action: "addPlace")
-//        
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "saveChangesToPlaylist")
-//    }
     
     
     @IBAction func unwindToSinglePlaylist(segue: UIStoryboardSegue)
@@ -92,7 +79,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     override func viewDidAppear(animated: Bool) {
-        playlistInfoView.frame.size.height = 260
+        playlistInfoView.frame.size.height = 350
         playlistTableHeaderHeight = playlistInfoView.frame.size.height
         print(playlistInfoView.frame.size.height)
     }
@@ -100,9 +87,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.playlistTableView.backgroundColor = appDefaults.color
         //navigationItem.rightBarButtonItem = editButtonItem()
         
-        playlistInfoView.frame.size.height = 260
+        playlistInfoView.frame.size.height = 350
         
         if (object == nil)
         {
@@ -154,7 +142,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        self.performSegueWithIdentifier("showBusinessDetail", sender: self)
     }
     
     // Override to support conditional editing of the table view.
@@ -217,18 +205,18 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.statusBarView.alpha = showWhenScrollDownAlpha
         
         // Handle Nav Shadow View
-        self.view.viewWithTag(100)!.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(showWhenScrollDownAlpha)
+        self.view.viewWithTag(100)!.backgroundColor = appDefaults.color.colorWithAlphaComponent(showWhenScrollDownAlpha)
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        playlistTableView.contentOffset.y = -260.0
+        playlistTableView.contentOffset.y = -350.0
         updateHeaderView()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        playlistTableView.contentOffset.y = -260.0
+        playlistTableView.contentOffset.y = -350.0
         updateHeaderView()
     }
 
@@ -251,15 +239,15 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 //            headerRect.origin.y = playlistTableView.contentOffset.y
 //            headerRect.size.height = -playlistTableView.contentOffset.y//playlistTableHeaderHeight//playlistTableView.contentOffset.y
         }
-        print(headerRect)
+        //print(headerRect)
         //print(playlistTableView.contentOffset.y)
         headerView.frame = headerRect
-        //playlistInfoView.frame.size.height = 260.0
+        //playlistInfoView.frame.size.height = 350.0
     }
     
     func addShadowToBar() {
         let shadowView = UIView(frame: self.navigationController!.navigationBar.frame)
-        //shadowView.backgroundColor = UIColor.darkGrayColor()
+        //shadowView.backgroundColor = appDefaults.color
         shadowView.layer.masksToBounds = false
         shadowView.layer.shadowOpacity = 0.7 // your opacity
         shadowView.layer.shadowOffset = CGSize(width: 0, height: 3) // your offset
@@ -325,6 +313,24 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             else{
                 print(error?.description)
             }
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "showBusinessDetail"){
+            let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
+            
+            let indexPath = playlistTableView.indexPathForSelectedRow
+            let object = playlistArray[indexPath!.row]
+            upcoming.object = object
+            upcoming.index = indexPath!.row
+            self.playlistTableView.deselectRowAtIndexPath(indexPath!, animated: true)
+        }else if (segue.identifier == "showActionsMenu"){
+            let upcoming: ActionsViewController = segue.destinationViewController as! ActionsViewController
+            //upcoming.view.backgroundColor = UIColor.clearColor()
+            //upcoming.tableView.backgroundColor = UIColor.clearColor()
+            //presentingViewController?.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+            presentingViewController?.presentViewController(self, animated: true, completion: nil)
         }
     }
     

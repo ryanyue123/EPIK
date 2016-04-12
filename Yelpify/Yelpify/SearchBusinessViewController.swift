@@ -142,6 +142,10 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
 
     @IBOutlet weak var tableView: UITableView!
     
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.backgroundColor = appDefaults.color
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -221,7 +225,12 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     override func viewDidLoad(){
         getCurrentLocation()
-        //self.navigationController?.navigationBar.set
+        
+        // Set up Nav Bar
+        self.navigationController?.navigationBar.backgroundColor = appDefaults.color
+        self.navigationController?.navigationItem.titleView?.tintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.tableView.backgroundColor = appDefaults.color
         
         // Performs an API search and returns a master array of businesses (as dictionaries)
         performInitialSearch()

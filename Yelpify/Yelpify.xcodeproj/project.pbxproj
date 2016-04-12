@@ -17,6 +17,7 @@
 		3CE2EE941C6C5EC8000C9088 /* YelpifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE2EE931C6C5EC8000C9088 /* YelpifyTests.swift */; };
 		3CE2EE9F1C6C5EC8000C9088 /* YelpifyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE2EE9E1C6C5EC8000C9088 /* YelpifyUITests.swift */; };
 		523E599553F6100C5348857C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68ACAEFF88A59BB74B411CE0 /* Pods.framework */; };
+		9038B75E1CBCD041004B220B /* ActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9038B75D1CBCD041004B220B /* ActionsViewController.swift */; };
 		906CAA311C8977B700AF3515 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906CAA301C8977B700AF3515 /* TestViewController.swift */; };
 		90711BD51CAF4DEA0032A257 /* PlaylistObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90711BD41CAF4DEA0032A257 /* PlaylistObject.swift */; };
 		907E0CE51C76768D00872135 /* LocuAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907E0CE41C76768D00872135 /* LocuAPIClient.swift */; };
@@ -91,6 +92,7 @@
 		3CE2EEA01C6C5EC8000C9088 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68ACAEFF88A59BB74B411CE0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9025184D1C8825E700BB3E05 /* Haneke.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Haneke.framework; path = "Pods/../build/Debug-iphoneos/Haneke.framework"; sourceTree = "<group>"; };
+		9038B75D1CBCD041004B220B /* ActionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionsViewController.swift; sourceTree = "<group>"; };
 		906CAA301C8977B700AF3515 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		90711BD41CAF4DEA0032A257 /* PlaylistObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistObject.swift; sourceTree = "<group>"; };
 		907E0CE41C76768D00872135 /* LocuAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocuAPIClient.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 		9025184F1C88276C00BB3E05 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9038B75D1CBCD041004B220B /* ActionsViewController.swift */,
 				3CD0344E1CBA121300675F88 /* TableViewCell.swift */,
 				3CB8D45B1CBB575F00870F38 /* CollectionViewCell.swift */,
 				3CD034501CBA122A00675F88 /* TableViewController.swift */,
@@ -529,6 +532,7 @@
 				90E505DF1C8E375200F47285 /* GPlacesSearchViewController.swift in Sources */,
 				907E0CE51C76768D00872135 /* LocuAPIClient.swift in Sources */,
 				90711BD51CAF4DEA0032A257 /* PlaylistObject.swift in Sources */,
+				9038B75E1CBCD041004B220B /* ActionsViewController.swift in Sources */,
 				3CD0344F1CBA121300675F88 /* TableViewCell.swift in Sources */,
 				907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */,
 				907E0CE71C77F34100872135 /* GooglePlacesAPIClient.swift in Sources */,

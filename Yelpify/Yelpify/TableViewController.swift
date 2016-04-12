@@ -15,6 +15,10 @@ struct playlist
     static var playlistname: String!
 }
 
+struct appDefaults {
+    static let color: UIColor! = UIColor.darkGrayColor()
+}
+
 class TableViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate {
     
     override func didReceiveMemoryWarning() {

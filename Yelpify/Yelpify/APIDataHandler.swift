@@ -125,13 +125,13 @@ class APIDataHandler {
                     }
                     
                     let placePrice = place["price_level"] as? Int
-                    let placeRating = place["rating"] as! Double
+                    let placeRating = place["rating"] as? Double
                     
-                    let placeReviews = place["reviews"] as! NSArray
+                    let placeReviews = place["reviews"] as? NSArray
                     
-                    let placeTypes = place["types"] as! NSArray
+                    let placeTypes = place["types"] as? NSArray
                     
-                    let placeWebsite = place["url"] as! String
+                    let placeWebsite = place["url"] as? String
                     
                     completion(detailedGPlace: GooglePlaceDetail(_address: placeFormattedAddress, _phone: placePhone, _website: placeWebsite, _hours: placeWeekdayText, _priceRating: placePrice, _rating: placeRating, _reviews: placeReviews, _photos: placePhotoRefArray))
                     
