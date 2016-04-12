@@ -26,6 +26,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize Google Places API.
         GMSServices.provideAPIKey("AIzaSyCKY_SOq4ivZp9b3oB8mmkBaKqHbLrbDlg")
         
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSFontAttributeName: UIFont(name: "Montserrat-Regular", size: 16)!
+        ]
+        
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        
         //UINavigationBar.appearance().barStyle = UIBarStyle.Black
         
         //UILabel.appearance().font = UIFont(name: "Montserrat", size: 14)

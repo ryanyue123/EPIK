@@ -21,7 +21,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     let cache = Shared.imageCache
     var dataHandler = APIDataHandler()
     var locationManager = CLLocationManager()
-    var googleParameters = ["key": "AIzaSyDkxzICx5QqztP8ARvq9z0DxNOF_1Em8Qc", "location": "33.64496794563093,-117.83725295740864", "rankby":"distance", "keyword": ""]
+    var googleParameters = ["key": "AIzaSyDkxzICx5QqztP8ARvq9z0DxNOF_1Em8Qc", "location": "33.6450038818185,-117.837313786366", "rankby":"distance", "keyword": "food"]
     var searchDidChange = false
     var searchQuery = ""
     
@@ -250,34 +250,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         return true
         // Will allow user to press "return" button to close keyboard
     }
-    
-    
-    
-    
-//    func textFieldDidEndEditing(textField: UITextField) {
-//        let query = locationTextField.text
-//        //let queryArr = query!.characters.split{$0 == " "}.map(String.init)
-//        //yelpSearchParameters["term"] = query as String!
-//        
-//        self.businessObjects.removeAll()
-//        self.tableView.reloadData()
-//        
-////        dataHandler.performAPISearch(yelpSearchParameters) { (businessObjectArray) -> Void in
-////            self.businessObjects = businessObjectArray
-////            self.tableView.reloadData()
-////        }
-//        
-//    }
-    
-    
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
