@@ -23,6 +23,7 @@
             <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
+            <string>Montserrat-Regular</string>
         </mutableArray>
         <mutableArray key="Montserrat-SemiBold.otf">
             <string>Montserrat-SemiBold</string>
@@ -1096,7 +1097,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="qJk-w5-pfb">
                             <connections>
                                 <action selector="editPlaylistButtonAction:" destination="7Om-1w-JrL" id="prb-Ja-Crz"/>
-                                <segue destination="DBE-eh-Yq5" kind="presentation" identifier="showActionsMenu" modalPresentationStyle="overCurrentContext" id="0GS-pE-eHG"/>
+                                <segue destination="DBE-eh-Yq5" kind="presentation" identifier="showActionsMenu" modalPresentationStyle="overCurrentContext" modalTransitionStyle="coverVertical" id="0GS-pE-eHG"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1114,6 +1115,7 @@
                         <outlet property="playlistInfoView" destination="iab-IN-lFB" id="gU2-Cv-evF"/>
                         <outlet property="playlistTableView" destination="n6r-Ge-7w9" id="5fF-p3-emf"/>
                         <outlet property="statusBarView" destination="v4U-RQ-qJT" id="KGH-Pn-58e"/>
+                        <segue destination="a1s-cq-qJD" kind="show" identifier="showBusinessDetail" id="YUf-97-oo0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bt3-DI-9NP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1347,13 +1349,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="100" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hER-TX-5xP">
+                            <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="64" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hER-TX-5xP">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <view key="tableHeaderView" contentMode="scaleToFill" id="31A-bF-uzM">
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="HIM-yb-Xnc" userLabel="Header View">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="actionCell" rowHeight="64" id="BIY-zd-GR0">
@@ -1362,6 +1367,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="63.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.2116279987373737" green="0.2116279987373737" blue="0.2116279987373737" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -1369,44 +1375,102 @@
                                     <outlet property="delegate" destination="DBE-eh-Yq5" id="uOD-YE-yo0"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hb3-A9-FEj" userLabel="Cancel View">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhU-yy-TQe">
+                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="6m8-Ab-bc4" kind="unwind" identifier="unwindToSinglePlaylist" unwindAction="unwindToSinglePlaylist:" id="xFc-CG-HtS"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.19971196338383834" green="0.19971196338383834" blue="0.19971196338383834" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="bhU-yy-TQe" firstAttribute="centerX" secondItem="Hb3-A9-FEj" secondAttribute="centerX" id="22Z-Mc-5kb"/>
+                                    <constraint firstItem="bhU-yy-TQe" firstAttribute="centerY" secondItem="Hb3-A9-FEj" secondAttribute="centerY" id="OVO-hx-Q2B"/>
+                                    <constraint firstAttribute="height" constant="40" id="nqK-uL-9eV"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="bhU-yy-TQe"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <exclude reference="nqK-uL-9eV"/>
+                                        <exclude reference="22Z-Mc-5kb"/>
+                                        <exclude reference="OVO-hx-Q2B"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="subviews">
+                                        <include reference="bhU-yy-TQe"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <include reference="nqK-uL-9eV"/>
+                                        <include reference="22Z-Mc-5kb"/>
+                                        <include reference="OVO-hx-Q2B"/>
+                                    </mask>
+                                </variation>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="hER-TX-5xP" firstAttribute="top" secondItem="Unk-jA-mLu" secondAttribute="topMargin" id="58z-xS-C0s"/>
-                            <constraint firstItem="hER-TX-5xP" firstAttribute="leading" secondItem="Unk-jA-mLu" secondAttribute="leadingMargin" constant="-20" id="d64-RB-b6c"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="hER-TX-5xP" secondAttribute="trailing" constant="-20" id="nHI-7p-dgI"/>
-                            <constraint firstItem="mSd-P6-hal" firstAttribute="top" secondItem="hER-TX-5xP" secondAttribute="bottom" id="s2g-9n-wfc"/>
+                            <constraint firstItem="hER-TX-5xP" firstAttribute="leading" secondItem="Unk-jA-mLu" secondAttribute="leadingMargin" constant="-20" id="8vM-QE-lGd"/>
+                            <constraint firstItem="hER-TX-5xP" firstAttribute="top" secondItem="jPE-RF-7l0" secondAttribute="bottom" constant="311" id="BLa-AH-a1g">
+                                <variation key="heightClass=regular-widthClass=compact" constant="-20"/>
+                            </constraint>
+                            <constraint firstItem="Hb3-A9-FEj" firstAttribute="leading" secondItem="Unk-jA-mLu" secondAttribute="leadingMargin" constant="-20" id="BZq-UV-dyI"/>
+                            <constraint firstItem="mSd-P6-hal" firstAttribute="top" secondItem="Hb3-A9-FEj" secondAttribute="bottom" id="JHt-6w-dx1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hER-TX-5xP" secondAttribute="trailing" constant="-20" id="XFy-5C-iRK"/>
+                            <constraint firstItem="mSd-P6-hal" firstAttribute="top" secondItem="hER-TX-5xP" secondAttribute="bottom" id="bOk-rk-Xfc">
+                                <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                            </constraint>
+                            <constraint firstAttribute="trailingMargin" secondItem="Hb3-A9-FEj" secondAttribute="trailing" constant="-20" id="yuJ-bZ-TbA"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="hER-TX-5xP"/>
+                                <exclude reference="Hb3-A9-FEj"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="s2g-9n-wfc"/>
-                                <exclude reference="58z-xS-C0s"/>
-                                <exclude reference="d64-RB-b6c"/>
-                                <exclude reference="nHI-7p-dgI"/>
+                                <exclude reference="8vM-QE-lGd"/>
+                                <exclude reference="BLa-AH-a1g"/>
+                                <exclude reference="XFy-5C-iRK"/>
+                                <exclude reference="BZq-UV-dyI"/>
+                                <exclude reference="yuJ-bZ-TbA"/>
+                                <exclude reference="JHt-6w-dx1"/>
+                                <exclude reference="bOk-rk-Xfc"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="hER-TX-5xP"/>
+                                <include reference="Hb3-A9-FEj"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="s2g-9n-wfc"/>
-                                <include reference="58z-xS-C0s"/>
-                                <include reference="d64-RB-b6c"/>
-                                <include reference="nHI-7p-dgI"/>
+                                <include reference="8vM-QE-lGd"/>
+                                <include reference="BLa-AH-a1g"/>
+                                <include reference="XFy-5C-iRK"/>
+                                <include reference="BZq-UV-dyI"/>
+                                <include reference="yuJ-bZ-TbA"/>
+                                <include reference="JHt-6w-dx1"/>
+                                <include reference="bOk-rk-Xfc"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="tableHeaderView" destination="HIM-yb-Xnc" id="L6j-hu-BAq"/>
                         <outlet property="tableView" destination="hER-TX-5xP" id="JvZ-bb-5nz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RUY-ao-aU0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="6m8-Ab-bc4" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5046" y="-310.5"/>
+            <point key="canvasLocation" x="5124" y="-826.5"/>
         </scene>
         <!--Around You-->
         <scene sceneID="vdw-Ia-rLx">
@@ -2095,7 +2159,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Obf-kV-cZr" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="HKr-MV-tFI" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6540" y="-239.25"/>
+            <point key="canvasLocation" x="6486" y="-296.25"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Tf1-7N-Rpw">
@@ -2143,5 +2207,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="5FV-hX-NA6"/>
+        <segue reference="YUf-97-oo0"/>
     </inferredMetricsTieBreakers>
 </document>
