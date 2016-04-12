@@ -30,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSFontAttributeName: UIFont(name: "Montserrat-Regular", size: 16)!,
             NSForegroundColorAttributeName: UIColor.whiteColor()     ]
         
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         
         

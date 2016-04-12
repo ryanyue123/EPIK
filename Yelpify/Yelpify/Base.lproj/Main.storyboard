@@ -104,6 +104,7 @@
                     <navigationItem key="navigationItem" id="GM2-Sg-Yv1">
                         <nil key="title"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="3xa-qL-I5d">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="showPlaylistAlert:" destination="omI-co-7je" id="wty-uQ-GaB"/>
                                 <segue destination="7Om-1w-JrL" kind="show" id="tzw-u6-Uwc"/>
@@ -147,10 +148,12 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="112" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="n6r-Ge-7w9">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="112" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="n6r-Ge-7w9">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
+                                <color key="separatorColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="5" maxY="0.0"/>
                                 <color key="sectionIndexBackgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexTrackingBackgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <view key="tableHeaderView" contentMode="scaleAspectFill" preservesSuperviewLayoutMargins="YES" id="iab-IN-lFB">
@@ -687,7 +690,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="418" id="T3y-FW-dw7"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="21"/>
+                                                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="19"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact" misplaced="YES">
@@ -695,9 +698,6 @@
                                                         <mask key="constraints">
                                                             <exclude reference="T3y-FW-dw7"/>
                                                         </mask>
-                                                    </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="136" y="13" width="204" height="25.5"/>
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open until 10:00 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SJe-u9-cmS">
@@ -792,7 +792,8 @@
                                                             <include reference="YXO-rr-zhB"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="0.0" y="1" width="114" height="112"/>
                                                         <mask key="constraints">
                                                             <exclude reference="7G7-wL-lJW"/>
                                                             <include reference="CCL-0i-NQ3"/>
@@ -823,7 +824,7 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sAd-MD-WM9">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sAd-MD-WM9" userLabel="Seperator">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                     <color key="backgroundColor" red="0.1471748737373737" green="0.1471748737373737" blue="0.1471748737373737" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -854,7 +855,7 @@
                                                     <variation key="heightClass=regular-widthClass=compact" constant="-16"/>
                                                 </constraint>
                                                 <constraint firstItem="nU9-9F-spO" firstAttribute="top" secondItem="1sV-Bx-ZkU" secondAttribute="bottom" id="HHK-BK-l9m">
-                                                    <variation key="heightClass=regular-widthClass=compact" constant="2"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="3"/>
                                                 </constraint>
                                                 <constraint firstItem="wAj-uF-Vpv" firstAttribute="centerY" secondItem="j3x-Zq-kmk" secondAttribute="centerY" id="HtI-Z6-uzU"/>
                                                 <constraint firstItem="wAj-uF-Vpv" firstAttribute="top" secondItem="j3x-Zq-kmk" secondAttribute="topMargin" constant="43" id="IXZ-Fi-Im1"/>
@@ -862,10 +863,12 @@
                                                 <constraint firstItem="1sV-Bx-ZkU" firstAttribute="leading" secondItem="j3x-Zq-kmk" secondAttribute="leadingMargin" constant="17" id="Lsx-xp-4HQ"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="SJe-u9-cmS" secondAttribute="bottom" constant="11.5" id="NNU-7k-Ub7"/>
                                                 <constraint firstAttribute="topMargin" secondItem="1sV-Bx-ZkU" secondAttribute="top" id="OGj-nf-qoe">
-                                                    <variation key="heightClass=regular-widthClass=compact" constant="-5"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="-6"/>
                                                 </constraint>
                                                 <constraint firstItem="1sV-Bx-ZkU" firstAttribute="top" secondItem="j3x-Zq-kmk" secondAttribute="topMargin" constant="18" id="Otz-NR-Gs3"/>
-                                                <constraint firstItem="sAd-MD-WM9" firstAttribute="top" secondItem="j3x-Zq-kmk" secondAttribute="topMargin" constant="-8" id="Q2n-fb-m4I"/>
+                                                <constraint firstItem="sAd-MD-WM9" firstAttribute="top" secondItem="j3x-Zq-kmk" secondAttribute="topMargin" constant="-8" id="Q2n-fb-m4I">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="-7"/>
+                                                </constraint>
                                                 <constraint firstAttribute="bottomMargin" secondItem="sAd-MD-WM9" secondAttribute="bottom" constant="-8" id="Q3F-tH-lFC"/>
                                                 <constraint firstItem="huX-li-R3l" firstAttribute="top" secondItem="j3x-Zq-kmk" secondAttribute="top" id="QAq-8V-Npf"/>
                                                 <constraint firstAttribute="trailing" secondItem="huX-li-R3l" secondAttribute="trailing" id="QF8-y0-9fn">
@@ -1094,7 +1097,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="4tR-FW-Hnb">
                         <barButtonItem key="backBarButtonItem" title=" " id="7aE-GB-4pv"/>
-                        <barButtonItem key="rightBarButtonItem" title="Edit" id="qJk-w5-pfb">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="qJk-w5-pfb">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="editPlaylistButtonAction:" destination="7Om-1w-JrL" id="prb-Ja-Crz"/>
                                 <segue destination="DBE-eh-Yq5" kind="presentation" identifier="showActionsMenu" modalPresentationStyle="overCurrentContext" modalTransitionStyle="coverVertical" id="0GS-pE-eHG"/>
@@ -1470,7 +1474,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RUY-ao-aU0" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="6m8-Ab-bc4" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5124" y="-826.5"/>
+            <point key="canvasLocation" x="5214" y="-709.5"/>
         </scene>
         <!--Around You-->
         <scene sceneID="vdw-Ia-rLx">

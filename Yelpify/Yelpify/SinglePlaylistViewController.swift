@@ -79,7 +79,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     override func viewDidAppear(animated: Bool) {
-        playlistInfoView.frame.size.height = 350
+        playlistInfoView.frame.size.height = 350.0
         playlistTableHeaderHeight = playlistInfoView.frame.size.height
         print(playlistInfoView.frame.size.height)
     }
@@ -90,7 +90,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.playlistTableView.backgroundColor = appDefaults.color
         //navigationItem.rightBarButtonItem = editButtonItem()
         
-        playlistInfoView.frame.size.height = 350
+        playlistInfoView.frame.size.height = 350.0
         
         if (object == nil)
         {
@@ -148,7 +148,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     // Override to support conditional editing of the table view.
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        return true
+        return false
     }
     
     // Override to support editing the table view.

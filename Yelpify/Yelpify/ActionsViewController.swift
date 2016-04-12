@@ -19,7 +19,6 @@ class ActionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         applyBackgroundBlurEffect()
         view.backgroundColor = UIColor.clearColor()
         view.opaque = false
-    
     }
     
     func applyBackgroundBlurEffect() {
@@ -36,18 +35,21 @@ class ActionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Add to subview
         view.addSubview(blurEffectView)
         view.addSubview(vibrancyEffectView)
+        
+        blurEffectView.tag = 101
+        vibrancyEffectView.tag = 102
     }
     
     func configureHeaderView(){
         var headerRect = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: self.view.frame.size.height * 0.5)
         tableHeaderView.frame = headerRect
-
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         if tableView.contentOffset.y < -100{
             performSegueWithIdentifier("unwindToSinglePlaylist", sender: self)
         }
+        
     }
     
     
