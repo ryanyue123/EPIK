@@ -111,17 +111,17 @@ class APIDataHandler {
                     let placeIntlPhone = place["international_phone_number"] as! String
                     
                     var placeWeekdayText = []
-                    if let placeHours = place["opening_hours"] as? NSArray{
-                        let placeWeekdayText = place["weekday_text"] as! NSArray
+                    if let placeHours = place["opening_hours"] as? NSDictionary{
+                        placeWeekdayText = placeHours["weekday_text"] as! NSArray
                         // let placePermanentlyClosed = place["permanently_closed"] as! Bool
                     }
                     
                     var placePhotoRefArray: [String] = []
-                    if let placePhotoArray = place["photos[]"] as? NSArray{
-                        for placePhoto in placePhotoArray{
-                            let photoRef = placePhoto["photo_reference"] as! String
-                            placePhotoRefArray.append(photoRef)
+                    if let placePhotoArray = place["photos"] as? NSArray{
+                        for photo in placePhotoArray{
+                            placePhotoRefArray.append(photo["photo_reference"] as! String)
                         }
+                        //placePhotoRefArray = placePhotoArray
                     }
                     
                     let placePrice = place["price_level"] as? Int
@@ -134,9 +134,6 @@ class APIDataHandler {
                     let placeWebsite = place["url"] as? String
                     
                     completion(detailedGPlace: GooglePlaceDetail(_address: placeFormattedAddress, _phone: placePhone, _website: placeWebsite, _hours: placeWeekdayText, _priceRating: placePrice, _rating: placeRating, _reviews: placeReviews, _photos: placePhotoRefArray))
-                    
-                    //completion(detailedGPlaceDict: ["phone": placePhone, "address": placeFormattedAddress, "website": placeWebsite, "priceRating": placePrice, "hours": placeWeekdayText, "placePhotos": placePhotoRefArray, "rating": placeRating, "reviews": placeReviews])
-                    
                 }
             }
         
