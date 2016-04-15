@@ -77,20 +77,15 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             }
         }
     }
+
     
-    override func viewDidAppear(animated: Bool) {
-        playlistInfoView.frame.size.height = 350.0
-        playlistTableHeaderHeight = playlistInfoView.frame.size.height
-        print(playlistInfoView.frame.size.height)
-    }
+    // MARK: - ViewDidLoad and other View functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.playlistTableView.backgroundColor = appDefaults.color
         //navigationItem.rightBarButtonItem = editButtonItem()
-        
-        playlistInfoView.frame.size.height = 350.0
         
         if (object == nil)
         {
@@ -106,6 +101,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
         
         configureNavigationBar()
+        //configurePlaylistInfoView()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        playlistInfoView.frame.size.height = 350.0
+        playlistTableHeaderHeight = playlistInfoView.frame.size.height
+        print(playlistInfoView.frame.size.height)
         configurePlaylistInfoView()
     }
     
@@ -118,9 +120,109 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         {
             playlist_name = object["playlistName"] as! String
         }
-        configureNavigationBar()
         configurePlaylistInfoView()
     }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        updateHeaderView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateHeaderView()
+    }
+    
+    // MARK: - Scroll View
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        fadePlaylistBG()
+        updateHeaderView()
+        handleNavigationBarOnScroll()
+    }
+    
+    func fadePlaylistBG(){
+        self.playlistInfoBG.alpha = (-playlistTableView.contentOffset.y / playlistTableHeaderHeight) * 0.5
+    }
+    
+    func handleNavigationBarOnScroll(){
+        
+        let showWhenScrollDownAlpha = 1 - (-playlistTableView.contentOffset.y / playlistTableHeaderHeight)
+        //let showWhenScrollUpAlpha = (-playlistTableView.contentOffset.y / playlistTableHeaderHeight)
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(showWhenScrollDownAlpha) ]
+        self.navigationItem.title = playlist_name
+        
+        // Handle Status Bar
+        self.statusBarView.alpha = showWhenScrollDownAlpha
+        
+        // Handle Nav Shadow View
+        self.view.viewWithTag(100)!.backgroundColor = appDefaults.color.colorWithAlphaComponent(showWhenScrollDownAlpha)
+    }
+    
+    // MARK: - Setup Views
+    
+    private var playlistTableHeaderHeight: CGFloat = 250.0
+    
+    func configurePlaylistInfoView(){
+        playlistTableView.tableHeaderView = nil
+        playlistTableView.addSubview(playlistInfoView)
+        playlistTableView.contentInset = UIEdgeInsets(top: playlistTableHeaderHeight, left: 0, bottom: 0, right: 0)
+        playlistTableView.contentOffset = CGPoint(x: 0, y: -playlistTableHeaderHeight)
+    }
+    
+    func configureNavigationBar(){
+        
+        addShadowToBar()
+        
+        for parent in self.navigationController!.navigationBar.subviews {
+            for childView in parent.subviews {
+                if(childView is UIImageView) {
+                    childView.removeFromSuperview()
+                }
+            }
+        }
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
+        // Change the back button item to display no text
+        //        let backItem = UIBarButtonItem()
+        //        backItem.title = ""
+        //        navigationController?.navigationItem.backBarButtonItem = backItem
+    }
+    
+    func updateHeaderView(){
+        //playlistTableHeaderHeight = playlistInfoView.frame.size.height
+        var headerRect = CGRect(x: 0, y: -playlistTableHeaderHeight, width: playlistTableView.frame.size.width, height: playlistTableHeaderHeight)
+        if playlistTableView.contentOffset.y < -playlistTableHeaderHeight{
+            //print("Scrolled above offset")
+            headerRect.origin.y = playlistTableView.contentOffset.y
+            headerRect.size.height = -playlistTableView.contentOffset.y
+        }else if playlistTableView.contentOffset.y > -playlistTableHeaderHeight{
+            //print("Scrolled below offset")
+            self.navigationItem.title = playlist_name
+            self.navigationItem.titleView?.tintColor = UIColor.whiteColor()
+            
+            //            headerRect.origin.y = playlistTableView.contentOffset.y
+            //            headerRect.size.height = -playlistTableView.contentOffset.y//playlistTableHeaderHeight//playlistTableView.contentOffset.y
+        }
+        playlistInfoView.frame = headerRect
+    }
+    
+    func addShadowToBar() {
+        let shadowView = UIView(frame: self.navigationController!.navigationBar.frame)
+        //shadowView.backgroundColor = appDefaults.color
+        shadowView.layer.masksToBounds = false
+        shadowView.layer.shadowOpacity = 0.7 // your opacity
+        shadowView.layer.shadowOffset = CGSize(width: 0, height: 3) // your offset
+        shadowView.layer.shadowRadius =  10 //your radius
+        self.view.addSubview(shadowView)
+        self.view.bringSubviewToFront(statusBarView)
+        
+        shadowView.tag = 100
+    }
+
     
     // MARK: - Table View Functions
     
@@ -179,114 +281,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             self.playlistTableView.reloadData()
         }
     }
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        fadePlaylistBG()
-        updateHeaderView()
-        handleNavigationBarOnScroll()
-    }
-    
-    private var playlistTableHeaderHeight: CGFloat = 250.0
-    var headerView: UIView!
-    
-    func fadePlaylistBG(){
-        self.playlistInfoBG.alpha = (-playlistTableView.contentOffset.y / playlistTableHeaderHeight) * 0.5
-    }
-    
-    func handleNavigationBarOnScroll(){
-        
-        let showWhenScrollDownAlpha = 1 - (-playlistTableView.contentOffset.y / playlistTableHeaderHeight)
-        //let showWhenScrollUpAlpha = (-playlistTableView.contentOffset.y / playlistTableHeaderHeight)
-        
-        self.navigationController?.navigationBar.titleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(showWhenScrollDownAlpha) ]
-        self.navigationItem.title = playlist_name
-        
-        // Handle Status Bar
-        self.statusBarView.alpha = showWhenScrollDownAlpha
-        
-        // Handle Nav Shadow View
-        self.view.viewWithTag(100)!.backgroundColor = appDefaults.color.colorWithAlphaComponent(showWhenScrollDownAlpha)
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        playlistTableView.contentOffset.y = -350.0
-        updateHeaderView()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        playlistTableView.contentOffset.y = -350.0
-        updateHeaderView()
-    }
-
-    func updateHeaderView(){
-        //playlistTableHeaderHeight = playlistInfoView.frame.size.height
-        var headerRect = CGRect(x: 0, y: -playlistTableHeaderHeight, width: playlistTableView.frame.size.width, height: playlistTableHeaderHeight)
-        
-        //print("Playlist scrolled below offset", playlistTableView.contentOffset.y < -playlistTableHeaderHeight)
-        
-        if playlistTableView.contentOffset.y < -playlistTableHeaderHeight{
-            //print("Scrolled above offset")
-            headerRect.origin.y = playlistTableView.contentOffset.y
-            headerRect.size.height = -playlistTableView.contentOffset.y
-            //print(headerRect.origin.y, headerRect.size.height)
-        }else if playlistTableView.contentOffset.y > -playlistTableHeaderHeight{
-            //print("Scrolled below offset")
-            self.navigationItem.title = playlist_name
-            self.navigationItem.titleView?.tintColor = UIColor.whiteColor()
-            
-//            headerRect.origin.y = playlistTableView.contentOffset.y
-//            headerRect.size.height = -playlistTableView.contentOffset.y//playlistTableHeaderHeight//playlistTableView.contentOffset.y
-        }
-        //print(headerRect)
-        //print(playlistTableView.contentOffset.y)
-        headerView.frame = headerRect
-        //playlistInfoView.frame.size.height = 350.0
-    }
-    
-    func addShadowToBar() {
-        let shadowView = UIView(frame: self.navigationController!.navigationBar.frame)
-        //shadowView.backgroundColor = appDefaults.color
-        shadowView.layer.masksToBounds = false
-        shadowView.layer.shadowOpacity = 0.7 // your opacity
-        shadowView.layer.shadowOffset = CGSize(width: 0, height: 3) // your offset
-        shadowView.layer.shadowRadius =  10 //your radius
-        self.view.addSubview(shadowView)
-        self.view.bringSubviewToFront(statusBarView)
-        
-        shadowView.tag = 100
-    }
 
     
-    func configurePlaylistInfoView(){
-        headerView = playlistInfoView//playlistTableView.tableHeaderView
-        
-        playlistTableView.tableHeaderView = nil
-        playlistTableView.addSubview(headerView)
-        playlistTableView.contentInset = UIEdgeInsets(top: playlistTableHeaderHeight, left: 0, bottom: 0, right: 0)
-        playlistTableView.contentOffset = CGPoint(x: 0, y: -playlistTableHeaderHeight)
-    }
     
-    func configureNavigationBar(){
-        
-        addShadowToBar()
-    
-        for parent in self.navigationController!.navigationBar.subviews {
-            for childView in parent.subviews {
-                if(childView is UIImageView) {
-                    childView.removeFromSuperview()
-                }
-            }
-        }
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        
-        // Change the back button item to display no text
-//        let backItem = UIBarButtonItem()
-//        backItem.title = ""
-//        navigationController?.navigationItem.backBarButtonItem = backItem
-    }
     
     func convertPlacesArrayToDictionary(placesArray: [Business])-> [NSDictionary]{
         var placeDictArray = [NSDictionary]()
