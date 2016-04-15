@@ -58,6 +58,7 @@ class BusinessDetailViewController: UITableViewController {
             
             self.object.businessPhone = detailedGPlace.phone!
             
+            /*
             print("Hours: ", detailedGPlace.hours!, "\n")
             print("Phone: ", detailedGPlace.phone!, "\n")
             print("Photos: ", detailedGPlace.photos!, "\n")
@@ -65,15 +66,41 @@ class BusinessDetailViewController: UITableViewController {
             print("Rating: ", detailedGPlace.rating!, "\n")
             //print("Reviews: ", detailedGPlace.reviews, "\n")
             print("Website: ", detailedGPlace.website!, "\n")
+            */
             
-            self.gpClient.getImageFromPhotoReference(detailedGPlace.photos![0] as! String, completion: { (key) in
-                self.cache.fetch(key: detailedGPlace.photos![0] as! String){ (imageData) in
-                    print("Grabbing image")
-                    self.placePhotoImageView.image = UIImage(data: imageData)
-                }
-            })
-            
+            if detailedGPlace.photos?.count > 0 {
+                self.setCoverPhoto(detailedGPlace.photos![0] as! String)
+            }
         }
+    }
+    
+    func setCoverPhoto(ref: String){
+        self.gpClient.getImage(ref) { (image) in
+            self.fadeOutImage(self.placePhotoImageView)
+            
+            UIImageView.animateWithDuration(1) {
+                self.placePhotoImageView.alpha = 0
+                self.placePhotoImageView.image = image
+            }
+            self.placePhotoImageView.alpha = 1
+            //self.placePhotoImageView.image = image
+        }
+        
+//        self.gpClient.getImageFromPhotoReference(photoRefArray[0] as! String, completion: { (key) in
+//            print("downloading image")
+//            self.cache.fetch(key: photoRefArray[0] as! String){ (imageData) in
+//                print("Grabbing image")
+//                self.placePhotoImageView.image = UIImage(data: imageData)
+//            }
+//        })
+    }
+    
+    func fadeOutImage(imageView: UIImageView, endAlpha: CGFloat = 0.0){
+        UIImageView.animateWithDuration(1) {
+            imageView.image = UIImage()
+            imageView.alpha = 1
+        }
+        imageView.alpha = endAlpha
     }
 
     override func didReceiveMemoryWarning() {

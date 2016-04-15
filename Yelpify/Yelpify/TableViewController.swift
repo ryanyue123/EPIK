@@ -251,22 +251,22 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
 {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 2
+        return 3
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
         
-        if(collectionView.tag == 0 && self.playlists_location.count != 0)
-        {
-            let templist = self.playlists_location[indexPath.row] as! PFObject
-            cell.label.text = templist["playlistName"] as? String
-        }
-        if(collectionView.tag == 1 && self.playlists_user.count != 0)
-        {
-            let templist = self.playlists_user[indexPath.row] as! PFObject
-            cell.label.text = templist["createdbyuser"] as? String
-        }
+//        if(collectionView.tag == 0 && self.playlists_location.count != 0)
+//        {
+//            let templist = self.playlists_location[indexPath.row] as! PFObject
+//            cell.label.text = templist["playlistName"] as? String
+//        }
+//        if(collectionView.tag == 1 && self.playlists_user.count != 0)
+//        {
+//            let templist = self.playlists_user[indexPath.row] as! PFObject
+//            cell.label.text = templist["createdbyuser"] as? String
+//        }
         
         return cell
     }

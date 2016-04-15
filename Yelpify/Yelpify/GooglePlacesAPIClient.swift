@@ -96,6 +96,13 @@ class GooglePlacesAPIClient: NSObject {
         }
     }
     
+    func getImage(ref: String, completion: (image: UIImage) -> Void){
+        let photoParameters = [ "key" : googleAPIKey, "photoreference" : ref, "maxheight" : "800" ]
+        let URL = NSURL(string: self.buildPlacePhotoURLString(photoParameters))!
+        let fetcher = NetworkFetcher<UIImage>(URL: URL)
+        cache.fetch(fetcher: fetcher).onSuccess { image in completion( image: image ) }
+    }
+    
     private func getDataFromUrl(url: NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
         NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
             completion(data: data, response: response, error: error)
