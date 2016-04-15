@@ -21,7 +21,7 @@ func sortMethods(businesses: Array<Business>, type: String)->Array<Business>{
     } else if (type == "distance"){
         sortedBusinesses = businesses.sort{$0.businessDistance < $1.businessDistance}
     } else if type == "rating"{
-        sortedBusinesses = businesses.sort{$0.businessRating < $1.businessRating}
+        sortedBusinesses = businesses.sort{$0.businessRating > $1.businessRating}
     }
     return sortedBusinesses
     

@@ -1307,11 +1307,55 @@
 			<string>PBXBuildFile</string>
 			<key>settings</key>
 			<dict>
-				<key>ATTRIBUTES</key>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>Target Support Files/ParseUI/ParseUI-prefix.pch</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/ParseUI/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.0</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
 				<array>
-					<string>Project</string>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
 				</array>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/ParseUI/ParseUI.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>PRODUCT_NAME</key>
+				<string>ParseUI</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
 			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
 		</dict>
 		<key>13C8E3F5CC4818CBFB4F60E7FA5A4FD6</key>
 		<dict>
@@ -1495,7 +1539,7 @@
 			<dict>
 				<key>ATTRIBUTES</key>
 				<array>
-					<string>Public</string>
+					<string>Project</string>
 				</array>
 			</dict>
 		</dict>
@@ -1524,7 +1568,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>PFMutableRelationState.h</string>
 			<key>path</key>
@@ -1564,8 +1608,15 @@
 		</dict>
 		<key>1787E0BF6C507798D3B20A2FC1E0CBAC</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>buildConfigurations</key>
+			<array>
+				<string>A520B174FB4635CAC5CA5DAF77594BCA</string>
+				<string>6AFAFA6A4648025EE1572D73111945F5</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -1592,8 +1643,8 @@
 		</dict>
 		<key>1876A2B4C9B60F66C059CF1458AC0A53</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>A5981270D450892AFE0EF13D18858FE3</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -1643,7 +1694,7 @@
 			<dict>
 				<key>ATTRIBUTES</key>
 				<array>
-					<string>Project</string>
+					<string>Public</string>
 				</array>
 			</dict>
 		</dict>
@@ -1758,7 +1809,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.swift</string>
 			<key>name</key>
 			<string>PFEventuallyQueue_Private.h</string>
 			<key>path</key>
@@ -1825,8 +1876,8 @@
 		</dict>
 		<key>1C2558EEC9356C1D6816523EB83C445A</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>08B7549989250E29384E3A3D4CF0646C</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -1916,7 +1967,15 @@
 			<key>fileRef</key>
 			<string>E40B624B9F6D531DF5BE5B88E482CA86</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>PFPaymentTransactionObserver.h</string>
+			<key>path</key>
+			<string>Parse/Internal/Purchase/PaymentTransactionObserver/PFPaymentTransactionObserver.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>1DB7F9922FA57B4E6826B0F17D24B08D</key>
 		<dict>
@@ -1925,7 +1984,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>PFCommandResult.h</string>
 			<key>path</key>
@@ -1938,14 +1997,15 @@
 			<key>fileRef</key>
 			<string>BEA12424CA43C3D8313AD081DE203536</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>ATTRIBUTES</key>
-				<array>
-					<string>Project</string>
-				</array>
-			</dict>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>PFQueryTableViewController.h</string>
+			<key>path</key>
+			<string>ParseUI/Classes/QueryTableViewController/PFQueryTableViewController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>1E625C1D7E6B18806DBD6ED2216E7BC2</key>
 		<dict>
@@ -2186,7 +2246,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
+			<string>sourcecode.c.h</string>
 			<key>name</key>
 			<string>PFConfigController.m</string>
 			<key>path</key>
@@ -2206,7 +2266,9 @@
 			<key>fileRef</key>
 			<string>82E0326FE85323DEFCB7175A92AA2265</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
+			<string>PBXHeadersBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
 		</dict>
 		<key>22F8FDDF5498F4C6317594561B269771</key>
 		<dict>
@@ -2283,7 +2345,7 @@
 			<dict>
 				<key>ATTRIBUTES</key>
 				<array>
-					<string>Project</string>
+					<string>Public</string>
 				</array>
 			</dict>
 		</dict>
@@ -2301,7 +2363,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>PFCloud+Deprecated.h</string>
 			<key>path</key>
@@ -2386,13 +2448,6 @@
 			<string>5954C1A1D7AED26A4A800904F3DF31D6</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>ATTRIBUTES</key>
-				<array>
-					<string>Public</string>
-				</array>
-			</dict>
 		</dict>
 		<key>2603CA594FCCDC20041137BF310329E8</key>
 		<dict>
@@ -2436,7 +2491,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.swift</string>
 			<key>name</key>
 			<string>PFFile.h</string>
 			<key>path</key>
@@ -2461,8 +2516,8 @@
 		</dict>
 		<key>27AB5F69D6929193A05C5AABA27F503D</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>355A57EBD4558F650E3F027BAF89F63A</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -2582,11 +2637,59 @@
 			<string>PBXBuildFile</string>
 			<key>settings</key>
 			<dict>
-				<key>ATTRIBUTES</key>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.0</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
 				<array>
 					<string>Public</string>
 				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods/Pods.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
 			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
 		</dict>
 		<key>2A92542210988B96909FFE06C59226B8</key>
 		<dict>
@@ -2595,7 +2698,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>Utils.swift</string>
 			<key>path</key>
@@ -2621,7 +2724,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.swift</string>
 			<key>name</key>
 			<string>PFBase64Encoder.h</string>
 			<key>path</key>
@@ -2875,7 +2978,15 @@
 			<key>fileRef</key>
 			<string>711AB522613F1CC621F90CCB1A607496</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Parse</string>
+			<key>productName</key>
+			<string>Parse</string>
+			<key>productReference</key>
+			<string>56FBDB13B6912CC101989A00FB9F3369</string>
+			<key>productType</key>
+			<string>com.apple.product-type.framework</string>
 		</dict>
 		<key>2FB79A55DE2E9F7ABB3B4C7871CD0C5B</key>
 		<dict>
@@ -2891,8 +3002,8 @@
 		</dict>
 		<key>2FB79E16A5D83D7E6E65DBC06FC1AD93</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>6BE12F81EF1A0DB5D663F29B7D5E4283</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -2947,6 +3058,11 @@
 			<string>645D57E47B12C89775328FA7D2451661</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
 		</dict>
 		<key>30FD86B19BC63DDA301CEF275D1B9D8D</key>
 		<dict>
@@ -2955,7 +3071,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.swift</string>
 			<key>name</key>
 			<string>PFRESTCloudCommand.h</string>
 			<key>path</key>
@@ -2969,13 +3085,6 @@
 			<string>3260723E1EEEA57CC0F487738EAB9703</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>ATTRIBUTES</key>
-				<array>
-					<string>Public</string>
-				</array>
-			</dict>
 		</dict>
 		<key>312E097CFE04C21C6D633D6DE5103C6A</key>
 		<dict>
@@ -3124,7 +3233,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
+			<string>sourcecode.swift</string>
 			<key>name</key>
 			<string>PFObjectState.m</string>
 			<key>path</key>
@@ -3204,7 +3313,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>PFKeychainStore.h</string>
 			<key>path</key>
@@ -3247,7 +3356,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
+			<string>sourcecode.c.h</string>
 			<key>name</key>
 			<string>PFQueryController.m</string>
 			<key>path</key>
@@ -3291,7 +3400,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>PFCommandCache_Private.h</string>
 			<key>path</key>
@@ -3334,7 +3443,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
+			<string>sourcecode.c.h</string>
 			<key>name</key>
 			<string>BFCancellationToken.m</string>
 			<key>path</key>
@@ -3344,8 +3453,8 @@
 		</dict>
 		<key>37947614480BAA1BA4A219E284EB0B23</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>EDE66D15A70DE32199A9E00EEB4FD7ED</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -3408,8 +3517,8 @@
 		</dict>
 		<key>38891ADE96881567EFBB3D03719137A0</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>ABA9CEF3DA2A42C112FBA5F886003828</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -3645,7 +3754,7 @@
 			<dict>
 				<key>ATTRIBUTES</key>
 				<array>
-					<string>Public</string>
+					<string>Project</string>
 				</array>
 			</dict>
 		</dict>
@@ -3975,7 +4084,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>Error.swift</string>
 			<key>path</key>
@@ -4060,7 +4169,15 @@
 			<key>fileRef</key>
 			<string>067AB9BBC9C8584F4F5128EA1547A8EA</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>PFFilePersistenceGroup.m</string>
+			<key>path</key>
+			<string>Parse/Internal/Persistence/Group/PFFilePersistenceGroup.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>4081EA628AF0B73AC51FFB9D7AB3B89E</key>
 		<dict>
@@ -4104,13 +4221,6 @@
 			<string>5B94A25B4B46FC17985C72C08C4C9C30</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>ATTRIBUTES</key>
-				<array>
-					<string>Project</string>
-				</array>
-			</dict>
 		</dict>
 		<key>42381ABCB837A7EF2DFBCAD09EC2EBE7</key>
 		<dict>
@@ -4708,7 +4818,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.swift</string>
 			<key>name</key>
 			<string>PFNetworkActivityIndicatorManager.h</string>
 			<key>path</key>
@@ -4863,7 +4973,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>PFObjectUtilities.h</string>
 			<key>path</key>
@@ -4935,7 +5045,7 @@
 			<dict>
 				<key>ATTRIBUTES</key>
 				<array>
-					<string>Project</string>
+					<string>Public</string>
 				</array>
 			</dict>
 		</dict>
@@ -5772,8 +5882,8 @@
 		<dict>
 			<key>buildConfigurations</key>
 			<array>
-				<string>74B95146461851ACA46CDFFF21AA98DE</string>
-				<string>D2EB73775E7DBB2BABBB45199E0881EA</string>
+				<string>696D387DD0486BBC81D3A38D9A6353ED</string>
+				<string>D7314EF73AA12C382C8A617D80D86F28</string>
 			</array>
 			<key>defaultConfigurationIsVisible</key>
 			<string>0</string>
@@ -5891,8 +6001,8 @@
 		</dict>
 		<key>5D06C0BA125B25828545FB590A7D39C5</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>C0262CDC820407F425B5FD4ABF01792B</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -5932,13 +6042,6 @@
 			<string>512E34A222F882A0274E3AB81AC63877</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>ATTRIBUTES</key>
-				<array>
-					<string>Project</string>
-				</array>
-			</dict>
 		</dict>
 		<key>5E58F6FE1562CC57C7557FAD0547E1CC</key>
 		<dict>
@@ -5976,7 +6079,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
+			<string>sourcecode.c.h</string>
 			<key>name</key>
 			<string>BFCancellationTokenRegistration.m</string>
 			<key>path</key>
@@ -5986,8 +6089,8 @@
 		</dict>
 		<key>5F976EB579FA93707567B4DC43A18F70</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>512E34A222F882A0274E3AB81AC63877</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -6020,7 +6123,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>PFTableViewCell.h</string>
 			<key>path</key>
@@ -6190,7 +6293,7 @@
 			<dict>
 				<key>ATTRIBUTES</key>
 				<array>
-					<string>Project</string>
+					<string>Public</string>
 				</array>
 			</dict>
 		</dict>
@@ -6276,18 +6379,18 @@
 		</dict>
 		<key>6405AB3BBBCF0F1D44DAA42186C65F65</key>
 		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
 			<key>includeInIndex</key>
-			<string>1</string>
+			<string>0</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
 			<key>name</key>
 			<string>PFQueryState_Private.h</string>
 			<key>path</key>
 			<string>Parse/Internal/Query/State/PFQueryState_Private.h</string>
 			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
+			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>6441529C470FD44650759DD72281BC1A</key>
 		<dict>
@@ -6309,7 +6412,15 @@
 			<key>fileRef</key>
 			<string>DB96D7DB4F353130A119B801C63E1AE0</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>PFInstallation.h</string>
+			<key>path</key>
+			<string>Parse/PFInstallation.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>645D57E47B12C89775328FA7D2451661</key>
 		<dict>
@@ -6407,6 +6518,13 @@
 			<string>C5960EEAF4EFE1CE66CFA0FF3FB21335</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Project</string>
+				</array>
+			</dict>
 		</dict>
 		<key>6548C65CFE1DBBE86F025AE1851E9722</key>
 		<dict>
@@ -6516,8 +6634,15 @@
 		</dict>
 		<key>66B9AA2A19A7C37E707C9CD3F097884F</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>children</key>
+			<array>
+				<string>E1630F0804F6E1F39E0453CC999BB99C</string>
+				<string>A210EBFFB67FBA50618EE93FD298A43B</string>
+				<string>B07DB33300734904B414356A79143A76</string>
+				<string>AAD6E9E341E79D2CAC867F463AA0F4EE</string>
+				<string>B51D240204A526235AEF802A754ED50D</string>
+				<string>D0126F046A270F3C65C0C640D7F8CCBD</string>
+			</array>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -6535,10 +6660,50 @@
 			<string>PBXBuildFile</string>
 			<key>settings</key>
 			<dict>
-				<key>ATTRIBUTES</key>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>Target Support Files/Parse/Parse-prefix.pch</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Parse/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.0</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
 				<array>
-					<string>Project</string>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
 				</array>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Parse/Parse.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>PRODUCT_NAME</key>
+				<string>Parse</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
 			</dict>
 		</dict>
 		<key>678A5ACD467698D8989FF1FC4BD98A58</key>
@@ -6596,7 +6761,7 @@
 			<dict>
 				<key>ATTRIBUTES</key>
 				<array>
-					<string>Project</string>
+					<string>Public</string>
 				</array>
 			</dict>
 		</dict>
@@ -6637,8 +6802,8 @@
 		</dict>
 		<key>6978AA5E854E2661897B80220D8272AB</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>D628DB983CB6F895D0B5643893B5A07B</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -6672,8 +6837,8 @@
 		</dict>
 		<key>6B1A2DAA8CC18CDBD55444B242A8F68D</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>FB5071924D5EC00C607ED4F3F46B3FFC</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -6784,7 +6949,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>PFPushState.h</string>
 			<key>path</key>
@@ -7204,7 +7369,9 @@
 				<string></string>
 			</dict>
 			<key>isa</key>
-			<string>XCBuildConfiguration</string>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
 			<key>name</key>
 			<string>Debug</string>
 		</dict>
@@ -7316,6 +7483,88 @@
 		</dict>
 		<key>75A2C5A6868C6C423BB3950A7F10C5F4</key>
 		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>YES</string>
+				<key>ENABLE_NS_ASSERTIONS</key>
+				<string>NO</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>RELEASE=1</string>
+				</array>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.0</string>
+				<key>STRIP_INSTALLED_PRODUCT</key>
+				<string>NO</string>
+				<key>SYMROOT</key>
+				<string>${SRCROOT}/../build</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>74D60AF66B5A8B61A710C1F1F623B0A7</key>
+		<dict>
+			<key>fileRef</key>
+			<string>03D8655A0C371BFEE6CBDA33253A2E4D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Project</string>
+				</array>
+			</dict>
+		</dict>
+		<key>7540EE4C79720196E76E53D4810105B5</key>
+		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
 			<key>isa</key>
@@ -7414,8 +7663,8 @@
 		</dict>
 		<key>76B4AB82A6C19093C42056673E657655</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>91BC7166F1FBAFC767351AFD3FFEDBFE</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -7448,7 +7697,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
+			<string>sourcecode.swift</string>
 			<key>name</key>
 			<string>PFObjectEstimatedData.m</string>
 			<key>path</key>
@@ -7633,8 +7882,8 @@
 		</dict>
 		<key>7A50DD44C865C224884E1168A06854D2</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>5F3C58F15DDD58ACB3C998ED19C8C4D0</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -7648,8 +7897,8 @@
 		</dict>
 		<key>7A8C3A5C07BFB6146E85573AFF33E4B6</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>FD928AA187BA2FC833BC8805CC00A5CE</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -7675,7 +7924,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
+			<string>sourcecode.swift</string>
 			<key>name</key>
 			<string>PFProduct.m</string>
 			<key>path</key>
@@ -7690,13 +7939,27 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
+			<string>sourcecode.c.h</string>
 			<key>name</key>
 			<string>PFSQLiteDatabaseResult.m</string>
 			<key>path</key>
 			<string>Parse/Internal/LocalDataStore/SQLite/PFSQLiteDatabaseResult.m</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>7B0F2E339975704D7BC5F575C06B8B51</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1370B2EC8940A03C460C6186AE529C33</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>7B1389D0B50464F16109BED7C64AD36C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>6548C65CFE1DBBE86F025AE1851E9722</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>7B0F2E339975704D7BC5F575C06B8B51</key>
 		<dict>
@@ -8004,7 +8267,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.swift</string>
 			<key>name</key>
 			<string>PFAnonymousUtils.h</string>
 			<key>path</key>
@@ -8021,8 +8284,8 @@
 		</dict>
 		<key>7E9492BAAE51E503F1C9373256D40E8C</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>10D19541902F94EFFC9DF23872E8FA87</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -8040,6 +8303,13 @@
 			<string>1FDDB4909D8994299E45FE0007BCA3AE</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Public</string>
+				</array>
+			</dict>
 		</dict>
 		<key>7FB16B22C72F48A826DF48FBB7408BE8</key>
 		<dict>
@@ -8076,7 +8346,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>PFJSONSerialization.h</string>
 			<key>path</key>
@@ -8127,10 +8397,8 @@
 			<string>PBXBuildFile</string>
 			<key>settings</key>
 			<dict>
-				<key>ATTRIBUTES</key>
-				<array>
-					<string>Project</string>
-				</array>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
 			</dict>
 		</dict>
 		<key>80F001E588E0CDE015136199AEC449A5</key>
@@ -8211,7 +8479,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
+			<string>sourcecode.c.h</string>
 			<key>name</key>
 			<string>PFEventuallyPin.m</string>
 			<key>path</key>
@@ -8315,7 +8583,7 @@
 			<dict>
 				<key>ATTRIBUTES</key>
 				<array>
-					<string>Public</string>
+					<string>Project</string>
 				</array>
 			</dict>
 		</dict>
@@ -8484,14 +8752,15 @@
 			<key>fileRef</key>
 			<string>D486F15068C2B04AB0FF2D9D0A866B37</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>ATTRIBUTES</key>
-				<array>
-					<string>Project</string>
-				</array>
-			</dict>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>PFSessionController.m</string>
+			<key>path</key>
+			<string>Parse/Internal/Session/Controller/PFSessionController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>86500B5F1A214D98D1A9803834277525</key>
 		<dict>
@@ -8513,7 +8782,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>PFLogInView.h</string>
 			<key>path</key>
@@ -8569,8 +8838,6 @@
 		</dict>
 		<key>8854E9548C52D2C2CC2C54CEA9D701F9</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -8578,7 +8845,7 @@
 			<key>path</key>
 			<string>HanekeSwift.xcconfig</string>
 			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
+			<string>DEVELOPER_DIR</string>
 		</dict>
 		<key>886054A17BCF06BCFCE27E062283FE2B</key>
 		<dict>
@@ -8756,13 +9023,6 @@
 			<string>AB59E5CEA1EC5C78A5AE0CEDCC4DD8F1</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>ATTRIBUTES</key>
-				<array>
-					<string>Project</string>
-				</array>
-			</dict>
 		</dict>
 		<key>8A49783FE30C18F9D6A84AAF3DAEE83C</key>
 		<dict>
@@ -8858,7 +9118,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
+			<string>sourcecode.c.h</string>
 			<key>name</key>
 			<string>BFTask.m</string>
 			<key>path</key>
@@ -8925,8 +9185,8 @@
 		</dict>
 		<key>8C7882A2B6BABB3B1BAF797E9C790077</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>654B8AF9651D037E125E2BA40CD49EE1</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -8952,7 +9212,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
+			<string>sourcecode.c.h</string>
 			<key>name</key>
 			<string>PFOfflineQueryLogic.m</string>
 			<key>path</key>
@@ -8985,7 +9245,7 @@
 			<dict>
 				<key>ATTRIBUTES</key>
 				<array>
-					<string>Project</string>
+					<string>Public</string>
 				</array>
 			</dict>
 		</dict>
@@ -9075,9 +9335,15 @@
 				<string></string>
 			</dict>
 			<key>isa</key>
-			<string>XCBuildConfiguration</string>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
-			<string>Debug</string>
+			<string>PFCommandURLRequestConstructor.m</string>
+			<key>path</key>
+			<string>Parse/Internal/Commands/CommandRunner/URLRequestConstructor/PFCommandURLRequestConstructor.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>8E15C28ECDDF1414E0207F49CF3ACC70</key>
 		<dict>
@@ -9113,7 +9379,15 @@
 			<key>fileRef</key>
 			<string>17CC8BC5D9D5F57B37DA00FC4BE5DE8E</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>PFTextButton.m</string>
+			<key>path</key>
+			<string>ParseUI/Classes/Internal/Views/Buttons/PFTextButton.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>8EFC8711C91D464CCD8462FDF33B7226</key>
 		<dict>
@@ -9152,7 +9426,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
+			<string>sourcecode.c.h</string>
 			<key>name</key>
 			<string>PFObjectBatchController.m</string>
 			<key>path</key>
@@ -9272,7 +9546,15 @@
 			<key>fileRef</key>
 			<string>8BE3CF45581B567E66DC2CBD647B067C</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>name</key>
+			<string>NSFileManager+Haneke.swift</string>
+			<key>path</key>
+			<string>Haneke/NSFileManager+Haneke.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>90ED2AAD21CC0963133975E87B82FF5F</key>
 		<dict>
@@ -9320,8 +9602,8 @@
 		</dict>
 		<key>915A7DE0D2A258488E712AE928653F49</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>31DFB516CD5E6AEC48A6C12E847812E5</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -9446,7 +9728,7 @@
 			<dict>
 				<key>ATTRIBUTES</key>
 				<array>
-					<string>Public</string>
+					<string>Project</string>
 				</array>
 			</dict>
 		</dict>
@@ -9524,7 +9806,7 @@
 			<dict>
 				<key>ATTRIBUTES</key>
 				<array>
-					<string>Project</string>
+					<string>Public</string>
 				</array>
 			</dict>
 		</dict>
@@ -9672,7 +9954,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
+			<string>sourcecode.c.h</string>
 			<key>name</key>
 			<string>PFHash.m</string>
 			<key>path</key>
@@ -9695,10 +9977,8 @@
 			<string>PBXBuildFile</string>
 			<key>settings</key>
 			<dict>
-				<key>ATTRIBUTES</key>
-				<array>
-					<string>Project</string>
-				</array>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
 			</dict>
 		</dict>
 		<key>96F8AC6A719452E08F4D02601C90EA7E</key>
@@ -10057,12 +10337,31 @@
 		</dict>
 		<key>9F49D56E13074A00C16517BD963D935C</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>children</key>
+			<array>
+				<string>628C3E627EA1FF81192F0B3140947FCD</string>
+				<string>F9FFFCF0C683F87F4B2A25547DE7BB94</string>
+				<string>1E734E1CD779D855AEE662330012D8FC</string>
+				<string>76B4AB82A6C19093C42056673E657655</string>
+				<string>61EDA95FC427D4F5F62A3CC9A6ACABAF</string>
+				<string>312E097CFE04C21C6D633D6DE5103C6A</string>
+				<string>D0D5774C364009F5C171AF1A7EABF028</string>
+				<string>AD92CBEED7D3C7848446004A2946BE53</string>
+				<string>7E9492BAAE51E503F1C9373256D40E8C</string>
+				<string>0FB20847A4091D13ADE233E7534E9AE1</string>
+				<string>A4717F77C7C0A0A9B3A06264A48EB208</string>
+				<string>97E375729BB4CEE895C5CE24C16D0FE5</string>
+				<string>C7DB4A7DFDBE310E6A3633395451670A</string>
+				<string>0BB8CC415784BF0069986D26749724FC</string>
+				<string>BAED54410F01406B4A5E4F7BA1577E7A</string>
+				<string>AC5FB1E7B6F338ED81FDE61C145556B7</string>
+				<string>7B77AE37B668FD4621352F091EFEF4F2</string>
+				<string>7D23E979E3DFC2FADFDA078DE91808A3</string>
+				<string>2A92542210988B96909FFE06C59226B8</string>
+				<string>AB4C5CB4E7E4B91F81F1BFA0516A7C50</string>
+			</array>
 			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>PBXGroup</string>
 			<key>name</key>
 			<string>PFCurrentObjectControlling.h</string>
 			<key>path</key>
@@ -10425,8 +10724,15 @@
 		</dict>
 		<key>A4851D76B390CF3AB55E09B84EDDE4FB</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>children</key>
+			<array>
+				<string>7C3E3B32F02B92D127C7CFB652FBD478</string>
+				<string>5022FB69999DE09253F2910137DDF43A</string>
+				<string>6EE5D2244F0F09CFF7782B3B12597822</string>
+				<string>89154589AD7F74B034A4042124C70149</string>
+				<string>131390A5083DB33EDCCC8CC9CDD60685</string>
+				<string>6F9EC718ADE54B9B1012D475292D9EBA</string>
+			</array>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -10834,8 +11140,8 @@
 		</dict>
 		<key>AAD6E9E341E79D2CAC867F463AA0F4EE</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>43FFE37751D095A8957E5BB48B4EF159</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -11257,7 +11563,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
+			<string>sourcecode.c.h</string>
 			<key>name</key>
 			<string>PFRESTSessionCommand.m</string>
 			<key>path</key>
@@ -11301,7 +11607,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>PFThreadsafety.h</string>
 			<key>path</key>
@@ -11315,13 +11621,6 @@
 			<string>44BB5755279021A18783AFB4F8191B0F</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>ATTRIBUTES</key>
-				<array>
-					<string>Project</string>
-				</array>
-			</dict>
 		</dict>
 		<key>B2609267878FCB7B5EDC0AC41414C454</key>
 		<dict>
@@ -11330,7 +11629,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>PFRESTUserCommand.h</string>
 			<key>path</key>
@@ -11365,8 +11664,6 @@
 		</dict>
 		<key>B27DF221686A991E44F6351C389930DB</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -11376,7 +11673,7 @@
 			<key>path</key>
 			<string>Parse/PFAnonymousUtils.m</string>
 			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
+			<string>DEVELOPER_DIR</string>
 		</dict>
 		<key>B29C770229539BDEBF024F329A7F31C1</key>
 		<dict>
@@ -11473,8 +11770,8 @@
 		</dict>
 		<key>B3331F785AA2224D5FAEF928DF2CC4D7</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>2A92542210988B96909FFE06C59226B8</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -11611,7 +11908,7 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>B5D28E27CBBD2A8B0BAC872DECD4D5D1</key>
+		<key>B5D0F9080C2735E422221399AA6892F2</key>
 		<dict>
 			<key>fileRef</key>
 			<string>80F001E588E0CDE015136199AEC449A5</string>
@@ -11645,6 +11942,13 @@
 			<string>05F579D4D9526D2A9865CE18AFADA5C7</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Project</string>
+				</array>
+			</dict>
 		</dict>
 		<key>B6A4D1F74B389BAA96D163E466E6E60C</key>
 		<dict>
@@ -11683,7 +11987,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
+			<string>sourcecode.c.h</string>
 			<key>name</key>
 			<string>PFOfflineQueryController.m</string>
 			<key>path</key>
@@ -11858,7 +12162,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
+			<string>sourcecode.c.h</string>
 			<key>name</key>
 			<string>PFObjectSubclassInfo.m</string>
 			<key>path</key>
@@ -11868,12 +12172,17 @@
 		</dict>
 		<key>B8751AC0152ACBF14E016E13A1919668</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>children</key>
+			<array>
+				<string>A8BCAD73098FF89864F96E036015B95A</string>
+				<string>C44226BB837DE4EA0DBDF743011D9415</string>
+				<string>D3AAC0C383E080A90639995935D07A8B</string>
+				<string>E7583DA3D2C8B8C52BC58EEE820E4E5B</string>
+				<string>C5E4C826ED65285E51132144633B4E71</string>
+				<string>A74B783BF3F2B88DFE170C5A037590C9</string>
+			</array>
 			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>PBXGroup</string>
 			<key>name</key>
 			<string>PFQueryCollectionViewController.h</string>
 			<key>path</key>
@@ -11881,7 +12190,7 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>B93AFED3C9630427582A70CDB8CA6ED4</key>
+		<key>B8378DFB159AF43D3BCC2F99A7D4E920</key>
 		<dict>
 			<key>fileRef</key>
 			<string>890449FB30B83D45C6A7A4479C029117</string>
@@ -11891,7 +12200,7 @@
 			<dict>
 				<key>ATTRIBUTES</key>
 				<array>
-					<string>Public</string>
+					<string>Project</string>
 				</array>
 			</dict>
 		</dict>
@@ -11928,8 +12237,8 @@
 		</dict>
 		<key>BA837D14BB502A2D66C9520168DEDFCC</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>37947614480BAA1BA4A219E284EB0B23</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -12080,7 +12389,15 @@
 			<key>fileRef</key>
 			<string>171B1492BAF311BBB8A1278D2804CCF6</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>PFQueryCollectionViewController.h</string>
+			<key>path</key>
+			<string>ParseUI/Classes/QueryCollectionViewController/PFQueryCollectionViewController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>BC77163070C68AB111E4F996AC26C532</key>
 		<dict>
@@ -12088,6 +12405,13 @@
 			<string>DD5352E9BC4D27468BEE56E425162848</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Public</string>
+				</array>
+			</dict>
 		</dict>
 		<key>BC871E4E13288EBF710F6E883931DFF7</key>
 		<dict>
@@ -12391,14 +12715,30 @@
 			<key>fileRef</key>
 			<string>BFAFD4843F2F23DCB81BD9FB257C3047</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>PFQueryConstants.h</string>
+			<key>path</key>
+			<string>Parse/Internal/Query/PFQueryConstants.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>C1CEA684EA563EB4E371A1E66A6C637E</key>
 		<dict>
 			<key>fileRef</key>
 			<string>9B09F77063DF564C37A177FC0EFFA2D5</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>PFTextField.h</string>
+			<key>path</key>
+			<string>ParseUI/Classes/Views/PFTextField.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>C1F680ACC51AACC679DB2E83540CB117</key>
 		<dict>
@@ -12633,7 +12973,7 @@
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
 		</dict>
-		<key>C2B36EB12CE870E40B59F4EACB600BDA</key>
+		<key>C0A8CD94547493B4852B16D6EDF96496</key>
 		<dict>
 			<key>fileRef</key>
 			<string>A74B783BF3F2B88DFE170C5A037590C9</string>
@@ -12643,7 +12983,7 @@
 			<dict>
 				<key>ATTRIBUTES</key>
 				<array>
-					<string>Public</string>
+					<string>Project</string>
 				</array>
 			</dict>
 		</dict>
@@ -12654,7 +12994,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>PFRESTObjectBatchCommand.h</string>
 			<key>path</key>
@@ -12676,14 +13016,14 @@
 				</array>
 			</dict>
 		</dict>
-		<key>C34BFD17C1AC32698EB79ECDBAE4C4B9</key>
+		<key>C197DFABA4276BDDC05E9B025DF64C93</key>
 		<dict>
 			<key>fileRef</key>
 			<string>95B6A9D56564548B53CD271E429680AD</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>C3746E36F91278C40D0DCBA78D124E88</key>
+		<key>C1C681C8898D1CC0AA6F2C4C41DDE16A</key>
 		<dict>
 			<key>baseConfigurationReference</key>
 			<string>A210EBFFB67FBA50618EE93FD298A43B</string>
@@ -12737,11 +13077,9 @@
 				<string></string>
 			</dict>
 			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
+			<string>PBXBuildFile</string>
 		</dict>
-		<key>C37FCA491E7E9D3CEFDC71E6514AD176</key>
+		<key>C1C823EA8EBB6011CCC57C4BD8D1F987</key>
 		<dict>
 			<key>fileRef</key>
 			<string>25B4B40AB9FD044FEBA58FE43EAC237D</string>
@@ -12755,7 +13093,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>PFAsyncTaskQueue.h</string>
 			<key>path</key>
@@ -12816,7 +13154,7 @@
 			<dict>
 				<key>ATTRIBUTES</key>
 				<array>
-					<string>Project</string>
+					<string>Public</string>
 				</array>
 			</dict>
 		</dict>
@@ -12991,7 +13329,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>PFObjectConstants.h</string>
 			<key>path</key>
@@ -13005,11 +13343,16 @@
 			<string>FB237BE354631CF8B50290B83F46B3EF</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Project</string>
+				</array>
+			</dict>
 		</dict>
 		<key>C7DB4A7DFDBE310E6A3633395451670A</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -13019,12 +13362,12 @@
 			<key>path</key>
 			<string>OAuthSwift/OAuthSwiftMultipartData.swift</string>
 			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
+			<string>DEVELOPER_DIR</string>
 		</dict>
 		<key>C817B20B30B551D797B822BC0C321DF3</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>0BD1DB6CA77916DD1D24E90437BD849F</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -13343,7 +13686,7 @@
 			<dict>
 				<key>ATTRIBUTES</key>
 				<array>
-					<string>Public</string>
+					<string>Project</string>
 				</array>
 			</dict>
 		</dict>
@@ -13353,8 +13696,6 @@
 			<string>1</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>PFObjectLocalIdStore.m</string>
 			<key>path</key>
@@ -13382,13 +13723,6 @@
 			<string>C2E355C4B3BD651600326FAB1AE5B509</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>ATTRIBUTES</key>
-				<array>
-					<string>Project</string>
-				</array>
-			</dict>
 		</dict>
 		<key>CD35547E7B749D12E23959E5F9C64844</key>
 		<dict>
@@ -13451,8 +13785,8 @@
 		</dict>
 		<key>CE022F7C4228B8E32E3EB09A8F583E1A</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>92AD68549D4DEDFC64AE9606B8032460</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -13537,7 +13871,7 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>CEDE90034DFE53735F2EBCD45492BC91</key>
+		<key>CA880A10C850D40315E16F15ADC90ABF</key>
 		<dict>
 			<key>baseConfigurationReference</key>
 			<string>D3AAC0C383E080A90639995935D07A8B</string>
@@ -13558,13 +13892,13 @@
 				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
 				<string>YES</string>
 				<key>GCC_PREFIX_HEADER</key>
-				<string>Target Support Files/ParseUI/ParseUI-prefix.pch</string>
+				<string>Target Support Files/Bolts/Bolts-prefix.pch</string>
 				<key>INFOPLIST_FILE</key>
-				<string>Target Support Files/ParseUI/Info.plist</string>
+				<string>Target Support Files/Bolts/Info.plist</string>
 				<key>INSTALL_PATH</key>
 				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
 				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>8.0</string>
+				<string>9.0</string>
 				<key>LD_RUNPATH_SEARCH_PATHS</key>
 				<array>
 					<string>$(inherited)</string>
@@ -13572,11 +13906,11 @@
 					<string>@loader_path/Frameworks</string>
 				</array>
 				<key>MODULEMAP_FILE</key>
-				<string>Target Support Files/ParseUI/ParseUI.modulemap</string>
+				<string>Target Support Files/Bolts/Bolts.modulemap</string>
 				<key>MTL_ENABLE_DEBUG_INFO</key>
-				<string>YES</string>
+				<string>NO</string>
 				<key>PRODUCT_NAME</key>
-				<string>ParseUI</string>
+				<string>Bolts</string>
 				<key>SDKROOT</key>
 				<string>iphoneos</string>
 				<key>SKIP_INSTALL</key>
@@ -13600,7 +13934,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>wrapper.plug-in</string>
 			<key>name</key>
 			<string>PFCommandRunning.h</string>
 			<key>path</key>
@@ -13615,7 +13949,7 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>CFA866249D5505D181C4383E1D7DB798</key>
+		<key>CCD1B53C92EDFA51594175D416BB0183</key>
 		<dict>
 			<key>fileRef</key>
 			<string>B8751AC0152ACBF14E016E13A1919668</string>
@@ -13656,9 +13990,11 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>text</string>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>PFObjectLocalIdStore.m</string>
 			<key>path</key>
-			<string>Pods-acknowledgements.markdown</string>
+			<string>Parse/Internal/Object/LocalIdStore/PFObjectLocalIdStore.m</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -13698,6 +14034,13 @@
 			<string>D62D2452385A61EB64B8A1D09EF72882</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Project</string>
+				</array>
+			</dict>
 		</dict>
 		<key>D135E41205BF58046BFAD09843D9E9AB</key>
 		<dict>
@@ -13732,14 +14075,30 @@
 			<key>fileRef</key>
 			<string>63FA9921DA394B40C041DC67CDB161B1</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>name</key>
+			<string>NSHTTPURLResponse+Haneke.swift</string>
+			<key>path</key>
+			<string>Haneke/NSHTTPURLResponse+Haneke.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>D172803AB7C600E0004EED188448B772</key>
 		<dict>
 			<key>fileRef</key>
 			<string>CE022F7C4228B8E32E3EB09A8F583E1A</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>name</key>
+			<string>Log.swift</string>
+			<key>path</key>
+			<string>Haneke/Log.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>D25DE7317ED03B5260BF46FA6ADFD444</key>
 		<dict>
@@ -13762,6 +14121,13 @@
 			<string>43FFE37751D095A8957E5BB48B4EF159</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Project</string>
+				</array>
+			</dict>
 		</dict>
 		<key>D2BBDE7298D97524005CB3E322952EFB</key>
 		<dict>
@@ -13806,13 +14172,13 @@
 				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
 				<string>YES</string>
 				<key>GCC_PREFIX_HEADER</key>
-				<string>Target Support Files/HanekeSwift/HanekeSwift-prefix.pch</string>
+				<string>Target Support Files/OAuthSwift/OAuthSwift-prefix.pch</string>
 				<key>INFOPLIST_FILE</key>
-				<string>Target Support Files/HanekeSwift/Info.plist</string>
+				<string>Target Support Files/OAuthSwift/Info.plist</string>
 				<key>INSTALL_PATH</key>
 				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
 				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>8.0</string>
+				<string>9.0</string>
 				<key>LD_RUNPATH_SEARCH_PATHS</key>
 				<array>
 					<string>$(inherited)</string>
@@ -13820,11 +14186,11 @@
 					<string>@loader_path/Frameworks</string>
 				</array>
 				<key>MODULEMAP_FILE</key>
-				<string>Target Support Files/HanekeSwift/HanekeSwift.modulemap</string>
+				<string>Target Support Files/OAuthSwift/OAuthSwift.modulemap</string>
 				<key>MTL_ENABLE_DEBUG_INFO</key>
 				<string>NO</string>
 				<key>PRODUCT_NAME</key>
-				<string>Haneke</string>
+				<string>OAuthSwift</string>
 				<key>SDKROOT</key>
 				<string>iphoneos</string>
 				<key>SKIP_INSTALL</key>
@@ -13874,6 +14240,18 @@
 			<string>ParseUI.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>D40315620E9D700DC73323A8CED6612F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C7DB4A7DFDBE310E6A3633395451670A</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
 		</dict>
 		<key>D40315620E9D700DC73323A8CED6612F</key>
 		<dict>
@@ -13991,12 +14369,14 @@
 		</dict>
 		<key>D513FA7EC478BDCB2C1B29F899150039</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>children</key>
+			<array>
+				<string>43FFE37751D095A8957E5BB48B4EF159</string>
+				<string>3BA3513B86C96B23CDAF6C505C85618F</string>
+				<string>5A4A19552A47C1AE280D34D246C96BA2</string>
+			</array>
 			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>PBXGroup</string>
 			<key>name</key>
 			<string>PFUserState_Private.h</string>
 			<key>path</key>
@@ -14200,13 +14580,13 @@
 				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
 				<string>YES</string>
 				<key>GCC_PREFIX_HEADER</key>
-				<string>Target Support Files/OAuthSwift/OAuthSwift-prefix.pch</string>
+				<string>Target Support Files/HanekeSwift/HanekeSwift-prefix.pch</string>
 				<key>INFOPLIST_FILE</key>
-				<string>Target Support Files/OAuthSwift/Info.plist</string>
+				<string>Target Support Files/HanekeSwift/Info.plist</string>
 				<key>INSTALL_PATH</key>
 				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
 				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>8.0</string>
+				<string>9.0</string>
 				<key>LD_RUNPATH_SEARCH_PATHS</key>
 				<array>
 					<string>$(inherited)</string>
@@ -14214,11 +14594,11 @@
 					<string>@loader_path/Frameworks</string>
 				</array>
 				<key>MODULEMAP_FILE</key>
-				<string>Target Support Files/OAuthSwift/OAuthSwift.modulemap</string>
+				<string>Target Support Files/HanekeSwift/HanekeSwift.modulemap</string>
 				<key>MTL_ENABLE_DEBUG_INFO</key>
 				<string>NO</string>
 				<key>PRODUCT_NAME</key>
-				<string>OAuthSwift</string>
+				<string>Haneke</string>
 				<key>SDKROOT</key>
 				<string>iphoneos</string>
 				<key>SKIP_INSTALL</key>
@@ -14536,14 +14916,94 @@
 			<key>fileRef</key>
 			<string>75A2C5A6868C6C423BB3950A7F10C5F4</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>name</key>
+			<string>Response.swift</string>
+			<key>path</key>
+			<string>Source/Response.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>DC32CB096E2568DE012E54EBAD17D8C5</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>PFFileManager.m</string>
+			<key>path</key>
+			<string>Parse/Internal/PFFileManager.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>DC69D1EDD4B8EEB2A97519634A646E2F</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>977577C045EDA9D9D1F46E2598D19FC7</string>
+			<key>buildSettings</key>
 			<dict>
-				<key>ATTRIBUTES</key>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.0</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
 				<array>
-					<string>Project</string>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
 				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods/Pods.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>SWIFT_OPTIMIZATION_LEVEL</key>
+				<string>-Onone</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
 			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
 		</dict>
 		<key>DC24A3706F5FBC2E229F88A53FA89E56</key>
 		<dict>
@@ -15366,7 +15826,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>PFHTTPURLRequestConstructor.h</string>
 			<key>path</key>
@@ -15379,14 +15839,15 @@
 			<key>fileRef</key>
 			<string>B2609267878FCB7B5EDC0AC41414C454</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>ATTRIBUTES</key>
-				<array>
-					<string>Project</string>
-				</array>
-			</dict>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>PFHTTPURLRequestConstructor.h</string>
+			<key>path</key>
+			<string>Parse/Internal/HTTPRequest/PFHTTPURLRequestConstructor.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>E40B624B9F6D531DF5BE5B88E482CA86</key>
 		<dict>
@@ -16442,6 +16903,13 @@
 			<string>89154589AD7F74B034A4042124C70149</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Public</string>
+				</array>
+			</dict>
 		</dict>
 		<key>F66BD86F05EE3A014C5349FEE280EAED</key>
 		<dict>
@@ -16473,8 +16941,8 @@
 		</dict>
 		<key>F6BAC4E103DE2E7C21CA5B5A8E512D1D</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>52AF1EE888540DDD61B77AE0745BA244</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
@@ -16580,7 +17048,7 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>F7CD054277FB14697CFC9A70498B4B2B</key>
+		<key>F780407333237D6C059996986F9B2C1A</key>
 		<dict>
 			<key>baseConfigurationReference</key>
 			<string>D3AAC0C383E080A90639995935D07A8B</string>
@@ -16601,13 +17069,13 @@
 				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
 				<string>YES</string>
 				<key>GCC_PREFIX_HEADER</key>
-				<string>Target Support Files/ParseUI/ParseUI-prefix.pch</string>
+				<string>Target Support Files/OAuthSwift/OAuthSwift-prefix.pch</string>
 				<key>INFOPLIST_FILE</key>
-				<string>Target Support Files/ParseUI/Info.plist</string>
+				<string>Target Support Files/OAuthSwift/Info.plist</string>
 				<key>INSTALL_PATH</key>
 				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
 				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>8.0</string>
+				<string>9.0</string>
 				<key>LD_RUNPATH_SEARCH_PATHS</key>
 				<array>
 					<string>$(inherited)</string>
@@ -16615,15 +17083,17 @@
 					<string>@loader_path/Frameworks</string>
 				</array>
 				<key>MODULEMAP_FILE</key>
-				<string>Target Support Files/ParseUI/ParseUI.modulemap</string>
+				<string>Target Support Files/OAuthSwift/OAuthSwift.modulemap</string>
 				<key>MTL_ENABLE_DEBUG_INFO</key>
-				<string>NO</string>
+				<string>YES</string>
 				<key>PRODUCT_NAME</key>
-				<string>ParseUI</string>
+				<string>OAuthSwift</string>
 				<key>SDKROOT</key>
 				<string>iphoneos</string>
 				<key>SKIP_INSTALL</key>
 				<string>YES</string>
+				<key>SWIFT_OPTIMIZATION_LEVEL</key>
+				<string>-Onone</string>
 				<key>TARGETED_DEVICE_FAMILY</key>
 				<string>1,2</string>
 				<key>VERSIONING_SYSTEM</key>
@@ -16634,14 +17104,27 @@
 			<key>isa</key>
 			<string>XCBuildConfiguration</string>
 			<key>name</key>
-			<string>Release</string>
+			<string>Debug</string>
 		</dict>
 		<key>F82198F34DD14753A42F4328CD5E7A6B</key>
 		<dict>
-			<key>fileRef</key>
-			<string>8BE3CF45581B567E66DC2CBD647B067C</string>
+			<key>children</key>
+			<array>
+				<string>E0CFCAEA98FD5DF20BEA64DC11BD33D2</string>
+				<string>8854E9548C52D2C2CC2C54CEA9D701F9</string>
+				<string>1787E0BF6C507798D3B20A2FC1E0CBAC</string>
+				<string>A35DCC18663157DF09CEF6538838163F</string>
+				<string>66B9AA2A19A7C37E707C9CD3F097884F</string>
+				<string>3E5F342FE00D5C0000EF604D8D6C42AF</string>
+			</array>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Support Files</string>
+			<key>path</key>
+			<string>../Target Support Files/HanekeSwift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>F86924FD3D739EA2C63631F241ED3456</key>
 		<dict>
@@ -16649,13 +17132,6 @@
 			<string>721C052282469D154F73AE8AC3EFBBD7</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>ATTRIBUTES</key>
-				<array>
-					<string>Project</string>
-				</array>
-			</dict>
 		</dict>
 		<key>F89900A4D2AB828A020CDEB4E871D2EB</key>
 		<dict>
@@ -16670,21 +17146,6 @@
 					<string>Project</string>
 				</array>
 			</dict>
-		</dict>
-		<key>F8ABA5C607515DD8D5DA8014A537C33D</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>ParseUI.framework</string>
-			<key>path</key>
-			<string>ParseUI.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>F8DA7DA43B81015EED351872B817182A</key>
 		<dict>
@@ -16760,12 +17221,10 @@
 		</dict>
 		<key>FA01EF1915381283014B8BF340B0F9CE</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>wrapper.framework</string>
 			<key>name</key>
 			<string>PFFile+Synchronous.h</string>
 			<key>path</key>
@@ -16889,71 +17348,17 @@
 		</dict>
 		<key>FB45FFD90572718D82AB9092B750F0CA</key>
 		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
-				<string>gnu++0x</string>
-				<key>CLANG_CXX_LIBRARY</key>
-				<string>libc++</string>
-				<key>CLANG_ENABLE_MODULES</key>
-				<string>YES</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>CLANG_WARN_BOOL_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
-				<string>YES</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
-				<string>YES</string>
-				<key>CLANG_WARN_UNREACHABLE_CODE</key>
-				<string>YES</string>
-				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
-				<string>YES</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>YES</string>
-				<key>ENABLE_NS_ASSERTIONS</key>
-				<string>NO</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>RELEASE=1</string>
-				</array>
-				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
-				<string>YES</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_FUNCTION</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>8.0</string>
-				<key>STRIP_INSTALLED_PRODUCT</key>
-				<string>NO</string>
-				<key>SYMROOT</key>
-				<string>${SRCROOT}/../build</string>
-				<key>VALIDATE_PRODUCT</key>
-				<string>YES</string>
-			</dict>
+			<key>fileRef</key>
+			<string>38891ADE96881567EFBB3D03719137A0</string>
 			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Project</string>
+				</array>
+			</dict>
 		</dict>
 		<key>FB5071924D5EC00C607ED4F3F46B3FFC</key>
 		<dict>
@@ -16962,7 +17367,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
 			<string>PFConfigController.h</string>
 			<key>path</key>
@@ -17014,10 +17419,10 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>FBEF12C68956960E0D95072E020A4ADF</key>
+		<key>FE02F50B01FFBE05B1611F96C7B41DC4</key>
 		<dict>
 			<key>fileRef</key>
-			<string>CB690781ED67FCE1DDE8EF5F9E03710A</string>
+			<string>0F5DAA4F01877CC91927A2BC1659EFD8</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -17066,14 +17471,15 @@
 			<key>fileRef</key>
 			<string>38891ADE96881567EFBB3D03719137A0</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>ATTRIBUTES</key>
-				<array>
-					<string>Project</string>
-				</array>
-			</dict>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>PFSQLiteDatabaseController.m</string>
+			<key>path</key>
+			<string>Parse/Internal/LocalDataStore/SQLite/PFSQLiteDatabaseController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>FD928AA187BA2FC833BC8805CC00A5CE</key>
 		<dict>
@@ -17140,7 +17546,7 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
+			<string>sourcecode.swift</string>
 			<key>name</key>
 			<string>PFSQLiteDatabaseController.m</string>
 			<key>path</key>
