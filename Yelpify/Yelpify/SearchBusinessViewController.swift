@@ -21,7 +21,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     let cache = Shared.imageCache
     var dataHandler = APIDataHandler()
     var locationManager = CLLocationManager()
-    var googleParameters = ["key": "AIzaSyDkxzICx5QqztP8ARvq9z0DxNOF_1Em8Qc", "location": "33.64496794563093,-117.83725295740864", "rankby":"distance", "keyword": ""]
+    var googleParameters = ["key": "AIzaSyDkxzICx5QqztP8ARvq9z0DxNOF_1Em8Qc", "location": "33.6450038818185,-117.837313786366", "rankby":"distance", "keyword": "food"]
     var searchDidChange = false
     var searchQuery = ""
     
@@ -142,6 +142,10 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
 
     @IBOutlet weak var tableView: UITableView!
     
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.backgroundColor = appDefaults.color
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -158,18 +162,9 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         let business = self.businessObjects[indexPath.row]
         
         cell.configureCellWith(business) { () -> Void in
-            //print("reloading cell", indexPath.row)
-            //self.businessShown[indexPath.row] = true
-            //self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
         }
-//        
-//        if !businessShown.contains(false){
-//            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-//            businessShown[indexPath.row] = true
-//        }
-//        
-        cell.addToPlaylist.tag = indexPath.row
-        cell.addToPlaylist.addTarget(self, action: "addTrackToPlaylist:", forControlEvents: .TouchUpInside)
+        cell.moreButton.tag = indexPath.row
+        cell.moreButton.addTarget(self, action: "addTrackToPlaylist:", forControlEvents: .TouchUpInside)
         return cell
     }
     
@@ -180,9 +175,16 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if (segue.identifier == "showBusinessDetail"){
+            let cache = Shared.dataCache
+            
             let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
+            
+            
             let indexPath = tableView.indexPathForSelectedRow
             let object = businessObjects[indexPath!.row]
+//            cache.fetch(key: object.businessPhotoReference!).onSuccess { image in
+//                upcoming.placePhoto = UIImage(data: image)
+//            }
             upcoming.object = object
             upcoming.index = indexPath!.row
             self.tableView.deselectRowAtIndexPath(indexPath!, animated: true)
@@ -223,7 +225,12 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     override func viewDidLoad(){
         getCurrentLocation()
-        //self.navigationController?.navigationBar.set
+        
+        // Set up Nav Bar
+        self.navigationController?.navigationBar.backgroundColor = appDefaults.color
+        self.navigationController?.navigationItem.titleView?.tintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.tableView.backgroundColor = appDefaults.color
         
         // Performs an API search and returns a master array of businesses (as dictionaries)
         performInitialSearch()
@@ -252,34 +259,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         return true
         // Will allow user to press "return" button to close keyboard
     }
-    
-    
-    
-    
-//    func textFieldDidEndEditing(textField: UITextField) {
-//        let query = locationTextField.text
-//        //let queryArr = query!.characters.split{$0 == " "}.map(String.init)
-//        //yelpSearchParameters["term"] = query as String!
-//        
-//        self.businessObjects.removeAll()
-//        self.tableView.reloadData()
-//        
-////        dataHandler.performAPISearch(yelpSearchParameters) { (businessObjectArray) -> Void in
-////            self.businessObjects = businessObjectArray
-////            self.tableView.reloadData()
-////        }
-//        
-//    }
-    
-    
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

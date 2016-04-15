@@ -8,17 +8,31 @@
 
 import UIKit
 import Parse
+import Haneke
+
+enum StringConversionError: ErrorType {
+    case CannotConvertError
+}
 
 class BusinessDetailViewController: UITableViewController {
 
+    @IBOutlet weak var placePhotoImageView: UIImageView!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var hoursLabel: UILabel!
+    
+    //var placePhoto: UIImage? = UIImage(named: "default_restaurant")
+    let cache = Shared.dataCache
     var object: Business!
     var index: Int!
-    var yelpClient = APIDataHandler()
-    var yelpObj:YelpBusiness!
+    
+    var photoRefs = [String]()
+    
+    var APIClient = APIDataHandler()
+    let gpClient = GooglePlacesAPIClient()
+    //var yelpClient = APIDataHandler()
+    //var yelpObj:YelpBusiness!
 
     
     @IBOutlet weak var directionsButton: UIButton!
@@ -35,23 +49,31 @@ class BusinessDetailViewController: UITableViewController {
         self.callButton.enabled = false
         self.webButton.enabled = false
         self.title = "Details"
-        yelpClient.retrieveYelpBusinessFromBusinessObject(object) { (yelpBusinessObject) -> Void in
-            self.yelpObj = yelpBusinessObject
+        
+        APIClient.performDetailedSearch(object.gPlaceID!) { (detailedGPlace) in
             self.nameLabel.text = self.object.businessName
-            self.addressLabel.text = self.object.businessAddress
+            self.addressLabel.text = detailedGPlace.address
             self.directionsButton.enabled = true
             self.callButton.enabled = true
-            if(self.object.businessPhone != nil)
-            {
-                self.callButton.enabled = true
-            }
-//            if(self.object.businessURL != nil)
-//            {
-//                self.webButton.enabled = true
-//            }
+            
+            self.object.businessPhone = detailedGPlace.phone!
+            
+            print("Hours: ", detailedGPlace.hours!, "\n")
+            print("Phone: ", detailedGPlace.phone!, "\n")
+            print("Photos: ", detailedGPlace.photos!, "\n")
+            print("Price Rating: ", detailedGPlace.priceRating!, "\n")
+            print("Rating: ", detailedGPlace.rating!, "\n")
+            //print("Reviews: ", detailedGPlace.reviews, "\n")
+            print("Website: ", detailedGPlace.website!, "\n")
+            
+            self.gpClient.getImageFromPhotoReference(detailedGPlace.photos![0] as! String, completion: { (key) in
+                self.cache.fetch(key: detailedGPlace.photos![0] as! String){ (imageData) in
+                    print("Grabbing image")
+                    self.placePhotoImageView.image = UIImage(data: imageData)
+                }
+            })
+            
         }
-        //nameLabel.text = object.businessName
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,17 +85,49 @@ class BusinessDetailViewController: UITableViewController {
         performSegueWithIdentifier("unwindFromDetail", sender: self)
     }
     
+//    @IBAction func PressedButton(sender: AnyObject) {
+//        
+//        var choose = UIAlertView()
+//        
+//        choose.addButtonWithTitle("Google Maps")
+//        choose.addButtonWithTitle("Apple Maps")
+//        choose.title = "Navigate"
+//        choose.show()
+//
+//    }
+    
+    func convertAddress(address: String) -> String{
+        let addressArray = address.characters.split{$0 == " "}.map(String.init)
+        var resultString = ""
+        for word in addressArray{
+            resultString += word + "+"
+        }
+        return resultString
+    }
+    
+    func convertPhone(phone: String) -> Int{
+        let phoneArray = phone.characters.map { String($0) }
+        var result = ""
+        for char in phoneArray{
+            if Int(char) != nil{
+                result += char
+            }
+        }
+        return Int(result)!
+    }
+    
     @IBAction func openInMaps(sender: UIButton) {
         let latitude = self.object.businessLatitude!
         let longitude = self.object.businessLongitude!
         
         if (UIApplication.sharedApplication().canOpenURL(NSURL(string: "comgooglemaps://")!))
         {
-            let name = self.object.businessName?.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-            print(name!)
-            let url = NSURL(string: "comgooglemaps://?saddr=&daddr=\(name!)&center=\(latitude),\(longitude)&directionsmode=driving")
+            let name = convertAddress(self.object.businessAddress!)
+            //let name = self.object.businessName//self.object.businessName?.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+            print(name)
+            let url = NSURL(string: "comgooglemaps://?saddr=\(name)&center=\(latitude),\(longitude)&directionsmode=driving")!
             print(url)
-            UIApplication.sharedApplication().openURL(url!)
+            UIApplication.sharedApplication().openURL(url)
         }
         else
         {
@@ -83,7 +137,7 @@ class BusinessDetailViewController: UITableViewController {
     
     @IBAction func openInPhone(sender: UIButton)
     {
-        let telnum = self.object.businessPhone!
+        let telnum = convertPhone(self.object.businessPhone!)
         if(UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel://")!))
         {
             let url = NSURL(string: "tel://\(telnum)")
@@ -100,13 +154,5 @@ class BusinessDetailViewController: UITableViewController {
             UIApplication.sharedApplication().openURL(url!)
         }
     }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }

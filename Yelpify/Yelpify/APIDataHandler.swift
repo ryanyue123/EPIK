@@ -47,6 +47,13 @@ class APIDataHandler {
         
     }
     
+    func performDetailedSearch(googleID: String, completion: (detailedGPlace: GooglePlaceDetail) -> Void){
+        self.gpClient.searchPlaceWithID(googleID) { (JSONdata) in
+            self.parseGoogleDetailedData(JSONdata, completion: { (detailedGPlace) in
+                completion(detailedGPlace: detailedGPlace)
+            })
+        }
+    }
     
     // MARK: - DETAILED REQUEST HANDLING (for use when cell in searchBusinessVC is clicked)
     
@@ -88,35 +95,45 @@ class APIDataHandler {
     // Handled in GoogleAPIClient
 
     // Step 2 - Parse Detailed Info // Returns a NSDictionary containing [phone, price, rating, reviews]
-    func parseGoogleDetailedData(data: NSDictionary, completion: (detailedGPlaceDict: NSDictionary) -> Void){
+    func parseGoogleDetailedData(data: NSDictionary, completion: (detailedGPlace: GooglePlaceDetail) -> Void){
         if data.count > 0 {
             if let place = data["result"] as? NSDictionary{
                 if place.count > 0{
-                    let placePhone = place["formatted_phone_number"] as! String
-                    // let placeIntlPhone = place["international_phone_number"] as! String
-            
-                    // let placeHours = place["weekday_text"] as! NSArray
-                    // let placePermanentlyClosed = place["permanently_closed"] as! Bool
                     
-                    var placePhotoRefArray: [String] = []
-                    if let placePhotoArray = place["photos[]"] as? NSArray{
-                        for placePhoto in placePhotoArray{
-                            let photoRef = placePhoto["photo_reference"] as! String
-                            placePhotoRefArray.append(photoRef)
-                        }
+                    var placeCity = ""
+                    if let addressComponents = place["address_components"] as? NSArray{
+                        //let addressCity = addressComponents[2] as! NSDictionary
                     }
                     
-                    let placePrice = place["price_level"] as! Int
-                    let placeRating = place["rating"] as! Double
+                    let placeFormattedAddress = place["formatted_address"] as! String
                     
-                    let placeReviews = place["reviews[]"] as! NSArray
+                    let placePhone = place["formatted_phone_number"] as! String
+                    let placeIntlPhone = place["international_phone_number"] as! String
                     
-                    // let placeTypes = place["types[]"] as! NSArray
+                    var placeWeekdayText = []
+                    if let placeHours = place["opening_hours"] as? NSDictionary{
+                        placeWeekdayText = placeHours["weekday_text"] as! NSArray
+                        // let placePermanentlyClosed = place["permanently_closed"] as! Bool
+                    }
                     
-                    //let placeWebsite = place["url"] as! String
+                    var placePhotoRefArray: [String] = []
+                    if let placePhotoArray = place["photos"] as? NSArray{
+                        for photo in placePhotoArray{
+                            placePhotoRefArray.append(photo["photo_reference"] as! String)
+                        }
+                        //placePhotoRefArray = placePhotoArray
+                    }
                     
-                    completion(detailedGPlaceDict: ["phone": placePhone, "placePrice": placePrice, "placeRating": placeRating, "placeReviews": placeReviews])
+                    let placePrice = place["price_level"] as? Int
+                    let placeRating = place["rating"] as? Double
                     
+                    let placeReviews = place["reviews"] as? NSArray
+                    
+                    let placeTypes = place["types"] as? NSArray
+                    
+                    let placeWebsite = place["url"] as? String
+                    
+                    completion(detailedGPlace: GooglePlaceDetail(_address: placeFormattedAddress, _phone: placePhone, _website: placeWebsite, _hours: placeWeekdayText, _priceRating: placePrice, _rating: placeRating, _reviews: placeReviews, _photos: placePhotoRefArray))
                 }
             }
         
@@ -150,8 +167,6 @@ class APIDataHandler {
     private func parseYelpBusinessData(data: NSDictionary, completion: (yelpBusiness: YelpBusiness) -> Void){
         
     }
-    
-    
     
     // END DETAILED
     

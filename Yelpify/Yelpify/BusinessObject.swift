@@ -108,6 +108,30 @@ struct GooglePlace {
         placeName = name
         placeAddress = address
         placePhotoReference = photoRef
+    }
+}
+
+//completion(detailedGPlaceDict: ["phone": placePhone, "address": placeFormattedAddress, "website": placeWebsite, "priceRating": placePrice, "hours": placeWeekdayText, "placePhotos": placePhotoRefArray, "rating": placeRating, "reviews": placeReviews])
+
+struct GooglePlaceDetail {
+    var address: String? = ""
+    var phone: String? = ""
+    var website: String? = ""
+    var hours: NSArray? = []
+    var priceRating: Int? = 0
+    var rating: Double? = 0
+    var reviews: NSArray? = []
+    var photos: NSArray? = []
+    
+    init(_address: String?, _phone: String?, _website: String?, _hours: NSArray?, _priceRating: Int?, _rating: Double?, _reviews: NSArray?, _photos: NSArray?){
+        address = _address
+        phone = _phone
+        website = _website
+        hours = _hours
+        priceRating = _priceRating
+        rating = _rating
+        reviews = _reviews
+        photos = _photos
         
     }
 }

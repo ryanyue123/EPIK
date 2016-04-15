@@ -26,14 +26,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize Google Places API.
         GMSServices.provideAPIKey("AIzaSyCKY_SOq4ivZp9b3oB8mmkBaKqHbLrbDlg")
         
-        //UINavigationBar.appearance().barStyle = UIBarStyle.Black
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSFontAttributeName: UIFont(name: "Montserrat-Regular", size: 16)!,
+            NSForegroundColorAttributeName: UIColor.whiteColor()     ]
+        
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        
+        
+        //UINavigationBar.appearance().backgroundColor = UIColor.darkGrayColor()
+        //UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        
+        //UILabel.appearance().font = UIFont(name: "Montserrat", size: 14)
         
         
         // Set navigation bar tint / background colour
 //        UINavigationBar.appearance().barTintColor = UIColor.whiteColor()
 //        
 //        UINavigationBar.appearance().backgroundColor = UIColor.whiteColor()
-//        UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarMetrics: .Default)
 //        
         // Set navigation bar ItemButton tint colour
         //UIBarButtonItem.appearance().tintColor = UIColor.orangeColor()
@@ -82,6 +93,7 @@ extension UIColor {
         self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff)
     }
 }
+
 
 
 
