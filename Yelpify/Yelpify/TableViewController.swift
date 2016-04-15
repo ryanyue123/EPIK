@@ -56,6 +56,8 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     var playlists_location = []
     var playlists_user = []
     
+    var all_playlists = [NSArray]()
+    
     var userlatitude: Double!
     var userlongitude: Double!
     var inputTextField: UITextField!
@@ -126,6 +128,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
             {
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlists_location = objects!
+                    self.all_playlists.append(self.playlists_location)
                     self.tableView.reloadData()
                 })
             }
@@ -145,8 +148,8 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
             if ((error) == nil)
             {
                 dispatch_async(dispatch_get_main_queue(), {
-                    print("user playlists")
                     self.playlists_user = objects!
+                    self.all_playlists.append(self.playlists_user)
                     self.tableView.reloadData()
                 })
             }
@@ -165,8 +168,10 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         print(userLocation.coordinate)
         userlatitude = latitude
         userlongitude = longitude
-        fetchNearbyPlaylists()
+        
         fetchUserPlaylists()
+        fetchNearbyPlaylists()
+        
         parameters["ll"] = String(latitude) + "," + String(longitude)
     }
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
@@ -218,7 +223,6 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
 
     // MARK: - Table view data source
     var storedOffsets = [Int: CGFloat]()
-
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -226,7 +230,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 3
+        return self.all_playlists.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -272,13 +276,14 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         //performSegueWithIdentifier("showPlaylist", sender: self)
+        print(collectionView.tag)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "showPlaylist")
         {
             let upcoming = segue.destinationViewController as? SinglePlaylistViewController
-            upcoming?.object = playlists_location[0] as! PFObject
+
         }
     }
 }

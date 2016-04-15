@@ -64,7 +64,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="179"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RO8-s4-ggK">
+                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" pagingEnabled="YES" showsVerticalScrollIndicator="NO" indicatorStyle="black" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RO8-s4-ggK">
                                             <rect key="frame" x="0.0" y="50" width="600" height="128"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1HL-9n-bYt">
@@ -122,17 +122,17 @@
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="showPlaylistAlert:" destination="omI-co-7je" id="wty-uQ-GaB"/>
-                                <segue destination="7Om-1w-JrL" kind="show" id="tzw-u6-Uwc"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="7Om-1w-JrL" kind="show" identifier="showPlaylist" action="showDetailViewController:sender:" id="5FV-hX-NA6"/>
+                        <segue destination="7Om-1w-JrL" kind="show" identifier="createPlaylist" id="y7k-Hg-iYt"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HhQ-rl-3l8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3345" y="-316"/>
+            <point key="canvasLocation" x="3289" y="-350"/>
         </scene>
         <!--Single Playlist View Controller-->
         <scene sceneID="8Ni-Nh-s1P">
@@ -2648,8 +2648,8 @@
         <image name="temp_rating" width="149" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5FV-hX-NA6"/>
+        <segue reference="YUf-97-oo0"/>
+        <segue reference="y7k-Hg-iYt"/>
         <segue reference="AJc-UI-xaB"/>
-        <segue reference="QgL-VR-Xl5"/>
     </inferredMetricsTieBreakers>
 </document>
