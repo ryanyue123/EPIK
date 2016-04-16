@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import GoogleMaps
+import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

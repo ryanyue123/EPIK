@@ -204,11 +204,6 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         }
         imageView.alpha = endAlpha
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     @IBAction func addItemToPlaylist(sender: UIBarButtonItem) {
         performSegueWithIdentifier("unwindFromDetail", sender: self)
