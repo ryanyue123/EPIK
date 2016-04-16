@@ -84,12 +84,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.convertParseArrayToBusinessArray(object["track"] as! [NSDictionary]) { (resultArray) in
-            self.playlistArray = resultArray
-            dispatch_async(dispatch_get_main_queue(), {
-                self.playlistTableView.reloadData()
-            })
-        }
+        
         
         self.playlistTableView.backgroundColor = appDefaults.color
         //navigationItem.rightBarButtonItem = editButtonItem()
@@ -105,6 +100,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         else
         {
             // edit button disabled
+            self.convertParseArrayToBusinessArray(object["track"] as! [NSDictionary]) { (resultArray) in
+                self.playlistArray = resultArray
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.playlistTableView.reloadData()
+                })
+            }
         }
         
         configureNavigationBar()
