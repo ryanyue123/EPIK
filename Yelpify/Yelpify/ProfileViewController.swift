@@ -8,8 +8,9 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var profileImageView: UIImageView!
     
     @IBOutlet weak var profileBG: UIImageView!
     @IBOutlet weak var tableView: UITableView!
@@ -18,13 +19,62 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        configureNavigationBar()
+        setupProfilePicture()
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        configureHeaderView()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        updateHeaderView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateHeaderView()
+    }
+    
+    // MARK: - Scroll View
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.fadeBG()
+        self.updateHeaderView()
+        self.handleNavigationBarOnScroll()
+    }
+    
+    func fadeBG(){
+        self.profileBG.alpha = (-tableView.contentOffset.y / headerHeight) * 0.5
+    }
+    
+    func handleNavigationBarOnScroll(){
+        let showWhenScrollDownAlpha = 1 - (-tableView.contentOffset.y / headerHeight)
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(showWhenScrollDownAlpha) ]
+        self.navigationItem.title = "details"
+        
+        // Handle Status Bar
+        //self.statusBarView.alpha = showWhenScrollDownAlpha
+        
+        // Handle Nav Shadow View
+        self.view.viewWithTag(102)!.backgroundColor = appDefaults.color.colorWithAlphaComponent(showWhenScrollDownAlpha)
+    }
+
     
     // MARK: - Configure Methods
     
     private let headerHeight: CGFloat = 300.0
+    
+    func setupProfilePicture(){
+        self.profileImageView.layer.borderWidth = 1.0
+        self.profileImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        //self.profileImageView.layer.cornerRadius = 13
+        self.profileImageView.layer.cornerRadius = profileImageView.frame.size.height/2
+        self.profileImageView.clipsToBounds = true
+        profileImageView.layer.masksToBounds = false
+    }
     
     func configureNavigationBar(){
         addShadowToBar()
@@ -77,34 +127,21 @@ class ProfileViewController: UIViewController {
     }
 
     
-    
-    // MARK: - Scroll View
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        self.fadeBG()
-        self.updateHeaderView()
-        self.handleNavigationBarOnScroll()
+    // MARK: - Table View Functions
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
     }
     
-    func fadeBG(){
-        self.profileBG.alpha = (-tableView.contentOffset.y / headerHeight) * 0.5
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("listCell", forIndexPath: indexPath)
+        return cell
+        
     }
     
-    func handleNavigationBarOnScroll(){
-        let showWhenScrollDownAlpha = 1 - (-tableView.contentOffset.y / headerHeight)
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        self.navigationController?.navigationBar.titleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(showWhenScrollDownAlpha) ]
-        self.navigationItem.title = "details"
-        
-        // Handle Status Bar
-        //self.statusBarView.alpha = showWhenScrollDownAlpha
-        
-        // Handle Nav Shadow View
-        self.view.viewWithTag(102)!.backgroundColor = appDefaults.color.colorWithAlphaComponent(showWhenScrollDownAlpha)
     }
+    
 
-    
-    // MARK: - Table View Methods
 
 }

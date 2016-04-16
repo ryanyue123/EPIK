@@ -101,6 +101,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
         
         configureNavigationBar()
+        
+        setupCollaboratorViews()
         //configurePlaylistInfoView()
     }
     
@@ -221,6 +223,39 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.view.bringSubviewToFront(statusBarView)
         
         shadowView.tag = 100
+    }
+    
+    // MARK: - Set Up Collaborator View
+    func setupCollaboratorViews(){
+        addGestureToCollaboratorView()
+        
+        var numOfCollaborators = 2 // Temp Var
+        var width: CGFloat = (collaboratorsImageView.frame.size.width / CGFloat(numOfCollaborators))
+        var setWidth: CGFloat = width
+        var height: CGFloat = collaboratorsImageView.frame.size.height
+        var x = collaboratorsImageView.frame.origin.x
+        
+        var image = UIImage(named: "default_restaurant")// Temp Image
+
+        for person in 0..<numOfCollaborators{
+            print(person)
+            let imageView = UIImageView(frame: CGRectMake(x, collaboratorsImageView.frame.origin.y, width, height))
+            imageView.contentMode = UIViewContentMode.ScaleAspectFill
+            
+            collaboratorsImageView.addSubview(imageView)
+            setWidth += width
+            x += width
+        }
+    }
+    
+    func addGestureToCollaboratorView(){
+        let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:Selector("tappedCollaborators"))
+        self.collaboratorsImageView.userInteractionEnabled = true
+        self.collaboratorsImageView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    func tappedCollaborators(){
+        performSegueWithIdentifier("showProfileView", sender: self)
     }
 
     
