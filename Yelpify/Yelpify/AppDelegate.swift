@@ -52,7 +52,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Set navigation bar Back button tint colour
         //UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         
-        return true
+        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions:
+            launchOptions)
     }
 
     func applicationWillResignActive(application: UIApplication) {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="TGK-Y4-oJh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wjg-5v-mT1">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -1560,7 +1560,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="112" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0eM-Bd-byN">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="112" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0eM-Bd-byN">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -2586,6 +2586,27 @@
             </objects>
             <point key="canvasLocation" x="5004" y="438"/>
         </scene>
+        <!--Login-->
+        <scene sceneID="dNT-ql-eCM">
+            <objects>
+                <viewController title="Login" id="wjg-5v-mT1" customClass="LoginViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="E2T-Kw-AAu"/>
+                        <viewControllerLayoutGuide type="bottom" id="rat-hO-TaF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dUl-62-egp">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="fbLogin" destination="dUl-62-egp" id="5F4-On-bYn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sma-fD-tWU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="459" y="879"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="N93-0p-u6f">
             <objects>
@@ -2699,8 +2720,8 @@
         <image name="temp_rating" width="149" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Enr-Xq-AeH"/>
         <segue reference="y7k-Hg-iYt"/>
         <segue reference="wcr-XA-MxT"/>
-        <segue reference="AJc-UI-xaB"/>
     </inferredMetricsTieBreakers>
 </document>
