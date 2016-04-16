@@ -56,9 +56,6 @@
 		90F34CDF1CB0893300CC0870 /* SinglePlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */; };
 		ED405A101CC1D03C0017A9AB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED405A0F1CC1D03C0017A9AB /* LoginViewController.swift */; };
 		ED405A141CC1D0E90017A9AB /* NSMutableArray+Login.m in Sources */ = {isa = PBXBuildFile; fileRef = ED405A131CC1D0E90017A9AB /* NSMutableArray+Login.m */; };
-		ED405A161CC1D1390017A9AB /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED405A151CC1D1390017A9AB /* FBSDKCoreKit.framework */; };
-		ED405A181CC1D1440017A9AB /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED405A171CC1D1440017A9AB /* FBSDKLoginKit.framework */; };
-		ED405A1A1CC1D14B0017A9AB /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED405A191CC1D14B0017A9AB /* FBSDKShareKit.framework */; };
 		EDA8CEF51CAF506400A5C2ED /* SortMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA8CEF41CAF506400A5C2ED /* SortMethods.swift */; };
 		EDD44DAD1CB4BA31008DC4AB /* RandomPlaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD44DAC1CB4BA31008DC4AB /* RandomPlaceController.swift */; };
 /* End PBXBuildFile section */
@@ -141,9 +138,6 @@
 		ED405A111CC1D0E90017A9AB /* Yelpify-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Yelpify-Bridging-Header.h"; sourceTree = "<group>"; };
 		ED405A121CC1D0E90017A9AB /* NSMutableArray+Login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Login.h"; sourceTree = "<group>"; };
 		ED405A131CC1D0E90017A9AB /* NSMutableArray+Login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Login.m"; sourceTree = "<group>"; };
-		ED405A151CC1D1390017A9AB /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		ED405A171CC1D1440017A9AB /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		ED405A191CC1D14B0017A9AB /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		EDA8CEF41CAF506400A5C2ED /* SortMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortMethods.swift; sourceTree = "<group>"; };
 		EDBAE5BF1C8E472100278A33 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		EDBAE5C11C8E49A900278A33 /* Publisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
@@ -156,10 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED405A1A1CC1D14B0017A9AB /* FBSDKShareKit.framework in Frameworks */,
 				523E599553F6100C5348857C /* Pods.framework in Frameworks */,
-				ED405A161CC1D1390017A9AB /* FBSDKCoreKit.framework in Frameworks */,
-				ED405A181CC1D1440017A9AB /* FBSDKLoginKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,9 +249,6 @@
 		724BF8D6608B34D8B4CAF41D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				ED405A191CC1D14B0017A9AB /* FBSDKShareKit.framework */,
-				ED405A171CC1D1440017A9AB /* FBSDKLoginKit.framework */,
-				ED405A151CC1D1390017A9AB /* FBSDKCoreKit.framework */,
 				9025184D1C8825E700BB3E05 /* Haneke.framework */,
 				68ACAEFF88A59BB74B411CE0 /* Pods.framework */,
 			);
