@@ -57,7 +57,9 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     var playlists_user = []
     
     var all_playlists = [NSArray]()
-    
+    var label_array = ["Playlists near you", "My playlists"]
+    var row: Int!
+    var col: Int!
     var userlatitude: Double!
     var userlongitude: Double!
     var inputTextField: UITextField!
@@ -236,6 +238,8 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! TableViewCell
         cell.reloadCollectionView()
+        cell.titleLabel.text = label_array[indexPath.row]
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
         return cell
     }
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -254,36 +258,27 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
 extension TableViewController: UICollectionViewDataSource, UICollectionViewDelegate
 {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return 3
+        return all_playlists[collectionView.tag].count
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
-        
-//        if(collectionView.tag == 0 && self.playlists_location.count != 0)
-//        {
-//            let templist = self.playlists_location[indexPath.row] as! PFObject
-//            cell.label.text = templist["playlistName"] as? String
-//        }
-//        if(collectionView.tag == 1 && self.playlists_user.count != 0)
-//        {
-//            let templist = self.playlists_user[indexPath.row] as! PFObject
-//            cell.label.text = templist["createdbyuser"] as? String
-//        }
-        
+        let tempobject = all_playlists[collectionView.tag][indexPath.row] as! PFObject
+        cell.label.text = tempobject["playlistName"] as? String
         return cell
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        //performSegueWithIdentifier("showPlaylist", sender: self)
-        print(collectionView.tag)
+        self.row = collectionView.tag
+        self.col = indexPath.row
+        performSegueWithIdentifier("showPlaylist", sender: self)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "showPlaylist")
         {
             let upcoming = segue.destinationViewController as? SinglePlaylistViewController
-
+            let temparray = all_playlists[row]
+            upcoming?.object = temparray[col] as! PFObject
         }
     }
 }
