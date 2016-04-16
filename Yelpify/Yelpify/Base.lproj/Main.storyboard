@@ -1935,6 +1935,9 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="751"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="hzi-hz-39z" id="2aM-CQ-71P"/>
                                     <outlet property="delegate" destination="hzi-hz-39z" id="lQQ-84-kjC"/>
@@ -2510,16 +2513,16 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2EE-vr-g3e">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <view key="tableHeaderView" contentMode="scaleToFill" id="nEE-s8-wT5">
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="nEE-s8-wT5" userLabel="Header View">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="restaurantImage - MCD" translatesAutoresizingMaskIntoConstraints="NO" id="iRl-pM-lZV">
+                                        <imageView userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="restaurantImage - MCD" translatesAutoresizingMaskIntoConstraints="NO" id="iRl-pM-lZV">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </imageView>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstItem="iRl-pM-lZV" firstAttribute="leading" secondItem="nEE-s8-wT5" secondAttribute="leading" id="AXB-C7-aXN"/>
                                         <constraint firstAttribute="trailing" secondItem="iRl-pM-lZV" secondAttribute="trailing" id="gOb-yN-kdz"/>
@@ -2581,6 +2584,11 @@
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="headerView" destination="nEE-s8-wT5" id="Mno-bR-Wpd"/>
+                        <outlet property="profileBG" destination="iRl-pM-lZV" id="mu8-6j-1E1"/>
+                        <outlet property="tableView" destination="2EE-vr-g3e" id="Z29-XB-uAU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BGj-Xk-T2S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
