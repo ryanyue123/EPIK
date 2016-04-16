@@ -68,12 +68,22 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     private let headerHeight: CGFloat = 300.0
     
     func setupProfilePicture(){
-        self.profileImageView.layer.borderWidth = 1.0
+        
+        self.roundingUIView(self.profileImageView, cornerRadiusParam: 45)
+        self.profileImageView.layer.borderWidth = 3.0
         self.profileImageView.layer.borderColor = UIColor.whiteColor().CGColor
-        //self.profileImageView.layer.cornerRadius = 13
-        self.profileImageView.layer.cornerRadius = profileImageView.frame.size.height/2
-        self.profileImageView.clipsToBounds = true
-        profileImageView.layer.masksToBounds = false
+        
+//        self.profileImageView.layer.borderWidth = 1.0
+//        self.profileImageView.layer.borderColor = UIColor.whiteColor().CGColor
+//        self.profileImageView.layer.cornerRadius = 13
+//        //self.profileImageView.layer.cornerRadius = profileImageView.frame.size.height/2
+//        self.profileImageView.clipsToBounds = true
+//        profileImageView.layer.masksToBounds = false
+    }
+    
+    private func roundingUIView(let aView: UIView!, let cornerRadiusParam: CGFloat!) {
+        aView.clipsToBounds = true
+        aView.layer.cornerRadius = cornerRadiusParam
     }
     
     func configureNavigationBar(){
