@@ -88,20 +88,8 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
                     dispatch_async(dispatch_get_main_queue(), {
                         if (objects!.count == 0)
                         {
-                            let object = PFObject(className: "Playlists")
-                            object["playlistName"] = self.inputTextField.text!
-                            object["createdbyuser"] = PFUser.currentUser()?.username!
-                            object.saveInBackgroundWithBlock {(success, error) -> Void in
-                                if (error == nil)
-                                {
-                                    playlist.playlistname = self.inputTextField.text!
-                                    self.performSegueWithIdentifier("createPlaylist", sender: self)
-                                }
-                                else
-                                {
-                                    print(error?.userInfo)
-                                }
-                            }
+                            playlist.playlistname = self.inputTextField.text!
+                            self.performSegueWithIdentifier("createPlaylist", sender: self)
                         }
                         else
                         {
@@ -171,8 +159,9 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         userlatitude = latitude
         userlongitude = longitude
         
-        fetchUserPlaylists()
+        
         fetchNearbyPlaylists()
+        fetchUserPlaylists()
         
         parameters["ll"] = String(latitude) + "," + String(longitude)
     }
@@ -265,6 +254,13 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
         let tempobject = all_playlists[collectionView.tag][indexPath.row] as! PFObject
         cell.label.text = tempobject["playlistName"] as? String
+    
+        //takes image of first business and uses it as icon for playlist
+        
+        let business = tempobject["track"][0] as! NSDictionary
+        let photoref = business["photoReference"] as! String
+        
+        cell.configureCell(photoref)
         return cell
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
