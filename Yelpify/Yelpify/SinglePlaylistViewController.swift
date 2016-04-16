@@ -84,6 +84,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.convertParseArrayToBusinessArray(object["track"] as! [NSDictionary]) { (resultArray) in
+            self.playlistArray = resultArray
+            dispatch_async(dispatch_get_main_queue(), {
+                self.playlistTableView.reloadData()
+            })
+        }
+        
         self.playlistTableView.backgroundColor = appDefaults.color
         //navigationItem.rightBarButtonItem = editButtonItem()
         
@@ -133,6 +140,17 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateHeaderView()
+    }
+    
+    // MARK: - Reload Data After Pass
+    
+    func convertParseArrayToBusinessArray(parseArray: [NSDictionary], completion: (resultArray: [Business])->Void){
+        var businessArray: [Business] = []
+        for dict in parseArray{
+            let business = Business(name: dict["name"] as? String, address: dict["address"] as? String, photoRef: dict["photoRef"] as? String, latitude: dict["latitude"] as? Double, longitude: dict["longitude"] as? Double, placeID: dict["id"] as? String)
+            businessArray.append(business)
+        }
+        completion(resultArray: businessArray)
     }
     
     // MARK: - Scroll View
@@ -272,7 +290,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-        cell.configureCellWith(playlistArray[indexPath.row]) { 
+        cell.configureCellWith(playlistArray[indexPath.row]) {
             //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
         return cell

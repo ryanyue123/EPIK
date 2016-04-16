@@ -73,7 +73,9 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         self.businessShown.removeAll()
         self.businessObjects.removeAll()
         cache.removeAll()
-        self.tableView.reloadData()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView.reloadData()
+        }
         
         print("grabbing new data")
         dataHandler.performAPISearch(googleParameters) { (businessObjectArray) -> Void in

@@ -27,7 +27,7 @@ struct Business {
     var yelpID: String? = ""
     var gPlaceID: String? = ""
     
-    init(name: String?, address: String?, city: String?, zip: String?, phone: String?, imageURL: String?, photoRef: String?, latitude: Double?, longitude: Double?, distance: Double?, rating: Double?, categories: NSArray?, status: Bool?, businessID: String?, placeID: String?){
+    init(name: String?, address: String?, city: String? = "", zip: String? = "", phone: String? = "", imageURL: String? = "", photoRef: String?, latitude: Double?, longitude: Double?, distance: Double? = nil, rating: Double? = nil, categories: NSArray? = nil, status: Bool? = nil, businessID: String? = nil, placeID: String?){
         businessName = name
         businessAddress = address
         businessImageURL = imageURL
@@ -47,6 +47,7 @@ struct Business {
     
     func getDictionary() -> NSDictionary{
         let businessDict = NSMutableDictionary()
+        businessDict["id"] = gPlaceID
         businessDict["name"] = businessName
         businessDict["address"] = businessAddress
         businessDict["imageURL"] = businessImageURL
