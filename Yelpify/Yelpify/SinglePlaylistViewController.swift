@@ -101,10 +101,17 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
         else if((object["createdbyuser"] as? String) == PFUser.currentUser()?.username) //later incorporate possibility of collaboration
         {
+            self.convertParseArrayToBusinessArray(object["track"] as! [NSDictionary]) { (resultArray) in
+                self.playlistArray = resultArray
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.playlistTableView.reloadData()
+                })
+            }
             // edit button is enabled
         }
         else
         {
+            print("playlist hi")
             // edit button disabled
             self.convertParseArrayToBusinessArray(object["track"] as! [NSDictionary]) { (resultArray) in
                 self.playlistArray = resultArray
