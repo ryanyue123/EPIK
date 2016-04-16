@@ -40,7 +40,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     // The apps default color
     let defaultAppColor = UIColor(netHex: 0xFFFFFF)
     
-    @IBAction func addPlaceButtonAction(sender: AnyObject) {
+    
+    @IBAction func savePlaylist(sender: UIBarButtonItem) {
+        savePlaylistToParse()
+    }
+    
+    @IBAction func addPlaceButtonAction(sender: AnyObject)
+    {
         
     }
     
@@ -108,7 +114,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             }
         }
         
-        configureNavigationBar()
+        //configureNavigationBar()
         
         setupCollaboratorViews()
         //configurePlaylistInfoView()
@@ -159,7 +165,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func scrollViewDidScroll(scrollView: UIScrollView) {
         fadePlaylistBG()
         updateHeaderView()
-        handleNavigationBarOnScroll()
+        //handleNavigationBarOnScroll()
     }
     
     func fadePlaylistBG(){
@@ -350,13 +356,16 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func savePlaylistToParse()
     {
         let saveobject = PFObject(className: "Playlists")
-        let lat = playlistArray[0].businessLatitude!
-        let long = playlistArray[0].businessLongitude!
-        
+        if let lat = playlistArray[0].businessLatitude
+        {
+            if let long = playlistArray[0].businessLongitude
+            {
+                saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
+            }
+        }
         saveobject["createdbyuser"] = PFUser.currentUser()?.username
         saveobject["playlistName"] = playlist_name
         saveobject["track"] = convertPlacesArrayToDictionary(playlistArray)
-        saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
         saveobject.saveInBackgroundWithBlock { (success, error)  -> Void in
             if (error == nil){
                 print("saved")

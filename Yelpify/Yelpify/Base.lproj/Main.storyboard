@@ -92,9 +92,6 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
-                                                            <imageView userInteractionEnabled="NO" alpha="0.65000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_restaurant" translatesAutoresizingMaskIntoConstraints="NO" id="G8x-dS-y3N">
-                                                                <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
-                                                            </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kvx-5J-dVB">
                                                                 <rect key="frame" x="8" y="64" width="134" height="21"/>
                                                                 <constraints>
@@ -104,6 +101,9 @@
                                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
+                                                            <imageView userInteractionEnabled="NO" alpha="0.65000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_restaurant" translatesAutoresizingMaskIntoConstraints="NO" id="G8x-dS-y3N">
+                                                                <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                                            </imageView>
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     </view>
@@ -120,6 +120,7 @@
                                                     <size key="customSize" width="150" height="150"/>
                                                     <connections>
                                                         <outlet property="label" destination="kvx-5J-dVB" id="XRI-KQ-UIc"/>
+                                                        <outlet property="playlistImage" destination="G8x-dS-y3N" id="dqY-Vt-up7"/>
                                                     </connections>
                                                 </collectionViewCell>
                                             </cells>
@@ -796,9 +797,6 @@
                                                             <exclude reference="ZB0-5P-g0e"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="136" y="79" width="101" height="13"/>
-                                                    </variation>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="temp_rating" translatesAutoresizingMaskIntoConstraints="NO" id="nU9-9F-spO">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -1186,6 +1184,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="4tR-FW-Hnb">
                         <barButtonItem key="backBarButtonItem" title=" " id="7aE-GB-4pv"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="save" id="IQt-sl-DB3">
+                            <connections>
+                                <action selector="savePlaylist:" destination="7Om-1w-JrL" id="baA-kt-5Ed"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="qJk-w5-pfb">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -1478,9 +1481,6 @@
                                         <state key="normal" title="Cancel">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                            <rect key="frame" x="176" y="5" width="47" height="30"/>
-                                        </variation>
                                         <connections>
                                             <segue destination="6m8-Ab-bc4" kind="unwind" identifier="unwindToSinglePlaylist" unwindAction="unwindToSinglePlaylist:" id="xFc-CG-HtS"/>
                                         </connections>
@@ -1651,9 +1651,6 @@
                                                             <exclude reference="TaV-gj-duh"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="136" y="79" width="101" height="13"/>
-                                                    </variation>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="temp_rating" translatesAutoresizingMaskIntoConstraints="NO" id="p1O-gJ-j32">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -1677,8 +1674,7 @@
                                                             <include reference="Ubd-G6-aSM"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="136" y="40" width="81" height="16"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="IgA-7g-by2"/>
                                                             <exclude reference="KQu-W4-pv8"/>
@@ -2097,9 +2093,6 @@
                                                     <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="20"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="22" y="0.0" width="163" height="24"/>
-                                                    </variation>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="temp_rating" translatesAutoresizingMaskIntoConstraints="NO" id="BCP-tx-DfP">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -2122,9 +2115,6 @@
                                                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="13"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="23" y="54" width="75" height="15.5"/>
-                                                    </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="OPEN" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o8p-iM-I7y">
                                                     <rect key="frame" x="550" y="96" width="34" height="18"/>
@@ -2132,7 +2122,7 @@
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="182" y="19" width="36" height="15.5"/>
+                                                        <rect key="frame" x="179.5" y="17.5" width="38.5" height="16"/>
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HOURS TODAY" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yhk-9e-dfH">
@@ -2141,7 +2131,7 @@
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="127" y="37" width="92" height="15.5"/>
+                                                        <rect key="frame" x="122" y="36" width="97" height="16"/>
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="11:30 AM - 1:00 AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jr1-9Y-pWy">
@@ -2150,7 +2140,7 @@
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="102" y="54" width="117" height="15.5"/>
+                                                        <rect key="frame" x="103" y="53.5" width="116" height="16"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
@@ -2272,7 +2262,7 @@
                                                         </mask>
                                                     </variation>
                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="-53" y="14" width="346" height="15.5"/>
+                                                        <rect key="frame" x="-53" y="14" width="346" height="16"/>
                                                         <mask key="constraints">
                                                             <include reference="aT5-OW-T9d"/>
                                                         </mask>
@@ -2365,7 +2355,7 @@
                                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <state key="normal" title="ROUTE"/>
                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="282" y="0.0" width="51" height="65"/>
+                                                        <rect key="frame" x="282" y="0.0" width="53" height="65"/>
                                                     </variation>
                                                     <connections>
                                                         <action selector="openInMaps:" destination="7pA-8d-Gw7" eventType="touchUpInside" id="zmT-hT-gft"/>
@@ -2625,7 +2615,7 @@
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="99" y="187" width="42.5" height="22.5"/>
+                                                <rect key="frame" x="100" y="188" width="41" height="23"/>
                                                 <mask key="constraints">
                                                     <exclude reference="7FN-Lh-14n"/>
                                                 </mask>
@@ -2687,7 +2677,7 @@
                                                 <rect key="frame" x="238" y="201" width="124" height="28"/>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="93" y="232" width="54" height="28"/>
+                                                <rect key="frame" x="92" y="234" width="56" height="28"/>
                                                 <mask key="constraints">
                                                     <exclude reference="YaO-bF-dd9"/>
                                                 </mask>
