@@ -34,11 +34,7 @@ class BusinessTableViewCell: UITableViewCell {
         
         self.businessBackgroundImage.image = UIImage(named:"default_restaurant")
         
-        let photoReference = business.businessPhotoReference!
-        
-        // If Business Object contains photo reference
-        if photoReference != ""{
-            
+        if let photoReference = business.businessPhotoReference{
             googlePlacesClient.getImageFromPhotoReference(photoReference) { (key) -> Void in
                 
                 self.cache.fetch(key: key).onSuccess { image in
@@ -48,14 +44,31 @@ class BusinessTableViewCell: UITableViewCell {
                     
                     completion()
                     
-//                    self.applyBlurEffect(image, completion: { (blurredImage) -> Void in
-//                        self.businessBackgroundImage.hnk_setImage(blurredImage, key: photoReference)
-//                        self.businessBackgroundImage.setNeedsLayout()
-//                    })
-        
                 }
             }
+
         }
+        
+//        // If Business Object contains photo reference
+//        if photoReference != ""{
+//            
+//            googlePlacesClient.getImageFromPhotoReference(photoReference) { (key) -> Void in
+//                
+//                self.cache.fetch(key: key).onSuccess { image in
+//                    self.businessBackgroundImage.hnk_setImage(image, key: photoReference)
+//                    self.businessBackgroundImage.setNeedsDisplay()
+//                    self.businessBackgroundImage.setNeedsLayout()
+//                    
+//                    completion()
+//                    
+////                    self.applyBlurEffect(image, completion: { (blurredImage) -> Void in
+////                        self.businessBackgroundImage.hnk_setImage(blurredImage, key: photoReference)
+////                        self.businessBackgroundImage.setNeedsLayout()
+////                    })
+//        
+//                }
+//            }
+//        }
     }
     
     func applyBlurEffect(image: UIImage, completion: (blurredImage: UIImage) -> Void){

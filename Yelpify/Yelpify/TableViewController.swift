@@ -253,10 +253,11 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
     
         //takes image of first business and uses it as icon for playlist
         
-        let business = tempobject["track"][0] as! NSDictionary
-        let photoref = business["photoReference"] as! String
-        
-        cell.configureCell(photoref)
+        if let business = tempobject["track"] as? [NSDictionary]{
+            let businessdict = business[0]
+            let photoref = businessdict["photoReference"] as! String
+            cell.configureCell(photoref)
+        }
         return cell
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
