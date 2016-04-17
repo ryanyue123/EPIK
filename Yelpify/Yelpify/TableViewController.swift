@@ -108,7 +108,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         
     }
 
-    func fetchNearbyPlaylists()
+    func fetchPlaylists()
     {
         let query:PFQuery = PFQuery(className: "Playlists")
         query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: userlatitude, longitude: userlongitude), withinMiles: 1000000000.0)
@@ -119,7 +119,25 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlists_location = objects!
                     self.all_playlists.append(self.playlists_location)
-                    self.tableView.reloadData()
+                    
+                    let query2: PFQuery = PFQuery(className: "Playlists")
+                    query2.whereKey("createdbyuser", equalTo: (PFUser.currentUser()?.username)!)
+                    query2.orderByDescending("updatedAt")
+                    query2.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
+                        if ((error) == nil)
+                        {
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.playlists_user = objects!
+                                self.all_playlists.append(self.playlists_user)
+                                self.tableView.reloadData()
+                            })
+                        }
+                        else
+                        {
+                            print(error?.userInfo)
+                        }
+                    }
+
                 })
             }
             else
@@ -129,27 +147,6 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         }
     }
 
-    func fetchUserPlaylists()
-    {
-        let query: PFQuery = PFQuery(className: "Playlists")
-        query.whereKey("createdbyuser", equalTo: (PFUser.currentUser()?.username)!)
-        query.orderByDescending("updatedAt")
-        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
-            if ((error) == nil)
-            {
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.playlists_user = objects!
-                    self.all_playlists.append(self.playlists_user)
-                    self.tableView.reloadData()
-                })
-            }
-            else
-            {
-                print(error?.userInfo)
-            }
-        }
-    }
-    
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation: CLLocation = locations[0]
         
@@ -160,8 +157,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         userlongitude = longitude
         
         
-        fetchNearbyPlaylists()
-        fetchUserPlaylists()
+        fetchPlaylists()
         
         parameters["ll"] = String(latitude) + "," + String(longitude)
     }
