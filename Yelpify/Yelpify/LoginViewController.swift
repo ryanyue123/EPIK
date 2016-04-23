@@ -28,37 +28,50 @@ class LoginViewController: UIViewController {
         //loginButton.center = view.center
         self.loginButton.translatesAutoresizingMaskIntoConstraints = false
         
-        //if let token = FBSDKAccessToken.currentAccessToken(){
-        //fetchProfile()
-        //}
-        
         
         let verticalCenterConstraint = NSLayoutConstraint(item: loginButton, attribute: .CenterY, relatedBy:.Equal, toItem: self.view, attribute: .CenterY, multiplier: 1, constant: 100)
         
         let horizontalCenterConstraint = NSLayoutConstraint(item: loginButton, attribute: .CenterX, relatedBy:.Equal, toItem: self.view, attribute: .CenterX, multiplier: 1, constant: 0)
         
         self.view.addConstraints([verticalCenterConstraint, horizontalCenterConstraint])
+        
+        if let token = FBSDKAccessToken.currentAccessToken(){
+            fetchProfile()
+        }
         // Do any additional setup after loading the view, typically from a nib.
     }
     
     
     
-    //    func fetchProfile() {
-    //        print("Profile Fetched!")
-    //        let parameters = ["fields": "email, first_name, last_name, picture.type(large)"]
-    //        FBSDKGraphRequest(graphPath: "me", parameters: parameters).startWithCompletionHandler{(connection, result, error) -> Void in
-    //            if error != nil{
-    //                print(error)
-    //                return
-    //
-    //            }
-    //
-    //            if let email = result["email"] as? String{
-    //                print(email)
-    //            }
-    //
+        func fetchProfile() {
+            print("Profile Fetched!")
+            let parameters = ["fields": "email, first_name, last_name, picture.type(large)"]
+            FBSDKGraphRequest(graphPath: "me", parameters: parameters).startWithCompletionHandler{(connection, result, error) -> Void in
+                if error != nil{
+                    print(error)
+                    return
     
+                }
     
+                if let email = result["email"] as? String{
+                    print(email)
+                }
+                
+                if let picture = result["picture"] as? NSDictionary, data = picture["data"] as? NSDictionary,
+                    url = data["url"] as? String {
+                    print(url)
+                }
+                
+                if let first_name = result["first_name"] as? String{
+                    print(first_name)
+                }
+                
+                if let last_name = result["last_name"] as? String{
+                    print(last_name)
+                }
+    
+        }
+    }
     
     
     override func didReceiveMemoryWarning() {

@@ -30,6 +30,7 @@
 		90B9B7D91C8A696F002D4BB1 /* BusinessDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */; };
 		90BAD1C11C8662ED0047277E /* TestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BAD1C01C8662ED0047277E /* TestTableViewController.swift */; };
 		90BAD1C31C86639E0047277E /* TestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BAD1C21C86639E0047277E /* TestTableViewCell.swift */; };
+		90C96AAE1CCAF72B00E9EC28 /* ConfigureFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C96AAD1CCAF72B00E9EC28 /* ConfigureFunctions.swift */; };
 		90DA32851C93616700D5EBDF /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90DA327B1C93615100D5EBDF /* OpenSans-Bold.ttf */; };
 		90DA32861C93616700D5EBDF /* OpenSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90DA327C1C93615100D5EBDF /* OpenSans-ExtraBold.ttf */; };
 		90DA32871C93616700D5EBDF /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90DA327D1C93615100D5EBDF /* OpenSans-Light.ttf */; };
@@ -55,7 +56,6 @@
 		90E505E41C8E946700F47285 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E505E31C8E946700F47285 /* CustomSearchBar.swift */; };
 		90F34CDF1CB0893300CC0870 /* SinglePlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */; };
 		ED405A101CC1D03C0017A9AB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED405A0F1CC1D03C0017A9AB /* LoginViewController.swift */; };
-		ED405A141CC1D0E90017A9AB /* NSMutableArray+Login.m in Sources */ = {isa = PBXBuildFile; fileRef = ED405A131CC1D0E90017A9AB /* NSMutableArray+Login.m */; };
 		EDA8CEF51CAF506400A5C2ED /* SortMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA8CEF41CAF506400A5C2ED /* SortMethods.swift */; };
 		EDD44DAD1CB4BA31008DC4AB /* RandomPlaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD44DAC1CB4BA31008DC4AB /* RandomPlaceController.swift */; };
 /* End PBXBuildFile section */
@@ -108,6 +108,7 @@
 		90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessDetailViewController.swift; sourceTree = "<group>"; };
 		90BAD1C01C8662ED0047277E /* TestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTableViewController.swift; sourceTree = "<group>"; };
 		90BAD1C21C86639E0047277E /* TestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTableViewCell.swift; sourceTree = "<group>"; };
+		90C96AAD1CCAF72B00E9EC28 /* ConfigureFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigureFunctions.swift; sourceTree = "<group>"; };
 		90DA32711C93613600D5EBDF /* Montserrat-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraBold.otf"; sourceTree = "<group>"; };
 		90DA32721C93613600D5EBDF /* Montserrat-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.otf"; sourceTree = "<group>"; };
 		90DA32731C93613600D5EBDF /* Montserrat-UltraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-UltraLight.otf"; sourceTree = "<group>"; };
@@ -137,7 +138,6 @@
 		ED405A0F1CC1D03C0017A9AB /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		ED405A111CC1D0E90017A9AB /* Yelpify-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Yelpify-Bridging-Header.h"; sourceTree = "<group>"; };
 		ED405A121CC1D0E90017A9AB /* NSMutableArray+Login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Login.h"; sourceTree = "<group>"; };
-		ED405A131CC1D0E90017A9AB /* NSMutableArray+Login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Login.m"; sourceTree = "<group>"; };
 		EDA8CEF41CAF506400A5C2ED /* SortMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortMethods.swift; sourceTree = "<group>"; };
 		EDBAE5BF1C8E472100278A33 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		EDBAE5C11C8E49A900278A33 /* Publisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
@@ -215,6 +215,7 @@
 				EDA8CEF41CAF506400A5C2ED /* SortMethods.swift */,
 				90DA327A1C93614700D5EBDF /* Fonts */,
 				90DC57BA1C72844B001F1891 /* API */,
+				90C96AAF1CCAFA9D00E9EC28 /* Helper Modules */,
 				9025184F1C88276C00BB3E05 /* View Controllers */,
 				3CA6CFFB1CC05A880004B989 /* Cells */,
 				902518501C88277B00BB3E05 /* Testing VCs */,
@@ -222,7 +223,6 @@
 				3CE2EE871C6C5EC8000C9088 /* LaunchScreen.storyboard */,
 				3CE2EE8A1C6C5EC8000C9088 /* Info.plist */,
 				ED405A121CC1D0E90017A9AB /* NSMutableArray+Login.h */,
-				ED405A131CC1D0E90017A9AB /* NSMutableArray+Login.m */,
 				ED405A111CC1D0E90017A9AB /* Yelpify-Bridging-Header.h */,
 			);
 			path = Yelpify;
@@ -284,6 +284,14 @@
 				90BAD1C21C86639E0047277E /* TestTableViewCell.swift */,
 			);
 			name = "Testing VCs";
+			sourceTree = "<group>";
+		};
+		90C96AAF1CCAFA9D00E9EC28 /* Helper Modules */ = {
+			isa = PBXGroup;
+			children = (
+				90C96AAD1CCAF72B00E9EC28 /* ConfigureFunctions.swift */,
+			);
+			name = "Helper Modules";
 			sourceTree = "<group>";
 		};
 		90DA327A1C93614700D5EBDF /* Fonts */ = {
@@ -554,6 +562,7 @@
 				90E505DF1C8E375200F47285 /* GPlacesSearchViewController.swift in Sources */,
 				907E0CE51C76768D00872135 /* LocuAPIClient.swift in Sources */,
 				90711BD51CAF4DEA0032A257 /* PlaylistObject.swift in Sources */,
+				90C96AAE1CCAF72B00E9EC28 /* ConfigureFunctions.swift in Sources */,
 				9038B75E1CBCD041004B220B /* ActionsViewController.swift in Sources */,
 				3CD0344F1CBA121300675F88 /* TableViewCell.swift in Sources */,
 				907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */,
@@ -573,7 +582,6 @@
 				908A3BCB1CC0EFED00767736 /* ProfileViewController.swift in Sources */,
 				908481801C7504AF009B6099 /* BusinessTableViewCell.swift in Sources */,
 				ED405A101CC1D03C0017A9AB /* LoginViewController.swift in Sources */,
-				ED405A141CC1D0E90017A9AB /* NSMutableArray+Login.m in Sources */,
 				90BAD1C11C8662ED0047277E /* TestTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

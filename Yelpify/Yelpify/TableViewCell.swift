@@ -44,6 +44,7 @@ class TableViewCell: UITableViewCell {
     }
     func reloadCollectionView()
     {
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
         collectionView.reloadData()
     }
 }

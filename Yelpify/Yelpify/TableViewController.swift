@@ -16,7 +16,7 @@ struct playlist
 }
 
 struct appDefaults {
-    static let color: UIColor! = UIColor.darkGrayColor()
+    static let color: UIColor! = UIColor.init(netHex: 0x52abc0)
 }
 
 class TableViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate {
@@ -28,6 +28,13 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+        ConfigureFunctions.configureStatusBar(self.navigationController!)
+        
+        
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+        
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
@@ -50,6 +57,18 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         }
     }
     
+    func configureStatusBar(navController: UINavigationController){
+        let statusBarRect = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 20.0)
+        let statusBarView = UIView(frame: statusBarRect)
+        statusBarView.backgroundColor = appDefaults.color
+        navController.view.addSubview(statusBarView)
+    }
+    
+    func configureNavBar(){
+        self.navigationController?.navigationBar.backgroundColor = appDefaults.color
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+    }
+    
     var locationManager = CLLocationManager()
     let client = YelpAPIClient()
     var parameters = ["ll": "", "category_filter": "pizza", "radius_filter": "3000", "sort": "0"]
@@ -57,7 +76,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     var playlists_user = []
     
     var all_playlists = [NSArray]()
-    var label_array = ["Playlists near you", "My playlists"]
+    var label_array = ["Playlists Near You", "My Playlists"]
     var row: Int!
     var col: Int!
     var userlatitude: Double!
@@ -108,7 +127,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         
     }
 
-    func fetchNearbyPlaylists()
+    func fetchPlaylists()
     {
         let query:PFQuery = PFQuery(className: "Playlists")
         query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: userlatitude, longitude: userlongitude), withinMiles: 1000000000.0)
@@ -119,7 +138,25 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlists_location = objects!
                     self.all_playlists.append(self.playlists_location)
-                    self.tableView.reloadData()
+                    
+                    let query2: PFQuery = PFQuery(className: "Playlists")
+                    query2.whereKey("createdbyuser", equalTo: (PFUser.currentUser()?.username)!)
+                    query2.orderByDescending("updatedAt")
+                    query2.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
+                        if ((error) == nil)
+                        {
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.playlists_user = objects!
+                                self.all_playlists.append(self.playlists_user)
+                                self.tableView.reloadData()
+                            })
+                        }
+                        else
+                        {
+                            print(error?.userInfo)
+                        }
+                    }
+
                 })
             }
             else
@@ -129,27 +166,6 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         }
     }
 
-    func fetchUserPlaylists()
-    {
-        let query: PFQuery = PFQuery(className: "Playlists")
-        query.whereKey("createdbyuser", equalTo: (PFUser.currentUser()?.username)!)
-        query.orderByDescending("updatedAt")
-        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
-            if ((error) == nil)
-            {
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.playlists_user = objects!
-                    self.all_playlists.append(self.playlists_user)
-                    self.tableView.reloadData()
-                })
-            }
-            else
-            {
-                print(error?.userInfo)
-            }
-        }
-    }
-    
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation: CLLocation = locations[0]
         
@@ -160,8 +176,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         userlongitude = longitude
         
         
-        fetchNearbyPlaylists()
-        fetchUserPlaylists()
+        fetchPlaylists()
         
         parameters["ll"] = String(latitude) + "," + String(longitude)
     }
@@ -228,6 +243,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! TableViewCell
         cell.reloadCollectionView()
         cell.titleLabel.text = label_array[indexPath.row]
+        cell.titleLabel.textColor = appDefaults.color
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         return cell
     }

@@ -1,0 +1,10 @@
+EMBEDDED_CONTENT_CONTAINS_SWIFT = YES
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/GoogleMaps/Frameworks"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/GoogleMaps"
+LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
+OTHER_CFLAGS = $(inherited) -iquote "$CONFIGURATION_BUILD_DIR/Alamofire.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/Bolts.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/FBSDKCoreKit.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/FBSDKLoginKit.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/FBSDKMessengerShareKit.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/FBSDKShareKit.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/Haneke.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/OAuthSwift.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/Parse.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/ParseUI.framework/Headers" -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/GoogleMaps"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"c++" -l"icucore" -l"z" -framework "AVFoundation" -framework "Accelerate" -framework "Alamofire" -framework "Bolts" -framework "CoreBluetooth" -framework "CoreData" -framework "CoreGraphics" -framework "CoreLocation" -framework "CoreText" -framework "FBSDKCoreKit" -framework "FBSDKLoginKit" -framework "FBSDKMessengerShareKit" -framework "FBSDKShareKit" -framework "GLKit" -framework "GoogleMaps" -framework "Haneke" -framework "ImageIO" -framework "OAuthSwift" -framework "OpenGLES" -framework "Parse" -framework "ParseUI" -framework "QuartzCore" -framework "Security" -framework "SystemConfiguration"
+OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
+PODS_FRAMEWORK_BUILD_PATH = $(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Pods
+PODS_ROOT = ${SRCROOT}/Pods
