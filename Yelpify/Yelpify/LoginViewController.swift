@@ -52,6 +52,11 @@ class LoginViewController: UIViewController {
                     return
     
                 }
+                
+                else{
+                    self.performSegueWithIdentifier("loginSuccessSegue", sender: self)
+                    
+                }
     
                 if let email = result["email"] as? String{
                     print(email)
