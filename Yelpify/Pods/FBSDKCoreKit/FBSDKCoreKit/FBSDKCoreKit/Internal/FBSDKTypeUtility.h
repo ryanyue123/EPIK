@@ -26,7 +26,6 @@
 + (NSInteger)integerValue:(id)object;
 + (id)objectValue:(id)object;
 + (NSString *)stringValue:(id)object;
-+ (NSTimeInterval)timeIntervalValue:(id)object;
 + (NSUInteger)unsignedIntegerValue:(id)object;
 + (NSURL *)URLValue:(id)object;
 

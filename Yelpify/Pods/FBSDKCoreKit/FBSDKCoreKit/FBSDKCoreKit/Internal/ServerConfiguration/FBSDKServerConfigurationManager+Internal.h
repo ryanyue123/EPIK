@@ -28,6 +28,4 @@
 
 + (FBSDKGraphRequest *)requestToLoadServerConfiguration:(NSString *)appID;
 
-+ (void)clearCache;
-
 @end

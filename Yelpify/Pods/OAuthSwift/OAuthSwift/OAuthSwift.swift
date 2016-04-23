@@ -23,8 +23,7 @@ public class OAuthSwift: NSObject {
     // MARK: callback alias
     public typealias TokenSuccessHandler = (credential: OAuthSwiftCredential, response: NSURLResponse?, parameters: Dictionary<String, String>) -> Void
     public typealias FailureHandler = (error: NSError) -> Void
-    public typealias TokenRenewedHandler = (credential: OAuthSwiftCredential) -> Void
-    
+
     // MARK: init
     init(consumerKey: String, consumerSecret: String) {
         self.client = OAuthSwiftClient(consumerKey: consumerKey, consumerSecret: consumerSecret)
@@ -40,27 +39,18 @@ public class OAuthSwift: NSObject {
     public class func handleOpenURL(url: NSURL) {
         let notification = NSNotification(name: CallbackNotification.notificationName, object: nil,
             userInfo: [CallbackNotification.optionsURLKey: url])
-        notificationCenter.postNotification(notification)
+        NSNotificationCenter.defaultCenter().postNotification(notification)
     }
-
+    
     var observer: AnyObject?
-    class var notificationCenter: NSNotificationCenter {
-        return NSNotificationCenter.defaultCenter()
-    }
 
     func observeCallback(block: (url: NSURL) -> Void) {
-        self.observer = OAuthSwift.notificationCenter.addObserverForName(CallbackNotification.notificationName, object: nil, queue: NSOperationQueue.mainQueue()){
+        self.observer = NSNotificationCenter.defaultCenter().addObserverForName(CallbackNotification.notificationName, object: nil, queue: NSOperationQueue.mainQueue()){
             notification in
-            self.removeCallbackNotificationObserver()
+            NSNotificationCenter.defaultCenter().removeObserver(self.observer!)
 
             let urlFromUserInfo = notification.userInfo![CallbackNotification.optionsURLKey] as! NSURL
             block(url: urlFromUserInfo)
-        }
-    }
-
-    public func removeCallbackNotificationObserver() {
-      	if let observer = self.observer {
-            OAuthSwift.notificationCenter.removeObserver(observer)
         }
     }
 
@@ -68,12 +58,3 @@ public class OAuthSwift: NSObject {
 
 // MARK: OAuthSwift errors
 public let OAuthSwiftErrorDomain = "oauthswift.error"
-
-public enum OAuthSwiftErrorCode: Int {
-    case GeneralError = -1
-    case TokenExpiredError = -2
-    case MissingStateError = -3
-    case StateNotEqualError = -4
-    case ServerError = -5
-    case EncodingError = -6
-}

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Parse
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var profileImageView: UIImageView!
@@ -17,8 +17,35 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var headerView: UIView!
     // MARK: - View Setup Methods
     
+    var username: String!
+    var userobject: PFObject!
+    
+    func fetchUserData()
+    {
+        let query = PFQuery(className: "User")
+        query.whereKey("username", equalTo: username)
+        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
+            if ((error) == nil)
+            {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.userobject = objects![0]
+                })
+            }
+            else
+            {
+                print(error?.userInfo)
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if (userobject == nil)
+        {
+            fetchUserData()
+        }
+        
         configureNavigationBar()
         setupProfilePicture()
     }
