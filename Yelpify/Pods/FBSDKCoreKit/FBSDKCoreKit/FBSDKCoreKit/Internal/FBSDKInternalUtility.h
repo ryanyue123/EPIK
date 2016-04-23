@@ -20,9 +20,7 @@
 #import <UIKit/UIKit.h>
 
 #define FBSDK_CANOPENURL_FACEBOOK @"fbauth2"
-#define FBSDK_CANOPENURL_FBAPI @"fbapi"
 #define FBSDK_CANOPENURL_MESSENGER @"fb-messenger-api"
-#define FBSDK_CANOPENURL_SHARE_EXTENSION @"fbshareextension"
 
 typedef NS_ENUM(int32_t, FBSDKUIKitVersion)
 {
@@ -283,21 +281,10 @@ setJSONStringForObject:(id)object
  */
 + (void)validateAppID;
 
-/**
- Validates that the client access token is non-nil, otherwise - throws an NSException otherwise.
- Returns the composed client access token.
- */
-+ (NSString *)validateRequiredClientAccessToken;
-
 /*!
  @abstract validates that the right URL schemes are registered, throws an NSException if not.
  */
 + (void)validateURLSchemes;
-
-/*!
- @abstract validates that Facebook reserved URL schemes are not registered, throws an NSException if they are.
- */
-+ (void)validateFacebookReservedURLSchemes;
 
 /*!
  @abstract Attempts to find the first UIViewController in the view's responder chain. Returns nil if not found.
@@ -313,11 +300,6 @@ setJSONStringForObject:(id)object
  @abstract returns currently displayed top view controller.
  */
 + (UIViewController *)topMostViewController;
-
-/*!
- @abstract Converts NSData to a hexadecimal UTF8 String.
- */
-+ (NSString *)hexadecimalStringFromData:(NSData *)data;
 
 /*
  @abstract Checks if the permission is a publish permission.
@@ -351,5 +333,4 @@ setJSONStringForObject:(id)object
 
 #define FB_BASE_URL @"facebook.com"
 
-+ (Class)resolveBoltsClassWithName:(NSString *)className;
 @end
