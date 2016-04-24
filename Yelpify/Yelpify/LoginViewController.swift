@@ -42,34 +42,32 @@ class LoginViewController: UIViewController {
     }
     
     
-    
-        func fetchProfile() {
-            print("Profile Fetched!")
-            let parameters = ["fields": "email, first_name, last_name, picture.type(large)"]
-            FBSDKGraphRequest(graphPath: "me", parameters: parameters).startWithCompletionHandler{(connection, result, error) -> Void in
-                if error != nil{
-                    print(error)
-                    return
-    
-                }
-    
-                if let email = result["email"] as? String{
-                    print(email)
-                }
-                
-                if let picture = result["picture"] as? NSDictionary, data = picture["data"] as? NSDictionary,
-                    url = data["url"] as? String {
-                    print(url)
-                }
-                
-                if let first_name = result["first_name"] as? String{
-                    print(first_name)
-                }
-                
-                if let last_name = result["last_name"] as? String{
-                    print(last_name)
-                }
-    
+    func fetchProfile() {
+        print("Profile Fetched!")
+        let parameters = ["fields": "email, first_name, last_name, picture.type(large)"]
+        FBSDKGraphRequest(graphPath: "me", parameters: parameters).startWithCompletionHandler{(connection, result, error) -> Void in
+            if error != nil{
+                print(error)
+                return
+
+            }
+
+            if let email = result["email"] as? String{
+                print(email)
+            }
+            
+            if let picture = result["picture"] as? NSDictionary, data = picture["data"] as? NSDictionary,
+                url = data["url"] as? String {
+                print(url)
+            }
+            
+            if let first_name = result["first_name"] as? String{
+                print(first_name)
+            }
+            
+            if let last_name = result["last_name"] as? String{
+                print(last_name)
+            }
         }
     }
     
