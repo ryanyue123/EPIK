@@ -11,7 +11,7 @@ import UIKit
 class TestTableViewController: UITableViewController {
     
     let googleClient = GooglePlacesAPIClient()
-    let yelpClient = YelpAPIClient()
+    //let yelpClient = YelpAPIClient()
     let dataHandler = APIDataHandler()
     
     var businessShown: [Bool] = []

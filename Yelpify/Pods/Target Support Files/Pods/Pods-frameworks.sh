@@ -91,9 +91,10 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods/FBSDKMessengerShareKit.framework"
   install_framework "Pods/FBSDKShareKit.framework"
   install_framework "Pods/Haneke.framework"
-  install_framework "Pods/OAuthSwift.framework"
   install_framework "Pods/Parse.framework"
   install_framework "Pods/ParseUI.framework"
+  install_framework "Pods/XLActionController.framework"
+  install_framework "Pods/XLPagerTabStrip.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods/Alamofire.framework"
@@ -103,7 +104,8 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods/FBSDKMessengerShareKit.framework"
   install_framework "Pods/FBSDKShareKit.framework"
   install_framework "Pods/Haneke.framework"
-  install_framework "Pods/OAuthSwift.framework"
   install_framework "Pods/Parse.framework"
   install_framework "Pods/ParseUI.framework"
+  install_framework "Pods/XLActionController.framework"
+  install_framework "Pods/XLPagerTabStrip.framework"
 fi

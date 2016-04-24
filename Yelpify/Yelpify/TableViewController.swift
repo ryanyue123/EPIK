@@ -70,7 +70,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     }
     
     var locationManager = CLLocationManager()
-    let client = YelpAPIClient()
+    //let client = YelpAPIClient()
     var parameters = ["ll": "", "category_filter": "pizza", "radius_filter": "3000", "sort": "0"]
     var playlists_location = []
     var playlists_user = []
