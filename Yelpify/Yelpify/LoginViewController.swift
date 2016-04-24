@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 import FBSDKCoreKit
 import FBSDKLoginKit
 
@@ -51,22 +52,32 @@ class LoginViewController: UIViewController {
                 return
 
             }
-
+            let object = PFObject(classname: "User")
             if let email = result["email"] as? String{
+                object["email"] = email
                 print(email)
             }
-            
             if let picture = result["picture"] as? NSDictionary, data = picture["data"] as? NSDictionary,
                 url = data["url"] as? String {
+                object["profpicture"] = url
                 print(url)
             }
-            
             if let first_name = result["first_name"] as? String{
+                object["first_name"] = first_name
                 print(first_name)
             }
-            
             if let last_name = result["last_name"] as? String{
+                object["last_name"] = last_name
                 print(last_name)
+            }
+            
+            object.saveInBackgroundWithBlock { (success, error)  -> Void in
+                if (error == nil){
+                    print("saved")
+                }
+                else{
+                    print(error?.description)
+                }
             }
         }
     }

@@ -19,10 +19,8 @@
 #import "FBSDKShareVideo.h"
 
 #import "FBSDKCoreKit+Internal.h"
-#import "FBSDKSharePhoto.h"
 
 #define FBSDK_SHARE_VIDEO_URL_KEY @"videoURL"
-#define FBSDK_SHARE_VIDEO_PREVIEW_PHOTO_KEY @"previewPhoto"
 
 @implementation FBSDKShareVideo
 
@@ -35,23 +33,11 @@
   return video;
 }
 
-+ (instancetype)videoWithVideoURL:(NSURL *)videoURL previewPhoto:(FBSDKSharePhoto *)previewPhoto
-{
-  FBSDKShareVideo *video = [[FBSDKShareVideo alloc] init];
-  video.videoURL = videoURL;
-  video.previewPhoto = previewPhoto;
-  return video;
-}
-
 #pragma mark - Equality
 
 - (NSUInteger)hash
 {
-  NSUInteger subhashes[] = {
-    [_videoURL hash],
-    [_previewPhoto hash],
-  };
-  return [FBSDKMath hashWithIntegerArray:subhashes count:sizeof(subhashes) / sizeof(subhashes[0])];
+  return [_videoURL hash];
 }
 
 - (BOOL)isEqual:(id)object
@@ -68,8 +54,7 @@
 - (BOOL)isEqualToShareVideo:(FBSDKShareVideo *)video
 {
   return (video &&
-          [FBSDKInternalUtility object:_videoURL isEqualToObject:video.videoURL] &&
-          [FBSDKInternalUtility object:_previewPhoto isEqualToObject:video.previewPhoto]);
+          [FBSDKInternalUtility object:_videoURL isEqualToObject:video.videoURL]);
 }
 
 #pragma mark - NSCoding
@@ -83,7 +68,6 @@
 {
   if ((self = [self init])) {
     _videoURL = [decoder decodeObjectOfClass:[NSURL class] forKey:FBSDK_SHARE_VIDEO_URL_KEY];
-    _previewPhoto = [decoder decodeObjectOfClass:[FBSDKSharePhoto class] forKey:FBSDK_SHARE_VIDEO_PREVIEW_PHOTO_KEY];
   }
   return self;
 }
@@ -91,7 +75,6 @@
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
   [encoder encodeObject:_videoURL forKey:FBSDK_SHARE_VIDEO_URL_KEY];
-  [encoder encodeObject:_previewPhoto forKey:FBSDK_SHARE_VIDEO_PREVIEW_PHOTO_KEY];
 }
 
 #pragma mark - NSCopying
@@ -100,7 +83,6 @@
 {
   FBSDKShareVideo *copy = [[FBSDKShareVideo alloc] init];
   copy->_videoURL = [_videoURL copy];
-  copy->_previewPhoto = [_previewPhoto copy];
   return copy;
 }
 
