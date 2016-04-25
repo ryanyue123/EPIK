@@ -138,6 +138,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlists_location = objects!
                     self.all_playlists.append(self.playlists_location)
+                    self.tableView.reloadData()
                     
                     let query2: PFQuery = PFQuery(className: "Playlists")
                     query2.whereKey("createdbyuser", equalTo: (PFUser.currentUser()?.username)!)

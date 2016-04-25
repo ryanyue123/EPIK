@@ -8,8 +8,8 @@
 
 import UIKit
 import CoreLocation
-import Parse
 import Haneke
+import Parse
 
 class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
