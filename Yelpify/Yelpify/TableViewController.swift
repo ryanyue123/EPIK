@@ -74,9 +74,9 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     var parameters = ["ll": "", "category_filter": "pizza", "radius_filter": "3000", "sort": "0"]
     var playlists_location = []
     var playlists_user = []
-    
+    var recent_playlists = []
     var all_playlists = [NSArray]()
-    var label_array = ["Playlists Near You", "My Playlists"]
+    var label_array = ["Playlists Near You", "My Playlists", "Recently Viewed"]
     var row: Int!
     var col: Int!
     var userlatitude: Double!
@@ -150,6 +150,31 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
                                 self.playlists_user = objects!
                                 self.all_playlists.append(self.playlists_user)
                                 self.tableView.reloadData()
+                                
+                                let query3 = PFUser.query()!
+                                query3.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
+                                print((PFUser.currentUser()?.username)!)
+                                query3.findObjectsInBackgroundWithBlock {(objects1: [PFObject]?, error: NSError?) -> Void in
+                                    if ((error) == nil)
+                                    {
+                                        print(objects1)
+                                        dispatch_async(dispatch_get_main_queue(), {
+                                            let recentarray = objects1![0]["recentlyViewed"] as! [String]
+                                            let query4 = PFQuery(className: "Playlists")
+                                            query4.whereKey("objectId", containedIn: recentarray)
+                                            query4.findObjectsInBackgroundWithBlock {(objects2: [PFObject]?, error: NSError?) -> Void in
+                                                if ((error) == nil)
+                                                {
+                                                    dispatch_async(dispatch_get_main_queue(), {
+                                                        self.recent_playlists = objects2!
+                                                        self.all_playlists.append(self.recent_playlists)
+                                                        self.tableView.reloadData()
+                                                    })
+                                                }
+                                            }
+                                        })
+                                    }
+                                }
                             })
                         }
                         else
