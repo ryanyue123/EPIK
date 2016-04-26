@@ -159,17 +159,19 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
                                     {
                                         print(objects1)
                                         dispatch_async(dispatch_get_main_queue(), {
-                                            let recentarray = objects1![0]["recentlyViewed"] as! [String]
-                                            let query4 = PFQuery(className: "Playlists")
-                                            query4.whereKey("objectId", containedIn: recentarray)
-                                            query4.findObjectsInBackgroundWithBlock {(objects2: [PFObject]?, error: NSError?) -> Void in
-                                                if ((error) == nil)
-                                                {
-                                                    dispatch_async(dispatch_get_main_queue(), {
-                                                        self.recent_playlists = objects2!
-                                                        self.all_playlists.append(self.recent_playlists)
-                                                        self.tableView.reloadData()
-                                                    })
+                                            if let recentarray = objects1![0]["recentlyViewed"] as? [String]
+                                            {
+                                                let query4 = PFQuery(className: "Playlists")
+                                                query4.whereKey("objectId", containedIn: recentarray)
+                                                query4.findObjectsInBackgroundWithBlock {(objects2: [PFObject]?, error: NSError?) -> Void in
+                                                    if ((error) == nil)
+                                                    {
+                                                        dispatch_async(dispatch_get_main_queue(), {
+                                                            self.recent_playlists = objects2!
+                                                            self.all_playlists.append(self.recent_playlists)
+                                                            self.tableView.reloadData()
+                                                        })
+                                                    }
                                                 }
                                             }
                                         })

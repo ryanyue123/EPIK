@@ -107,9 +107,11 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 recentlyviewed.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
                 recentlyviewed.findObjectsInBackgroundWithBlock {(objects1: [PFObject]?, error: NSError?) -> Void in
                     let recent = objects1![0]
-                    let recentarray = recent["recentlyViewed"] as! [String]
+                    if let recentarray = recent["recentlyViewed"] as? [String]
+                    {
                     
-                    viewedlist.addObjectsFromArray(recentarray)
+                        viewedlist.addObjectsFromArray(recentarray)
+                    }
                     viewedlist.insertObject(self.object.objectId!, atIndex: 0)
                     
                     recent["recentlyViewed"] = viewedlist
@@ -139,9 +141,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 recentlyviewed.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
                 recentlyviewed.findObjectsInBackgroundWithBlock {(objects1: [PFObject]?, error: NSError?) -> Void in
                     let recent = objects1![0]
-                    let recentarray = recent["recentlyViewed"] as! [String]
-                    
-                    viewedlist.addObjectsFromArray(recentarray)
+                    if let recentarray = recent["recentlyViewed"] as? [String]
+                    {
+                        viewedlist.addObjectsFromArray(recentarray)
+                    }
                     viewedlist.insertObject(self.object.objectId!, atIndex: 0)
                     
                     recent["recentlyViewed"] = viewedlist
@@ -170,7 +173,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidAppear(animated: Bool) {
         playlistInfoView.frame.size.height = 350.0
         playlistTableHeaderHeight = playlistInfoView.frame.size.height
-        print(playlistInfoView.frame.size.height)
+        //print(playlistInfoView.frame.size.height)
         configurePlaylistInfoView()
     }
     
@@ -310,7 +313,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         var image = UIImage(named: "default_restaurant")// Temp Image
 
         for person in 0..<numOfCollaborators{
-            print(person)
+            //print(person)
             let imageView = UIImageView(frame: CGRectMake(x, collaboratorsImageView.frame.origin.y, width, height))
             imageView.contentMode = UIViewContentMode.ScaleAspectFill
             
@@ -351,7 +354,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("showBusinessDetail", sender: self)
+        print(indexPath.row)
+        performSegueWithIdentifier("showBusinessDetail", sender: self)
     }
     
     // Override to support conditional editing of the table view.
@@ -428,7 +432,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
             
             let indexPath = playlistTableView.indexPathForSelectedRow
-            let object = playlistArray[indexPath!.row]
+            let temp = indexPath!.row
+            let object = playlistArray[temp]
             upcoming.object = object
             upcoming.index = indexPath!.row
             self.playlistTableView.deselectRowAtIndexPath(indexPath!, animated: true)
