@@ -75,7 +75,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
                 self.setCoverPhoto(detailedGPlace.photos![0] as! String)
             }
         }
-        configureNavigationBar()
+        //configureNavigationBar()
         
     }
     

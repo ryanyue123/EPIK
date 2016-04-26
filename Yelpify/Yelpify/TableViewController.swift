@@ -283,6 +283,9 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         self.row = collectionView.tag
         self.col = indexPath.row
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let vc = storyboard.instantiateViewControllerWithIdentifier("someViewController") as! UIViewController
+//        showViewController(vc, sender: self)
         performSegueWithIdentifier("showPlaylist", sender: self)
     }
     
