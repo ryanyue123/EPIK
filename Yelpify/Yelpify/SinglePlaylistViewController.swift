@@ -182,20 +182,23 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
 
         
-        //configureNavigationBar()
-        
         setupCollaboratorViews()
         //configurePlaylistInfoView()
     }
     
     override func viewDidAppear(animated: Bool) {
-        playlistInfoView.frame.size.height = 350.0
-        playlistTableHeaderHeight = playlistInfoView.frame.size.height
-        print(playlistInfoView.frame.size.height)
-        configurePlaylistInfoView()
+    
     }
     
     override func viewWillAppear(animated: Bool) {
+        
+        //Configure Functions
+        
+        configureNavigationBar()
+        playlistInfoView.frame.size.height = 350.0
+        playlistTableHeaderHeight = playlistInfoView.frame.size.height
+        configurePlaylistInfoView()
+        
         if (object == nil)
         {
             playlist_name = playlist.playlistname
@@ -233,7 +236,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func scrollViewDidScroll(scrollView: UIScrollView) {
         fadePlaylistBG()
         updateHeaderView()
-        //handleNavigationBarOnScroll()
+        handleNavigationBarOnScroll()
         
         let offset = scrollView.contentOffset.y + playlistInfoView.bounds.height
         
@@ -286,6 +289,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(showWhenScrollDownAlpha) ]
         self.navigationItem.title = playlist_name
         
+        self.navigationController?.navigationBar.backgroundColor = appDefaults.color.colorWithAlphaComponent((showWhenScrollDownAlpha))
+        
         // Handle Status Bar
         self.statusBarView.alpha = showWhenScrollDownAlpha
         
@@ -306,6 +311,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func configureNavigationBar(){
         
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
+        //self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
         addShadowToBar()
         
         for parent in self.navigationController!.navigationBar.subviews {
@@ -315,8 +324,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 }
             }
         }
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         // Change the back button item to display no text
         //        let backItem = UIBarButtonItem()

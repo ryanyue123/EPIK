@@ -29,10 +29,6 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
-        ConfigureFunctions.configureStatusBar(self.navigationController!)
-        
-        
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         
         locationManager.delegate = self
@@ -41,7 +37,15 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+        ConfigureFunctions.configureStatusBar(self.navigationController!)
+
+    }
+    
     override func viewDidAppear(animated: Bool) {
+
+        
         if (PFUser.currentUser() == nil) {
             let logInViewController = PFLogInViewController()
             logInViewController.delegate = self
@@ -309,18 +313,22 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         self.row = collectionView.tag
         self.col = indexPath.row
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let vc = storyboard.instantiateViewControllerWithIdentifier("someViewController") as! UIViewController
-//        showViewController(vc, sender: self)
-        performSegueWithIdentifier("showPlaylist", sender: self)
+        
+        // Perform Segue and Pass List Data
+        let controller = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
+        let temparray = all_playlists[indexPath.row]
+        controller.object = temparray[indexPath.row] as! PFObject
+        self.navigationController!.pushViewController(controller, animated: true)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "showPlaylist")
-        {
-            let upcoming = segue.destinationViewController as? SinglePlaylistViewController
-            let temparray = all_playlists[row]
-            upcoming?.object = temparray[col] as! PFObject
-        }
+//        if (segue.identifier == "showPlaylist")
+//        {
+//            let upcoming = segue.destinationViewController as? SinglePlaylistViewController
+//            let temparray = all_playlists[row]
+//            
+//            let navController: UINavigationController = self.navigationController!
+//            upcoming?.object = temparray[col] as! PFObject
+//        }
     }
 }
