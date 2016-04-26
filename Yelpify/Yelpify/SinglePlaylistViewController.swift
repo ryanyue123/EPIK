@@ -102,6 +102,26 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         else if((object["createdbyuser"] as? String) == PFUser.currentUser()?.username) //later incorporate possibility of collaboration
         {
             self.convertParseArrayToBusinessArray(object["track"] as! [NSDictionary]) { (resultArray) in
+                let viewedlist: NSMutableArray = []
+                let recentlyviewed = PFUser.query()!
+                recentlyviewed.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
+                recentlyviewed.findObjectsInBackgroundWithBlock {(objects1: [PFObject]?, error: NSError?) -> Void in
+                    let recent = objects1![0]
+                    let recentarray = recent["recentlyViewed"] as! [String]
+                    
+                    viewedlist.addObjectsFromArray(recentarray)
+                    viewedlist.insertObject(self.object.objectId!, atIndex: 0)
+                    
+                    recent["recentlyViewed"] = viewedlist
+                    recent.saveInBackgroundWithBlock({ (success, error) in
+                        if (error == nil)
+                        {
+                            print("Success")
+                        }
+                    })
+                    
+                }
+                
                 self.playlistArray = resultArray
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlistTableView.reloadData()
@@ -114,16 +134,25 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             // edit button disabled
             self.convertParseArrayToBusinessArray(object["track"] as! [NSDictionary]) { (resultArray) in
                 
-                let recentlyviewed = PFObject(className: "User")
-                let viewedlist = recentlyviewed["recentlyViewed"] as! NSMutableArray
-                
-                viewedlist.insertObject(self.object.objectId!, atIndex: 0)
-                recentlyviewed.saveInBackgroundWithBlock({ (success, error) in
-                    if (error == nil)
-                    {
-                        print("Success")
-                    }
-                })
+                let viewedlist: NSMutableArray = []
+                let recentlyviewed = PFUser.query()!
+                recentlyviewed.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
+                recentlyviewed.findObjectsInBackgroundWithBlock {(objects1: [PFObject]?, error: NSError?) -> Void in
+                    let recent = objects1![0]
+                    let recentarray = recent["recentlyViewed"] as! [String]
+                    
+                    viewedlist.addObjectsFromArray(recentarray)
+                    viewedlist.insertObject(self.object.objectId!, atIndex: 0)
+                    
+                    recent["recentlyViewed"] = viewedlist
+                    recent.saveInBackgroundWithBlock({ (success, error) in
+                        if (error == nil)
+                        {
+                            print("Success")
+                        }
+                    })
+                    
+                }
                     
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlistTableView.reloadData()
