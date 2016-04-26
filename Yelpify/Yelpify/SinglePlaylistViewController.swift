@@ -407,23 +407,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         super.setEditing(editing, animated: animated)
         self.playlistTableView.setEditing(editing, animated: animated)
     }
-
-    
-    // MARK - API Handling
-    
-    let dataHandler = APIDataHandler()
-    var googleParameters = ["key": "AIzaSyDkxzICx5QqztP8ARvq9z0DxNOF_1Em8Qc", "location": "33.64496794563093,-117.83725295740864", "rankby":"distance", "keyword": ""]
-    
-    func performInitialSearch(){
-        dataHandler.performAPISearch(googleParameters) { (businessObjectArray) -> Void in
-            //self.businessObjects = businessObjectArray
-            self.playlistTableView.reloadData()
-        }
-    }
-
-    
-    
-    
     func convertPlacesArrayToDictionary(placesArray: [Business])-> [NSDictionary]{
         var placeDictArray = [NSDictionary]()
         for business in placesArray{
