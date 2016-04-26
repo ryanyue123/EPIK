@@ -76,7 +76,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     var playlists_user = []
     var recent_playlists = []
     var all_playlists = [NSArray]()
-    var label_array = ["Playlists Near You", "My Playlists", "Recently Viewed"]
+    var label_array: [String] = []
     var row: Int!
     var col: Int!
     var userlatitude: Double!
@@ -138,6 +138,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlists_location = objects!
                     self.all_playlists.append(self.playlists_location)
+                    self.label_array.append("Playlists near me")
                     self.tableView.reloadData()
                     
                     let query2: PFQuery = PFQuery(className: "Playlists")
@@ -147,9 +148,13 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
                         if ((error) == nil)
                         {
                             dispatch_async(dispatch_get_main_queue(), {
-                                self.playlists_user = objects!
-                                self.all_playlists.append(self.playlists_user)
-                                self.tableView.reloadData()
+                                if (objects!.count != 0)
+                                {
+                                    self.playlists_user = objects!
+                                    self.all_playlists.append(self.playlists_user)
+                                    self.label_array.append("My playlists")
+                                    self.tableView.reloadData()
+                                }
                                 
                                 let query3 = PFUser.query()!
                                 query3.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
@@ -169,6 +174,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
                                                         dispatch_async(dispatch_get_main_queue(), {
                                                             self.recent_playlists = objects2!
                                                             self.all_playlists.append(self.recent_playlists)
+                                                            self.label_array.append("Recently viewed")
                                                             self.tableView.reloadData()
                                                         })
                                                     }
@@ -270,7 +276,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! TableViewCell
         cell.reloadCollectionView()
-        cell.titleLabel.text = label_array[indexPath.row]
+        cell.titleLabel.text = label_array[indexPath.row] as! String
         cell.titleLabel.textColor = appDefaults.color
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         return cell
