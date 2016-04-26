@@ -23,7 +23,7 @@ class BusinessTableViewCell: UITableViewCell {
     @IBOutlet weak var businessAddressLabel: UILabel!
     @IBOutlet weak var businessOpenLabel: UILabel!
     
-    let yelpBusinessClient = YelpAPIClient()
+    //let yelpBusinessClient = YelpAPIClient()
     let googlePlacesClient = GooglePlacesAPIClient()
         
     func configureCellWith(business: Business, completion:() -> Void){

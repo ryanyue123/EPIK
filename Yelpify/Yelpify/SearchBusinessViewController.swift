@@ -8,14 +8,14 @@
 
 import UIKit
 import CoreLocation
-import Parse
 import Haneke
+import Parse
 
 class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - GLOBAL VARIABLES
-    var yelpClient = YelpAPIClient()
-    var locuClient = LocuAPIClient()
+    //var yelpClient = YelpAPIClient()
+    //var locuClient = LocuAPIClient()
     var googlePlacesClient = GooglePlacesAPIClient()
     var customSearchController: CustomSearchController!
     let cache = Shared.imageCache

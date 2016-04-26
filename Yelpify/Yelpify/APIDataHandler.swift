@@ -25,7 +25,7 @@ class APIDataHandler {
     let PRINT_JSON = true
     
     var gpClient = GooglePlacesAPIClient()
-    var yelpClient = YelpAPIClient()
+    //var yelpClient = YelpAPIClient()
     //var locuClient = LocuAPIClient()
     
     /*
@@ -68,26 +68,26 @@ class APIDataHandler {
             })
         }
         
-        // YELP API
-        // Step 1 - Retrive Yelp ID
-        self.getYelpID(business) { (yelpID) -> Void in
-            // Step 2 - Request Data from Yelp API by ID
-            self.yelpClient.getBusinessInformationOf(yelpID, successSearch: { (data, response) -> Void in
-                // Step 3 - Parse Yelp Detailed JSON
-                
-                }, failureSearch: { (error) -> Void in
-                    print(error)
-            })
-        }
-        // YELP API
-        // Step 1 - Request Data from Yelp API
-        yelpClient.searchBusinessesWithCoordinateAndAddress(String(business.businessLatitude), longitude: String(business.businessLongitude), address: business.businessAddress!) { (JSONdata) -> Void in
-            
-            
-            // Step 2 - Parse Yelp JSON for first result
-            
-        }
-        
+//        // YELP API
+//        // Step 1 - Retrive Yelp ID
+//        self.getYelpID(business) { (yelpID) -> Void in
+//            // Step 2 - Request Data from Yelp API by ID
+//            self.yelpClient.getBusinessInformationOf(yelpID, successSearch: { (data, response) -> Void in
+//                // Step 3 - Parse Yelp Detailed JSON
+//                
+//                }, failureSearch: { (error) -> Void in
+//                    print(error)
+//            })
+//        }
+//        // YELP API
+//        // Step 1 - Request Data from Yelp API
+//        yelpClient.searchBusinessesWithCoordinateAndAddress(String(business.businessLatitude), longitude: String(business.businessLongitude), address: business.businessAddress!) { (JSONdata) -> Void in
+//            
+//            
+//            // Step 2 - Parse Yelp JSON for first result
+//            
+//        }
+//        
         // When finished, merge both
     }
     
@@ -139,236 +139,236 @@ class APIDataHandler {
         
         }
     }
+//    
+//    // Gets Yelp ID with Business Object // Returns ID
+//    func getYelpID(business: Business, completion: (yelpID: String) -> Void){
+//        yelpClient.searchBusinessesWithCoordinateAndAddress(String(business.businessLatitude), longitude: String(business.businessLongitude), address: business.businessAddress!) { (JSONdata) -> Void in
+//            self.parseYelpForID(JSONdata, completion: { (yelpID) -> Void in
+//                completion(yelpID: yelpID)
+//            })
+//        }
+//    }
+//    
+//    // Parse Yelp for ID of FIRST BUSINESS // Returns ID
+//    private func parseYelpForID(JSONdata: NSDictionary, completion: (yelpID: String) -> Void) {
+//        if JSONdata.count > 0{
+//            if let businesses = JSONdata["businesses"] as? NSArray {
+//                let business = businesses[0]
+//                let businessID = business["id"] as! String
+//                
+//                completion(yelpID: businessID)
+//            }else{
+//                // DO THIS WHEN THERE ARE NO RESULTS
+//            }
+//        }
+//    }
+//    
+//    // Parse Yelp Business JSON // Returns YelpBusiness Object with [id, rating, phone, url, is_closed, review_count, categories, reviews[id, rating, exerpt, user[name]], 
+//    private func parseYelpBusinessData(data: NSDictionary, completion: (yelpBusiness: YelpBusiness) -> Void){
+//        
+//    }
+//    
+//    // END DETAILED
+//    
+//    
+//    func retrieveYelpBusinessFromBusinessObject(business:Business, completion: (yelpBusinessObject: YelpBusiness) -> Void){
+//        getSingleYelpBusiness(createYelpParameters(business)) { (yelpBusinessObject) -> Void in
+//            completion(yelpBusinessObject: yelpBusinessObject)
+//        
+//        }
+//    }
+//    
+//    func createYelpParameters(businessObject: Business) -> Dictionary<String, String>{
+//        let ll = String(businessObject.businessLatitude!) + "," + String(businessObject.businessLongitude!)
+//        let name = businessObject.businessName!
+//        return [
+//            "ll": ll,
+//            "term": name,
+//            "radius_filter": "500",
+//            "sort": "1"]
+//    }
+//    
+//    
+//    func getSingleYelpBusiness(yelpParameters: Dictionary<String, String>, completion: (yelpBusinessObject: YelpBusiness)-> Void){
+//        
+//        yelpClient.searchPlacesWithParameters(yelpParameters) { (result) -> Void in
+//            self.parseSingleYelpBusiness(result, completion: { (yelpBusinessObject) -> Void in
+//                completion(yelpBusinessObject: yelpBusinessObject)
+//            })
+//        }
+//    }
     
-    // Gets Yelp ID with Business Object // Returns ID
-    func getYelpID(business: Business, completion: (yelpID: String) -> Void){
-        yelpClient.searchBusinessesWithCoordinateAndAddress(String(business.businessLatitude), longitude: String(business.businessLongitude), address: business.businessAddress!) { (JSONdata) -> Void in
-            self.parseYelpForID(JSONdata, completion: { (yelpID) -> Void in
-                completion(yelpID: yelpID)
-            })
-        }
-    }
-    
-    // Parse Yelp for ID of FIRST BUSINESS // Returns ID
-    private func parseYelpForID(JSONdata: NSDictionary, completion: (yelpID: String) -> Void) {
-        if JSONdata.count > 0{
-            if let businesses = JSONdata["businesses"] as? NSArray {
-                let business = businesses[0]
-                let businessID = business["id"] as! String
-                
-                completion(yelpID: businessID)
-            }else{
-                // DO THIS WHEN THERE ARE NO RESULTS
-            }
-        }
-    }
-    
-    // Parse Yelp Business JSON // Returns YelpBusiness Object with [id, rating, phone, url, is_closed, review_count, categories, reviews[id, rating, exerpt, user[name]], 
-    private func parseYelpBusinessData(data: NSDictionary, completion: (yelpBusiness: YelpBusiness) -> Void){
-        
-    }
-    
-    // END DETAILED
-    
-    
-    func retrieveYelpBusinessFromBusinessObject(business:Business, completion: (yelpBusinessObject: YelpBusiness) -> Void){
-        getSingleYelpBusiness(createYelpParameters(business)) { (yelpBusinessObject) -> Void in
-            completion(yelpBusinessObject: yelpBusinessObject)
-        
-        }
-    }
-    
-    func createYelpParameters(businessObject: Business) -> Dictionary<String, String>{
-        let ll = String(businessObject.businessLatitude!) + "," + String(businessObject.businessLongitude!)
-        let name = businessObject.businessName!
-        return [
-            "ll": ll,
-            "term": name,
-            "radius_filter": "500",
-            "sort": "1"]
-    }
-    
-    
-    func getSingleYelpBusiness(yelpParameters: Dictionary<String, String>, completion: (yelpBusinessObject: YelpBusiness)-> Void){
-        
-        yelpClient.searchPlacesWithParameters(yelpParameters) { (result) -> Void in
-            self.parseSingleYelpBusiness(result, completion: { (yelpBusinessObject) -> Void in
-                completion(yelpBusinessObject: yelpBusinessObject)
-            })
-        }
-    }
-    
-    func parseSingleYelpBusiness(data: NSDictionary, completion: (yelpBusinessObject: YelpBusiness) -> Void){
-        if data.count > 0 {
-            
-            if let businesses = data["businesses"] as? NSArray {
-                
-                if businesses.count > 0{
-                    // Handle Address
-                    
-                    let business = businesses[0]
-                    
-                    let businessID = business["id"] as! String
-                    let businessName = business["name"] as! String
-                    
-                    var businessImageURL = ""
-                    
-                    if let imageURL = business["image_url"] as? String{
-                        businessImageURL = imageURL
-                    }
-                    
-                    var businessAddress = ""
-                    
-                    var businessLongitude: Double!
-                    var businessLatitude: Double!
-                    
-                    if let businessLocation = business["location"] as? NSDictionary{
-                        if let addressArray = businessLocation["address"] as? NSArray{
-                            if addressArray.count > 0{
-                                businessAddress = addressArray[0] as! String
-                            }else{
-                                if let displayAdressArray = businessLocation["display_address"] as? NSArray{
-                                    businessAddress = displayAdressArray[0] as! String
-                                }
-                            }
-                        }
-                        if let businessCoordinate = businessLocation["coordinate"] as? NSDictionary{
-                            businessLatitude = businessCoordinate["latitude"] as? Double
-                            businessLongitude = businessCoordinate["longitude"] as? Double
-                        }
-                        
-                    }
-                    
-                    var businessZip = ""
-                    var businessCity = ""
-                    if let businessLocation = business["location"] as? NSDictionary{
-                        businessZip = businessLocation["postal_code"] as! String
-                        businessCity = businessLocation["city"] as! String
-                    }
-                    
-                    let businessPhone = business["phone"] as? String
-                    let businessDistance = business["distance"] as! Double
-                    let businessCategory = business["categories"] as? NSArray
-                    let businessRating = business["rating"] as! Double
-                    
-                    
-                    var businessStatus: Bool? = true
-                    
-                    if let businessAvail = business["is_closed"] as? Int{
-                        if businessAvail == 0{
-                            businessStatus = true
-                        }else{
-                            businessStatus = false
-                        }
-                    }
-                    
-                    
-                    let yelpBusinessObject = YelpBusiness(id: businessID, name: businessName, address: businessAddress, city: businessCity, zip: businessZip, phone: businessPhone, imageURL: businessImageURL, latitude: businessLatitude, longitude: businessLongitude, distance: businessDistance, rating: businessRating, categories: businessCategory!, status: businessStatus!)
-                    
-                    completion(yelpBusinessObject: yelpBusinessObject)
-                    
-                    
-                }else{
-                    // Do this if no businesses show up
-                    let yelpBusinessObject = YelpBusiness(id: nil, name: nil, address: nil, city: nil, zip: nil, phone: nil, imageURL: nil, latitude: nil, longitude: nil, distance: nil, rating: nil, categories: nil, status: nil)
-                    completion(yelpBusinessObject: yelpBusinessObject)
-                }
-            }
-        }
-        
-    }
+//    func parseSingleYelpBusiness(data: NSDictionary, completion: (yelpBusinessObject: YelpBusiness) -> Void){
+//        if data.count > 0 {
+//            
+//            if let businesses = data["businesses"] as? NSArray {
+//                
+//                if businesses.count > 0{
+//                    // Handle Address
+//                    
+//                    let business = businesses[0]
+//                    
+//                    let businessID = business["id"] as! String
+//                    let businessName = business["name"] as! String
+//                    
+//                    var businessImageURL = ""
+//                    
+//                    if let imageURL = business["image_url"] as? String{
+//                        businessImageURL = imageURL
+//                    }
+//                    
+//                    var businessAddress = ""
+//                    
+//                    var businessLongitude: Double!
+//                    var businessLatitude: Double!
+//                    
+//                    if let businessLocation = business["location"] as? NSDictionary{
+//                        if let addressArray = businessLocation["address"] as? NSArray{
+//                            if addressArray.count > 0{
+//                                businessAddress = addressArray[0] as! String
+//                            }else{
+//                                if let displayAdressArray = businessLocation["display_address"] as? NSArray{
+//                                    businessAddress = displayAdressArray[0] as! String
+//                                }
+//                            }
+//                        }
+//                        if let businessCoordinate = businessLocation["coordinate"] as? NSDictionary{
+//                            businessLatitude = businessCoordinate["latitude"] as? Double
+//                            businessLongitude = businessCoordinate["longitude"] as? Double
+//                        }
+//                        
+//                    }
+//                    
+//                    var businessZip = ""
+//                    var businessCity = ""
+//                    if let businessLocation = business["location"] as? NSDictionary{
+//                        businessZip = businessLocation["postal_code"] as! String
+//                        businessCity = businessLocation["city"] as! String
+//                    }
+//                    
+//                    let businessPhone = business["phone"] as? String
+//                    let businessDistance = business["distance"] as! Double
+//                    let businessCategory = business["categories"] as? NSArray
+//                    let businessRating = business["rating"] as! Double
+//                    
+//                    
+//                    var businessStatus: Bool? = true
+//                    
+//                    if let businessAvail = business["is_closed"] as? Int{
+//                        if businessAvail == 0{
+//                            businessStatus = true
+//                        }else{
+//                            businessStatus = false
+//                        }
+//                    }
+//                    
+//                    
+//                    let yelpBusinessObject = YelpBusiness(id: businessID, name: businessName, address: businessAddress, city: businessCity, zip: businessZip, phone: businessPhone, imageURL: businessImageURL, latitude: businessLatitude, longitude: businessLongitude, distance: businessDistance, rating: businessRating, categories: businessCategory!, status: businessStatus!)
+//                    
+//                    completion(yelpBusinessObject: yelpBusinessObject)
+//                    
+//                    
+//                }else{
+//                    // Do this if no businesses show up
+//                    let yelpBusinessObject = YelpBusiness(id: nil, name: nil, address: nil, city: nil, zip: nil, phone: nil, imageURL: nil, latitude: nil, longitude: nil, distance: nil, rating: nil, categories: nil, status: nil)
+//                    completion(yelpBusinessObject: yelpBusinessObject)
+//                }
+//            }
+//        }
+//        
+//    }
 
-
-    func parseYelpJSON(data: NSDictionary, completion: (yelpBusinessArray: [YelpBusiness]) -> Void){
-        
-        if data.count > 0 {
-            
-            var arrayOfYelpBusinesses: [YelpBusiness] = []
-            
-            if let businesses = data["businesses"] as? NSArray {
-                
-                if businesses.count > 0{
-                    for business in businesses {
-                        // Handle Address
-                        
-                        let businessID = business["id"] as! String
-                        let businessName = business["name"] as! String
-                        
-                        var businessImageURL = ""
-                        
-                        if let imageURL = business["image_url"] as? String{
-                            businessImageURL = imageURL
-                        }
-                        
-                        var businessAddress = ""
-                        
-                        var businessLongitude: Double!
-                        var businessLatitude: Double!
-                        
-                        if let businessLocation = business["location"] as? NSDictionary{
-                            if let addressArray = businessLocation["address"] as? NSArray{
-                                if addressArray.count > 0{
-                                    businessAddress = addressArray[0] as! String
-                                }else{
-                                    if let displayAdressArray = businessLocation["display_address"] as? NSArray{
-                                        businessAddress = displayAdressArray[0] as! String
-                                    }
-                                }
-                            }
-                            if let businessCoordinate = businessLocation["coordinate"] as? NSDictionary{
-                                businessLatitude = businessCoordinate["latitude"] as? Double
-                                businessLongitude = businessCoordinate["longitude"] as? Double
-                            }
-                            
-                        }
-                        
-                        var businessZip = ""
-                        var businessCity = ""
-                        if let businessLocation = business["location"] as? NSDictionary{
-                            businessZip = businessLocation["postal_code"] as! String
-                            businessCity = businessLocation["city"] as! String
-                        }
-                        
-                        let businessPhone = business["phone"] as? String
-                        let businessDistance = business["distance"] as! Double
-                        let businessCategory = business["categories"] as? NSArray
-                        let businessRating = business["rating"] as! Double
-                        
-                        
-                        var businessStatus: Bool? = true
-                        
-                        if let businessAvail = business["is_closed"] as? Int{
-                            if businessAvail == 0{
-                                businessStatus = true
-                            }else{
-                                businessStatus = false
-                            }
-                        }
-                        
-                        
-                        let yelpBusinessObject = YelpBusiness(id: businessID, name: businessName, address: businessAddress, city: businessCity, zip: businessZip, phone: businessPhone, imageURL: businessImageURL, latitude: businessLatitude, longitude: businessLongitude, distance: businessDistance, rating: businessRating, categories: businessCategory!, status: businessStatus!)
-                        
-                        arrayOfYelpBusinesses.append(yelpBusinessObject)
-                    }
-                    
-                    if debugPrint.BUSINESS_ARRAY == true{
-                        
-                        print("Yelp Businesses")
-                        for business in arrayOfYelpBusinesses{
-                            print(business.businessName)
-                        }
-                    }
-                    
-                    completion(yelpBusinessArray: arrayOfYelpBusinesses)
-                    
-                }else{
-                    // Do this if no businesses show up
-                    
-                    completion(yelpBusinessArray: arrayOfYelpBusinesses)
-                }
-            }
-        }
-    }
+//
+//    func parseYelpJSON(data: NSDictionary, completion: (yelpBusinessArray: [YelpBusiness]) -> Void){
+//        
+//        if data.count > 0 {
+//            
+//            var arrayOfYelpBusinesses: [YelpBusiness] = []
+//            
+//            if let businesses = data["businesses"] as? NSArray {
+//                
+//                if businesses.count > 0{
+//                    for business in businesses {
+//                        // Handle Address
+//                        
+//                        let businessID = business["id"] as! String
+//                        let businessName = business["name"] as! String
+//                        
+//                        var businessImageURL = ""
+//                        
+//                        if let imageURL = business["image_url"] as? String{
+//                            businessImageURL = imageURL
+//                        }
+//                        
+//                        var businessAddress = ""
+//                        
+//                        var businessLongitude: Double!
+//                        var businessLatitude: Double!
+//                        
+//                        if let businessLocation = business["location"] as? NSDictionary{
+//                            if let addressArray = businessLocation["address"] as? NSArray{
+//                                if addressArray.count > 0{
+//                                    businessAddress = addressArray[0] as! String
+//                                }else{
+//                                    if let displayAdressArray = businessLocation["display_address"] as? NSArray{
+//                                        businessAddress = displayAdressArray[0] as! String
+//                                    }
+//                                }
+//                            }
+//                            if let businessCoordinate = businessLocation["coordinate"] as? NSDictionary{
+//                                businessLatitude = businessCoordinate["latitude"] as? Double
+//                                businessLongitude = businessCoordinate["longitude"] as? Double
+//                            }
+//                            
+//                        }
+//                        
+//                        var businessZip = ""
+//                        var businessCity = ""
+//                        if let businessLocation = business["location"] as? NSDictionary{
+//                            businessZip = businessLocation["postal_code"] as! String
+//                            businessCity = businessLocation["city"] as! String
+//                        }
+//                        
+//                        let businessPhone = business["phone"] as? String
+//                        let businessDistance = business["distance"] as! Double
+//                        let businessCategory = business["categories"] as? NSArray
+//                        let businessRating = business["rating"] as! Double
+//                        
+//                        
+//                        var businessStatus: Bool? = true
+//                        
+//                        if let businessAvail = business["is_closed"] as? Int{
+//                            if businessAvail == 0{
+//                                businessStatus = true
+//                            }else{
+//                                businessStatus = false
+//                            }
+//                        }
+//                        
+//                        
+//                        let yelpBusinessObject = YelpBusiness(id: businessID, name: businessName, address: businessAddress, city: businessCity, zip: businessZip, phone: businessPhone, imageURL: businessImageURL, latitude: businessLatitude, longitude: businessLongitude, distance: businessDistance, rating: businessRating, categories: businessCategory!, status: businessStatus!)
+//                        
+//                        arrayOfYelpBusinesses.append(yelpBusinessObject)
+//                    }
+//                    
+//                    if debugPrint.BUSINESS_ARRAY == true{
+//                        
+//                        print("Yelp Businesses")
+//                        for business in arrayOfYelpBusinesses{
+//                            print(business.businessName)
+//                        }
+//                    }
+//                    
+//                    completion(yelpBusinessArray: arrayOfYelpBusinesses)
+//                    
+//                }else{
+//                    // Do this if no businesses show up
+//                    
+//                    completion(yelpBusinessArray: arrayOfYelpBusinesses)
+//                }
+//            }
+//        }
+//    }
     
     func parseGPlacesJSON(data: NSDictionary, completion: (businessArray: [Business]) -> Void){
         if data.count > 0 {
