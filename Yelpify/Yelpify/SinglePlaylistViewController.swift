@@ -54,6 +54,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     @IBAction func editPlaylistButtonAction(sender: AnyObject) {
         
         performSegueWithIdentifier("showActionsMenu", sender: self)
+        /*
         let actionController = YoutubeActionController()
         
         actionController.addAction(Action(ActionData(title: "Add to Watch Later", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
@@ -68,7 +69,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
 
         
-        /*
+        
         print(self.navigationItem.rightBarButtonItem!.title!)
         switch self.navigationItem.rightBarButtonItem!.title! {
         case "Edit":
@@ -341,7 +342,20 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tappedCollaborators(){
-        performSegueWithIdentifier("showProfileView", sender: self)
+        //performSegueWithIdentifier("showProfileView", sender: self)
+        let actionController = YoutubeActionController()
+        
+        actionController.addAction(Action(ActionData(title: "Add to Watch Later", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
+        }))
+        actionController.addAction(Action(ActionData(title: "Add to Playlist...", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
+        }))
+        actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-share-icon")!), style: .Default, handler: { action in
+        }))
+        actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
+        
+        presentViewController(actionController, animated: true, completion: nil)
+        
+
     }
 
     
