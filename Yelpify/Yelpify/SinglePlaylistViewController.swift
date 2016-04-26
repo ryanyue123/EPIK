@@ -10,6 +10,10 @@ import UIKit
 import Parse
 import XLActionController
 
+enum ContentTypes {
+    case Places, Comments
+}
+
 class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     @IBOutlet weak var statusBarView: UIView!
@@ -32,6 +36,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var followListButton: UIButton!
     
     @IBOutlet weak var addPlaceButton: UIButton!
+    
+    @IBOutlet weak var segmentedBar: UISegmentedControl!
+    @IBOutlet weak var segmentedBarView: UIView!
+    
+    let offset_HeaderStop:CGFloat = 40.0
+    var contentToDisplay: ContentTypes = .Places
     
     //var businessObjects: [Business] = []
     var playlistArray = [Business]()
@@ -84,6 +94,17 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
  */
     }
     
+    @IBAction func selectContentType(sender: AnyObject) {
+        // crap code I know
+        if sender.selectedSegmentIndex == 0 {
+            contentToDisplay = .Places
+        }
+        else {
+            contentToDisplay = .Comments
+        }
+        
+        playlistTableView.reloadData()
+    }
     
     
     @IBAction func unwindToSinglePlaylist(segue: UIStoryboardSegue)
@@ -176,20 +197,23 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
 
         
-        //configureNavigationBar()
-        
         setupCollaboratorViews()
         //configurePlaylistInfoView()
     }
     
     override func viewDidAppear(animated: Bool) {
-        playlistInfoView.frame.size.height = 350.0
-        playlistTableHeaderHeight = playlistInfoView.frame.size.height
-        print(playlistInfoView.frame.size.height)
-        configurePlaylistInfoView()
+    
     }
     
     override func viewWillAppear(animated: Bool) {
+        
+        //Configure Functions
+        
+        configureNavigationBar()
+        playlistInfoView.frame.size.height = 350.0
+        playlistTableHeaderHeight = playlistInfoView.frame.size.height
+        configurePlaylistInfoView()
+        
         if (object == nil)
         {
             playlist_name = playlist.playlistname
@@ -227,7 +251,44 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func scrollViewDidScroll(scrollView: UIScrollView) {
         fadePlaylistBG()
         updateHeaderView()
-        //handleNavigationBarOnScroll()
+        handleNavigationBarOnScroll()
+        
+        let offset = scrollView.contentOffset.y + playlistInfoView.bounds.height
+        
+        if offset < 0{
+            
+        }else{
+            
+        }
+        
+        if offset > 323{
+            var segmentTransform = CATransform3DIdentity
+            segmentTransform = CATransform3DTranslate(segmentTransform, 0, (offset-315), 0)
+            
+            segmentedBarView.layer.transform = segmentTransform
+        }else{
+            
+        }
+        
+        print(offset)
+        
+//        // Segment control
+//        
+//        let segmentViewOffset = playlistInfoView.frame.height - segmentedBarView.frame.height - offset
+//        
+//        var segmentTransform = CATransform3DIdentity
+//        
+//        // Scroll the segment view until its offset reaches the same offset at which the header stopped shrinking
+//        segmentTransform = CATransform3DTranslate(segmentTransform, 0, max(segmentViewOffset, -offset_HeaderStop), 0)
+//        
+//        segmentedBarView.layer.transform = segmentTransform
+//        
+//        
+//        // Set scroll view insets just underneath the segment control
+//        playlistTableView.scrollIndicatorInsets = UIEdgeInsetsMake(segmentedBarView.frame.maxY, 0, 0, 0)
+        
+        
+        
     }
     
     func fadePlaylistBG(){
@@ -242,6 +303,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.navigationController?.navigationBar.titleTextAttributes = [
             NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(showWhenScrollDownAlpha) ]
         self.navigationItem.title = playlist_name
+        
+        self.navigationController?.navigationBar.backgroundColor = appDefaults.color.colorWithAlphaComponent((showWhenScrollDownAlpha))
         
         // Handle Status Bar
         self.statusBarView.alpha = showWhenScrollDownAlpha
@@ -263,6 +326,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func configureNavigationBar(){
         
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
+        //self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
         addShadowToBar()
         
         for parent in self.navigationController!.navigationBar.subviews {
@@ -272,8 +339,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 }
             }
         }
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         // Change the back button item to display no text
         //        let backItem = UIBarButtonItem()
@@ -368,15 +433,34 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return playlistArray.count
+        switch contentToDisplay {
+        case .Places:
+            return playlistArray.count
+            
+        case .Comments:
+            return 20
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-        cell.configureCellWith(playlistArray[indexPath.row]) {
-            //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+//        let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
+//        cell.configureCellWith(playlistArray[indexPath.row]) {
+//            //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+//        }
+        
+        var cell = UITableViewCell()
+        
+        switch contentToDisplay {
+        case .Places:
+            cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
+            //cell.textLabel?.text = "Tweet Tweet!"
+            
+        case .Comments:
+            cell.textLabel?.text = "Piccies!"
+            cell.imageView?.image = UIImage(named: "header_bg")
         }
+        
         return cell
     }
     
