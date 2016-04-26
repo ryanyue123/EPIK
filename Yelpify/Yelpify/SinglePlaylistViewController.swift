@@ -111,14 +111,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
         else
         {
-            print("playlist hi")
             // edit button disabled
             self.convertParseArrayToBusinessArray(object["track"] as! [NSDictionary]) { (resultArray) in
                 self.playlistArray = resultArray
                 
-                let recentlyviewed = PFObject(classname: "User")
-                let viewedlist = recentlyviewed["recentlyViewed"] as NSMutableArray
-                viewedlist.insertObject(resultArray, 0)
+                let recentlyviewed = PFObject(className: "User")
+                let viewedlist = recentlyviewed["recentlyViewed"] as! NSMutableArray
+                
+                viewedlist.insertObject(self.object.objectId!, atIndex: 0)
                     
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlistTableView.reloadData()
