@@ -19,7 +19,6 @@
 #import <Foundation/Foundation.h>
 
 #import <FBSDKShareKit/FBSDKShareLinkContent.h>
-#import <FBSDKShareKit/FBSDKShareMediaContent.h>
 #import <FBSDKShareKit/FBSDKShareOpenGraphContent.h>
 #import <FBSDKShareKit/FBSDKSharePhotoContent.h>
 #import <FBSDKShareKit/FBSDKShareVideoContent.h>
@@ -33,7 +32,6 @@
 @interface FBSDKShareUtility : NSObject
 
 + (void)assertCollection:(id<NSFastEnumeration>)collection ofClass:itemClass name:(NSString *)name;
-+ (void)assertCollection:(id<NSFastEnumeration>)collection ofClassStrings:(NSArray *)classStrings name:(NSString *)name;
 + (void)assertOpenGraphKey:(id)key requireNamespace:(BOOL)requireNamespace;
 + (void)assertOpenGraphValue:(id)value;
 + (void)assertOpenGraphValues:(NSDictionary *)dictionary requireKeyNamespace:(BOOL)requireKeyNamespace;
@@ -44,19 +42,14 @@
                        error:(NSError *__autoreleasing *)errorRef;
 + (NSDictionary *)convertOpenGraphValues:(NSDictionary *)dictionary;
 + (NSDictionary *)feedShareDictionaryForContent:(id<FBSDKSharingContent>)content;
-+ (NSString *)hashtagStringFromHashtag:(FBSDKHashtag *)hashtag;
 + (NSDictionary *)parametersForShareContent:(id<FBSDKSharingContent>)shareContent
                       shouldFailOnDataError:(BOOL)shouldFailOnDataError;
 + (void)testShareContent:(id<FBSDKSharingContent>)shareContent
            containsMedia:(BOOL *)containsMediaRef
-          containsPhotos:(BOOL *)containsPhotosRef
-          containsVideos:(BOOL *)containsVideosRef;
-+ (BOOL)shareMediaContentContainsPhotosAndVideos:(FBSDKShareMediaContent *)shareMediaContent;
+          containsPhotos:(BOOL *)containsPhotosRef;
 + (BOOL)validateAssetLibraryURLWithShareVideoContent:(FBSDKShareVideoContent *)videoContent name:(NSString *)name error:(NSError *__autoreleasing *)errorRef;
-+ (BOOL)validateAssetLibraryURLsWithShareMediaContent:(FBSDKShareMediaContent *)mediaContent name:(NSString *)name error:(NSError *__autoreleasing *)errorRef;
 + (BOOL)validateShareContent:(id<FBSDKSharingContent>)shareContent error:(NSError *__autoreleasing *)errorRef;
 + (BOOL)validateShareLinkContent:(FBSDKShareLinkContent *)linkContent error:(NSError *__autoreleasing *)errorRef;
-+ (BOOL)validateShareMediaContent:(FBSDKShareMediaContent *)mediaContent error:(NSError *__autoreleasing *)errorRef;
 + (BOOL)validateShareOpenGraphContent:(FBSDKShareOpenGraphContent *)openGraphContent
                                 error:(NSError *__autoreleasing *)errorRef;
 + (BOOL)validateSharePhotoContent:(FBSDKSharePhotoContent *)photoContent error:(NSError *__autoreleasing *)errorRef;
