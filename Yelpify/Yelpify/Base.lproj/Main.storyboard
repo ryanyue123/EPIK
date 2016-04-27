@@ -125,25 +125,19 @@
                                             <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="18"/>
                                             <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="12" y="21" width="62.5" height="21"/>
-                                            </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NEAR IRVINE, CA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Rh-1B-vL7">
                                             <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="10"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="79" y="28" width="80" height="12"/>
-                                            </variation>
                                         </label>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="black" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RO8-s4-ggK">
                                             <rect key="frame" x="8" y="37" width="584" height="169"/>
                                             <color key="backgroundColor" red="0.89543876262626265" green="0.89543876262626265" blue="0.89543876262626265" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="169" id="cco-7c-4yR">
-                                                    <variation key="heightClass=regular-widthClass=compact" constant="193"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="202"/>
                                                 </constraint>
                                             </constraints>
                                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1HL-9n-bYt">
@@ -318,7 +312,7 @@
                                     <color key="backgroundColor" red="0.89543876259999999" green="0.89543876259999999" blue="0.89543876259999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstItem="RO8-s4-ggK" firstAttribute="top" secondItem="3Rh-1B-vL7" secondAttribute="bottom" constant="3.5" id="3aX-A7-UT1">
-                                            <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                                            <variation key="heightClass=regular-widthClass=compact" constant="6"/>
                                         </constraint>
                                         <constraint firstAttribute="trailingMargin" secondItem="RO8-s4-ggK" secondAttribute="trailing" id="Obq-T8-OVA">
                                             <variation key="heightClass=regular-widthClass=compact" constant="-8"/>
@@ -327,14 +321,14 @@
                                             <variation key="heightClass=regular-widthClass=compact" constant="-12"/>
                                         </constraint>
                                         <constraint firstAttribute="bottom" secondItem="RO8-s4-ggK" secondAttribute="bottom" id="fwz-Qd-2f4">
-                                            <variation key="heightClass=regular-widthClass=compact" constant="1"/>
+                                            <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                         </constraint>
                                         <constraint firstAttribute="leadingMargin" secondItem="RO8-s4-ggK" secondAttribute="leading" id="k0A-EG-5s3">
                                             <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                                         </constraint>
                                         <constraint firstItem="3Rh-1B-vL7" firstAttribute="leading" secondItem="cY1-Jg-fNH" secondAttribute="trailing" constant="5" id="mPg-xc-w8e"/>
                                         <constraint firstItem="RO8-s4-ggK" firstAttribute="top" secondItem="cY1-Jg-fNH" secondAttribute="bottom" constant="8" symbolic="YES" id="qrp-dn-rRr">
-                                            <variation key="heightClass=regular-widthClass=compact" constant="6"/>
+                                            <variation key="heightClass=regular-widthClass=compact" constant="4"/>
                                         </constraint>
                                     </constraints>
                                     <variation key="default">
@@ -389,7 +383,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HhQ-rl-3l8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3288" y="-350.25"/>
+            <point key="canvasLocation" x="3288" y="-294.75"/>
         </scene>
         <!--singlePlaylistVC-->
         <scene sceneID="8Ni-Nh-s1P">

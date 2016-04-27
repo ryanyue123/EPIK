@@ -9,6 +9,9 @@
 import UIKit
 import ParseUI
 import Parse
+import CoreLocation
+import MapKit
+import SwiftLocation
 
 struct playlist
 {
@@ -31,9 +34,11 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestLocation()
+        self.getLocationAndFetch()
+        
+//        locationManager.delegate = self
+//        locationManager.requestWhenInUseAuthorization()
+//        locationManager.requestLocation()
         
     }
     
@@ -73,7 +78,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
     }
     
-    var locationManager = CLLocationManager()
+    //var locationManager = CLLocationManager()
     //let client = YelpAPIClient()
     var parameters = ["ll": "", "category_filter": "pizza", "radius_filter": "3000", "sort": "0"]
     var playlists_location = []
@@ -129,6 +134,27 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         alertController.addAction(okAction)
         presentViewController(alertController, animated: true, completion: nil)
         
+    }
+    
+    func getLocationAndFetch(){
+        // SwiftLocation
+        do {
+            try SwiftLocation.shared.currentLocation(Accuracy.Neighborhood, timeout: 20, onSuccess: { (location) -> Void in
+                // location is a CLPlacemark
+                self.userlatitude = location?.coordinate.latitude
+                self.userlongitude = location?.coordinate.longitude
+                
+                self.fetchPlaylists()
+                
+                self.parameters["ll"] = String(self.userlatitude) + "," + String(self.userlongitude)
+                
+                print("1. Location found \(location?.description)")
+            }) { (error) -> Void in
+                print("1. Something went wrong -> \(error?.localizedDescription)")
+            }
+        } catch (let error) {
+            print("Error \(error)")
+        }
     }
 
     func fetchPlaylists()
@@ -196,30 +222,30 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         }
     }
 
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let userLocation: CLLocation = locations[0]
-        
-        let latitude = userLocation.coordinate.latitude
-        let longitude = userLocation.coordinate.longitude
-        print(userLocation.coordinate)
-        userlatitude = latitude
-        userlongitude = longitude
-        
-        
-        fetchPlaylists()
-        
-        parameters["ll"] = String(latitude) + "," + String(longitude)
-    }
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        print(error.description)
-    }
-    
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == .AuthorizedWhenInUse
-        {
-            //print("Authorized")
-        }
-    }
+//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        let userLocation: CLLocation = locations[0]
+//        
+//        let latitude = userLocation.coordinate.latitude
+//        let longitude = userLocation.coordinate.longitude
+//        print(userLocation.coordinate)
+//        userlatitude = latitude
+//        userlongitude = longitude
+//        
+//        
+//        fetchPlaylists()
+//        
+//        parameters["ll"] = String(latitude) + "," + String(longitude)
+//    }
+//    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+//        print(error.description)
+//    }
+//    
+//    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+//        if status == .AuthorizedWhenInUse
+//        {
+//            //print("Authorized")
+//        }
+//    }
     
     func logInViewController(logInController: PFLogInViewController, shouldBeginLogInWithUsername username: String, password: String) -> Bool {
         if (!username.isEmpty || !password.isEmpty)
