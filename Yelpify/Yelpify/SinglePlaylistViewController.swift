@@ -202,7 +202,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     override func viewDidAppear(animated: Bool) {
-    
     }
     
     override func viewWillAppear(animated: Bool) {

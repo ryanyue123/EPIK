@@ -31,6 +31,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     var index: Int!
     
     var photoRefs = [String]()
+    var reviews = [String]()
     
     var APIClient = APIDataHandler()
     let gpClient = GooglePlacesAPIClient()
@@ -59,6 +60,10 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             self.directionsButton.enabled = true
             self.callButton.enabled = true
             
+            if let reviewDict = detailedGPlace.reviews as? [NSDictionary] {
+                self.reviews = self.getReviewText(reviewDict)
+            }
+            
             self.object.businessPhone = detailedGPlace.phone!
             
             /*
@@ -74,13 +79,18 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             if detailedGPlace.photos?.count > 0 {
                 self.setCoverPhoto(detailedGPlace.photos![0] as! String)
             }
+            
+            
+            self.tableView.reloadData()
         }
+        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         //configureNavigationBar()
         
     }
     
     override func viewDidAppear(animated: Bool) {
         configureHeaderView()
+        ConfigureFunctions.configureStatusBar(self.navigationController!)
     }
     
     override func viewWillLayoutSubviews() {
@@ -91,6 +101,14 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateHeaderView()
+    }
+    
+    func getReviewText(reviewDict: [NSDictionary]) -> [String]{
+        var result: [String] = []
+        for review in reviewDict{
+            result.append(review["text"] as! String)
+        }
+        return result
     }
     
     // MARK: - Scroll View 
@@ -106,7 +124,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         self.darkOverlay.alpha = 1.6 - (-tableView.contentOffset.y / headerHeight)
         if self.darkOverlay.alpha < 0.6{ self.darkOverlay.alpha = 0.6 }
     }
-    
+
     func handleNavigationBarOnScroll(){
         let showWhenScrollDownAlpha = 1 - (-tableView.contentOffset.y / headerHeight)
         
@@ -114,11 +132,14 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(showWhenScrollDownAlpha) ]
         self.navigationItem.title = "details"
         
+        self.navigationController?.navigationBar.backgroundColor = appDefaults.color.colorWithAlphaComponent((showWhenScrollDownAlpha))
+        
         // Handle Status Bar
-        //self.statusBarView.alpha = showWhenScrollDownAlpha
+        //let statusBarView = self.view.viewWithTag(100)
+        //statusBarView!.alpha = showWhenScrollDownAlpha
         
         // Handle Nav Shadow View
-        self.view.viewWithTag(102)!.backgroundColor = appDefaults.color.colorWithAlphaComponent(showWhenScrollDownAlpha)
+        //self.view.viewWithTag(102)!.backgroundColor = appDefaults.color.colorWithAlphaComponent(showWhenScrollDownAlpha)
     }
 
     
@@ -282,11 +303,13 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     
     // MARK: - Table View Functions
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.reviews.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reviewCell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("reviewCell", forIndexPath: indexPath) as! CommentTableViewCell
+        let review = self.reviews[indexPath.row]
+        cell.configureCell(review)
         return cell
 
     }

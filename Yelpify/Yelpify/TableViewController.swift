@@ -20,21 +20,32 @@ struct playlist
 
 struct appDefaults {
     static let color: UIColor! = UIColor.init(netHex: 0x52abc0)
+    static let color_bg: UIColor! = UIColor.init(netHex: 0xe4e4e4)
 }
 
 class TableViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate {
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var headerImageView: UIImageView!
+    @IBOutlet weak var darkOverlay: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+        //tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
+        
         
         self.getLocationAndFetch()
+        self.configureColors()
+        self.configureHeaderView()
+        
+        // Test code, to be placed into functions in the future
+        self.title = "EPIK"
+        let leftButton =  UIBarButtonItem(title: "Search", style: UIBarButtonItemStyle.Plain, target: self, action: nil)
+        let rightButton = UIBarButtonItem(title: "New", style: UIBarButtonItemStyle.Plain, target: self, action: nil)
+        
+        navigationItem.leftBarButtonItem = leftButton
+        navigationItem.rightBarButtonItem = rightButton
         
 //        locationManager.delegate = self
 //        locationManager.requestWhenInUseAuthorization()
@@ -43,13 +54,14 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     }
     
     override func viewWillAppear(animated: Bool) {
+        // Configure Views
         ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         ConfigureFunctions.configureStatusBar(self.navigationController!)
-
     }
-    
+
     override func viewDidAppear(animated: Bool) {
 
+        //configureHeaderView()
         
         if (PFUser.currentUser() == nil) {
             let logInViewController = PFLogInViewController()
@@ -62,9 +74,72 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
             
             self.presentViewController(logInViewController, animated: true, completion: nil)
             
-            
         }
     }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        updateHeaderView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateHeaderView()
+    }
+    
+    // MARK: - Configure Methods
+    
+    private let headerHeight: CGFloat = 200.0
+    
+    func configureHeaderView(){
+        tableView.tableHeaderView = nil
+        tableView.addSubview(headerView)
+        tableView.contentInset = UIEdgeInsets(top: headerHeight, left: 0, bottom: 50, right: 0)
+        tableView.contentOffset = CGPoint(x: 0, y: -headerHeight)
+    }
+    
+    func configureColors(){
+        self.tableView.backgroundColor = appDefaults.color_bg
+        self.view.backgroundColor = appDefaults.color_bg
+    }
+    
+    func updateHeaderView(){
+        var headerRect = CGRect(x: 0, y: -headerHeight, width: self.tableView.frame.size.width, height: headerHeight)
+        
+        if self.tableView.contentOffset.y < -headerHeight{
+            headerRect.origin.y = tableView.contentOffset.y
+            headerRect.size.height = -tableView.contentOffset.y
+        }else if self.tableView.contentOffset.y > headerHeight{
+        }
+        
+        headerView.frame = headerRect
+    }
+    
+    // MARK: - Scroll View
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.fadeBG()
+        self.updateHeaderView()
+    }
+    
+    func fadeBG(){
+        self.headerImageView.alpha = (-tableView.contentOffset.y / headerHeight) * 0.5
+    }
+    
+    // end
+    
+    func addShadowToBar() {
+        let shadowView = UIView(frame: self.navigationController!.navigationBar.frame)
+        //shadowView.backgroundColor = appDefaults.color
+        shadowView.layer.masksToBounds = false
+        shadowView.layer.shadowOpacity = 0.7 // your opacity
+        shadowView.layer.shadowOffset = CGSize(width: 0, height: 3) // your offset
+        shadowView.layer.shadowRadius =  10 //your radius
+        self.view.addSubview(shadowView)
+        self.view.bringSubviewToFront(shadowView)
+        
+        shadowView.tag = 102
+    }
+    
     
     func configureStatusBar(navController: UINavigationController){
         let statusBarRect = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 20.0)
@@ -91,6 +166,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     var userlatitude: Double!
     var userlongitude: Double!
     var inputTextField: UITextField!
+    
     
     @IBAction func showPlaylistAlert(sender: UIBarButtonItem) {
         print("hello")
@@ -324,8 +400,10 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
+        
         let tempobject = all_playlists[collectionView.tag][indexPath.row] as! PFObject
         cell.label.text = tempobject["playlistName"] as? String
+        
     
         //takes image of first business and uses it as icon for playlist
         
@@ -334,20 +412,21 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
             let photoref = businessdict["photoReference"] as! String
             cell.configureCell(photoref)
         }
+        
         return cell
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        self.row = collectionView.tag
-        self.col = indexPath.row
+        //self.row = collectionView.tag
+        //self.col = indexPath.row
         
         // Perform Segue and Pass List Data
         let controller = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
-        let temparray = all_playlists[indexPath.row]
+        let temparray = all_playlists[collectionView.tag]
         controller.object = temparray[indexPath.row] as! PFObject
         self.navigationController!.pushViewController(controller, animated: true)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 //        if (segue.identifier == "showPlaylist")
 //        {
 //            let upcoming = segue.destinationViewController as? SinglePlaylistViewController
