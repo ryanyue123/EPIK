@@ -126,7 +126,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        print((object["objectId"] as? String))
         
         self.playlistTableView.backgroundColor = appDefaults.color
         //navigationItem.rightBarButtonItem = editButtonItem()
@@ -169,7 +169,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
         else
         {
-            // edit button disabled
+            self.addPlaceButton.hidden = true
+            print("hidden")
+            self.view.reloadInputViews()
             self.convertParseArrayToBusinessArray(object["track"] as! [NSDictionary]) { (resultArray) in
                 
                 let viewedlist: NSMutableArray = []

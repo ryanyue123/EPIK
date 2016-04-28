@@ -188,11 +188,9 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
                                 
                                 let query3 = PFUser.query()!
                                 query3.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
-                                print((PFUser.currentUser()?.username)!)
                                 query3.findObjectsInBackgroundWithBlock {(objects1: [PFObject]?, error: NSError?) -> Void in
                                     if ((error) == nil)
                                     {
-                                        print(objects1)
                                         dispatch_async(dispatch_get_main_queue(), {
                                             if let recentarray = objects1![0]["recentlyViewed"] as? [String]
                                             {
@@ -350,7 +348,7 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         
         // Perform Segue and Pass List Data
         let controller = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
-        let temparray = all_playlists[indexPath.row]
+        let temparray = self.all_playlists[collectionView.tag]
         controller.object = temparray[indexPath.row] as! PFObject
         self.navigationController!.pushViewController(controller, animated: true)
     }
