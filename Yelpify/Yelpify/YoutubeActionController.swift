@@ -66,6 +66,7 @@ public class YoutubeCell: ActionCell {
     }
 }
 
+
 public class YoutubeActionController: ActionController<YoutubeCell, ActionData, UICollectionReusableView, Void, UICollectionReusableView, Void> {
     
     public override init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: NSBundle? = nil) {
