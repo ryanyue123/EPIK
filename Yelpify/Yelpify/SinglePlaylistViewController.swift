@@ -17,6 +17,7 @@ enum ContentTypes {
 class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     @IBOutlet weak var statusBarView: UIView!
+    @IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
     
     @IBOutlet weak var editPlaylistButton: UIBarButtonItem!
 
@@ -53,11 +54,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     var viewDisappearing = false
     
-    
-    @IBAction func savePlaylist(sender: UIBarButtonItem) {
-        savePlaylistToParse()
-    }
-    
     @IBAction func addPlaceButtonAction(sender: AnyObject)
     {
         
@@ -65,13 +61,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     @IBAction func editPlaylistButtonAction(sender: AnyObject) {
         
-        performSegueWithIdentifier("showActionsMenu", sender: self)
-        /*
+        //performSegueWithIdentifier("showActionsMenu", sender: self)
         let actionController = YoutubeActionController()
         
         actionController.addAction(Action(ActionData(title: "Add to Watch Later", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
         }))
-        actionController.addAction(Action(ActionData(title: "Add to Playlist...", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
+        actionController.addAction(Action(ActionData(title: "Edit Playlist", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
+            self.activateEditMode()
         }))
         actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-share-icon")!), style: .Default, handler: { action in
         }))
@@ -82,18 +78,18 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 
         
         
-        print(self.navigationItem.rightBarButtonItem!.title!)
-        switch self.navigationItem.rightBarButtonItem!.title! {
-        case "Edit":
-            playlistTableView.setEditing(true, animated: true)
-            self.navigationItem.rightBarButtonItem?.title = "Done" //= UIBarButtonItem(title: "Done", style: .Plain, target: self, action: nil)
-        case "Done":
-            playlistTableView.setEditing(false, animated: true)
-            self.navigationItem.rightBarButtonItem?.title = "Edit"//= UIBarButtonItem(title: "Edit", style: .Plain, target: self, action: nil)
-        default:
-            playlistTableView.setEditing(false, animated: true)
-        }
- */
+//        print(self.navigationItem.rightBarButtonItem!.title!)
+//        switch self.navigationItem.rightBarButtonItem!.title! {
+//        case "Edit":
+//            playlistTableView.setEditing(true, animated: true)
+//            self.navigationItem.rightBarButtonItem?.title = "Done" //= UIBarButtonItem(title: "Done", style: .Plain, target: self, action: nil)
+//        case "Done":
+//            playlistTableView.setEditing(false, animated: true)
+//            self.navigationItem.rightBarButtonItem?.title = "Edit"//= UIBarButtonItem(title: "Edit", style: .Plain, target: self, action: nil)
+//        default:
+//            playlistTableView.setEditing(false, animated: true)
+//        }
+
     }
     
     @IBAction func selectContentType(sender: AnyObject) {
@@ -130,6 +126,11 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         print((object["objectId"] as? String))
         self.addPlaceButton.hidden = true
+        self.addPlaceButton.enabled = false
+        self.leftBarButtonItem.title = "Back"
+        self.leftBarButtonItem.target = self
+        self.leftBarButtonItem.action = "unwindView:"
+        
         self.playlistTableView.backgroundColor = appDefaults.color
         //navigationItem.rightBarButtonItem = editButtonItem()
         
@@ -246,7 +247,18 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         updateHeaderView()
     }
     
+    func unwindView(sender: UIBarButtonItem)
+    {
+        self.navigationController?.popToRootViewControllerAnimated(true)
+    }
     
+    func activateEditMode()
+    {
+        self.leftBarButtonItem.title = "Done"
+        self.leftBarButtonItem.action = "savePlaylistToParse:"
+        self.addPlaceButton.hidden = false
+        self.addPlaceButton.enabled = true
+    }
     
     // MARK: - Reload Data After Pass
     
@@ -513,8 +525,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         return placeDictArray
     }
     
-    func savePlaylistToParse()
+    func savePlaylistToParse(sender: UIBarButtonItem)
     {
+        print("hello")
         let saveobject = PFObject(className: "Playlists")
         if let lat = playlistArray[0].businessLatitude
         {
@@ -534,6 +547,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 print(error?.description)
             }
         }
+        self.leftBarButtonItem.title = "Back" 
+        self.leftBarButtonItem.action = "unwindView:"
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
