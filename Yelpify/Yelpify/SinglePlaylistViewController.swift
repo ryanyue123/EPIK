@@ -51,6 +51,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     // The apps default color
     let defaultAppColor = UIColor(netHex: 0xFFFFFF)
     
+    var viewDisappearing = false
+    
     
     @IBAction func savePlaylist(sender: UIBarButtonItem) {
         savePlaylistToParse()
@@ -212,6 +214,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     override func viewWillAppear(animated: Bool) {
+        print("viewWillAppear")
         
         //Configure Functions
         
@@ -229,6 +232,11 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             playlist_name = object["playlistName"] as! String
         }
         configurePlaylistInfoView()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        print("viewWillDisappear")
+        self.viewDisappearing = true
     }
     
     override func viewWillLayoutSubviews() {
@@ -258,8 +266,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         fadePlaylistBG()
-        updateHeaderView()
-        handleNavigationBarOnScroll()
+        if viewDisappearing != false{
+            updateHeaderView()
+            handleNavigationBarOnScroll()
+        }
         
         let offset = scrollView.contentOffset.y + playlistInfoView.bounds.height
         
