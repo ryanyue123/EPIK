@@ -10,6 +10,7 @@ import UIKit
 
 class SearchPlaylistViewController: UITableViewController {
 
+    @IBOutlet weak var textField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
 

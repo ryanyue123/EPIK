@@ -3824,10 +3824,10 @@
             </objects>
             <point key="canvasLocation" x="457.5" y="1599.75"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Search Playlist View Controller-->
         <scene sceneID="W0S-I9-Z0q">
             <objects>
-                <tableViewController id="VEb-x6-gyy" sceneMemberID="viewController">
+                <tableViewController id="VEb-x6-gyy" customClass="SearchPlaylistViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="UZ4-PZ-dAM">
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3853,6 +3853,9 @@
                             <textInputTraits key="textInputTraits" returnKeyType="search"/>
                         </textField>
                     </navigationItem>
+                    <connections>
+                        <outlet property="textField" destination="EVk-jG-K8d" id="Tvf-UN-w73"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tUw-1Y-blf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
