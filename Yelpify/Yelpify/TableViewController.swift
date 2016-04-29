@@ -21,6 +21,7 @@ struct playlist
 struct appDefaults {
     static let color: UIColor! = UIColor.init(netHex: 0x52abc0)
     static let color_bg: UIColor! = UIColor.init(netHex: 0xe4e4e4)
+    static let color_darker: UIColor! = UIColor.init(netHex: 0x3a7b8a)
 }
 
 class TableViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate {
@@ -41,7 +42,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         // Test code, to be placed into functions in the future
         self.title = "EPIK"
         let leftButton =  UIBarButtonItem(title: "Search", style: UIBarButtonItemStyle.Plain, target: self, action: nil)
-        let rightButton = UIBarButtonItem(title: "New", style: UIBarButtonItemStyle.Plain, target: self, action: nil)
+        let rightButton = UIBarButtonItem(title: "New", style: UIBarButtonItemStyle.Plain, target: self, action: "showPlaylistAlert:")
         
         navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton
@@ -168,7 +169,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     var inputTextField: UITextField!
     
     
-    @IBAction func showPlaylistAlert(sender: UIBarButtonItem) {
+    func showPlaylistAlert(sender: UIBarButtonItem) {
         print("hello")
         let alertController = UIAlertController(title: "Create new playlist", message: "Enter name of playlist.", preferredStyle: UIAlertControllerStyle.Alert)
         

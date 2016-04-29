@@ -145,7 +145,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     @IBOutlet weak var tableView: UITableView!
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        cell.backgroundColor = appDefaults.color
+        cell.backgroundColor = UIColor.whiteColor()
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -228,11 +228,15 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     override func viewDidLoad(){
         getCurrentLocation()
         
-        // Set up Nav Bar
-        self.navigationController?.navigationBar.backgroundColor = appDefaults.color
-        self.navigationController?.navigationItem.titleView?.tintColor = UIColor.whiteColor()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        self.tableView.backgroundColor = appDefaults.color
+        ConfigureFunctions.configureStatusBar(self.navigationController!)
+        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+        tableView.contentInset = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
+        
+//        // Set up Nav Bar
+//        self.navigationController?.navigationBar.backgroundColor = appDefaults.color
+//        self.navigationController?.navigationItem.titleView?.tintColor = UIColor.whiteColor()
+//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.tableView.backgroundColor = appDefaults.color_bg
         
         // Performs an API search and returns a master array of businesses (as dictionaries)
         performInitialSearch()

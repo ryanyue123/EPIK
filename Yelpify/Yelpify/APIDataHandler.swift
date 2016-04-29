@@ -11,6 +11,7 @@
 // Save data to Business Object
 
 import Foundation
+import UIKit
 
 struct debugPrint{
     static var RAW_GOOGLE_JSON = false
@@ -139,6 +140,15 @@ class APIDataHandler {
         
         }
     }
+    
+    
+    private func getDataFromUrl(url: NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
+        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
+            completion(data: data, response: response, error: error)
+            }.resume()
+    }
+    
+    
 //    
 //    // Gets Yelp ID with Business Object // Returns ID
 //    func getYelpID(business: Business, completion: (yelpID: String) -> Void){

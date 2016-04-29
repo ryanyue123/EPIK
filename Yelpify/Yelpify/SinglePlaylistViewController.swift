@@ -17,7 +17,7 @@ enum ContentTypes {
 class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     @IBOutlet weak var statusBarView: UIView!
-    @IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
+    //@IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
     
     @IBOutlet weak var editPlaylistButton: UIBarButtonItem!
 
@@ -54,11 +54,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     var viewDisappearing = false
     
-    @IBAction func addPlaceButtonAction(sender: AnyObject)
-    {
-        
-    }
-    
     @IBAction func editPlaylistButtonAction(sender: AnyObject) {
         
         //performSegueWithIdentifier("showActionsMenu", sender: self)
@@ -67,6 +62,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         actionController.addAction(Action(ActionData(title: "Add to Watch Later", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
         }))
         actionController.addAction(Action(ActionData(title: "Edit Playlist", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
+            print("Edit pressed")
             self.activateEditMode()
         }))
         actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-share-icon")!), style: .Default, handler: { action in
@@ -127,9 +123,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         print((object["objectId"] as? String))
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
-        self.leftBarButtonItem.title = "Back"
-        self.leftBarButtonItem.target = self
-        self.leftBarButtonItem.action = "unwindView:"
+//        self.leftBarButtonItem.title = "Back"
+//        self.leftBarButtonItem.target = self
+//        self.leftBarButtonItem.action = "unwindView:"
         
         self.playlistTableView.backgroundColor = appDefaults.color
         //navigationItem.rightBarButtonItem = editButtonItem()
@@ -254,8 +250,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func activateEditMode()
     {
-        self.leftBarButtonItem.title = "Done"
-        self.leftBarButtonItem.action = "savePlaylistToParse:"
+        self.navigationItem.setHidesBackButton(true, animated: true)
+        let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "savePlaylistToParse:")
+        self.navigationItem.leftBarButtonItem = backButton
+        //self.navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "savePlaylistToParse:")
+        
+        //self.leftBarButtonItem.title = "Done"
+        //self.leftBarButtonItem.action = "savePlaylistToParse:"
         self.addPlaceButton.hidden = false
         self.addPlaceButton.enabled = true
     }
@@ -275,10 +276,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         fadePlaylistBG()
-        if viewDisappearing != false{
-            updateHeaderView()
-            handleNavigationBarOnScroll()
-        }
+        updateHeaderView()
+        handleNavigationBarOnScroll()
         
         let offset = scrollView.contentOffset.y + playlistInfoView.bounds.height
         
@@ -528,27 +527,30 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func savePlaylistToParse(sender: UIBarButtonItem)
     {
         print("hello")
-        let saveobject = PFObject(className: "Playlists")
-        if let lat = playlistArray[0].businessLatitude
-        {
-            if let long = playlistArray[0].businessLongitude
+        if playlistArray.count > 0{
+            let saveobject = PFObject(className: "Playlists")
+            if let lat = playlistArray[0].businessLatitude
             {
-                saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
+                if let long = playlistArray[0].businessLongitude
+                {
+                    saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
+                }
+            }
+            saveobject["createdbyuser"] = PFUser.currentUser()?.username
+            saveobject["playlistName"] = playlist_name
+            saveobject["track"] = convertPlacesArrayToDictionary(playlistArray)
+            saveobject.saveInBackgroundWithBlock { (success, error)  -> Void in
+                if (error == nil){
+                    print("saved")
+                }
+                else{
+                    print(error?.description)
+                }
             }
         }
-        saveobject["createdbyuser"] = PFUser.currentUser()?.username
-        saveobject["playlistName"] = playlist_name
-        saveobject["track"] = convertPlacesArrayToDictionary(playlistArray)
-        saveobject.saveInBackgroundWithBlock { (success, error)  -> Void in
-            if (error == nil){
-                print("saved")
-            }
-            else{
-                print(error?.description)
-            }
-        }
-        self.leftBarButtonItem.title = "Back" 
-        self.leftBarButtonItem.action = "unwindView:"
+        
+        self.navigationItem.setHidesBackButton(false, animated: true)
+        self.navigationItem.leftBarButtonItem = nil
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
