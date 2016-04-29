@@ -40,7 +40,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     var index: Int!
     
     var photoRefs = [String]()
-    var reviews = [String]()
+    var reviewArray = NSArray()
     
     var APIClient = APIDataHandler()
     let gpClient = GooglePlacesAPIClient()
@@ -60,6 +60,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         super.viewDidLoad()
         
         self.navBarShadowView = ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+        
         // Configure status bar and set alpha to 0
         self.statusBarView = ConfigureFunctions.configureStatusBar(self.navigationController!)
         self.loadedStatusBar = true
@@ -78,9 +79,9 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             self.directionsButton.enabled = true
             self.callButton.enabled = true
             
-            if let reviewDict = detailedGPlace.reviews as? [NSDictionary] {
-                self.reviews = self.getReviewText(reviewDict)
-            }
+            
+            
+            self.reviewArray = detailedGPlace.reviews!
             
             self.object.businessPhone = detailedGPlace.phone!
             if let ratingValue = detailedGPlace.rating{
@@ -96,7 +97,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             print("Photos: ", detailedGPlace.photos!, "\n")
             print("Price Rating: ", detailedGPlace.priceRating!, "\n")
             print("Rating: ", detailedGPlace.rating!, "\n")
-            //print("Reviews: ", detailedGPlace.reviews, "\n")
+            print("Reviews: ", detailedGPlace.reviews, "\n")
             print("Website: ", detailedGPlace.website!, "\n")
             */
             
@@ -335,13 +336,13 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     
     // MARK: - Table View Functions
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.reviews.count
+        return self.reviewArray.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("reviewCell", forIndexPath: indexPath) as! CommentTableViewCell
-        let review = self.reviews[indexPath.row]
-        cell.configureCell(review)
+        let review = self.reviewArray[indexPath.row]
+        cell.configureCell(review as! NSDictionary)
         return cell
 
     }
