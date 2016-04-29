@@ -10,9 +10,14 @@ import UIKit
 import Parse
 import XLActionController
 
+enum ContentTypes {
+    case Places, Comments
+}
+
 class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     @IBOutlet weak var statusBarView: UIView!
+    @IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
     
     @IBOutlet weak var editPlaylistButton: UIBarButtonItem!
 
@@ -33,6 +38,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     @IBOutlet weak var addPlaceButton: UIButton!
     
+    @IBOutlet weak var segmentedBar: UISegmentedControl!
+    @IBOutlet weak var segmentedBarView: UIView!
+    
+    let offset_HeaderStop:CGFloat = 40.0
+    var contentToDisplay: ContentTypes = .Places
+    
     //var businessObjects: [Business] = []
     var playlistArray = [Business]()
     var object: PFObject!
@@ -41,25 +52,17 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     // The apps default color
     let defaultAppColor = UIColor(netHex: 0xFFFFFF)
     
-    
-    @IBAction func savePlaylist(sender: UIBarButtonItem) {
-        savePlaylistToParse()
-    }
-    
-    @IBAction func addPlaceButtonAction(sender: AnyObject)
-    {
-        
-    }
+    var viewDisappearing = false
     
     @IBAction func editPlaylistButtonAction(sender: AnyObject) {
         
-        performSegueWithIdentifier("showActionsMenu", sender: self)
-        /*
+        //performSegueWithIdentifier("showActionsMenu", sender: self)
         let actionController = YoutubeActionController()
         
         actionController.addAction(Action(ActionData(title: "Add to Watch Later", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
         }))
-        actionController.addAction(Action(ActionData(title: "Add to Playlist...", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
+        actionController.addAction(Action(ActionData(title: "Edit Playlist", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
+            self.activateEditMode()
         }))
         actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-share-icon")!), style: .Default, handler: { action in
         }))
@@ -70,20 +73,31 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 
         
         
-        print(self.navigationItem.rightBarButtonItem!.title!)
-        switch self.navigationItem.rightBarButtonItem!.title! {
-        case "Edit":
-            playlistTableView.setEditing(true, animated: true)
-            self.navigationItem.rightBarButtonItem?.title = "Done" //= UIBarButtonItem(title: "Done", style: .Plain, target: self, action: nil)
-        case "Done":
-            playlistTableView.setEditing(false, animated: true)
-            self.navigationItem.rightBarButtonItem?.title = "Edit"//= UIBarButtonItem(title: "Edit", style: .Plain, target: self, action: nil)
-        default:
-            playlistTableView.setEditing(false, animated: true)
-        }
- */
+//        print(self.navigationItem.rightBarButtonItem!.title!)
+//        switch self.navigationItem.rightBarButtonItem!.title! {
+//        case "Edit":
+//            playlistTableView.setEditing(true, animated: true)
+//            self.navigationItem.rightBarButtonItem?.title = "Done" //= UIBarButtonItem(title: "Done", style: .Plain, target: self, action: nil)
+//        case "Done":
+//            playlistTableView.setEditing(false, animated: true)
+//            self.navigationItem.rightBarButtonItem?.title = "Edit"//= UIBarButtonItem(title: "Edit", style: .Plain, target: self, action: nil)
+//        default:
+//            playlistTableView.setEditing(false, animated: true)
+//        }
+
     }
     
+    @IBAction func selectContentType(sender: AnyObject) {
+        // crap code I know
+        if sender.selectedSegmentIndex == 0 {
+            contentToDisplay = .Places
+        }
+        else {
+            contentToDisplay = .Comments
+        }
+        
+        playlistTableView.reloadData()
+    }
     
     
     @IBAction func unwindToSinglePlaylist(segue: UIStoryboardSegue)
@@ -105,7 +119,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        print((object["objectId"] as? String))
+        self.addPlaceButton.hidden = true
+        self.addPlaceButton.enabled = false
+        self.leftBarButtonItem.title = "Back"
+        self.leftBarButtonItem.target = self
+        self.leftBarButtonItem.action = "unwindView:"
         
         self.playlistTableView.backgroundColor = appDefaults.color
         //navigationItem.rightBarButtonItem = editButtonItem()
@@ -122,9 +141,11 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 recentlyviewed.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
                 recentlyviewed.findObjectsInBackgroundWithBlock {(objects1: [PFObject]?, error: NSError?) -> Void in
                     let recent = objects1![0]
-                    let recentarray = recent["recentlyViewed"] as! [String]
+                    if let recentarray = recent["recentlyViewed"] as? [String]
+                    {
                     
-                    viewedlist.addObjectsFromArray(recentarray)
+                        viewedlist.addObjectsFromArray(recentarray)
+                    }
                     viewedlist.insertObject(self.object.objectId!, atIndex: 0)
                     
                     recent["recentlyViewed"] = viewedlist
@@ -146,7 +167,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
         else
         {
-            // edit button disabled
+            self.view.reloadInputViews()
             self.convertParseArrayToBusinessArray(object["track"] as! [NSDictionary]) { (resultArray) in
                 
                 let viewedlist: NSMutableArray = []
@@ -154,9 +175,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 recentlyviewed.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
                 recentlyviewed.findObjectsInBackgroundWithBlock {(objects1: [PFObject]?, error: NSError?) -> Void in
                     let recent = objects1![0]
-                    let recentarray = recent["recentlyViewed"] as! [String]
-                    
-                    viewedlist.addObjectsFromArray(recentarray)
+                    if let recentarray = recent["recentlyViewed"] as? [String]
+                    {
+                        viewedlist.addObjectsFromArray(recentarray)
+                    }
                     viewedlist.insertObject(self.object.objectId!, atIndex: 0)
                     
                     recent["recentlyViewed"] = viewedlist
@@ -176,20 +198,24 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
 
         
-        //configureNavigationBar()
-        
         setupCollaboratorViews()
         //configurePlaylistInfoView()
     }
     
     override func viewDidAppear(animated: Bool) {
-        playlistInfoView.frame.size.height = 350.0
-        playlistTableHeaderHeight = playlistInfoView.frame.size.height
-        print(playlistInfoView.frame.size.height)
-        configurePlaylistInfoView()
+        print("viewDidAppear")
     }
     
     override func viewWillAppear(animated: Bool) {
+        print("viewWillAppear")
+        
+        //Configure Functions
+        
+        configureNavigationBar()
+        playlistInfoView.frame.size.height = 350.0
+        playlistTableHeaderHeight = playlistInfoView.frame.size.height
+        configurePlaylistInfoView()
+        
         if (object == nil)
         {
             playlist_name = playlist.playlistname
@@ -201,6 +227,11 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         configurePlaylistInfoView()
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        print("viewWillDisappear")
+        self.viewDisappearing = true
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         updateHeaderView()
@@ -209,6 +240,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateHeaderView()
+    }
+    
+    func unwindView(sender: UIBarButtonItem)
+    {
+        self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+    func activateEditMode()
+    {
+        self.leftBarButtonItem.title = "Done"
+        self.leftBarButtonItem.action = "savePlaylistToParse:"
+        self.addPlaceButton.hidden = false
+        self.addPlaceButton.enabled = true
     }
     
     // MARK: - Reload Data After Pass
@@ -226,8 +270,47 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         fadePlaylistBG()
-        updateHeaderView()
-        //handleNavigationBarOnScroll()
+        if viewDisappearing != false{
+            updateHeaderView()
+            handleNavigationBarOnScroll()
+        }
+        
+        let offset = scrollView.contentOffset.y + playlistInfoView.bounds.height
+        
+        if offset < 0{
+            
+        }else{
+            
+        }
+        
+        if offset > 323{
+            var segmentTransform = CATransform3DIdentity
+            segmentTransform = CATransform3DTranslate(segmentTransform, 0, (offset-315), 0)
+            
+            segmentedBarView.layer.transform = segmentTransform
+        }else{
+            
+        }
+        
+        print(offset)
+        
+//        // Segment control
+//        
+//        let segmentViewOffset = playlistInfoView.frame.height - segmentedBarView.frame.height - offset
+//        
+//        var segmentTransform = CATransform3DIdentity
+//        
+//        // Scroll the segment view until its offset reaches the same offset at which the header stopped shrinking
+//        segmentTransform = CATransform3DTranslate(segmentTransform, 0, max(segmentViewOffset, -offset_HeaderStop), 0)
+//        
+//        segmentedBarView.layer.transform = segmentTransform
+//        
+//        
+//        // Set scroll view insets just underneath the segment control
+//        playlistTableView.scrollIndicatorInsets = UIEdgeInsetsMake(segmentedBarView.frame.maxY, 0, 0, 0)
+        
+        
+        
     }
     
     func fadePlaylistBG(){
@@ -242,6 +325,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.navigationController?.navigationBar.titleTextAttributes = [
             NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(showWhenScrollDownAlpha) ]
         self.navigationItem.title = playlist_name
+        
+        self.navigationController?.navigationBar.backgroundColor = appDefaults.color.colorWithAlphaComponent((showWhenScrollDownAlpha))
         
         // Handle Status Bar
         self.statusBarView.alpha = showWhenScrollDownAlpha
@@ -263,6 +348,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func configureNavigationBar(){
         
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
+        //self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
         addShadowToBar()
         
         for parent in self.navigationController!.navigationBar.subviews {
@@ -272,8 +361,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 }
             }
         }
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         // Change the back button item to display no text
         //        let backItem = UIBarButtonItem()
@@ -325,7 +412,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         var image = UIImage(named: "default_restaurant")// Temp Image
 
         for person in 0..<numOfCollaborators{
-            print(person)
+            //print(person)
             let imageView = UIImageView(frame: CGRectMake(x, collaboratorsImageView.frame.origin.y, width, height))
             imageView.contentMode = UIViewContentMode.ScaleAspectFill
             
@@ -369,20 +456,40 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return playlistArray.count
+        switch contentToDisplay {
+        case .Places:
+            return playlistArray.count
+            
+        case .Comments:
+            return 20
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-        cell.configureCellWith(playlistArray[indexPath.row]) {
-            //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+//        let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
+//        cell.configureCellWith(playlistArray[indexPath.row]) {
+//            //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+//        }
+        
+        var cell = UITableViewCell()
+        
+        switch contentToDisplay {
+        case .Places:
+            cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
+            //cell.textLabel?.text = "Tweet Tweet!"
+            
+        case .Comments:
+            cell.textLabel?.text = "Piccies!"
+            cell.imageView?.image = UIImage(named: "header_bg")
         }
+        
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("showBusinessDetail", sender: self)
+        print(indexPath.row)
+        performSegueWithIdentifier("showBusinessDetail", sender: self)
     }
     
     // Override to support conditional editing of the table view.
@@ -406,23 +513,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         super.setEditing(editing, animated: animated)
         self.playlistTableView.setEditing(editing, animated: animated)
     }
-
-    
-    // MARK - API Handling
-    
-    let dataHandler = APIDataHandler()
-    var googleParameters = ["key": "AIzaSyDkxzICx5QqztP8ARvq9z0DxNOF_1Em8Qc", "location": "33.64496794563093,-117.83725295740864", "rankby":"distance", "keyword": ""]
-    
-    func performInitialSearch(){
-        dataHandler.performAPISearch(googleParameters) { (businessObjectArray) -> Void in
-            //self.businessObjects = businessObjectArray
-            self.playlistTableView.reloadData()
-        }
-    }
-
-    
-    
-    
     func convertPlacesArrayToDictionary(placesArray: [Business])-> [NSDictionary]{
         var placeDictArray = [NSDictionary]()
         for business in placesArray{
@@ -431,8 +521,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         return placeDictArray
     }
     
-    func savePlaylistToParse()
+    func savePlaylistToParse(sender: UIBarButtonItem)
     {
+        print("hello")
         let saveobject = PFObject(className: "Playlists")
         if let lat = playlistArray[0].businessLatitude
         {
@@ -452,6 +543,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 print(error?.description)
             }
         }
+        self.leftBarButtonItem.title = "Back" 
+        self.leftBarButtonItem.action = "unwindView:"
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -459,7 +552,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
             
             let indexPath = playlistTableView.indexPathForSelectedRow
-            let object = playlistArray[indexPath!.row]
+            let temp = indexPath!.row
+            let object = playlistArray[temp]
             upcoming.object = object
             upcoming.index = indexPath!.row
             self.playlistTableView.deselectRowAtIndexPath(indexPath!, animated: true)

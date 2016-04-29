@@ -75,6 +75,10 @@ class LoginViewController: UIViewController {
                     object["last_name"] = last_name
                     print(last_name)
                 }
+                if let id = results["id"] as? String{
+                    object["username"] = id
+                    print(id)
+                }
                 
                 object.saveInBackgroundWithBlock { (success, error)  -> Void in
                     if (error == nil){

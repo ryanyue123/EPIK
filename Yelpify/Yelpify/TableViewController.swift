@@ -9,6 +9,9 @@
 import UIKit
 import ParseUI
 import Parse
+import CoreLocation
+import MapKit
+import SwiftLocation
 
 struct playlist
 {
@@ -17,31 +20,48 @@ struct playlist
 
 struct appDefaults {
     static let color: UIColor! = UIColor.init(netHex: 0x52abc0)
+    static let color_bg: UIColor! = UIColor.init(netHex: 0xe4e4e4)
 }
 
 class TableViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate {
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var headerImageView: UIImageView!
+    @IBOutlet weak var darkOverlay: UIView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
-        ConfigureFunctions.configureStatusBar(self.navigationController!)
         
         
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+        self.getLocationAndFetch()
+        self.configureColors()
+        self.configureHeaderView()
         
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestLocation()
+        // Test code, to be placed into functions in the future
+        self.title = "EPIK"
+        let leftButton =  UIBarButtonItem(title: "Search", style: UIBarButtonItemStyle.Plain, target: self, action: nil)
+        let rightButton = UIBarButtonItem(title: "New", style: UIBarButtonItemStyle.Plain, target: self, action: "showPlaylistAlert:")
+        
+        navigationItem.leftBarButtonItem = leftButton
+        navigationItem.rightBarButtonItem = rightButton
+        
+//        locationManager.delegate = self
+//        locationManager.requestWhenInUseAuthorization()
+//        locationManager.requestLocation()
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        // Configure Views
+        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+        ConfigureFunctions.configureStatusBar(self.navigationController!)
+    }
+
     override func viewDidAppear(animated: Bool) {
+
+        //configureHeaderView()
+        
         if (PFUser.currentUser() == nil) {
             let logInViewController = PFLogInViewController()
             logInViewController.delegate = self
@@ -53,9 +73,73 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
             
             self.presentViewController(logInViewController, animated: true, completion: nil)
             
-            
         }
+        self.tableView.reloadData()
     }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        updateHeaderView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateHeaderView()
+    }
+    
+    // MARK: - Configure Methods
+    
+    private let headerHeight: CGFloat = 200.0
+    
+    func configureHeaderView(){
+        tableView.tableHeaderView = nil
+        tableView.addSubview(headerView)
+        tableView.contentInset = UIEdgeInsets(top: headerHeight, left: 0, bottom: 50, right: 0)
+        tableView.contentOffset = CGPoint(x: 0, y: -headerHeight)
+    }
+    
+    func configureColors(){
+        self.tableView.backgroundColor = appDefaults.color_bg
+        self.view.backgroundColor = appDefaults.color_bg
+    }
+    
+    func updateHeaderView(){
+        var headerRect = CGRect(x: 0, y: -headerHeight, width: self.tableView.frame.size.width, height: headerHeight)
+        
+        if self.tableView.contentOffset.y < -headerHeight{
+            headerRect.origin.y = tableView.contentOffset.y
+            headerRect.size.height = -tableView.contentOffset.y
+        }else if self.tableView.contentOffset.y > headerHeight{
+        }
+        
+        headerView.frame = headerRect
+    }
+    
+    // MARK: - Scroll View
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.fadeBG()
+        self.updateHeaderView()
+    }
+    
+    func fadeBG(){
+        self.headerImageView.alpha = (-tableView.contentOffset.y / headerHeight) * 0.5
+    }
+    
+    // end
+    
+    func addShadowToBar() {
+        let shadowView = UIView(frame: self.navigationController!.navigationBar.frame)
+        //shadowView.backgroundColor = appDefaults.color
+        shadowView.layer.masksToBounds = false
+        shadowView.layer.shadowOpacity = 0.7 // your opacity
+        shadowView.layer.shadowOffset = CGSize(width: 0, height: 3) // your offset
+        shadowView.layer.shadowRadius =  10 //your radius
+        self.view.addSubview(shadowView)
+        self.view.bringSubviewToFront(shadowView)
+        
+        shadowView.tag = 102
+    }
+    
     
     func configureStatusBar(navController: UINavigationController){
         let statusBarRect = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 20.0)
@@ -69,21 +153,22 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
     }
     
-    var locationManager = CLLocationManager()
+    //var locationManager = CLLocationManager()
     //let client = YelpAPIClient()
     var parameters = ["ll": "", "category_filter": "pizza", "radius_filter": "3000", "sort": "0"]
     var playlists_location = []
     var playlists_user = []
     var recent_playlists = []
     var all_playlists = [NSArray]()
-    var label_array = ["Playlists Near You", "My Playlists", "Recently Viewed"]
+    var label_array: [String] = []
     var row: Int!
     var col: Int!
     var userlatitude: Double!
     var userlongitude: Double!
     var inputTextField: UITextField!
     
-    @IBAction func showPlaylistAlert(sender: UIBarButtonItem) {
+    
+    func showPlaylistAlert(sender: UIBarButtonItem) {
         print("hello")
         let alertController = UIAlertController(title: "Create new playlist", message: "Enter name of playlist.", preferredStyle: UIAlertControllerStyle.Alert)
         
@@ -126,6 +211,27 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         presentViewController(alertController, animated: true, completion: nil)
         
     }
+    
+    func getLocationAndFetch(){
+        // SwiftLocation
+        do {
+            try SwiftLocation.shared.currentLocation(Accuracy.Neighborhood, timeout: 20, onSuccess: { (location) -> Void in
+                // location is a CLPlacemark
+                self.userlatitude = location?.coordinate.latitude
+                self.userlongitude = location?.coordinate.longitude
+                
+                self.fetchPlaylists()
+                
+                self.parameters["ll"] = String(self.userlatitude) + "," + String(self.userlongitude)
+                
+                print("1. Location found \(location?.description)")
+            }) { (error) -> Void in
+                print("1. Something went wrong -> \(error?.localizedDescription)")
+            }
+        } catch (let error) {
+            print("Error \(error)")
+        }
+    }
 
     func fetchPlaylists()
     {
@@ -138,6 +244,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlists_location = objects!
                     self.all_playlists.append(self.playlists_location)
+                    self.label_array.append("Playlists near me")
                     self.tableView.reloadData()
                     
                     let query2: PFQuery = PFQuery(className: "Playlists")
@@ -147,29 +254,34 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
                         if ((error) == nil)
                         {
                             dispatch_async(dispatch_get_main_queue(), {
-                                self.playlists_user = objects!
-                                self.all_playlists.append(self.playlists_user)
-                                self.tableView.reloadData()
+                                if (objects!.count != 0)
+                                {
+                                    self.playlists_user = objects!
+                                    self.all_playlists.append(self.playlists_user)
+                                    self.label_array.append("My playlists")
+                                    self.tableView.reloadData()
+                                }
                                 
                                 let query3 = PFUser.query()!
                                 query3.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
-                                print((PFUser.currentUser()?.username)!)
                                 query3.findObjectsInBackgroundWithBlock {(objects1: [PFObject]?, error: NSError?) -> Void in
                                     if ((error) == nil)
                                     {
-                                        print(objects1)
                                         dispatch_async(dispatch_get_main_queue(), {
-                                            let recentarray = objects1![0]["recentlyViewed"] as! [String]
-                                            let query4 = PFQuery(className: "Playlists")
-                                            query4.whereKey("objectId", containedIn: recentarray)
-                                            query4.findObjectsInBackgroundWithBlock {(objects2: [PFObject]?, error: NSError?) -> Void in
-                                                if ((error) == nil)
-                                                {
-                                                    dispatch_async(dispatch_get_main_queue(), {
-                                                        self.recent_playlists = objects2!
-                                                        self.all_playlists.append(self.recent_playlists)
-                                                        self.tableView.reloadData()
-                                                    })
+                                            if let recentarray = objects1![0]["recentlyViewed"] as? [String]
+                                            {
+                                                let query4 = PFQuery(className: "Playlists")
+                                                query4.whereKey("objectId", containedIn: recentarray)
+                                                query4.findObjectsInBackgroundWithBlock {(objects2: [PFObject]?, error: NSError?) -> Void in
+                                                    if ((error) == nil)
+                                                    {
+                                                        dispatch_async(dispatch_get_main_queue(), {
+                                                            self.recent_playlists = objects2!
+                                                            self.all_playlists.append(self.recent_playlists)
+                                                            self.label_array.append("Recently viewed")
+                                                            self.tableView.reloadData()
+                                                        })
+                                                    }
                                                 }
                                             }
                                         })
@@ -192,30 +304,30 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         }
     }
 
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let userLocation: CLLocation = locations[0]
-        
-        let latitude = userLocation.coordinate.latitude
-        let longitude = userLocation.coordinate.longitude
-        print(userLocation.coordinate)
-        userlatitude = latitude
-        userlongitude = longitude
-        
-        
-        fetchPlaylists()
-        
-        parameters["ll"] = String(latitude) + "," + String(longitude)
-    }
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        print(error.description)
-    }
-    
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == .AuthorizedWhenInUse
-        {
-            //print("Authorized")
-        }
-    }
+//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        let userLocation: CLLocation = locations[0]
+//        
+//        let latitude = userLocation.coordinate.latitude
+//        let longitude = userLocation.coordinate.longitude
+//        print(userLocation.coordinate)
+//        userlatitude = latitude
+//        userlongitude = longitude
+//        
+//        
+//        fetchPlaylists()
+//        
+//        parameters["ll"] = String(latitude) + "," + String(longitude)
+//    }
+//    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+//        print(error.description)
+//    }
+//    
+//    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+//        if status == .AuthorizedWhenInUse
+//        {
+//            //print("Authorized")
+//        }
+//    }
     
     func logInViewController(logInController: PFLogInViewController, shouldBeginLogInWithUsername username: String, password: String) -> Bool {
         if (!username.isEmpty || !password.isEmpty)
@@ -268,7 +380,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! TableViewCell
         cell.reloadCollectionView()
-        cell.titleLabel.text = label_array[indexPath.row]
+        cell.titleLabel.text = label_array[indexPath.row] as! String
         cell.titleLabel.textColor = appDefaults.color
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         return cell
@@ -294,30 +406,42 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
+        
         let tempobject = all_playlists[collectionView.tag][indexPath.row] as! PFObject
         cell.label.text = tempobject["playlistName"] as? String
+        
     
         //takes image of first business and uses it as icon for playlist
         
         if let business = tempobject["track"] as? [NSDictionary]{
             let businessdict = business[0]
-            let photoref = businessdict["photoReference"] as! String
-            cell.configureCell(photoref)
+            if let photoref = businessdict["photoReference"] as? String
+            {
+                cell.configureCell(photoref)
+            }
         }
+        
         return cell
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        self.row = collectionView.tag
-        self.col = indexPath.row
-        performSegueWithIdentifier("showPlaylist", sender: self)
+        //self.row = collectionView.tag
+        //self.col = indexPath.row
+        
+        // Perform Segue and Pass List Data
+        let controller = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
+        let temparray = all_playlists[collectionView.tag]
+        controller.object = temparray[indexPath.row] as! PFObject
+        self.navigationController!.pushViewController(controller, animated: true)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "showPlaylist")
-        {
-            let upcoming = segue.destinationViewController as? SinglePlaylistViewController
-            let temparray = all_playlists[row]
-            upcoming?.object = temparray[col] as! PFObject
-        }
+        override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if (segue.identifier == "showPlaylist")
+//        {
+//            let upcoming = segue.destinationViewController as? SinglePlaylistViewController
+//            let temparray = all_playlists[row]
+//            
+//            let navController: UINavigationController = self.navigationController!
+//            upcoming?.object = temparray[col] as! PFObject
+//        }
     }
 }
