@@ -433,22 +433,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tappedCollaborators(){
-        //performSegueWithIdentifier("showProfileView", sender: self)
-        let actionController = YoutubeActionController()
-        
-        actionController.addAction(Action(ActionData(title: "Add to Watch Later", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
-            
-        }))
-        actionController.addAction(Action(ActionData(title: "Add to Playlist...", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
-            
-        }))
-        actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-share-icon")!), style: .Default, handler: { action in
-        }))
-        actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
-        
-        presentViewController(actionController, animated: true, completion: nil)
-        
-
+        performSegueWithIdentifier("showProfileView", sender: self)
     }
 
     
@@ -470,19 +455,21 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-//        let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-//        cell.configureCellWith(playlistArray[indexPath.row]) {
-//            //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-//        }
+        let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
+        cell.configureCellWith(playlistArray[indexPath.row]) {
+            //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        }
         
-        var cell = UITableViewCell()
         
         switch contentToDisplay {
         case .Places:
-            cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-            //cell.textLabel?.text = "Tweet Tweet!"
+            let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
+            cell.configureCellWith(playlistArray[indexPath.row]) {
+                //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            }
             
         case .Comments:
+            var cell = UITableViewCell()
             cell.textLabel?.text = "Piccies!"
             cell.imageView?.image = UIImage(named: "header_bg")
         }

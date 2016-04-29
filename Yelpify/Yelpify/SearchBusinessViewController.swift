@@ -10,6 +10,7 @@ import UIKit
 import CoreLocation
 import Haneke
 import Parse
+import DGElasticPullToRefresh
 
 class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
@@ -93,27 +94,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
-    }
-    
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        print(error.description)
-    }
-    
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == .AuthorizedWhenInUse
-        {
-            print("Authorized")
-        }
-    }
-    
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let userLocation: CLLocation = locations[0]
-        
-        let latitude = userLocation.coordinate.latitude
-        let longitude = userLocation.coordinate.longitude
-        
-        googleParameters["location"] = String(latitude) + "," + String(longitude)
-        print(String(latitude) + "," + String(longitude))
     }
     
     func firstDictFromDict(dict: NSDictionary) -> NSDictionary{
@@ -226,7 +206,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     // MARK: - VIEWDIDLOAD
     
     override func viewDidLoad(){
-        getCurrentLocation()
+        //getCurrentLocation()
         
         ConfigureFunctions.configureStatusBar(self.navigationController!)
         ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)

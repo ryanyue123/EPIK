@@ -12,6 +12,7 @@ import Parse
 import CoreLocation
 import MapKit
 import SwiftLocation
+import DGElasticPullToRefresh
 
 struct playlist
 {
@@ -33,8 +34,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
+
         self.getLocationAndFetch()
         self.configureColors()
         self.configureHeaderView()
@@ -47,10 +47,24 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton
         
-//        locationManager.delegate = self
-//        locationManager.requestWhenInUseAuthorization()
-//        locationManager.requestLocation()
         
+        
+        // Pull to Refresh
+        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
+        loadingView.tintColor = UIColor.whiteColor()
+        tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+            // Add your logic here
+            self?.getLocationAndFetch()
+            // Do not forget to call dg_stopLoading() at the end
+            self?.tableView.dg_stopLoading()
+            }, loadingView: loadingView)
+        tableView.dg_setPullToRefreshFillColor(appDefaults.color_darker)
+        tableView.dg_setPullToRefreshBackgroundColor(appDefaults.color_darker)
+        
+    }
+    
+    deinit {
+        tableView.dg_removePullToRefresh()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -435,7 +449,8 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         self.navigationController!.pushViewController(controller, animated: true)
     }
     
-        override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
 //        if (segue.identifier == "showPlaylist")
 //        {
 //            let upcoming = segue.destinationViewController as? SinglePlaylistViewController
@@ -444,5 +459,11 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
 //            let navController: UINavigationController = self.navigationController!
 //            upcoming?.object = temparray[col] as! PFObject
 //        }
+    }
+    
+    override func segueForUnwindingToViewController(toViewController: UIViewController, fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
+        let segue = CustomUnwindSegue(identifier: identifier, source: fromViewController, destination: toViewController)
+        segue.animationType = .Push
+        return segue
     }
 }
