@@ -10,6 +10,11 @@ import UIKit
 
 class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var reviewTextView: UITextView!
+    @IBOutlet weak var reviewRating: UIImageView!
+    @IBOutlet weak var reviewName: UILabel!
+    @IBOutlet weak var reviewDate: UILabel!
+    @IBOutlet weak var reviewProfileImage: UIImageView!
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()
