@@ -127,7 +127,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         super.viewDidLoad()
         
         print((object["objectId"] as? String))
-        
+        self.addPlaceButton.hidden = true
         self.playlistTableView.backgroundColor = appDefaults.color
         //navigationItem.rightBarButtonItem = editButtonItem()
         
@@ -169,8 +169,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
         else
         {
-            self.addPlaceButton.hidden = true
-            print("hidden")
             self.view.reloadInputViews()
             self.convertParseArrayToBusinessArray(object["track"] as! [NSDictionary]) { (resultArray) in
                 
@@ -242,6 +240,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         super.viewDidLayoutSubviews()
         updateHeaderView()
     }
+    
+    
     
     // MARK: - Reload Data After Pass
     
