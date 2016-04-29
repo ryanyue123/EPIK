@@ -25,12 +25,18 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var ratingImageView: UIImageView!
     @IBOutlet weak var numOfReviewsLabel: UILabel!
     
+    var statusBarView: UIView!
+    var navBarShadowView: UIView!
+    var loadedStatusBar = false
+    var loadedNavBar = false
+    
     //var placePhoto: UIImage? = UIImage(named: "default_restaurant")
     let cache = Shared.dataCache
     var object: Business!
     var index: Int!
     
     var photoRefs = [String]()
+    var reviews = [String]()
     
     var APIClient = APIDataHandler()
     let gpClient = GooglePlacesAPIClient()
@@ -48,6 +54,15 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        self.navBarShadowView = ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+        // Configure status bar and set alpha to 0
+        self.statusBarView = ConfigureFunctions.configureStatusBar(self.navigationController!)
+        self.loadedStatusBar = true
+        self.loadedNavBar = true
+        
+        configureHeaderView()
+
         self.directionsButton.enabled = false
         self.callButton.enabled = false
         //self.webButton.enabled = false
@@ -58,6 +73,10 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             self.addressLabel.text = detailedGPlace.address
             self.directionsButton.enabled = true
             self.callButton.enabled = true
+            
+            if let reviewDict = detailedGPlace.reviews as? [NSDictionary] {
+                self.reviews = self.getReviewText(reviewDict)
+            }
             
             self.object.businessPhone = detailedGPlace.phone!
             
@@ -74,13 +93,26 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             if detailedGPlace.photos?.count > 0 {
                 self.setCoverPhoto(detailedGPlace.photos![0] as! String)
             }
+            
+            
+            self.tableView.reloadData()
         }
-        //configureNavigationBar()
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.loadedNavBar = true
+        self.loadedStatusBar = true
+        self.statusBarView.alpha = 0
+    }
+    
     override func viewDidAppear(animated: Bool) {
-        configureHeaderView()
+        //self.statusBarView.alpha = 0
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.loadedNavBar = false
+        self.loadedStatusBar = false
     }
     
     override func viewWillLayoutSubviews() {
@@ -93,6 +125,14 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         updateHeaderView()
     }
     
+    func getReviewText(reviewDict: [NSDictionary]) -> [String]{
+        var result: [String] = []
+        for review in reviewDict{
+            result.append(review["text"] as! String)
+        }
+        return result
+    }
+    
     // MARK: - Scroll View 
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -102,11 +142,11 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func fadeBG(){
-        print(-tableView.contentOffset.y / headerHeight)
+        //print(-tableView.contentOffset.y / headerHeight)
         self.darkOverlay.alpha = 1.6 - (-tableView.contentOffset.y / headerHeight)
         if self.darkOverlay.alpha < 0.6{ self.darkOverlay.alpha = 0.6 }
     }
-    
+
     func handleNavigationBarOnScroll(){
         let showWhenScrollDownAlpha = 1 - (-tableView.contentOffset.y / headerHeight)
         
@@ -114,31 +154,40 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(showWhenScrollDownAlpha) ]
         self.navigationItem.title = "details"
         
+        self.navigationController?.navigationBar.backgroundColor = appDefaults.color.colorWithAlphaComponent((showWhenScrollDownAlpha))
+        
         // Handle Status Bar
-        //self.statusBarView.alpha = showWhenScrollDownAlpha
+        //let statusBarView = self.view.viewWithTag(100)
+        
+        if loadedStatusBar == true{
+            statusBarView.alpha = showWhenScrollDownAlpha
+        }
         
         // Handle Nav Shadow View
-        self.view.viewWithTag(102)!.backgroundColor = appDefaults.color.colorWithAlphaComponent(showWhenScrollDownAlpha)
+        if loadedNavBar == true{
+            self.navBarShadowView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(showWhenScrollDownAlpha)
+        }
+        //self.view.viewWithTag(102)!.backgroundColor = appDefaults.color.colorWithAlphaComponent(showWhenScrollDownAlpha)
     }
 
     
     // MARK: - Setup Views
     
-    private let headerHeight: CGFloat = 300.0
+    private let headerHeight: CGFloat = 320.0
     
-    func configureNavigationBar(){
-        addShadowToBar()
-        for parent in self.navigationController!.navigationBar.subviews {
-            for childView in parent.subviews {
-                if(childView is UIImageView) {
-                    childView.removeFromSuperview()
-                }
-            }
-        }
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-
-    }
+//    func configureNavigationBar(){
+//        addShadowToBar()
+//        for parent in self.navigationController!.navigationBar.subviews {
+//            for childView in parent.subviews {
+//                if(childView is UIImageView) {
+//                    childView.removeFromSuperview()
+//                }
+//            }
+//        }
+//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
+//        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+//
+//    }
     
     func configureHeaderView(){
         tableView.tableHeaderView = nil
@@ -187,14 +236,6 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             self.placePhotoImageView.alpha = 1
             //self.placePhotoImageView.image = image
         }
-        
-//        self.gpClient.getImageFromPhotoReference(photoRefArray[0] as! String, completion: { (key) in
-//            print("downloading image")
-//            self.cache.fetch(key: photoRefArray[0] as! String){ (imageData) in
-//                print("Grabbing image")
-//                self.placePhotoImageView.image = UIImage(data: imageData)
-//            }
-//        })
     }
     
     func fadeOutImage(imageView: UIImageView, endAlpha: CGFloat = 0.0){
@@ -282,11 +323,13 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     
     // MARK: - Table View Functions
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.reviews.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reviewCell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("reviewCell", forIndexPath: indexPath) as! CommentTableViewCell
+        let review = self.reviews[indexPath.row]
+        cell.configureCell(review)
         return cell
 
     }

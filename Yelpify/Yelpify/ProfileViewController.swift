@@ -22,7 +22,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func fetchUserData()
     {
-        let query = PFQuery(className: "User")
+        let query = PFUser.query()!
         query.whereKey("username", equalTo: username)
         query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
             if ((error) == nil)
