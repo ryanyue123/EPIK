@@ -25,6 +25,11 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var ratingImageView: UIImageView!
     @IBOutlet weak var numOfReviewsLabel: UILabel!
     
+    var statusBarView: UIView!
+    var navBarShadowView: UIView!
+    var loadedStatusBar = false
+    var loadedNavBar = false
+    
     //var placePhoto: UIImage? = UIImage(named: "default_restaurant")
     let cache = Shared.dataCache
     var object: Business!
@@ -49,6 +54,15 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        self.navBarShadowView = ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+        // Configure status bar and set alpha to 0
+        self.statusBarView = ConfigureFunctions.configureStatusBar(self.navigationController!)
+        self.loadedStatusBar = true
+        self.loadedNavBar = true
+        
+        configureHeaderView()
+
         self.directionsButton.enabled = false
         self.callButton.enabled = false
         //self.webButton.enabled = false
@@ -83,14 +97,22 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             
             self.tableView.reloadData()
         }
-        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
-        //configureNavigationBar()
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.loadedNavBar = true
+        self.loadedStatusBar = true
+        self.statusBarView.alpha = 0
+    }
+    
     override func viewDidAppear(animated: Bool) {
-        configureHeaderView()
-        ConfigureFunctions.configureStatusBar(self.navigationController!)
+        //self.statusBarView.alpha = 0
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.loadedNavBar = false
+        self.loadedStatusBar = false
     }
     
     override func viewWillLayoutSubviews() {
@@ -120,7 +142,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func fadeBG(){
-        print(-tableView.contentOffset.y / headerHeight)
+        //print(-tableView.contentOffset.y / headerHeight)
         self.darkOverlay.alpha = 1.6 - (-tableView.contentOffset.y / headerHeight)
         if self.darkOverlay.alpha < 0.6{ self.darkOverlay.alpha = 0.6 }
     }
@@ -136,30 +158,36 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         
         // Handle Status Bar
         //let statusBarView = self.view.viewWithTag(100)
-        //statusBarView!.alpha = showWhenScrollDownAlpha
+        
+        if loadedStatusBar == true{
+            statusBarView.alpha = showWhenScrollDownAlpha
+        }
         
         // Handle Nav Shadow View
+        if loadedNavBar == true{
+            self.navBarShadowView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(showWhenScrollDownAlpha)
+        }
         //self.view.viewWithTag(102)!.backgroundColor = appDefaults.color.colorWithAlphaComponent(showWhenScrollDownAlpha)
     }
 
     
     // MARK: - Setup Views
     
-    private let headerHeight: CGFloat = 300.0
+    private let headerHeight: CGFloat = 320.0
     
-    func configureNavigationBar(){
-        addShadowToBar()
-        for parent in self.navigationController!.navigationBar.subviews {
-            for childView in parent.subviews {
-                if(childView is UIImageView) {
-                    childView.removeFromSuperview()
-                }
-            }
-        }
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-
-    }
+//    func configureNavigationBar(){
+//        addShadowToBar()
+//        for parent in self.navigationController!.navigationBar.subviews {
+//            for childView in parent.subviews {
+//                if(childView is UIImageView) {
+//                    childView.removeFromSuperview()
+//                }
+//            }
+//        }
+//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
+//        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+//
+//    }
     
     func configureHeaderView(){
         tableView.tableHeaderView = nil
@@ -208,14 +236,6 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             self.placePhotoImageView.alpha = 1
             //self.placePhotoImageView.image = image
         }
-        
-//        self.gpClient.getImageFromPhotoReference(photoRefArray[0] as! String, completion: { (key) in
-//            print("downloading image")
-//            self.cache.fetch(key: photoRefArray[0] as! String){ (imageData) in
-//                print("Grabbing image")
-//                self.placePhotoImageView.image = UIImage(data: imageData)
-//            }
-//        })
     }
     
     func fadeOutImage(imageView: UIImageView, endAlpha: CGFloat = 0.0){
