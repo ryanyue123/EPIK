@@ -207,10 +207,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     override func viewDidAppear(animated: Bool) {
-        playlistInfoView.frame.size.height = 350.0
-        playlistTableHeaderHeight = playlistInfoView.frame.size.height
-        //print(playlistInfoView.frame.size.height)
-        configurePlaylistInfoView()
+        print("viewDidAppear")
     }
     
     override func viewWillAppear(animated: Bool) {
