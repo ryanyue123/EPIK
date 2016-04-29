@@ -28,7 +28,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var darkOverlay: UIView!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -74,6 +74,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
             self.presentViewController(logInViewController, animated: true, completion: nil)
             
         }
+        self.tableView.reloadData()
     }
     
     override func viewWillLayoutSubviews() {
@@ -414,8 +415,10 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         
         if let business = tempobject["track"] as? [NSDictionary]{
             let businessdict = business[0]
-            let photoref = businessdict["photoReference"] as! String
-            cell.configureCell(photoref)
+            if let photoref = businessdict["photoReference"] as? String
+            {
+                cell.configureCell(photoref)
+            }
         }
         
         return cell
