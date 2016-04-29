@@ -54,11 +54,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     var viewDisappearing = false
     
-    @IBAction func addPlaceButtonAction(sender: AnyObject)
-    {
-        
-    }
-    
     @IBAction func editPlaylistButtonAction(sender: AnyObject) {
         
         //performSegueWithIdentifier("showActionsMenu", sender: self)
