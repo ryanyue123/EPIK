@@ -17,8 +17,8 @@ struct ConfigureFunctions {
         navController.view.addSubview(statusBarView)
     }
     
-    static func configureNavigationBar(navController: UINavigationController, outterView: UIView){
-        func addShadowToBar() {
+    static func configureNavigationBar(navController: UINavigationController, outterView: UIView) -> UIView{
+        func addShadowToBar() -> UIView {
             let shadowView = UIView(frame: navController.navigationBar.frame)
             shadowView.layer.masksToBounds = false
             shadowView.layer.shadowOpacity = 0.7 // your opacity
@@ -28,9 +28,8 @@ struct ConfigureFunctions {
             //outterView.bringSubviewToFront(statusBarView)
             
             shadowView.tag = 100
+            return shadowView
         }
-        
-        addShadowToBar()
         
         for parent in navController.navigationBar.subviews {
             for childView in parent.subviews {
@@ -42,5 +41,7 @@ struct ConfigureFunctions {
         
         navController.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
         navController.navigationBar.backgroundColor = appDefaults.color
+        
+        return addShadowToBar()
     }
 }

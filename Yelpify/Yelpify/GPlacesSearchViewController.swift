@@ -102,17 +102,6 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
         
         customSearchController.customDelegate = self
         
-//        // NAV SEARCH BAR
-//        customSearchPlaceController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, (self.navigationController?.navigationBar.frame.size.width)!, 44.0), searchBarFont: UIFont(name: "Futura", size: 16.0)!, searchBarTextColor: UIColor.orangeColor(), searchBarTintColor: UIColor.blackColor())
-//        
-//        customSearchPlaceController.customSearchBar.showsCancelButton = false
-//        customSearchPlaceController.customSearchBar.showsScopeBar = false
-//        customSearchPlaceController.customSearchBar.placeholder = "Search Places"
-//        
-//        customSearchPlaceController.customDelegate = self
-//        
-//        self.navigationItem.titleView = customSearchPlaceController.customSearchBar
-        
     }
     
     func didStartSearching() {
