@@ -11,6 +11,7 @@
 // Save data to Business Object
 
 import Foundation
+import UIKit
 
 struct debugPrint{
     static var RAW_GOOGLE_JSON = false
@@ -139,6 +140,15 @@ class APIDataHandler {
         
         }
     }
+    
+    
+    private func getDataFromUrl(url: NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
+        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
+            completion(data: data, response: response, error: error)
+            }.resume()
+    }
+    
+    
 //    
 //    // Gets Yelp ID with Business Object // Returns ID
 //    func getYelpID(business: Business, completion: (yelpID: String) -> Void){
@@ -388,6 +398,8 @@ class APIDataHandler {
                             placePhotoRef = photos[0]["photo_reference"] as! String
                         }
                         
+                        var placeRating = place["rating"] as! Double
+                        
                         var placeLat: Double?
                         var placeLng: Double?
                         if let placeGeometry = place["geometry"] as? NSDictionary{
@@ -401,7 +413,7 @@ class APIDataHandler {
                         //let placeObject = GooglePlace(id: placeID, name: placeName, address: placeAddress, photoRef: placePhotoRef)
                         
                         // Create Business Object
-                        let businessObject = Business(name: placeName, address: placeAddress, city: nil, zip: nil, phone: nil, imageURL: nil, photoRef: placePhotoRef, latitude: placeLat, longitude: placeLng, distance: nil, rating: nil, categories: nil, status: nil, businessID: nil, placeID: placeID)
+                        let businessObject = Business(name: placeName, address: placeAddress, city: nil, zip: nil, phone: nil, imageURL: nil, photoRef: placePhotoRef, latitude: placeLat, longitude: placeLng, distance: nil, rating: placeRating, categories: nil, status: nil, businessID: nil, placeID: placeID)
                         
                         arrayOfBusinesses.append(businessObject)
                         

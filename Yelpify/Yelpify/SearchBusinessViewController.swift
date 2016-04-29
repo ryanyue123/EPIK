@@ -10,6 +10,7 @@ import UIKit
 import CoreLocation
 import Haneke
 import Parse
+import DGElasticPullToRefresh
 
 class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
@@ -95,27 +96,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         locationManager.requestLocation()
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        print(error.description)
-    }
-    
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == .AuthorizedWhenInUse
-        {
-            print("Authorized")
-        }
-    }
-    
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let userLocation: CLLocation = locations[0]
-        
-        let latitude = userLocation.coordinate.latitude
-        let longitude = userLocation.coordinate.longitude
-        
-        googleParameters["location"] = String(latitude) + "," + String(longitude)
-        print(String(latitude) + "," + String(longitude))
-    }
-    
     func firstDictFromDict(dict: NSDictionary) -> NSDictionary{
         let key = dict.allKeys[0] as! String
         return dict[key] as! NSDictionary
@@ -145,7 +125,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     @IBOutlet weak var tableView: UITableView!
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        cell.backgroundColor = appDefaults.color
+        cell.backgroundColor = UIColor.whiteColor()
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -226,13 +206,17 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     // MARK: - VIEWDIDLOAD
     
     override func viewDidLoad(){
-        getCurrentLocation()
+        //getCurrentLocation()
         
-        // Set up Nav Bar
-        self.navigationController?.navigationBar.backgroundColor = appDefaults.color
-        self.navigationController?.navigationItem.titleView?.tintColor = UIColor.whiteColor()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        self.tableView.backgroundColor = appDefaults.color
+        ConfigureFunctions.configureStatusBar(self.navigationController!)
+        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+        tableView.contentInset = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
+        
+//        // Set up Nav Bar
+//        self.navigationController?.navigationBar.backgroundColor = appDefaults.color
+//        self.navigationController?.navigationItem.titleView?.tintColor = UIColor.whiteColor()
+//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.tableView.backgroundColor = appDefaults.color_bg
         
         // Performs an API search and returns a master array of businesses (as dictionaries)
         performInitialSearch()
