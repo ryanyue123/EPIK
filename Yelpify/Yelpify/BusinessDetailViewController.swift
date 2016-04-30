@@ -79,8 +79,6 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             self.directionsButton.enabled = true
             self.callButton.enabled = true
             
-            
-            
             self.reviewArray = detailedGPlace.reviews!
             
             self.object.businessPhone = detailedGPlace.phone!
@@ -186,7 +184,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     
     // MARK: - Setup Views
     
-    private let headerHeight: CGFloat = 320.0
+    private let headerHeight: CGFloat = 350.0
     
 //    func configureNavigationBar(){
 //        addShadowToBar()

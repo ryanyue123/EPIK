@@ -3151,12 +3151,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="115"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="This place sucks." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="N22-ZU-hHT">
-                                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                    <dataDetectorType key="dataDetectorTypes" link="YES" address="YES"/>
-                                                </textView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tXk-xX-VMT">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                     <constraints>
@@ -3213,6 +3207,12 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="This place sucks." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="N22-ZU-hHT">
+                                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    <dataDetectorType key="dataDetectorTypes" link="YES" address="YES"/>
+                                                </textView>
                                             </subviews>
                                             <color key="backgroundColor" red="0.89543876259999999" green="0.89543876259999999" blue="0.89543876259999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
@@ -3231,11 +3231,11 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="subviews">
-                                                    <exclude reference="N22-ZU-hHT"/>
                                                     <exclude reference="tXk-xX-VMT"/>
                                                     <exclude reference="Xb5-dW-2oc"/>
                                                     <exclude reference="ty9-n7-7fY"/>
                                                     <exclude reference="c44-MP-uAS"/>
+                                                    <exclude reference="N22-ZU-hHT"/>
                                                 </mask>
                                                 <mask key="constraints">
                                                     <exclude reference="fdK-TA-Htm"/>
@@ -3254,11 +3254,11 @@
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact">
                                                 <mask key="subviews">
-                                                    <include reference="N22-ZU-hHT"/>
                                                     <include reference="tXk-xX-VMT"/>
                                                     <include reference="Xb5-dW-2oc"/>
                                                     <include reference="ty9-n7-7fY"/>
                                                     <include reference="c44-MP-uAS"/>
+                                                    <include reference="N22-ZU-hHT"/>
                                                 </mask>
                                                 <mask key="constraints">
                                                     <include reference="fdK-TA-Htm"/>
@@ -3774,9 +3774,6 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="0.0" width="400" height="751"/>
-                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="p6T-7v-0MJ" id="Ogb-0B-VBi"/>
                                     <outlet property="delegate" destination="p6T-7v-0MJ" id="bKg-sw-gJr"/>
@@ -3820,26 +3817,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BGj-Xk-T2S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5634" y="141"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="VLW-qf-gpH">
-            <objects>
-                <navigationController id="oA8-ZO-KJa" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="CtG-Jb-paR">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="TCM-Sp-fgi">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
-                    <connections>
-                        <segue destination="p6T-7v-0MJ" kind="relationship" relationship="rootViewController" id="18f-YE-Dld"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="l5g-GF-H2X" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="7338" y="-131.25"/>
+            <point key="canvasLocation" x="6090" y="1458"/>
         </scene>
         <!--Login-->
         <scene sceneID="dNT-ql-eCM">
@@ -3948,6 +3926,7 @@
                         <segue destination="jt5-0Y-Stx" kind="relationship" relationship="viewControllers" id="cFj-4h-kKI"/>
                         <segue destination="UL9-SW-wCG" kind="relationship" relationship="viewControllers" id="Enr-Xq-AeH"/>
                         <segue destination="2rv-6j-pkH" kind="relationship" relationship="viewControllers" id="eaO-2O-M9H"/>
+                        <segue destination="lUk-Ja-IgE" kind="relationship" relationship="viewControllers" id="327-to-bmV"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cy4-wy-XfY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4006,6 +3985,28 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xPO-lb-3Lj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3288" y="1252.5"/>
+        </scene>
+        <!--Profile-->
+        <scene sceneID="GRH-7c-r96">
+            <objects>
+                <navigationController id="lUk-Ja-IgE" customClass="RAM" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Profile" image="bucket" id="ih0-Hj-8GE" customClass="RAMAnimatedTabBarItem" customModule="RAMAnimatedTabBarController">
+                        <connections>
+                            <outlet property="animation" destination="0yi-rr-RK0" id="Tb2-Oe-hsJ"/>
+                        </connections>
+                    </tabBarItem>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Nnj-EQ-brK">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="p6T-7v-0MJ" kind="relationship" relationship="rootViewController" id="AX2-eb-7Av"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g5y-ZW-WqI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="0yi-rr-RK0" customClass="RAMBounceAnimation" customModule="RAMAnimatedTabBarController"/>
+            </objects>
+            <point key="canvasLocation" x="2430" y="1922.25"/>
         </scene>
         <!--More-->
         <scene sceneID="3th-nw-LQy">
@@ -4067,6 +4068,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="Enr-Xq-AeH"/>
         <segue reference="5FV-hX-NA6"/>
-        <segue reference="1RX-FS-Umm"/>
+        <segue reference="AX2-eb-7Av"/>
     </inferredMetricsTieBreakers>
 </document>

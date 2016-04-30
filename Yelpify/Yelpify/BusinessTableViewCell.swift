@@ -31,6 +31,7 @@ class BusinessTableViewCell: UITableViewCell {
         businessAddressLabel.text = business.businessAddress
         //self.backgroundColor = UIColor(netHex:0x000000)
         //setCellColor()
+        print(business.businessRating)
         
         self.businessBackgroundImage.image = UIImage(named:"default_restaurant")
         
