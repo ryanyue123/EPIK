@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="14S-FV-tcl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="xiI-OX-0fu">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -403,7 +403,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HhQ-rl-3l8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3390" y="-338.25"/>
+            <point key="canvasLocation" x="4308" y="-338.25"/>
         </scene>
         <!--singlePlaylistVC-->
         <scene sceneID="8Ni-Nh-s1P">
@@ -1379,7 +1379,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bt3-DI-9NP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4197" y="-350.25"/>
+            <point key="canvasLocation" x="5115" y="-350.25"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pbW-sH-FoZ">
@@ -1599,6 +1599,7 @@
         <!--Youtube Example View Controller-->
         <scene sceneID="jse-V4-Wft">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zac-32-lIF" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="oNx-ac-Gyd" customClass="YoutubeExampleViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7d3-9y-w29"/>
@@ -1611,9 +1612,6 @@
                             <view contentMode="scaleAspectFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rsq-3e-4zY" userLabel="Info View">
                                 <rect key="frame" x="0.0" y="64" width="600" height="258"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="restaurantImage - InNOut" translatesAutoresizingMaskIntoConstraints="NO" id="l7i-6u-s9W">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="258"/>
-                                    </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Explore Irvine" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="la8-R5-z1h">
                                         <rect key="frame" x="109" y="73" width="382" height="40"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="31"/>
@@ -1804,6 +1802,9 @@
                                             </mask>
                                         </variation>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="restaurantImage - InNOut" translatesAutoresizingMaskIntoConstraints="NO" id="l7i-6u-s9W">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="258"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -2087,41 +2088,13 @@
                         </variation>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Zac-32-lIF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3903" y="-1093.5"/>
-        </scene>
-        <!--Alert View Controller-->
-        <scene sceneID="eLD-vR-5lT">
-            <objects>
-                <viewController id="14S-FV-tcl" customClass="AlertViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="VZv-DZ-pmM"/>
-                        <viewControllerLayoutGuide type="bottom" id="k9E-KO-jSY"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Q3j-yM-g3X">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dmb-OM-k3s">
-                                <rect key="frame" x="207" y="383" width="163" height="64"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="Alert"/>
-                                <connections>
-                                    <action selector="warningAlert:" destination="14S-FV-tcl" eventType="touchUpInside" id="ZFn-nR-4Ja"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zhC-9R-Xgb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3113" y="-1056"/>
         </scene>
         <!--Youtube View Controller-->
         <scene sceneID="UKU-p0-63O">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cjJ-Dg-qHd" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="egs-ot-3ly" customClass="YoutubeViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="w9Q-GC-PVy"/>
@@ -2143,7 +2116,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cjJ-Dg-qHd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4887" y="-1227"/>
         </scene>
@@ -2426,7 +2398,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wJO-Js-5jv" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="nyU-rd-931" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5124" y="438"/>
+            <point key="canvasLocation" x="6042" y="438"/>
         </scene>
         <!--Business Detail View Controller-->
         <scene sceneID="9Yv-IZ-Ip6">
@@ -2960,7 +2932,7 @@
                     </variation>
                 </view>
             </objects>
-            <point key="canvasLocation" x="6000" y="438"/>
+            <point key="canvasLocation" x="6918" y="438"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="jSs-Z0-YPM">
@@ -3410,6 +3382,9 @@
                                 <state key="normal" title="Sign-up">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <segue destination="Ugk-eq-0xQ" kind="show" id="7cx-ch-hza"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="V6w-fD-Uvy">
                                 <rect key="frame" x="170" y="234" width="260" height="30"/>
@@ -3453,6 +3428,7 @@
                             <constraint firstItem="cJE-nc-3SC" firstAttribute="leading" secondItem="vPR-xK-jY5" secondAttribute="leading" constant="180" id="zE8-Ei-90Q"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="9Y3-Id-SQG"/>
                     <connections>
                         <outlet property="fbLogin" destination="dUl-62-egp" id="5F4-On-bYn"/>
                         <outlet property="passwordField" destination="vPR-xK-jY5" id="eum-3q-X4q"/>
@@ -3462,25 +3438,93 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sma-fD-tWU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="696" y="-24.75"/>
+            <point key="canvasLocation" x="1614" y="-24.75"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="ffm-cJ-cwB">
+        <!--Sign Up View Controller-->
+        <scene sceneID="1Fm-eu-HZw">
             <objects>
-                <viewController id="isW-yh-HIE" sceneMemberID="viewController">
+                <viewController id="Ugk-eq-0xQ" customClass="SignUpViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="SKO-C0-Oye"/>
-                        <viewControllerLayoutGuide type="bottom" id="KgI-vv-Ltt"/>
+                        <viewControllerLayoutGuide type="top" id="YmK-rw-gHc"/>
+                        <viewControllerLayoutGuide type="bottom" id="Bx5-h1-y45"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="7zF-yu-LX7">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <view key="view" contentMode="scaleToFill" id="ooh-lw-KKw">
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Cs-zD-tTh">
+                                <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="32" y="233" width="336" height="30"/>
+                                </variation>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V0K-cu-y9c">
+                                <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="32" y="195" width="336" height="30"/>
+                                </variation>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dnr-kg-0uW">
+                                <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="32" y="309" width="336" height="30"/>
+                                </variation>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Co3-qm-SEs">
+                                <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="32" y="347" width="336" height="30"/>
+                                </variation>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b14-0T-iTK">
+                                <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="32" y="271" width="336" height="30"/>
+                                </variation>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ylV-AK-bTB">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="177" y="385" width="46" height="30"/>
+                                </variation>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="7Cs-zD-tTh"/>
+                                <exclude reference="V0K-cu-y9c"/>
+                                <exclude reference="Dnr-kg-0uW"/>
+                                <exclude reference="Co3-qm-SEs"/>
+                                <exclude reference="b14-0T-iTK"/>
+                                <exclude reference="ylV-AK-bTB"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="7Cs-zD-tTh"/>
+                                <include reference="V0K-cu-y9c"/>
+                                <include reference="Dnr-kg-0uW"/>
+                                <include reference="Co3-qm-SEs"/>
+                                <include reference="b14-0T-iTK"/>
+                                <include reference="ylV-AK-bTB"/>
+                            </mask>
+                        </variation>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="AAo-ty-WbA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qi1-GZ-36m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="457.5" y="1599.75"/>
+            <point key="canvasLocation" x="2466" y="-24.75"/>
         </scene>
         <!--Initial View Controller-->
         <scene sceneID="2QV-5Z-yaI">
@@ -3497,7 +3541,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="FQn-ic-O8W"/>
                     <connections>
-                        <segue destination="wjg-5v-mT1" kind="presentation" identifier="loginscreen" id="kiL-Kg-cmL"/>
+                        <segue destination="BGQ-qQ-TBQ" kind="presentation" identifier="loginscreen" id="kiL-Kg-cmL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Pf-nX-Tue" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3610,7 +3654,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DUF-NC-Z7t" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="iE6-KI-8kj" customClass="RAMBounceAnimation" customModule="RAMAnimatedTabBarController"/>
             </objects>
-            <point key="canvasLocation" x="4188" y="438"/>
+            <point key="canvasLocation" x="5106" y="438"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="ilR-KH-oAo">
@@ -3707,7 +3751,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MkK-fe-4us" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="UqR-z2-KXx" customClass="RAMLeftRotationAnimation" customModule="RAMAnimatedTabBarController"/>
             </objects>
-            <point key="canvasLocation" x="2343" y="-272.25"/>
+            <point key="canvasLocation" x="3261" y="-272.25"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="av7-Yi-gCu">
@@ -3745,6 +3789,24 @@
             </objects>
             <point key="canvasLocation" x="-72" y="798.75"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="8uF-3w-IPN">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BGQ-qQ-TBQ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="zwV-kI-zXg">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="wjg-5v-mT1" kind="relationship" relationship="rootViewController" id="fep-Kx-YrG"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vrM-o5-uvE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="696" y="-24.75"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Favorite Icon" width="500" height="500"/>
@@ -3758,8 +3820,8 @@
         <image name="temp_rating" width="149" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="AX2-eb-7Av"/>
         <segue reference="5FV-hX-NA6"/>
-        <segue reference="1RX-FS-Umm"/>
         <segue reference="p83-lZ-EZB"/>
     </inferredMetricsTieBreakers>
 </document>

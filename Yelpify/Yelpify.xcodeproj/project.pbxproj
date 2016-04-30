@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3C2F1C7B1CD468020081CEFA /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2F1C7A1CD468020081CEFA /* InitialViewController.swift */; };
+		3C7C56451CD479EF009D8B34 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7C56441CD479EF009D8B34 /* SignUpViewController.swift */; };
 		3CB8D45C1CBB575F00870F38 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB8D45B1CBB575F00870F38 /* CollectionViewCell.swift */; };
 		3CBFD89B1CD42A7900290F25 /* SearchPlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBFD89A1CD42A7900290F25 /* SearchPlaylistViewController.swift */; };
 		3CBFD89D1CD4355900290F25 /* SearchPlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBFD89C1CD4355900290F25 /* SearchPlaylistCell.swift */; };
@@ -75,8 +76,6 @@
 		ED52E64F1CCB2E0300CEBAE2 /* YoutubeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED52E64C1CCB2E0300CEBAE2 /* YoutubeViewController.swift */; };
 		EDA8CEF51CAF506400A5C2ED /* SortMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA8CEF41CAF506400A5C2ED /* SortMethods.swift */; };
 		EDD44DAD1CB4BA31008DC4AB /* RandomPlaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD44DAC1CB4BA31008DC4AB /* RandomPlaceController.swift */; };
-		EDF405AC1CD46339000526BE /* SweetAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF405AB1CD46339000526BE /* SweetAlertViewController.swift */; };
-		EDF405AE1CD46628000526BE /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF405AD1CD46628000526BE /* AlertViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +97,7 @@
 
 /* Begin PBXFileReference section */
 		3C2F1C7A1CD468020081CEFA /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InitialViewController.swift; path = ../InitialViewController.swift; sourceTree = "<group>"; };
+		3C7C56441CD479EF009D8B34 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		3CB8D45B1CBB575F00870F38 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionViewCell.swift; path = Yelpify/CollectionViewCell.swift; sourceTree = "<group>"; };
 		3CBFD89A1CD42A7900290F25 /* SearchPlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlaylistViewController.swift; sourceTree = "<group>"; };
 		3CBFD89C1CD4355900290F25 /* SearchPlaylistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchPlaylistCell.swift; path = Yelpify/SearchPlaylistCell.swift; sourceTree = "<group>"; };
@@ -179,8 +179,6 @@
 		EDBAE5C11C8E49A900278A33 /* Publisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
 		EDBAE5C31C8E4C1C00278A33 /* Publishers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publishers.swift; sourceTree = "<group>"; };
 		EDD44DAC1CB4BA31008DC4AB /* RandomPlaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomPlaceController.swift; sourceTree = "<group>"; };
-		EDF405AB1CD46339000526BE /* SweetAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetAlertViewController.swift; sourceTree = "<group>"; };
-		EDF405AD1CD46628000526BE /* AlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -313,6 +311,7 @@
 				90E505E31C8E946700F47285 /* CustomSearchBar.swift */,
 				EDD44DAC1CB4BA31008DC4AB /* RandomPlaceController.swift */,
 				ED405A0F1CC1D03C0017A9AB /* LoginViewController.swift */,
+				3C7C56441CD479EF009D8B34 /* SignUpViewController.swift */,
 				3C2F1C7A1CD468020081CEFA /* InitialViewController.swift */,
 			);
 			name = "View Controllers";
@@ -631,7 +630,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				90DC57BC1C72A1D0001F1891 /* SearchBusinessViewController.swift in Sources */,
-				EDF405AE1CD46628000526BE /* AlertViewController.swift in Sources */,
 				90C177DB1CCB5B4A007344CE /* TableChildExampleViewController.swift in Sources */,
 				3CD034511CBA122A00675F88 /* TableViewController.swift in Sources */,
 				90F34CDF1CB0893300CC0870 /* SinglePlaylistViewController.swift in Sources */,
@@ -643,7 +641,6 @@
 				90C96AAE1CCAF72B00E9EC28 /* ConfigureFunctions.swift in Sources */,
 				9038B75E1CBCD041004B220B /* ActionsViewController.swift in Sources */,
 				3CBFD89D1CD4355900290F25 /* SearchPlaylistCell.swift in Sources */,
-				EDF405AC1CD46339000526BE /* SweetAlertViewController.swift in Sources */,
 				3CD0344F1CBA121300675F88 /* TableViewCell.swift in Sources */,
 				907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */,
 				907E0CE71C77F34100872135 /* GooglePlacesAPIClient.swift in Sources */,
@@ -652,6 +649,7 @@
 				90C177E01CCB5B85007344CE /* PostCell.swift in Sources */,
 				90C177DA1CCB5B4A007344CE /* ChildExampleViewController.swift in Sources */,
 				90C177D41CCB50A6007344CE /* YoutubeExampleViewController.swift in Sources */,
+				3C7C56451CD479EF009D8B34 /* SignUpViewController.swift in Sources */,
 				3CBFD89B1CD42A7900290F25 /* SearchPlaylistViewController.swift in Sources */,
 				EDA8CEF51CAF506400A5C2ED /* SortMethods.swift in Sources */,
 				90DC57B91C72843A001F1891 /* YelpAPIClient.swift in Sources */,

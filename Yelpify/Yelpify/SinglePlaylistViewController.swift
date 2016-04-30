@@ -479,6 +479,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         switch contentToDisplay {
         case .Places:
             let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
+            print(playlistArray[indexPath.row].businessRating)
             cell.configureCellWith(playlistArray[indexPath.row]) {
                 //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             }
