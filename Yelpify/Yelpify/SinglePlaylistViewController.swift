@@ -120,7 +120,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
         
@@ -500,12 +500,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 //        }
         
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-        
-        //cell.delegate = self //optional
-        
-     
-        
-        
+
         switch contentToDisplay {
         case .Places:
             let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell

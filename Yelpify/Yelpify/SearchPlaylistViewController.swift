@@ -8,18 +8,40 @@
 
 import UIKit
 import Parse
-class SearchPlaylistViewController: UITableViewController, UITextFieldDelegate {
+import XLPagerTabStrip
 
-    @IBOutlet weak var textField: UITextField!
+class SearchPlaylistViewController: UITableViewController, UITextFieldDelegate, IndicatorInfoProvider {
+    
+    var itemInfo: IndicatorInfo = "Lists"
+    
+    var textField: UITextField!
+    
+    init(style: UITableViewStyle, itemInfo: IndicatorInfo, textField: UITextField) {
+        self.textField = textField
+        self.itemInfo = itemInfo
+        super.init(style: style)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        //fatalError("init(coder:) has not been implemented")
+    }
+    
+    func indicatorInfoForPagerTabStrip(pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return itemInfo
+    }
+
+    //@IBOutlet weak var textField: UITextField!
     var playlist_query = [PFObject]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         textField.delegate = self
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -33,6 +55,7 @@ class SearchPlaylistViewController: UITableViewController, UITextFieldDelegate {
         // #warning Incomplete implementation, return the number of rows
         return self.playlist_query.count
     }
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         searchForPlaylistWithName()
         self.textField.endEditing(true)

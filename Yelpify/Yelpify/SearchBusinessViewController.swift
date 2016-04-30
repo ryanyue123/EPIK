@@ -11,8 +11,11 @@ import CoreLocation
 import Haneke
 import Parse
 import DGElasticPullToRefresh
+import XLPagerTabStrip
 
-class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
+class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, IndicatorInfoProvider  {
+    
+    var itemInfo: IndicatorInfo = "Places"
     
     // MARK: - GLOBAL VARIABLES
     //var yelpClient = YelpAPIClient()
@@ -27,6 +30,28 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var searchQuery = ""
     
     // MARK: - OUTLETS
+    
+    func indicatorInfoForPagerTabStrip(pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return itemInfo
+    }
+    
+//    
+//    var itemInfo: IndicatorInfo = "Places"
+//    
+//    init(itemInfo: IndicatorInfo) {
+//        self.itemInfo = itemInfo
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//    
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//        //fatalError("init(coder:) has not been implemented")
+//    }
+//    
+//    func indicatorInfoForPagerTabStrip(pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+//        return itemInfo
+//    }
+//
     
     @IBAction func searchWithGPlaces(sender: AnyObject) {
     }
@@ -210,7 +235,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         
         ConfigureFunctions.configureStatusBar(self.navigationController!)
         ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
-        tableView.contentInset = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
         
 //        // Set up Nav Bar
 //        self.navigationController?.navigationBar.backgroundColor = appDefaults.color
@@ -221,6 +245,26 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         // Performs an API search and returns a master array of businesses (as dictionaries)
         performInitialSearch()
         playlistArray.removeAll()
+        
+        // Pull to Refresh
+        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
+        loadingView.tintColor = UIColor.whiteColor()
+        tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+            // Add your logic here
+            print("refreshing")
+            self?.tableView.reloadData()
+            // Do not forget to call dg_stopLoading() at the end
+            self?.tableView.dg_stopLoading()
+            }, loadingView: loadingView)
+        tableView.dg_setPullToRefreshFillColor(appDefaults.color_darker)
+        tableView.dg_setPullToRefreshBackgroundColor(appDefaults.color_darker)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        self.navigationController?.navigationBar.alpha = 1
+        self.navigationController?.navigationBar.backgroundColor = appDefaults.color
+        self.navigationItem.titleView?.alpha = 1
     }
     
     func configureCustomSearchController() {
