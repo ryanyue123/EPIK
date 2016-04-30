@@ -44,17 +44,28 @@ class GooglePlacesAPIClient: NSObject {
         }
     }
     
-    func searchPlaceWithID(id: String, completion: (JSONdata: NSDictionary) -> Void){
+    func searchPlaceWithID(id: String, completion: (data: NSData) -> Void){
         let parameters = ["key": googleAPIKey, "placeid": id]
         
         Alamofire.request(.GET, self.buildDetailedURLString(parameters))
             .responseJSON { response in
-                do { let data = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
-                    completion(JSONdata: data!)
-                }catch{}
+                completion(data: response.data!)
         }
-
+        
     }
+    
+    
+//    func searchPlaceWithID(id: String, completion: (JSONdata: NSDictionary) -> Void){
+//        let parameters = ["key": googleAPIKey, "placeid": id]
+//        
+//        Alamofire.request(.GET, self.buildDetailedURLString(parameters))
+//            .responseJSON { response in
+//                do { let data = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+//                    completion(JSONdata: data!)
+//                }catch{}
+//        }
+//
+//    }
     
     func searchPlaceWithNameAndCoordinates(name: String, coordinates: NSArray, completion: (JSONdata: NSDictionary) -> Void) {
         

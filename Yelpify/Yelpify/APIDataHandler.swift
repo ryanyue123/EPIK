@@ -97,49 +97,93 @@ class APIDataHandler {
     // Handled in GoogleAPIClient
 
     // Step 2 - Parse Detailed Info // Returns a NSDictionary containing [phone, price, rating, reviews]
-    func parseGoogleDetailedData(data: NSDictionary, completion: (detailedGPlace: GooglePlaceDetail) -> Void){
-        if data.count > 0 {
-            if let place = data["result"] as? NSDictionary{
+    func parseGoogleDetailedData(data: NSData, completion: (detailedGPlace: GooglePlaceDetail) -> Void){
+        let json = JSON(data: data)
+        if json.count > 0 {
+            if let place = json["result"].dictionary{
                 if place.count > 0{
                     
-                    var placeCity = ""
-                    if let addressComponents = place["address_components"] as? NSArray{
-                        //let addressCity = addressComponents[2] as! NSDictionary
+                    var DetailedObject = GooglePlaceDetail()
+                    
+                    if let address = place["address_components"]?.array{
+                    }
+                    if let formattedAddress = place["formatted_address"]?.string{
+                        DetailedObject.address = formattedAddress
+                    }
+                    if let phone = place["formatted_phone_number"]!.string{
+                        DetailedObject.phone = phone
+                    }
+                    if let intlPhone = place["international_phone_number"]?.string{
+                        
                     }
                     
-                    let placeFormattedAddress = place["formatted_address"] as! String
-                    
-                    let placePhone = place["formatted_phone_number"] as! String
-                    let placeIntlPhone = place["international_phone_number"] as! String
-                    
-                    var placeWeekdayText = []
-                    if let placeHours = place["opening_hours"] as? NSDictionary{
-                        placeWeekdayText = placeHours["weekday_text"] as! NSArray
-                        // let placePermanentlyClosed = place["permanently_closed"] as! Bool
+                    for (index,photo) : (String, JSON) in place["opening_hours"]!["weekday_text"] {
+                        DetailedObject.hours.arrayByAddingObject(photo.string!)
                     }
                     
-                    var placePhotoRefArray: [String] = []
-                    if let placePhotoArray = place["photos"] as? NSArray{
-                        for photo in placePhotoArray{
-                            placePhotoRefArray.append(photo["photo_reference"] as! String)
+                    
+                    for (index,photo):(String, JSON) in place["photos"]! {
+                        if let photoDict = photo.dictionary{
+                            if let ref = photoDict["photo_reference"]?.string{
+                                DetailedObject.photos.addObject(ref)
+                            }
                         }
-                        //placePhotoRefArray = placePhotoArray
                     }
                     
-                    let placePrice = place["price_level"] as? Int
-                    let placeRating = place["rating"] as? Double
+                    if let placePrice = place["price_level"]!.int{
+                        DetailedObject.priceRating = placePrice
+                    }
                     
-                    let placeReviews = place["reviews"] as? NSArray
                     
-                    let placeTypes = place["types"] as? NSArray
+                    if let rating = place["rating"]?.double{
+                        DetailedObject.rating = rating
+                    }
+                
+                    for (index,review):(String, JSON) in place["reviews"]! {
+                        if let reviewDict = review.dictionary{
+                            
+                            var resultDict = NSMutableDictionary()
+                            if let time = reviewDict["time"]?.int{
+                                resultDict["time"] = time
+                            }
+                            if let text = reviewDict["text"]?.string{
+                                resultDict["text"] = text
+                            }
+                            if let author = reviewDict["author_name"]?.string{
+                                resultDict["author"] = author
+                            }
+                            if let author_url = reviewDict["author_url"]?.string{
+                                resultDict["author_url"] = author_url
+                            }
+                            if let profile_photo = reviewDict["profile_photo_url"]?.string{
+                                resultDict["profile_photo"] = profile_photo
+                            }
+                            if let rating = reviewDict["rating"]?.double{
+                                resultDict["rating"] = rating
+                            }
+                            DetailedObject.reviews.addObject(resultDict)
+                        }
+                    }
                     
-                    let placeWebsite = place["url"] as? String
+                    if let types = place["types"]?.array{
+                        var typeArray: [String] = []
+                        for type in types{
+                            if let t = type.string{
+                                typeArray.append(t)
+                            }
+                        }
+                    }
                     
-                    completion(detailedGPlace: GooglePlaceDetail(_address: placeFormattedAddress, _phone: placePhone, _website: placeWebsite, _hours: placeWeekdayText, _priceRating: placePrice, _rating: placeRating, _reviews: placeReviews, _photos: placePhotoRefArray))
+                    if let website = place["url"]?.string{
+                        DetailedObject.website = website
+                    }
+                    
+                    completion(detailedGPlace: DetailedObject)
                 }
             }
         
         }
+    
     }
     
 
