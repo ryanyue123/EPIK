@@ -509,8 +509,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             }
             
             //configure left buttons
-            cell.leftButtons = [MGSwipeButton(title: "", icon: UIImage(named:"check.png"), backgroundColor: UIColor.greenColor())
-                ,MGSwipeButton(title: "", icon: UIImage(named:"fav.png"), backgroundColor: UIColor.blueColor())]
+            cell.leftButtons = [MGSwipeButton(title: "noice", backgroundColor: UIColor.greenColor())
+                ,MGSwipeButton(title: "aight", backgroundColor: UIColor.blueColor())]
             cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
             
             //configure right buttons

@@ -8,6 +8,7 @@
 
 import UIKit
 import Haneke
+import Cosmos
 
 class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var reviewTextView: UITextView!
@@ -15,6 +16,7 @@ class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var reviewName: UILabel!
     @IBOutlet weak var reviewDate: UILabel!
     @IBOutlet weak var reviewProfileImage: UIImageView!
+    @IBOutlet weak var CommentRating: CosmosView!
     
     let cache = Shared.dataCache
     
@@ -34,6 +36,13 @@ class CommentTableViewCell: UITableViewCell {
         
         self.reviewTextView.text = review["text"] as? String
         self.reviewName.text = review["author_name"] as? String
+        
+        
+    if let ratingValue3 = review["rating"] as? Double{
+        if ratingValue3 != -1{
+                self.CommentRating.rating = ratingValue3
+            }
+        }
         
         if let profilePhotoURL = review["profile_photo_url"] as? String{
             
