@@ -8,6 +8,7 @@
 
 import UIKit
 import Haneke
+import SwiftyJSON
 
 class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var reviewTextView: UITextView!

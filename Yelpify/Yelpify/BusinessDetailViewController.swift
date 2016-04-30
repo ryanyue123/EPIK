@@ -260,8 +260,8 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     func configureTableView(){
         tableView.layoutMargins = UIEdgeInsetsMake(20, 0, 20, 0)
         tableView.separatorInset = UIEdgeInsetsMake(20, 0, 20, 0)
-        tableView.estimatedRowHeight = 14.0
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 140.0
+        //tableView.rowHeight = UITableViewAutomaticDimension
     }
     
     @IBAction func addItemToPlaylist(sender: UIBarButtonItem) {
