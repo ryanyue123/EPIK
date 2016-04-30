@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import XLActionController
+import MGSwipeTableCell
 
 enum ContentTypes {
     case Places, Comments
@@ -119,7 +120,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
         
@@ -490,8 +491,15 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
+        let reuseIdentifier = "programmaticCell"
+//        var SwipeCell = self.playlistTableView.dequeueReusableCellWithIdentifier(reuseIdentifier) as! MGSwipeTableCell!
+//        if SwipeCell == nil
+//        {
+//            SwipeCell = MGSwipeTableCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: reuseIdentifier)
+//        }
         
+        let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
+
         switch contentToDisplay {
         case .Places:
             let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
@@ -499,6 +507,17 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             cell.configureCellWith(playlistArray[indexPath.row]) {
                 //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             }
+            
+            //configure left buttons
+            cell.leftButtons = [MGSwipeButton(title: "", icon: UIImage(named:"check.png"), backgroundColor: UIColor.greenColor())
+                ,MGSwipeButton(title: "", icon: UIImage(named:"fav.png"), backgroundColor: UIColor.blueColor())]
+            cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
+            
+            //configure right buttons
+            cell.rightButtons = [MGSwipeButton(title: "Delete", backgroundColor: UIColor.redColor())
+                ,MGSwipeButton(title: "More",backgroundColor: UIColor.lightGrayColor())]
+            cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
+            
             
         case .Comments:
             var cell = UITableViewCell()

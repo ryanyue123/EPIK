@@ -33,6 +33,7 @@
 		90A9437A1CD2CDE8004ACE78 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A943791CD2CDE8004ACE78 /* CommentTableViewCell.swift */; };
 		90B09C601CBC7573004F38C2 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B09C5F1CBC7573004F38C2 /* CardView.swift */; };
 		90B6D69C1CD35BBE006928E8 /* CustomSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B6D69B1CD35BBE006928E8 /* CustomSegue.swift */; };
+		90B6D69E1CD49888006928E8 /* SearchPagerTabStripVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B6D69D1CD49888006928E8 /* SearchPagerTabStripVC.swift */; };
 		90B9B7D91C8A696F002D4BB1 /* BusinessDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */; };
 		90BAD1C11C8662ED0047277E /* TestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BAD1C01C8662ED0047277E /* TestTableViewController.swift */; };
 		90BAD1C31C86639E0047277E /* TestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BAD1C21C86639E0047277E /* TestTableViewCell.swift */; };
@@ -129,6 +130,7 @@
 		90A943791CD2CDE8004ACE78 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentTableViewCell.swift; path = Yelpify/CommentTableViewCell.swift; sourceTree = "<group>"; };
 		90B09C5F1CBC7573004F38C2 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		90B6D69B1CD35BBE006928E8 /* CustomSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSegue.swift; sourceTree = "<group>"; };
+		90B6D69D1CD49888006928E8 /* SearchPagerTabStripVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPagerTabStripVC.swift; sourceTree = "<group>"; };
 		90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessDetailViewController.swift; sourceTree = "<group>"; };
 		90BAD1C01C8662ED0047277E /* TestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTableViewController.swift; sourceTree = "<group>"; };
 		90BAD1C21C86639E0047277E /* TestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTableViewCell.swift; sourceTree = "<group>"; };
@@ -297,18 +299,15 @@
 		9025184F1C88276C00BB3E05 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				90C177D71CCB50AE007344CE /* TabSwipe */,
+				90B6D69D1CD49888006928E8 /* SearchPagerTabStripVC.swift */,
 				908A3BCA1CC0EFED00767736 /* ProfileViewController.swift */,
 				3CBFD89A1CD42A7900290F25 /* SearchPlaylistViewController.swift */,
+				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
 				9038B75D1CBCD041004B220B /* ActionsViewController.swift */,
 				3CD034501CBA122A00675F88 /* TableViewController.swift */,
 				90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */,
-				90B6D69B1CD35BBE006928E8 /* CustomSegue.swift */,
-				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
 				90E505DE1C8E375200F47285 /* GPlacesSearchViewController.swift */,
 				90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */,
-				90E505E11C8E944100F47285 /* CustomSearchController.swift */,
-				90E505E31C8E946700F47285 /* CustomSearchBar.swift */,
 				EDD44DAC1CB4BA31008DC4AB /* RandomPlaceController.swift */,
 				ED405A0F1CC1D03C0017A9AB /* LoginViewController.swift */,
 				3C7C56441CD479EF009D8B34 /* SignUpViewController.swift */,
@@ -348,6 +347,10 @@
 		90C96AAF1CCAFA9D00E9EC28 /* Helper Modules */ = {
 			isa = PBXGroup;
 			children = (
+				90C177D71CCB50AE007344CE /* TabSwipe */,
+				90E505E11C8E944100F47285 /* CustomSearchController.swift */,
+				90E505E31C8E946700F47285 /* CustomSearchBar.swift */,
+				90B6D69B1CD35BBE006928E8 /* CustomSegue.swift */,
 				90C96AAD1CCAF72B00E9EC28 /* ConfigureFunctions.swift */,
 			);
 			name = "Helper Modules";
@@ -481,7 +484,7 @@
 				TargetAttributes = {
 					3CE2EE7A1C6C5EC8000C9088 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = CQD8Z7UVJ4;
+						DevelopmentTeam = 3K6Q37NEBQ;
 					};
 					3CE2EE8E1C6C5EC8000C9088 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -640,6 +643,7 @@
 				90711BD51CAF4DEA0032A257 /* PlaylistObject.swift in Sources */,
 				90C96AAE1CCAF72B00E9EC28 /* ConfigureFunctions.swift in Sources */,
 				9038B75E1CBCD041004B220B /* ActionsViewController.swift in Sources */,
+				90B6D69E1CD49888006928E8 /* SearchPagerTabStripVC.swift in Sources */,
 				3CBFD89D1CD4355900290F25 /* SearchPlaylistCell.swift in Sources */,
 				3CD0344F1CBA121300675F88 /* TableViewCell.swift in Sources */,
 				907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */,
@@ -826,7 +830,7 @@
 				INFOPLIST_FILE = Yelpify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Yelpify.Yelpify-1";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Yelpify.Yelpify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Yelpify/Yelpify-Bridging-Header.h";
@@ -851,7 +855,7 @@
 				INFOPLIST_FILE = Yelpify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Yelpify.Yelpify-1";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Yelpify.Yelpify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Yelpify/Yelpify-Bridging-Header.h";
