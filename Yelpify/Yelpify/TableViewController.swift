@@ -10,8 +10,8 @@ import UIKit
 import Parse
 import CoreLocation
 import MapKit
-import SwiftLocation
 import DGElasticPullToRefresh
+import SwiftLocation
 
 struct playlist
 {
@@ -214,18 +214,21 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
     }
     
     func getLocationAndFetch(){
-        LocationManager.shared.observeLocations(.Block, frequency: .OneShot, onSuccess: { location in
-            self.userlatitude = location.coordinate.latitude
-            self.userlongitude = location.coordinate.longitude
-
-            self.fetchPlaylists()
-
-            self.parameters["ll"] = String(self.userlatitude) + "," + String(self.userlongitude)
-
-        }) { error in
-            // Something went wrong. error will tell you what
-        }
-//        
+//        LocationManager.shared.observeLocations(.Block, frequency: .OneShot, onSuccess: { location in
+//            self.userlatitude = location.coordinate.latitude
+//            self.userlongitude = location.coordinate.longitude
+//
+//            self.fetchPlaylists()
+//
+//            self.parameters["ll"] = String(self.userlatitude) + "," + String(self.userlongitude)
+//
+//        }) { error in
+//            // Something went wrong. error will tell you what
+//        }
+        self.userlatitude = 37.322998
+        self.userlongitude = -122.032182
+        self.parameters["ll"] = String(self.userlatitude) + "," + String(self.userlongitude)
+//
 //        // SwiftLocation
 //        do {
 //            try SwiftLocation.shared.currentLocation(Accuracy.Block, timeout: 20, onSuccess: { (location) -> Void in
