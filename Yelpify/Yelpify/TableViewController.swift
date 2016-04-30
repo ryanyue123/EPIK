@@ -214,7 +214,6 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
     }
     
     func getLocationAndFetch(){
-        
         LocationManager.shared.observeLocations(.Block, frequency: .OneShot, onSuccess: { location in
             self.userlatitude = location.coordinate.latitude
             self.userlongitude = location.coordinate.longitude

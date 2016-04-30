@@ -26,6 +26,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.addSubview(loginButton)
         //loginButton.center = view.center
         self.loginButton.translatesAutoresizingMaskIntoConstraints = false
@@ -60,7 +61,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
             else
             {
-                let object = PFObject(className: "User")
+                let object = PFUser()
                 if let email = results["email"] as? String{
                     object["email"] = email
                     print(email)
@@ -83,16 +84,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     print(id)
                 }
                 
-                object.saveInBackgroundWithBlock { (success, error)  -> Void in
-                    if (error == nil){
-                        print("saved")
+                object.signUpInBackgroundWithBlock({ (success, error) in
+                    if (error == nil)
+                    {
+                        print("user signed up")
                     }
-                    else{
-                        print(error?.description)
-                    }
-                }
+                })
+
             }
             self.performSegueWithIdentifier("loginSuccessSegue", sender: self)
+            
         }
     }
     
