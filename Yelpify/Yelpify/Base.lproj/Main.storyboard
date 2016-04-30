@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wjg-5v-mT1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="TGK-Y4-oJh">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -553,7 +553,7 @@
                                                 <rect key="frame" x="238" y="201" width="124" height="28"/>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="139" y="275" width="124" height="28"/>
+                                                <rect key="frame" x="138" y="275" width="124" height="28"/>
                                             </variation>
                                         </button>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Favorite Icon" translatesAutoresizingMaskIntoConstraints="NO" id="dCb-vi-p6V">
@@ -1503,6 +1503,7 @@
                         <outlet property="statusBarView" destination="v4U-RQ-qJT" id="KGH-Pn-58e"/>
                         <segue destination="4gw-Mw-ac6" kind="show" id="zYA-Hc-nft"/>
                         <segue destination="p6T-7v-0MJ" kind="show" identifier="showProfileView" id="1RX-FS-Umm"/>
+                        <segue destination="7pA-8d-Gw7" kind="show" identifier="showBusinessDetail" id="IFd-Gd-HzU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bt3-DI-9NP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1523,7 +1524,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8DH-cU-31C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4263" y="1138.5"/>
+            <point key="canvasLocation" x="6099" y="1138.5"/>
         </scene>
         <!--Places Search View Controller-->
         <scene sceneID="DpG-32-Qpg">
@@ -1586,7 +1587,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rFe-V7-JC5" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="MaZ-WG-NVz" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5164.5" y="1143"/>
+            <point key="canvasLocation" x="7000.5" y="1143"/>
         </scene>
         <!--Random Place Controller-->
         <scene sceneID="jUW-qe-1S9">
@@ -2277,7 +2278,7 @@
                                 </variation>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="112" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0eM-Bd-byN">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexTrackingBackgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -3132,7 +3133,8 @@
                                                             <exclude reference="NYf-Xo-Xl1"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="132" y="20" width="89" height="16"/>
                                                         <mask key="constraints">
                                                             <include reference="5D5-Ie-ARm"/>
                                                             <include reference="NYf-Xo-Xl1"/>
@@ -3856,7 +3858,71 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cy4-wy-XfY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1314" y="857.25"/>
+            <point key="canvasLocation" x="1326" y="909"/>
+        </scene>
+        <!--Search Playlist View Controller-->
+        <scene sceneID="F0b-TN-LvD">
+            <objects>
+                <tableViewController id="RDd-T3-T8V" customClass="SearchPlaylistViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="T67-X2-u6X">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="2Bz-yG-Y8E" customClass="SearchPlaylistCell" customModule="Yelpify" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2Bz-yG-Y8E" id="tdq-63-yZF">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mxS-3c-Lzt">
+                                            <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                                <rect key="frame" x="8" y="11" width="250" height="21"/>
+                                            </variation>
+                                        </label>
+                                    </subviews>
+                                    <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="mxS-3c-Lzt"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="heightClass=regular-widthClass=compact">
+                                        <mask key="subviews">
+                                            <include reference="mxS-3c-Lzt"/>
+                                        </mask>
+                                    </variation>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="label" destination="mxS-3c-Lzt" id="7WI-6P-YGE"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="RDd-T3-T8V" id="vm0-GG-dcc"/>
+                            <outlet property="delegate" destination="RDd-T3-T8V" id="CmU-oW-rES"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="xcm-qI-eWc">
+                        <nil key="title"/>
+                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search playlists" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" id="qe2-Vz-Vbd">
+                            <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                        </textField>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="textField" destination="qe2-Vz-Vbd" id="cX2-1g-c6g"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SQt-FX-tGz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2808" y="1595.25"/>
         </scene>
         <!--Search-->
         <scene sceneID="Tf1-7N-Rpw">
@@ -3909,7 +3975,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xPO-lb-3Lj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3288" y="1252.5"/>
+            <point key="canvasLocation" x="5124" y="1252.5"/>
         </scene>
         <!--Profile-->
         <scene sceneID="GRH-7c-r96">
@@ -3931,7 +3997,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g5y-ZW-WqI" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="0yi-rr-RK0" customClass="RAMBounceAnimation" customModule="RAMAnimatedTabBarController"/>
             </objects>
-            <point key="canvasLocation" x="2430" y="1922.25"/>
+            <point key="canvasLocation" x="3654" y="1901.25"/>
         </scene>
         <!--More-->
         <scene sceneID="3th-nw-LQy">
@@ -3953,7 +4019,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xoG-R1-aHX" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="BaG-jF-R37" customClass="RAMFumeAnimation" customModule="RAMAnimatedTabBarController"/>
             </objects>
-            <point key="canvasLocation" x="2352" y="1231.5"/>
+            <point key="canvasLocation" x="4188" y="1231.5"/>
         </scene>
         <!--Favorites-->
         <scene sceneID="GYL-PM-mR8">
@@ -3978,6 +4044,24 @@
                 <customObject id="UqR-z2-KXx" customClass="RAMLeftRotationAnimation" customModule="RAMAnimatedTabBarController"/>
             </objects>
             <point key="canvasLocation" x="2343" y="-272.25"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="av7-Yi-gCu">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="X3z-H0-NPz" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Xby-Uf-HZj">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="RDd-T3-T8V" kind="relationship" relationship="rootViewController" id="kfq-o9-KVf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2eW-m6-iqK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2049" y="1595.25"/>
         </scene>
     </scenes>
     <resources>

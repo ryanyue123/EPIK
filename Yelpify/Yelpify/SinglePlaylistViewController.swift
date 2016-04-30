@@ -119,23 +119,18 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print((object["objectId"] as? String))
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
-//        self.leftBarButtonItem.title = "Back"
-//        self.leftBarButtonItem.target = self
-//        self.leftBarButtonItem.action = "unwindView:"
         
         self.playlistTableView.backgroundColor = appDefaults.color
-        //navigationItem.rightBarButtonItem = editButtonItem()
-        
         if (object == nil)
         {
+            print("the object is nil")
             // Automatic edit mode
         }
         else if((object["createdbyuser"] as? String) == PFUser.currentUser()?.username) //later incorporate possibility of collaboration
         {
+            print("not nil")
             self.convertParseArrayToBusinessArray(object["track"] as! [NSDictionary]) { (resultArray) in
                 let viewedlist: NSMutableArray = []
                 let recentlyviewed = PFUser.query()!
@@ -153,13 +148,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                     recent.saveInBackgroundWithBlock({ (success, error) in
                         if (error == nil)
                         {
-                            print("Success")
                         }
                     })
                     
                 }
                 
                 self.playlistArray = resultArray
+                print(resultArray.count)
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlistTableView.reloadData()
                 })
@@ -168,6 +163,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
         else
         {
+            print("not nil")
             self.view.reloadInputViews()
             self.convertParseArrayToBusinessArray(object["track"] as! [NSDictionary]) { (resultArray) in
                 
@@ -191,7 +187,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                     })
                     
                 }
-                    
+                self.playlistArray = resultArray    
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlistTableView.reloadData()
                 })
@@ -204,12 +200,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     override func viewDidAppear(animated: Bool) {
-        print("viewDidAppear")
     }
     
     override func viewWillAppear(animated: Bool) {
-        print("viewWillAppear")
-        
         //Configure Functions
         
         configureNavigationBar()
@@ -296,7 +289,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             
         }
         
-        print(offset)
+        //print(offset)
         
 //        // Segment control
 //        
@@ -433,7 +426,23 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tappedCollaborators(){
-        performSegueWithIdentifier("showProfileView", sender: self)
+        //performSegueWithIdentifier("showProfileView", sender: self)
+        let actionController = YoutubeActionController()
+        
+        actionController.addAction(Action(ActionData(title: "Edit", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
+            
+            
+        }))
+        actionController.addAction(Action(ActionData(title: "Copy", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
+            
+        }))
+        actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-share-icon")!), style: .Default, handler: { action in
+        }))
+        actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
+        
+        presentViewController(actionController, animated: true, completion: nil)
+        
+
     }
 
     
@@ -513,7 +522,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func savePlaylistToParse(sender: UIBarButtonItem)
     {
-        print("hello")
         if playlistArray.count > 0{
             let saveobject = PFObject(className: "Playlists")
             if let lat = playlistArray[0].businessLatitude
