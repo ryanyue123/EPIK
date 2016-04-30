@@ -172,9 +172,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                     
                 }
                 
-                self.playlistArray = resultArray
                 print(resultArray.count)
                 dispatch_async(dispatch_get_main_queue(), {
+                    self.playlistArray = resultArray
                     self.playlistTableView.reloadData()
                 })
             }
@@ -206,8 +206,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                     })
                     
                 }
-                self.playlistArray = resultArray    
                 dispatch_async(dispatch_get_main_queue(), {
+                    self.playlistArray = resultArray
                     self.playlistTableView.reloadData()
                 })
             }
