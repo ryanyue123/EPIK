@@ -247,7 +247,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
                     self.label_array.append("Playlists near me")
                     self.tableView.reloadData()
                     
-                    let query2: PFQuery = PFQuery(className: "Playlists")
+                    /*let query2: PFQuery = PFQuery(className: "Playlists")
                     query2.whereKey("createdbyuser", equalTo: (PFUser.currentUser()?.username)!)
                     query2.orderByDescending("updatedAt")
                     query2.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
@@ -293,7 +293,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
                         {
                             print(error?.userInfo)
                         }
-                    }
+                    }*/
 
                 })
             }
