@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="X3z-H0-NPz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wjg-5v-mT1">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -3097,7 +3097,8 @@
                                                             <exclude reference="NYf-Xo-Xl1"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="132" y="20" width="89" height="16"/>
                                                         <mask key="constraints">
                                                             <include reference="5D5-Ie-ARm"/>
                                                             <include reference="NYf-Xo-Xl1"/>
@@ -3109,6 +3110,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     <dataDetectorType key="dataDetectorTypes" link="YES" address="YES"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="20" y="56" width="201" height="66.5"/>
+                                                    </variation>
                                                 </textView>
                                             </subviews>
                                             <color key="backgroundColor" red="0.89543876259999999" green="0.89543876259999999" blue="0.89543876259999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -3254,7 +3258,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="nEE-s8-wT5" userLabel="Header View">
-                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                    <rect key="frame" x="0.0" y="64" width="240" height="128"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" alpha="0.25" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="restaurantImage - MCD" translatesAutoresizingMaskIntoConstraints="NO" id="iRl-pM-lZV">
@@ -3267,7 +3271,7 @@
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="113.5" y="152" width="173.5" height="29.5"/>
+                                                <rect key="frame" x="33" y="152" width="173.5" height="29.5"/>
                                             </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOLLOWERS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mNx-7B-xbx">
@@ -3276,7 +3280,7 @@
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="172.5" y="208" width="55" height="10.5"/>
+                                                <rect key="frame" x="92" y="208" width="55" height="10.5"/>
                                             </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3333" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sdT-Xt-b4r">
@@ -3298,7 +3302,7 @@
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="179.5" y="187" width="42.5" height="22.5"/>
+                                                <rect key="frame" x="99" y="187" width="42.5" height="22.5"/>
                                                 <mask key="constraints">
                                                     <exclude reference="7FN-Lh-14n"/>
                                                 </mask>
@@ -3310,7 +3314,7 @@
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="269.5" y="208" width="53" height="11"/>
+                                                <rect key="frame" x="189" y="208" width="53" height="11"/>
                                             </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LISTS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VOR-Wy-9Lg">
@@ -3319,7 +3323,7 @@
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="92.5" y="208" width="25" height="11"/>
+                                                <rect key="frame" x="12" y="208" width="25" height="11"/>
                                             </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3333" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VzC-DH-cYn">
@@ -3341,7 +3345,7 @@
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="83.5" y="187" width="42.5" height="23"/>
+                                                <rect key="frame" x="3" y="187" width="42.5" height="23"/>
                                                 <mask key="constraints">
                                                     <exclude reference="kEi-9e-Gr7"/>
                                                 </mask>
@@ -3357,7 +3361,7 @@
                                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             </state>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="173.5" y="232" width="54" height="28"/>
+                                                <rect key="frame" x="93" y="232" width="54" height="28"/>
                                                 <mask key="constraints">
                                                     <exclude reference="YaO-bF-dd9"/>
                                                 </mask>
@@ -3382,7 +3386,7 @@
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="275.5" y="187" width="42.5" height="23"/>
+                                                <rect key="frame" x="195" y="187" width="42.5" height="23"/>
                                                 <mask key="constraints">
                                                     <exclude reference="bWL-bh-bsd"/>
                                                 </mask>
@@ -3400,7 +3404,8 @@
                                                     <exclude reference="yyJ-Yg-Ma7"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact">
+                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="74" y="48" width="91" height="91"/>
                                                 <mask key="constraints">
                                                     <include reference="kdO-qA-iEO"/>
                                                     <include reference="yyJ-Yg-Ma7"/>
@@ -3514,7 +3519,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="playlistCell" rowHeight="100" id="g7p-QP-Rfn">
-                                        <rect key="frame" x="0.0" y="156" width="240" height="100"/>
+                                        <rect key="frame" x="0.0" y="220" width="240" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g7p-QP-Rfn" id="G1g-Dj-AGB">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="99.5"/>
@@ -3796,12 +3801,15 @@
             <objects>
                 <tableViewController id="RDd-T3-T8V" customClass="SearchPlaylistViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="T67-X2-u6X">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="2Bz-yG-Y8E" customClass="SearchPlaylistCell" customModule="Yelpify" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2Bz-yG-Y8E" id="tdq-63-yZF">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mxS-3c-Lzt">
@@ -3925,7 +3933,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g5y-ZW-WqI" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="0yi-rr-RK0" customClass="RAMBounceAnimation" customModule="RAMAnimatedTabBarController"/>
             </objects>
-            <point key="canvasLocation" x="2430" y="1922.25"/>
+            <point key="canvasLocation" x="3654" y="1901.25"/>
         </scene>
         <!--More-->
         <scene sceneID="3th-nw-LQy">

@@ -119,19 +119,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print((object["objectId"] as? String))
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
-//        self.leftBarButtonItem.title = "Back"
-//        self.leftBarButtonItem.target = self
-//        self.leftBarButtonItem.action = "unwindView:"
         
         self.playlistTableView.backgroundColor = appDefaults.color
-        //navigationItem.rightBarButtonItem = editButtonItem()
-        
         if (object == nil)
         {
+            print("the object is nil")
             // Automatic edit mode
         }
         else if((object["createdbyuser"] as? String) == PFUser.currentUser()?.username) //later incorporate possibility of collaboration
@@ -153,13 +147,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                     recent.saveInBackgroundWithBlock({ (success, error) in
                         if (error == nil)
                         {
-                            print("Success")
                         }
                     })
                     
                 }
                 
                 self.playlistArray = resultArray
+                print(resultArray.count)
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlistTableView.reloadData()
                 })
@@ -204,12 +198,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     override func viewDidAppear(animated: Bool) {
-        print("viewDidAppear")
     }
     
     override func viewWillAppear(animated: Bool) {
-        print("viewWillAppear")
-        
         //Configure Functions
         
         configureNavigationBar()
