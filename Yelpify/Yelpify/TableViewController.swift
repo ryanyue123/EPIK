@@ -54,6 +54,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         loadingView.tintColor = UIColor.whiteColor()
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             // Add your logic here
+            self?.all_playlists.removeAll()
             self?.getLocationAndFetch()
             // Do not forget to call dg_stopLoading() at the end
             self?.tableView.dg_stopLoading()
@@ -261,8 +262,8 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
                     self.all_playlists.append(self.playlists_location)
                     self.label_array.append("Playlists near me")
                     self.tableView.reloadData()
-                    
-                    /*let query2: PFQuery = PFQuery(className: "Playlists")
+                    /*
+                    let query2: PFQuery = PFQuery(className: "Playlists")
                     query2.whereKey("createdbyuser", equalTo: (PFUser.currentUser()?.username)!)
                     query2.orderByDescending("updatedAt")
                     query2.findObjectsInBackgroundWithBlock {(user: [PFObject]?, error: NSError?) -> Void in

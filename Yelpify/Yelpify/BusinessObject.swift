@@ -11,38 +11,24 @@ import UIKit
 
 struct Business {
     
-    var businessName: String? = ""
-    var businessAddress: String? = ""
-    var businessCity: String? = ""
-    var businessZip: String? = ""
-    var businessPhone: String? = ""
-    var businessImageURL: String? = ""
-    var businessPhotoReference: String? = ""
-    var businessLatitude: Double? = -1
-    var businessLongitude: Double? = -1
-    var businessDistance: Double? = -1
-    var businessRating: Double? = -1
-    var businessCategories: NSArray? = []
-    var businessStatus: Bool? = nil
-    var yelpID: String? = ""
-    var gPlaceID: String? = ""
+    var businessName: String! = ""
+    var businessAddress: String! = ""
+    //var businessCity: String! = ""
+    //var businessZip: String! = ""
+    var businessPhone: String! = ""
+    //var businessImageURL: String! = ""
+    var businessPhotoReference: String! = ""
+    var businessLatitude: Double! = -1
+    var businessLongitude: Double! = -1
+    //var businessDistance: Double! = -1
+    var businessRating: Double! = -1
+    //var businessCategories: NSArray! = []
+    var businessStatus: Bool! = nil
+    //var yelpID: String! = ""
+    var gPlaceID: String! = ""
     
-    init(name: String?, address: String?, city: String? = "", zip: String? = "", phone: String? = "", imageURL: String? = "", photoRef: String?, latitude: Double?, longitude: Double?, distance: Double? = nil, rating: Double? = nil, categories: NSArray? = nil, status: Bool? = nil, businessID: String? = nil, placeID: String?){
-        businessName = name
-        businessAddress = address
-        businessImageURL = imageURL
-        businessPhotoReference = photoRef
-        businessLatitude = latitude
-        businessLongitude = longitude
-        businessDistance = distance
-        businessRating = rating
-        businessCategories = categories
-        businessCity = city
-        businessZip = zip
-        businessPhone = phone
-        businessStatus = status
-        gPlaceID = placeID
-        yelpID = businessID
+    init(){
+        
     }
     
     func getDictionary() -> NSDictionary{
@@ -50,21 +36,47 @@ struct Business {
         businessDict["id"] = gPlaceID
         businessDict["name"] = businessName
         businessDict["address"] = businessAddress
-        businessDict["imageURL"] = businessImageURL
+        //businessDict["imageURL"] = businessImageURL
         businessDict["photoReference"] = businessPhotoReference
         businessDict["latitude"] = businessLatitude
         businessDict["longitude"] = businessLongitude
-        businessDict["distance"] = businessDistance
+        //businessDict["distance"] = businessDistance
         businessDict["rating"] = businessRating
-        businessDict["categories"] = businessCategories
-        businessDict["city"] = businessCity
-        businessDict["zip"] = businessZip
+        //businessDict["categories"] = businessCategories
+        //businessDict["city"] = businessCity
+        //businessDict["zip"] = businessZip
         businessDict["phone"] = businessPhone
         businessDict["status"] = businessStatus
         
         return businessDict
     }
+    
+//    func setItem(name: String?, address: String?, phone: String? = "", photoRef: String?, latitude: Double?, longitude: Double?, rating: Double? = nil, status: Bool? = nil, placeID: String?){
+//        
+//    }
+    
+//    init(name: String?, address: String?, city: String? = "", zip: String? = "", phone: String? = "", imageURL: String? = "", photoRef: String?, latitude: Double?, longitude: Double?, distance: Double? = nil, rating: Double? = nil, categories: NSArray? = nil, status: Bool? = nil, businessID: String? = nil, placeID: String?){
+//        businessName = name
+//        businessAddress = address
+//        businessImageURL = imageURL
+//        businessPhotoReference = photoRef
+//        businessLatitude = latitude
+//        businessLongitude = longitude
+//        businessDistance = distance
+//        businessRating = rating
+//        businessCategories = categories
+//        businessCity = city
+//        businessZip = zip
+//        businessPhone = phone
+//        businessStatus = status
+//        gPlaceID = placeID
+//        yelpID = businessID
+//}
+
 }
+
+
+
 
 struct YelpBusiness{
     var businessID: String? = ""
