@@ -266,7 +266,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             business.businessLatitude = dict["latitude"] as? Double
             business.businessLongitude = dict["longitude"] as? Double
             business.gPlaceID = dict["id"] as? String
-            //let business = Business(name: dict["name"] as? String, address: dict["address"] as? String, photoRef: dict["photoRef"] as? String, latitude: dict["latitude"] as? Double, longitude: dict["longitude"] as? Double, placeID: dict["id"] as? String)
             businessArray.append(business)
         }
         completion(resultArray: businessArray)

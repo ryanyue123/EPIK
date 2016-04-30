@@ -46,18 +46,19 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
         
         
         
-        // Pull to Refresh
-        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
-        loadingView.tintColor = UIColor.whiteColor()
-        tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-            // Add your logic here
-            self?.all_playlists.removeAll()
-            self?.getLocationAndFetch()
-            // Do not forget to call dg_stopLoading() at the end
-            self?.tableView.dg_stopLoading()
-            }, loadingView: loadingView)
-        tableView.dg_setPullToRefreshFillColor(appDefaults.color_darker)
-        tableView.dg_setPullToRefreshBackgroundColor(appDefaults.color_darker)
+//        // Pull to Refresh
+//        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
+//        loadingView.tintColor = UIColor.whiteColor()
+//        tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+//            // Add your logic here
+//            print("refreshing")
+//            self?.all_playlists.removeAll()
+//            self?.getLocationAndFetch()
+//            // Do not forget to call dg_stopLoading() at the end
+//            self?.tableView.dg_stopLoading()
+//            }, loadingView: loadingView)
+//        tableView.dg_setPullToRefreshFillColor(appDefaults.color_darker)
+//        tableView.dg_setPullToRefreshBackgroundColor(appDefaults.color_darker)
         
     }
     
@@ -246,7 +247,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                     self.all_playlists.append(self.playlists_location)
                     self.label_array.append("Playlists near me")
                     self.tableView.reloadData()
-                    /*
+                    
                     let query2: PFQuery = PFQuery(className: "Playlists")
                     query2.whereKey("createdbyuser", equalTo: (PFUser.currentUser()?.username)!)
                     query2.orderByDescending("updatedAt")
@@ -293,7 +294,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                         {
                             print(error?.userInfo)
                         }
-                    }*/
+                    }
 
                 })
             }
@@ -303,31 +304,6 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
             }
         }
     }
-
-//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        let userLocation: CLLocation = locations[0]
-//        
-//        let latitude = userLocation.coordinate.latitude
-//        let longitude = userLocation.coordinate.longitude
-//        print(userLocation.coordinate)
-//        userlatitude = latitude
-//        userlongitude = longitude
-//        
-//        
-//        fetchPlaylists()
-//        
-//        parameters["ll"] = String(latitude) + "," + String(longitude)
-//    }
-//    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-//        print(error.description)
-//    }
-//    
-//    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-//        if status == .AuthorizedWhenInUse
-//        {
-//            //print("Authorized")
-//        }
-//    }
     
     // MARK: - Table view data source
     var storedOffsets = [Int: CGFloat]()
