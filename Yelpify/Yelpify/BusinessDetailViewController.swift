@@ -79,7 +79,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             self.directionsButton.enabled = true
             self.callButton.enabled = true
             
-            self.reviewArray = detailedGPlace.reviews!
+            //self.reviewArray = detailedGPlace.reviews!
             
             self.object.businessPhone = detailedGPlace.phone!
             if let ratingValue = detailedGPlace.rating{
