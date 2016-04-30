@@ -262,17 +262,17 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
                     self.all_playlists.append(self.playlists_location)
                     self.label_array.append("Playlists near me")
                     self.tableView.reloadData()
-                    
+                    /*
                     let query2: PFQuery = PFQuery(className: "Playlists")
                     query2.whereKey("createdbyuser", equalTo: (PFUser.currentUser()?.username)!)
                     query2.orderByDescending("updatedAt")
-                    query2.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
+                    query2.findObjectsInBackgroundWithBlock {(user: [PFObject]?, error: NSError?) -> Void in
                         if ((error) == nil)
                         {
                             dispatch_async(dispatch_get_main_queue(), {
-                                if (objects!.count != 0)
+                                if (user!.count != 0)
                                 {
-                                    self.playlists_user = objects!
+                                    self.playlists_user = user!
                                     self.all_playlists.append(self.playlists_user)
                                     self.label_array.append("My playlists")
                                     self.tableView.reloadData()
@@ -309,7 +309,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
                         {
                             print(error?.userInfo)
                         }
-                    }
+                    }*/
 
                 })
             }
