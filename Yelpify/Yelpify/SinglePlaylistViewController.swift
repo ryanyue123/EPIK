@@ -113,6 +113,20 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             }
         }
     }
+    
+    func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        
+        if longPressGestureRecognizer.state == UIGestureRecognizerState.Began {
+            
+            let touchPoint = longPressGestureRecognizer.locationInView(self.view)
+            if let indexPath = playlistTableView.indexPathForRowAtPoint(touchPoint) {
+                print("HIIIII")
+                // your code here, get the row for the indexPath or do whatever you want
+            }
+        }
+        
+    }
+
 
     
     // MARK: - ViewDidLoad and other View functions
@@ -121,6 +135,11 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         super.viewDidLoad()
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
+        
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(SinglePlaylistViewController.longPress(_:)))
+        self.view.addGestureRecognizer(longPressRecognizer)
+        
+
         
         self.playlistTableView.backgroundColor = appDefaults.color
         if (object == nil)
@@ -235,6 +254,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         super.viewDidLayoutSubviews()
         updateHeaderView()
     }
+
     
     func unwindView(sender: UIBarButtonItem)
     {
