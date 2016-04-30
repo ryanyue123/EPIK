@@ -54,6 +54,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         loadingView.tintColor = UIColor.whiteColor()
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             // Add your logic here
+            self?.all_playlists.removeAll()
             self?.getLocationAndFetch()
             // Do not forget to call dg_stopLoading() at the end
             self?.tableView.dg_stopLoading()

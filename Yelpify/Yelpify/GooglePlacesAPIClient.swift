@@ -26,7 +26,7 @@ class GooglePlacesAPIClient: NSObject {
         super.init()
     }
     
-    func searchPlacesWithParameters(searchParameters: Dictionary<String, String>, completion: (result: NSDictionary) -> Void){
+    func searchPlacesWithParameters(searchParameters: Dictionary<String, String>, completion: (result: NSData) -> Void){
         
         Alamofire.request(.GET, buildURLString(searchParameters))
             .responseJSON { response in
@@ -36,9 +36,11 @@ class GooglePlacesAPIClient: NSObject {
 //                print(response.data)     // server data
 //                print(response.result)   // result of response serialization
                 
-                do { let data = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
-                    completion(result: data!)
-                }catch{}
+                completion(result: response.data!)
+                
+//                do { let data = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+//                    completion(result: data!)
+//                }catch{}
         }
     }
     

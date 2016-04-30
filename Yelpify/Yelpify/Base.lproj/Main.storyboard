@@ -2836,14 +2836,14 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                                    <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
                                                         <rect key="frame" x="0.0" y="0.0" width="400" height="277"/>
                                                     </variation>
                                                 </imageView>
                                                 <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2i3-HV-aNj" userLabel="Dark Overlay">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                     <color key="backgroundColor" red="0.14717487369999999" green="0.14717487369999999" blue="0.14717487369999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                                    <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
                                                         <rect key="frame" x="0.0" y="0.0" width="400" height="277"/>
                                                     </variation>
                                                 </view>
@@ -2906,6 +2906,12 @@
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="l9y-Np-oo8" secondAttribute="bottom" id="EP0-wH-GrH"/>
+                                                <constraint firstItem="l9y-Np-oo8" firstAttribute="top" secondItem="TCc-7j-r3v" secondAttribute="top" id="GXR-zJ-0IW"/>
+                                                <constraint firstItem="l9y-Np-oo8" firstAttribute="leading" secondItem="TCc-7j-r3v" secondAttribute="leading" id="Kh0-wa-bxP"/>
+                                                <constraint firstAttribute="trailing" secondItem="l9y-Np-oo8" secondAttribute="trailing" id="jaf-8l-y0c"/>
+                                            </constraints>
                                             <variation key="default">
                                                 <mask key="subviews">
                                                     <exclude reference="l9y-Np-oo8"/>
@@ -2918,8 +2924,14 @@
                                                     <exclude reference="yhk-9e-dfH"/>
                                                     <exclude reference="Jr1-9Y-pWy"/>
                                                 </mask>
+                                                <mask key="constraints">
+                                                    <exclude reference="EP0-wH-GrH"/>
+                                                    <exclude reference="GXR-zJ-0IW"/>
+                                                    <exclude reference="Kh0-wa-bxP"/>
+                                                    <exclude reference="jaf-8l-y0c"/>
+                                                </mask>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
                                                 <rect key="frame" x="0.0" y="-65" width="400" height="277"/>
                                                 <mask key="subviews">
                                                     <include reference="l9y-Np-oo8"/>
@@ -2931,6 +2943,12 @@
                                                     <include reference="o8p-iM-I7y"/>
                                                     <include reference="yhk-9e-dfH"/>
                                                     <include reference="Jr1-9Y-pWy"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <include reference="EP0-wH-GrH"/>
+                                                    <include reference="GXR-zJ-0IW"/>
+                                                    <include reference="Kh0-wa-bxP"/>
+                                                    <include reference="jaf-8l-y0c"/>
                                                 </mask>
                                             </variation>
                                         </view>
@@ -2953,7 +2971,7 @@
                                                     <exclude reference="zRE-Om-xfV"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
                                                 <rect key="frame" x="0.0" y="211" width="400" height="39"/>
                                                 <mask key="subviews">
                                                     <include reference="zRE-Om-xfV"/>
@@ -3019,7 +3037,7 @@
                                                     <exclude reference="yf2-pS-2AI"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
                                                 <rect key="frame" x="0.0" y="252" width="400" height="80"/>
                                                 <mask key="subviews">
                                                     <include reference="bga-tI-XA3"/>
@@ -3031,11 +3049,25 @@
                                         </view>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="Sjf-gU-SsZ" secondAttribute="trailing" id="4pA-tU-shT"/>
+                                        <constraint firstAttribute="bottom" secondItem="Sjf-gU-SsZ" secondAttribute="bottom" id="6fp-FX-Asl"/>
+                                        <constraint firstItem="Sjf-gU-SsZ" firstAttribute="leading" secondItem="9en-ku-crS" secondAttribute="leading" id="8Tm-en-0PT"/>
+                                        <constraint firstItem="Sjf-gU-SsZ" firstAttribute="top" secondItem="IMU-N6-VE8" secondAttribute="bottom" constant="2" id="FWp-60-QMu"/>
+                                        <constraint firstItem="IMU-N6-VE8" firstAttribute="top" secondItem="2i3-HV-aNj" secondAttribute="bottom" constant="-1" id="Gt8-Vx-43A"/>
+                                    </constraints>
                                     <variation key="default">
                                         <mask key="subviews">
                                             <exclude reference="TCc-7j-r3v"/>
                                             <exclude reference="IMU-N6-VE8"/>
                                             <exclude reference="Sjf-gU-SsZ"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <exclude reference="Gt8-Vx-43A"/>
+                                            <exclude reference="4pA-tU-shT"/>
+                                            <exclude reference="6fp-FX-Asl"/>
+                                            <exclude reference="8Tm-en-0PT"/>
+                                            <exclude reference="FWp-60-QMu"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
@@ -3043,6 +3075,13 @@
                                             <include reference="TCc-7j-r3v"/>
                                             <include reference="IMU-N6-VE8"/>
                                             <include reference="Sjf-gU-SsZ"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <include reference="Gt8-Vx-43A"/>
+                                            <include reference="4pA-tU-shT"/>
+                                            <include reference="6fp-FX-Asl"/>
+                                            <include reference="8Tm-en-0PT"/>
+                                            <include reference="FWp-60-QMu"/>
                                         </mask>
                                     </variation>
                                 </view>
@@ -3244,7 +3283,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dl3-9A-JHI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4263" y="438"/>
+            <point key="canvasLocation" x="4164" y="438"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="jSs-Z0-YPM">

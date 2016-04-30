@@ -266,7 +266,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func convertParseArrayToBusinessArray(parseArray: [NSDictionary], completion: (resultArray: [Business])->Void){
         var businessArray: [Business] = []
         for dict in parseArray{
-            let business = Business(name: dict["name"] as? String, address: dict["address"] as? String, photoRef: dict["photoRef"] as? String, latitude: dict["latitude"] as? Double, longitude: dict["longitude"] as? Double, placeID: dict["id"] as? String)
+            var business = Business()
+            business.businessName = dict["name"] as? String
+            business.businessName = dict["address"] as? String
+            business.businessName = dict["photoRef"] as? String
+            business.businessLatitude = dict["latitude"] as? Double
+            business.businessLongitude = dict["longitude"] as? Double
+            business.gPlaceID = dict["id"] as? String
+            //let business = Business(name: dict["name"] as? String, address: dict["address"] as? String, photoRef: dict["photoRef"] as? String, latitude: dict["latitude"] as? Double, longitude: dict["longitude"] as? Double, placeID: dict["id"] as? String)
             businessArray.append(business)
         }
         completion(resultArray: businessArray)
