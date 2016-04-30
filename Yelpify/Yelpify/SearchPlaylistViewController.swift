@@ -33,6 +33,7 @@ class SearchPlaylistViewController: UITableViewController, UITextFieldDelegate {
         // #warning Incomplete implementation, return the number of rows
         return self.playlist_query.count
     }
+
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         searchForPlaylistWithName()
         self.textField.endEditing(true)

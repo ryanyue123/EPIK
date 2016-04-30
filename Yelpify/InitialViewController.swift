@@ -13,7 +13,6 @@ class InitialViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        PFUser.logOut()
         // Do any additional setup after loading the view.
         if (PFUser.currentUser() == nil) {
             self.performSegueWithIdentifier("loginscreen", sender: self)

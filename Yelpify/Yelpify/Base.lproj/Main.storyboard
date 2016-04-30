@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="TGK-Y4-oJh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="xiI-OX-0fu">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -1036,14 +1036,14 @@
                                                     </constraints>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="M8H-HU-Jx0"/>
                                                             <exclude reference="4xS-G5-bpl"/>
+                                                            <exclude reference="M8H-HU-Jx0"/>
                                                         </mask>
                                                     </variation>
                                                     <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="constraints">
-                                                            <include reference="M8H-HU-Jx0"/>
                                                             <include reference="4xS-G5-bpl"/>
+                                                            <include reference="M8H-HU-Jx0"/>
                                                         </mask>
                                                     </variation>
                                                 </imageView>
@@ -1056,14 +1056,14 @@
                                                     </constraints>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="VeT-gx-38h"/>
                                                             <exclude reference="DQN-9h-ou2"/>
+                                                            <exclude reference="VeT-gx-38h"/>
                                                         </mask>
                                                     </variation>
                                                     <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="constraints">
-                                                            <include reference="VeT-gx-38h"/>
                                                             <include reference="DQN-9h-ou2"/>
+                                                            <include reference="VeT-gx-38h"/>
                                                         </mask>
                                                     </variation>
                                                 </view>
@@ -1086,7 +1086,7 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
-                                                <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D46-jM-XWc" userLabel="Side Seperator">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yO7-4r-fEa" userLabel="Side Seperator">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                     <color key="backgroundColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -1105,8 +1105,8 @@
                                                             <include reference="fJw-C1-fKd"/>
                                                         </mask>
                                                     </variation>
-                                                </imageView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yEV-sC-RwX" userLabel="Seperator">
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NVZ-Bn-9ok" userLabel="Seperator">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                     <color key="backgroundColor" red="0.89543876259999999" green="0.89543876259999999" blue="0.89543876259999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -1197,7 +1197,8 @@
                                             <variation key="widthClass=compact" ambiguous="YES">
                                                 <rect key="frame" x="0.0" y="0.0" width="400" height="111.5"/>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact">
+                                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
+                                                <rect key="frame" x="0.0" y="0.0" width="400" height="104.5"/>
                                                 <mask key="subviews">
                                                     <include reference="L11-3r-211"/>
                                                     <include reference="ob7-Oi-6p7"/>
@@ -3342,7 +3343,7 @@
                                     <constraint firstAttribute="width" constant="260" id="C3P-hW-dsA"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vPR-xK-jY5">
                                 <rect key="frame" x="170" y="285" width="260" height="30"/>
@@ -3350,7 +3351,7 @@
                                     <constraint firstAttribute="width" constant="260" id="JlQ-yj-Lm3"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="23a-PF-nSo">
                                 <rect key="frame" x="170" y="335" width="80" height="30"/>
@@ -3774,6 +3775,6 @@
         <segue reference="5rF-SK-oO5"/>
         <segue reference="5FV-hX-NA6"/>
         <segue reference="1RX-FS-Umm"/>
-        <segue reference="p83-lZ-EZB"/>
+        <segue reference="IFd-Gd-HzU"/>
     </inferredMetricsTieBreakers>
 </document>

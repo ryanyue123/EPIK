@@ -159,7 +159,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                     
                 }
                 
-                print(resultArray.count)
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlistArray = resultArray
                     self.playlistTableView.reloadData()
@@ -496,7 +495,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         switch contentToDisplay {
         case .Places:
             let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-            print(playlistArray[indexPath.row].businessRating)
+            //print(playlistArray[indexPath.row].businessRating)
             cell.configureCellWith(playlistArray[indexPath.row]) {
                 //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             }
@@ -511,13 +510,15 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
+        //print(indexPath.row)
         performSegueWithIdentifier("showBusinessDetail", sender: self)
     }
     
     // Override to support conditional editing of the table view.
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
+        print("this is row ")
+        print(indexPath.row)
         return false
     }
     
