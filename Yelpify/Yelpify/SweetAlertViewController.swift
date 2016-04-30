@@ -15,16 +15,6 @@ public enum AlertStyle {
 
 public class SweetAlertViewController: UIViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
 
     
@@ -38,7 +28,7 @@ public class SweetAlertViewController: UIViewController {
     let kButtonHeight: CGFloat = 35.0
     var textViewHeight: CGFloat = 90.0
     let kTitleHeight:CGFloat = 30.0
-    var strongSelf:SweetAlert?
+    var strongSelf:SweetAlertViewController?
     var contentView = UIView()
     var titleLabel: UILabel = UILabel()
     var buttons: [UIButton] = []
@@ -217,24 +207,24 @@ public class SweetAlertViewController: UIViewController {
         self.contentView = UIView()
     }
     
-    public func showAlert(title: String) -> SweetAlert {
+    public func showAlert(title: String) -> SweetAlertViewController {
         self.showAlert(title, subTitle: nil, style: .None)
         return self
     }
     
-    public func showAlert(title: String, subTitle: String?, style: AlertStyle) -> SweetAlert {
+    public func showAlert(title: String, subTitle: String?, style: AlertStyle) -> SweetAlertViewController {
         self.showAlert(title, subTitle: subTitle, style: style, buttonTitle: "OK")
         return self
         
     }
     
-    public func showAlert(title: String, subTitle: String?, style: AlertStyle,buttonTitle: String, action: ((isOtherButton: Bool) -> Void)? = nil) -> SweetAlert {
+    public func showAlert(title: String, subTitle: String?, style: AlertStyle,buttonTitle: String, action: ((isOtherButton: Bool) -> Void)? = nil) -> SweetAlertViewController {
         self.showAlert(title, subTitle: subTitle, style: style, buttonTitle: buttonTitle,buttonColor: UIColor.colorFromRGB(0xAEDEF4))
         userAction = action
         return self
     }
     
-    public func showAlert(title: String, subTitle: String?, style: AlertStyle,buttonTitle: String,buttonColor: UIColor,action: ((isOtherButton: Bool) -> Void)? = nil) -> SweetAlert {
+    public func showAlert(title: String, subTitle: String?, style: AlertStyle,buttonTitle: String,buttonColor: UIColor,action: ((isOtherButton: Bool) -> Void)? = nil) -> SweetAlertViewController {
         self.showAlert(title, subTitle: subTitle, style: style, buttonTitle: buttonTitle,buttonColor: buttonColor,otherButtonTitle:
             nil)
         userAction = action
@@ -242,7 +232,7 @@ public class SweetAlertViewController: UIViewController {
     }
     
     public func showAlert(title: String, subTitle: String?, style: AlertStyle,buttonTitle: String,buttonColor: UIColor,otherButtonTitle:
-        String?, action: ((isOtherButton: Bool) -> Void)? = nil) -> SweetAlert {
+        String?, action: ((isOtherButton: Bool) -> Void)? = nil) -> SweetAlertViewController {
         self.showAlert(title, subTitle: subTitle, style: style, buttonTitle: buttonTitle,buttonColor: buttonColor,otherButtonTitle:
             otherButtonTitle,otherButtonColor: UIColor.redColor())
         userAction = action
@@ -296,7 +286,7 @@ public class SweetAlertViewController: UIViewController {
             let button: UIButton = UIButton(type: UIButtonType.Custom)
             button.setTitle(otherButtonTitle, forState: UIControlState.Normal)
             button.backgroundColor = otherButtonColor
-            button.addTarget(self, action: "pressed:", forControlEvents: UIControlEvents.TouchUpInside)
+            button.addTarget(self, action: #selector(SweetAlertViewController.pressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             button.tag = 1
             buttons.append(button)
         }
