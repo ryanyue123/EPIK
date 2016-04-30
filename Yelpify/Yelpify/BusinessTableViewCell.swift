@@ -18,7 +18,6 @@ class BusinessTableViewCell: UITableViewCell {
     
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var businessTitleLabel: UILabel!
-    @IBOutlet weak var ratingImageView: UIImageView!
     
     @IBOutlet weak var categoryIcon: UIImageView!
     @IBOutlet weak var businessBackgroundImage: UIImageView!
@@ -35,16 +34,13 @@ class BusinessTableViewCell: UITableViewCell {
         //self.backgroundColor = UIColor(netHex:0x000000)
         //setCellColor()
         print(business.businessRating)
-        if business.businessRating != nil{
+        if business.businessRating != -1{
             if let ratingValue2 = business.businessRating{
                 self.BusinessRating.rating = ratingValue2
-                
             }
 
-        }
-        else{
-            self.BusinessRating.rating = 0
-            
+        }else{
+            //self.BusinessRating.rating = 0
         }
                 self.businessBackgroundImage.image = UIImage(named:"default_restaurant")
         
