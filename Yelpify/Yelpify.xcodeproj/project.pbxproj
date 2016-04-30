@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3C2F1C7B1CD468020081CEFA /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2F1C7A1CD468020081CEFA /* InitialViewController.swift */; };
+		3C7C56451CD479EF009D8B34 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7C56441CD479EF009D8B34 /* SignUpViewController.swift */; };
 		3CB8D45C1CBB575F00870F38 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB8D45B1CBB575F00870F38 /* CollectionViewCell.swift */; };
 		3CBFD89B1CD42A7900290F25 /* SearchPlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBFD89A1CD42A7900290F25 /* SearchPlaylistViewController.swift */; };
 		3CBFD89D1CD4355900290F25 /* SearchPlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBFD89C1CD4355900290F25 /* SearchPlaylistCell.swift */; };
@@ -97,6 +98,7 @@
 
 /* Begin PBXFileReference section */
 		3C2F1C7A1CD468020081CEFA /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InitialViewController.swift; path = ../InitialViewController.swift; sourceTree = "<group>"; };
+		3C7C56441CD479EF009D8B34 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		3CB8D45B1CBB575F00870F38 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionViewCell.swift; path = Yelpify/CollectionViewCell.swift; sourceTree = "<group>"; };
 		3CBFD89A1CD42A7900290F25 /* SearchPlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlaylistViewController.swift; sourceTree = "<group>"; };
 		3CBFD89C1CD4355900290F25 /* SearchPlaylistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchPlaylistCell.swift; path = Yelpify/SearchPlaylistCell.swift; sourceTree = "<group>"; };
@@ -308,6 +310,7 @@
 				90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */,
 				EDD44DAC1CB4BA31008DC4AB /* RandomPlaceController.swift */,
 				ED405A0F1CC1D03C0017A9AB /* LoginViewController.swift */,
+				3C7C56441CD479EF009D8B34 /* SignUpViewController.swift */,
 				3C2F1C7A1CD468020081CEFA /* InitialViewController.swift */,
 			);
 			name = "View Controllers";
@@ -650,6 +653,7 @@
 				90C177E01CCB5B85007344CE /* PostCell.swift in Sources */,
 				90C177DA1CCB5B4A007344CE /* ChildExampleViewController.swift in Sources */,
 				90C177D41CCB50A6007344CE /* YoutubeExampleViewController.swift in Sources */,
+				3C7C56451CD479EF009D8B34 /* SignUpViewController.swift in Sources */,
 				3CBFD89B1CD42A7900290F25 /* SearchPlaylistViewController.swift in Sources */,
 				EDA8CEF51CAF506400A5C2ED /* SortMethods.swift in Sources */,
 				90DC57B91C72843A001F1891 /* YelpAPIClient.swift in Sources */,
@@ -826,7 +830,7 @@
 				INFOPLIST_FILE = Yelpify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Yelpify.Yelpify;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Yelpify.Yelpify-1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Yelpify/Yelpify-Bridging-Header.h";
@@ -851,7 +855,7 @@
 				INFOPLIST_FILE = Yelpify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Yelpify.Yelpify;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Yelpify.Yelpify-1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Yelpify/Yelpify-Bridging-Header.h";

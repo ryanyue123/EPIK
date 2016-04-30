@@ -8,7 +8,6 @@
 
 import UIKit
 import Parse
-import ParseUI
 import FBSDKCoreKit
 import FBSDKLoginKit
 
@@ -53,7 +52,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         FBSDKGraphRequest(graphPath: "me", parameters: parameters).startWithCompletionHandler{(connection, result, error) -> Void in
             
             var results = result as! NSDictionary
-            if (error != nil)
+            if (error == nil)
             {
                 print(error)
                 return

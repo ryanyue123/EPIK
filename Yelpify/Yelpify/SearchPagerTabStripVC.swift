@@ -51,7 +51,7 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController {
         let searchBusinessVC = storyboard.instantiateViewControllerWithIdentifier("searchBusinessVC") as! UIViewController
         
         let child_1 = searchBusinessVC //SearchPlaylistViewController(style: .Plain , itemInfo: "Lists", textField: searchTextField)
-        let child_2 = ChildExampleViewController(itemInfo: "Places")
+        let child_2 = searchPlaylistVC
         let child_3 = TableChildExampleViewController(style: .Grouped, itemInfo: "People")
         guard isReload else {
             return [child_1, child_2, child_3]

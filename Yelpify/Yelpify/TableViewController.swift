@@ -214,24 +214,37 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
     }
     
     func getLocationAndFetch(){
-        // SwiftLocation
-        do {
-            try SwiftLocation.shared.currentLocation(Accuracy.Block, timeout: 20, onSuccess: { (location) -> Void in
-                // location is a CLPlacemark
-                self.userlatitude = location?.coordinate.latitude
-                self.userlongitude = location?.coordinate.longitude
-                
-                self.fetchPlaylists()
-                
-                self.parameters["ll"] = String(self.userlatitude) + "," + String(self.userlongitude)
-                
-                print("1. Location found \(location?.description)")
-            }) { (error) -> Void in
-                print("1. Something went wrong -> \(error?.localizedDescription)")
-            }
-        } catch (let error) {
-            print("Error \(error)")
+        
+        LocationManager.shared.observeLocations(.Block, frequency: .OneShot, onSuccess: { location in
+            self.userlatitude = location.coordinate.latitude
+            self.userlongitude = location.coordinate.longitude
+
+            self.fetchPlaylists()
+
+            self.parameters["ll"] = String(self.userlatitude) + "," + String(self.userlongitude)
+
+        }) { error in
+            // Something went wrong. error will tell you what
         }
+//        
+//        // SwiftLocation
+//        do {
+//            try SwiftLocation.shared.currentLocation(Accuracy.Block, timeout: 20, onSuccess: { (location) -> Void in
+//                // location is a CLPlacemark
+//                self.userlatitude = location?.coordinate.latitude
+//                self.userlongitude = location?.coordinate.longitude
+//                
+//                self.fetchPlaylists()
+//                
+//                self.parameters["ll"] = String(self.userlatitude) + "," + String(self.userlongitude)
+//                
+//                print("1. Location found \(location?.description)")
+//            }) { (error) -> Void in
+//                print("1. Something went wrong -> \(error?.localizedDescription)")
+//            }
+//        } catch (let error) {
+//            print("Error \(error)")
+//        }
     }
 
     func fetchPlaylists()
