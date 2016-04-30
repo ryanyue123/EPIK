@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3CB8D45C1CBB575F00870F38 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB8D45B1CBB575F00870F38 /* CollectionViewCell.swift */; };
+		3CBFD89B1CD42A7900290F25 /* SearchPlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBFD89A1CD42A7900290F25 /* SearchPlaylistViewController.swift */; };
+		3CBFD89D1CD4355900290F25 /* SearchPlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBFD89C1CD4355900290F25 /* SearchPlaylistCell.swift */; };
 		3CD0344F1CBA121300675F88 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD0344E1CBA121300675F88 /* TableViewCell.swift */; };
 		3CD034511CBA122A00675F88 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD034501CBA122A00675F88 /* TableViewController.swift */; };
 		3CE2EE7F1C6C5EC8000C9088 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE2EE7E1C6C5EC8000C9088 /* AppDelegate.swift */; };
@@ -28,6 +30,7 @@
 		908A3BCB1CC0EFED00767736 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908A3BCA1CC0EFED00767736 /* ProfileViewController.swift */; };
 		90A9437A1CD2CDE8004ACE78 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A943791CD2CDE8004ACE78 /* CommentTableViewCell.swift */; };
 		90B09C601CBC7573004F38C2 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B09C5F1CBC7573004F38C2 /* CardView.swift */; };
+		90B6D69C1CD35BBE006928E8 /* CustomSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B6D69B1CD35BBE006928E8 /* CustomSegue.swift */; };
 		90B9B7D91C8A696F002D4BB1 /* BusinessDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */; };
 		90BAD1C11C8662ED0047277E /* TestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BAD1C01C8662ED0047277E /* TestTableViewController.swift */; };
 		90BAD1C31C86639E0047277E /* TestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BAD1C21C86639E0047277E /* TestTableViewCell.swift */; };
@@ -92,6 +95,8 @@
 
 /* Begin PBXFileReference section */
 		3CB8D45B1CBB575F00870F38 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionViewCell.swift; path = Yelpify/CollectionViewCell.swift; sourceTree = "<group>"; };
+		3CBFD89A1CD42A7900290F25 /* SearchPlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlaylistViewController.swift; sourceTree = "<group>"; };
+		3CBFD89C1CD4355900290F25 /* SearchPlaylistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchPlaylistCell.swift; path = Yelpify/SearchPlaylistCell.swift; sourceTree = "<group>"; };
 		3CD0344E1CBA121300675F88 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewCell.swift; path = Yelpify/TableViewCell.swift; sourceTree = "<group>"; };
 		3CD034501CBA122A00675F88 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		3CE2EE7B1C6C5EC8000C9088 /* Yelpify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yelpify.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,6 +124,7 @@
 		908A3BCA1CC0EFED00767736 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		90A943791CD2CDE8004ACE78 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentTableViewCell.swift; path = Yelpify/CommentTableViewCell.swift; sourceTree = "<group>"; };
 		90B09C5F1CBC7573004F38C2 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		90B6D69B1CD35BBE006928E8 /* CustomSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSegue.swift; sourceTree = "<group>"; };
 		90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessDetailViewController.swift; sourceTree = "<group>"; };
 		90BAD1C01C8662ED0047277E /* TestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTableViewController.swift; sourceTree = "<group>"; };
 		90BAD1C21C86639E0047277E /* TestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTableViewCell.swift; sourceTree = "<group>"; };
@@ -200,6 +206,7 @@
 		3CA6CFFB1CC05A880004B989 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				3CBFD89C1CD4355900290F25 /* SearchPlaylistCell.swift */,
 				9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */,
 				90A943791CD2CDE8004ACE78 /* CommentTableViewCell.swift */,
 				3CD0344E1CBA121300675F88 /* TableViewCell.swift */,
@@ -288,9 +295,11 @@
 			children = (
 				90C177D71CCB50AE007344CE /* TabSwipe */,
 				908A3BCA1CC0EFED00767736 /* ProfileViewController.swift */,
+				3CBFD89A1CD42A7900290F25 /* SearchPlaylistViewController.swift */,
 				9038B75D1CBCD041004B220B /* ActionsViewController.swift */,
 				3CD034501CBA122A00675F88 /* TableViewController.swift */,
 				90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */,
+				90B6D69B1CD35BBE006928E8 /* CustomSegue.swift */,
 				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
 				90E505DE1C8E375200F47285 /* GPlacesSearchViewController.swift */,
 				90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */,
@@ -620,10 +629,12 @@
 				90F34CDF1CB0893300CC0870 /* SinglePlaylistViewController.swift in Sources */,
 				90C177D51CCB50A6007344CE /* YoutubeIconCell.swift in Sources */,
 				90E505DF1C8E375200F47285 /* GPlacesSearchViewController.swift in Sources */,
+				90B6D69C1CD35BBE006928E8 /* CustomSegue.swift in Sources */,
 				907E0CE51C76768D00872135 /* LocuAPIClient.swift in Sources */,
 				90711BD51CAF4DEA0032A257 /* PlaylistObject.swift in Sources */,
 				90C96AAE1CCAF72B00E9EC28 /* ConfigureFunctions.swift in Sources */,
 				9038B75E1CBCD041004B220B /* ActionsViewController.swift in Sources */,
+				3CBFD89D1CD4355900290F25 /* SearchPlaylistCell.swift in Sources */,
 				3CD0344F1CBA121300675F88 /* TableViewCell.swift in Sources */,
 				907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */,
 				907E0CE71C77F34100872135 /* GooglePlacesAPIClient.swift in Sources */,
@@ -632,6 +643,7 @@
 				90C177E01CCB5B85007344CE /* PostCell.swift in Sources */,
 				90C177DA1CCB5B4A007344CE /* ChildExampleViewController.swift in Sources */,
 				90C177D41CCB50A6007344CE /* YoutubeExampleViewController.swift in Sources */,
+				3CBFD89B1CD42A7900290F25 /* SearchPlaylistViewController.swift in Sources */,
 				EDA8CEF51CAF506400A5C2ED /* SortMethods.swift in Sources */,
 				90DC57B91C72843A001F1891 /* YelpAPIClient.swift in Sources */,
 				90BAD1C31C86639E0047277E /* TestTableViewCell.swift in Sources */,
