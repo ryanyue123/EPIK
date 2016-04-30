@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ParseUI
 import Parse
 import CoreLocation
 import MapKit
@@ -25,7 +24,7 @@ struct appDefaults {
     static let color_darker: UIColor! = UIColor.init(netHex: 0x3a7b8a)
 }
 
-class TableViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate {
+class TableViewController: UITableViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerImageView: UIImageView!
@@ -33,8 +32,6 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
         self.getLocationAndFetch()
         self.configureColors()
         self.configureHeaderView()

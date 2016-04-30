@@ -12,7 +12,7 @@ import ParseUI
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     let loginButton: FBSDKLoginButton = {
         let button = FBSDKLoginButton()
@@ -24,10 +24,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, PFLogInViewCon
     @IBOutlet weak var fbLogin: UIView!
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.addSubview(loginButton)
         //loginButton.center = view.center
         self.loginButton.translatesAutoresizingMaskIntoConstraints = false
@@ -45,54 +44,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, PFLogInViewCon
         // Do any additional setup after loading the view, typically from a nib.
     }
     override func viewDidAppear(animated: Bool) {
-        if (PFUser.currentUser() == nil) {
-            let logInViewController = PFLogInViewController()
-            logInViewController.delegate = self
-            
-            let signUpViewController = PFSignUpViewController()
-            signUpViewController.delegate = self
-            
-            logInViewController.signUpController = signUpViewController
-            
-            self.presentViewController(logInViewController, animated: true, completion: nil)
-            
-        }
 
-    }
-    func logInViewController(logInController: PFLogInViewController, shouldBeginLogInWithUsername username: String, password: String) -> Bool {
-        if (!username.isEmpty || !password.isEmpty)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    func logInViewController(logInController: PFLogInViewController, didLogInUser user: PFUser) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    func logInViewController(logInController: PFLogInViewController, didFailToLogInWithError error: NSError?) {
-        print("failed to login")
-    }
-    func signUpViewController(signUpController: PFSignUpViewController, shouldBeginSignUp info: [String : String]) -> Bool {
-        if let password = info["password"]
-        {
-            return password.utf16.count >= 8
-        }
-        else
-        {
-            return false
-        }
-    }
-    func signUpViewController(signUpController: PFSignUpViewController, didSignUpUser user: PFUser) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    func signUpViewController(signUpController: PFSignUpViewController, didFailToSignUpWithError error: NSError?) {
-        print("failed to signup")
-    }
-    func signUpViewControllerDidCancelSignUp(signUpController: PFSignUpViewController) {
-        print("signup canceled")
     }
 
     func fetchProfile() {
@@ -142,6 +94,27 @@ class LoginViewController: UIViewController, UITextFieldDelegate, PFLogInViewCon
                 }
             }
             self.performSegueWithIdentifier("loginSuccessSegue", sender: self)
+        }
+    }
+    
+    @IBAction func loginAction(sender: UIButton) {
+        let username = self.usernameField.text!
+        let password = self.passwordField.text!
+        
+        if (!username.isEmpty && !password.isEmpty)
+        {
+            print("hello")
+            
+            PFUser.logInWithUsernameInBackground(username, password: password, block: { (user, error) in
+                if (error == nil)
+                {
+                    if (user != nil)
+                    {
+                        print("success")
+                        self.performSegueWithIdentifier("loginSuccessSegue", sender: self)
+                    }
+                }
+            })
         }
     }
     
