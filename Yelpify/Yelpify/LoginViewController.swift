@@ -8,10 +8,11 @@
 
 import UIKit
 import Parse
+import ParseUI
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     let loginButton: FBSDKLoginButton = {
         let button = FBSDKLoginButton()
@@ -21,10 +22,11 @@ class LoginViewController: UIViewController {
     
 
     @IBOutlet weak var fbLogin: UIView!
-    
+    @IBOutlet weak var usernameField: UITextField!
+    @IBOutlet weak var passwordField: UITextField!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.addSubview(loginButton)
         //loginButton.center = view.center
         self.loginButton.translatesAutoresizingMaskIntoConstraints = false
@@ -41,8 +43,10 @@ class LoginViewController: UIViewController {
         }
         // Do any additional setup after loading the view, typically from a nib.
     }
-    
-    
+    override func viewDidAppear(animated: Bool) {
+
+    }
+
     func fetchProfile() {
         print("Profile Fetched!")
         let parameters = ["fields": "email, first_name, last_name, picture.type(large)"]
@@ -93,6 +97,26 @@ class LoginViewController: UIViewController {
         }
     }
     
+    @IBAction func loginAction(sender: UIButton) {
+        let username = self.usernameField.text!
+        let password = self.passwordField.text!
+        
+        if (!username.isEmpty && !password.isEmpty)
+        {
+            print("hello")
+            
+            PFUser.logInWithUsernameInBackground(username, password: password, block: { (user, error) in
+                if (error == nil)
+                {
+                    if (user != nil)
+                    {
+                        print("success")
+                        self.performSegueWithIdentifier("loginSuccessSegue", sender: self)
+                    }
+                }
+            })
+        }
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

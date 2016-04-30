@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ParseUI
 import Parse
 import CoreLocation
 import MapKit
@@ -25,7 +24,7 @@ struct appDefaults {
     static let color_darker: UIColor! = UIColor.init(netHex: 0x3a7b8a)
 }
 
-class TableViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate {
+class TableViewController: UITableViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerImageView: UIImageView!
@@ -33,7 +32,6 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.getLocationAndFetch()
         self.configureColors()
         self.configureHeaderView()
@@ -77,19 +75,6 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
     override func viewDidAppear(animated: Bool) {
 
         //configureHeaderView()
-        
-        if (PFUser.currentUser() == nil) {
-            let logInViewController = PFLogInViewController()
-            logInViewController.delegate = self
-            
-            let signUpViewController = PFSignUpViewController()
-            signUpViewController.delegate = self
-            
-            logInViewController.signUpController = signUpViewController
-            
-            self.presentViewController(logInViewController, animated: true, completion: nil)
-            
-        }
         self.tableView.reloadData()
     }
     
@@ -320,42 +305,6 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
         }
     }
     
-    func logInViewController(logInController: PFLogInViewController, shouldBeginLogInWithUsername username: String, password: String) -> Bool {
-        if (!username.isEmpty || !password.isEmpty)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    func logInViewController(logInController: PFLogInViewController, didLogInUser user: PFUser) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    func logInViewController(logInController: PFLogInViewController, didFailToLogInWithError error: NSError?) {
-        print("failed to login")
-    }
-    func signUpViewController(signUpController: PFSignUpViewController, shouldBeginSignUp info: [String : String]) -> Bool {
-        if let password = info["password"]
-        {
-            return password.utf16.count >= 8
-        }
-        else
-        {
-            return false
-        }
-    }
-    func signUpViewController(signUpController: PFSignUpViewController, didSignUpUser user: PFUser) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    func signUpViewController(signUpController: PFSignUpViewController, didFailToSignUpWithError error: NSError?) {
-        print("failed to signup")
-    }
-    func signUpViewControllerDidCancelSignUp(signUpController: PFSignUpViewController) {
-        print("signup canceled")
-    }
-
     // MARK: - Table view data source
     var storedOffsets = [Int: CGFloat]()
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
