@@ -16,7 +16,6 @@ enum ContentTypes {
 
 class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
-    @IBOutlet weak var statusBarView: UIView!
     //@IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
     
     @IBOutlet weak var editPlaylistButton: UIBarButtonItem!
@@ -40,6 +39,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     @IBOutlet weak var segmentedBar: UISegmentedControl!
     @IBOutlet weak var segmentedBarView: UIView!
+    
+    var statusBarView: UIView!
     
     let offset_HeaderStop:CGFloat = 40.0
     var contentToDisplay: ContentTypes = .Places
@@ -70,21 +71,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
         
         presentViewController(actionController, animated: true, completion: nil)
-    
-
-        
-        
-//        print(self.navigationItem.rightBarButtonItem!.title!)
-//        switch self.navigationItem.rightBarButtonItem!.title! {
-//        case "Edit":
-//            playlistTableView.setEditing(true, animated: true)
-//            self.navigationItem.rightBarButtonItem?.title = "Done" //= UIBarButtonItem(title: "Done", style: .Plain, target: self, action: nil)
-//        case "Done":
-//            playlistTableView.setEditing(false, animated: true)
-//            self.navigationItem.rightBarButtonItem?.title = "Edit"//= UIBarButtonItem(title: "Edit", style: .Plain, target: self, action: nil)
-//        default:
-//            playlistTableView.setEditing(false, animated: true)
-//        }
 
     }
     
@@ -113,17 +99,37 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             }
         }
     }
+    
+    func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        
+        if longPressGestureRecognizer.state == UIGestureRecognizerState.Began {
+            
+            let touchPoint = longPressGestureRecognizer.locationInView(self.view)
+            if let indexPath = playlistTableView.indexPathForRowAtPoint(touchPoint) {
+                print("HIIIII")
+                // your code here, get the row for the indexPath or do whatever you want
+            }
+        }
+        
+    }
+
 
     
     // MARK: - ViewDidLoad and other View functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
         
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(SinglePlaylistViewController.longPress(_:)))
+        self.view.addGestureRecognizer(longPressRecognizer)
+        
+
+        
         self.playlistTableView.backgroundColor = appDefaults.color
-        if (object == nil)
+        if (object["track"] == nil)
         {
             print("the object is nil")
             // Automatic edit mode
@@ -197,6 +203,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         setupCollaboratorViews()
         //configurePlaylistInfoView()
+        configureInfo()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -205,7 +212,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     override func viewWillAppear(animated: Bool) {
         //Configure Functions
         
-        configureNavigationBar()
+        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+        self.statusBarView = ConfigureFunctions.configureStatusBar(self.navigationController!)
+        
         playlistInfoView.frame.size.height = 350.0
         playlistTableHeaderHeight = playlistInfoView.frame.size.height
         configurePlaylistInfoView()
@@ -235,10 +244,17 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         super.viewDidLayoutSubviews()
         updateHeaderView()
     }
+
+    
+
     
     func unwindView(sender: UIBarButtonItem)
     {
         self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+    func configureInfo(){
+        self.playlistInfoName.text = object["playlistName"] as? String
     }
     
     func activateEditMode()
@@ -260,12 +276,16 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         var businessArray: [Business] = []
         for dict in parseArray{
             var business = Business()
-            business.businessName = dict["name"] as? String
-            business.businessName = dict["address"] as? String
-            business.businessName = dict["photoRef"] as? String
-            business.businessLatitude = dict["latitude"] as? Double
-            business.businessLongitude = dict["longitude"] as? Double
-            business.gPlaceID = dict["id"] as? String
+
+            business.businessName = dict["name"] as! String
+            business.businessAddress = dict["address"] as! String
+            if let photoRef = dict["photoRef"] as? String{
+                business.businessPhotoReference = photoRef
+            }
+            business.businessRating = dict["rating"] as! Double
+            business.businessLatitude = dict["latitude"] as! Double
+            business.businessLongitude = dict["longitude"] as! Double
+            business.gPlaceID = dict["id"] as! String
             businessArray.append(business)
         }
         completion(resultArray: businessArray)
@@ -335,7 +355,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.statusBarView.alpha = showWhenScrollDownAlpha
         
         // Handle Nav Shadow View
-        self.view.viewWithTag(100)!.backgroundColor = appDefaults.color.colorWithAlphaComponent(showWhenScrollDownAlpha)
+        //self.statusBarView.backgroundColor = appDefaults.color.colorWithAlphaComponent(showWhenScrollDownAlpha)
+        //self.view.viewWithTag(100)!.backgroundColor = appDefaults.color.colorWithAlphaComponent(showWhenScrollDownAlpha)
     }
     
     // MARK: - Setup Views
@@ -471,10 +492,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-        cell.configureCellWith(playlistArray[indexPath.row]) {
-            //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        }
-        
         
         switch contentToDisplay {
         case .Places:
@@ -530,7 +547,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func savePlaylistToParse(sender: UIBarButtonItem)
     {
         if playlistArray.count > 0{
-            let saveobject = PFObject(className: "Playlists")
+            let saveobject = object
             if let lat = playlistArray[0].businessLatitude
             {
                 if let long = playlistArray[0].businessLongitude

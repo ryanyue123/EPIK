@@ -46,19 +46,19 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
         
         
         
-//        // Pull to Refresh
-//        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
-//        loadingView.tintColor = UIColor.whiteColor()
-//        tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-//            // Add your logic here
-//            print("refreshing")
-//            self?.all_playlists.removeAll()
-//            self?.getLocationAndFetch()
-//            // Do not forget to call dg_stopLoading() at the end
-//            self?.tableView.dg_stopLoading()
-//            }, loadingView: loadingView)
-//        tableView.dg_setPullToRefreshFillColor(appDefaults.color_darker)
-//        tableView.dg_setPullToRefreshBackgroundColor(appDefaults.color_darker)
+        // Pull to Refresh
+        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
+        loadingView.tintColor = UIColor.whiteColor()
+        tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+            // Add your logic here
+            print("refreshing")
+            self?.all_playlists.removeAll()
+            self?.getLocationAndFetch()
+            // Do not forget to call dg_stopLoading() at the end
+            self?.tableView.dg_stopLoading()
+            }, loadingView: loadingView)
+        tableView.dg_setPullToRefreshFillColor(appDefaults.color_darker)
+        tableView.dg_setPullToRefreshBackgroundColor(appDefaults.color_darker)
         
     }
     
@@ -216,7 +216,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
     func getLocationAndFetch(){
         // SwiftLocation
         do {
-            try SwiftLocation.shared.currentLocation(Accuracy.Neighborhood, timeout: 20, onSuccess: { (location) -> Void in
+            try SwiftLocation.shared.currentLocation(Accuracy.Block, timeout: 20, onSuccess: { (location) -> Void in
                 // location is a CLPlacemark
                 self.userlatitude = location?.coordinate.latitude
                 self.userlongitude = location?.coordinate.longitude
@@ -366,7 +366,8 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         //self.row = collectionView.tag
         //self.col = indexPath.row
-        
+        print(collectionView.tag)
+        print(indexPath.row)
         // Perform Segue and Pass List Data
         let controller = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
         let temparray = all_playlists[collectionView.tag]

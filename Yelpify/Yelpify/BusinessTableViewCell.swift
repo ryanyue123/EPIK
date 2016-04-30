@@ -40,7 +40,7 @@ class BusinessTableViewCell: UITableViewCell {
             }
 
         }else{
-            //self.BusinessRating.rating = 0
+            self.BusinessRating.rating = 0
         }
                 self.businessBackgroundImage.image = UIImage(named:"default_restaurant")
         
