@@ -1448,6 +1448,9 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="800"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="7Om-1w-JrL" id="S1t-pJ-mE8"/>
                                     <outlet property="delegate" destination="7Om-1w-JrL" id="042-vq-gNq"/>
@@ -2743,9 +2746,6 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="0.0" width="400" height="800"/>
-                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="hzi-hz-39z" id="2aM-CQ-71P"/>
                                     <outlet property="delegate" destination="hzi-hz-39z" id="lQQ-84-kjC"/>
@@ -3705,9 +3705,6 @@
                                 <state key="normal" title="Sign-up">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <connections>
-                                    <segue destination="isW-yh-HIE" kind="show" id="ctH-7X-t9Q"/>
-                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V6w-fD-Uvy">
                                 <rect key="frame" x="170" y="234" width="260" height="30"/>
@@ -3734,9 +3731,6 @@
                                 <state key="normal" title="Login">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="TGK-Y4-oJh" kind="show" identifier="loginSuccessSegue" id="hRZ-03-l8l"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3753,6 +3747,9 @@
                     </view>
                     <connections>
                         <outlet property="fbLogin" destination="dUl-62-egp" id="5F4-On-bYn"/>
+                        <outlet property="passwordField" destination="vPR-xK-jY5" id="CBg-5u-Jbz"/>
+                        <outlet property="usernameField" destination="V6w-fD-Uvy" id="lc1-ZU-XGc"/>
+                        <segue destination="TGK-Y4-oJh" kind="show" identifier="loginSuccessSegue" action="showDetailViewController:sender:" id="WpN-0Y-8TF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sma-fD-tWU" userLabel="First Responder" sceneMemberID="firstResponder"/>
