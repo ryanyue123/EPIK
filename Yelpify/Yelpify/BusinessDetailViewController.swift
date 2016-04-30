@@ -59,6 +59,8 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         
         super.viewDidLoad()
         
+        configureTableView()
+        
         self.navBarShadowView = ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         
         // Configure status bar and set alpha to 0
@@ -79,15 +81,13 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             self.directionsButton.enabled = true
             self.callButton.enabled = true
             
-            //self.reviewArray = detailedGPlace.reviews!
+            self.reviewArray = detailedGPlace.reviews!
             
             self.object.businessPhone = detailedGPlace.phone!
             if let ratingValue = detailedGPlace.rating{
                 print("Rating: ", ratingValue, "\n")
                 self.cosmosRating.rating = ratingValue
             }
-            //let ratingValue = detailedGPlace.rating!
-            //self.cosmosRating.rating = ratingValue
             
             /*
             print("Hours: ", detailedGPlace.hours!, "\n")
@@ -184,7 +184,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     
     // MARK: - Setup Views
     
-    private let headerHeight: CGFloat = 350.0
+    private let headerHeight: CGFloat = 320.0
     
 //    func configureNavigationBar(){
 //        addShadowToBar()
@@ -203,7 +203,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     func configureHeaderView(){
         tableView.tableHeaderView = nil
         tableView.addSubview(headerView)
-        tableView.contentInset = UIEdgeInsets(top: headerHeight, left: 0, bottom: 0, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: headerHeight + 5, left: 0, bottom: 0, right: 0)
         tableView.contentOffset = CGPoint(x: 0, y: -headerHeight)
     }
     
@@ -255,6 +255,13 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             imageView.alpha = 1
         }
         imageView.alpha = endAlpha
+    }
+    
+    func configureTableView(){
+        tableView.layoutMargins = UIEdgeInsetsMake(20, 0, 20, 0)
+        tableView.separatorInset = UIEdgeInsetsMake(20, 0, 20, 0)
+        tableView.estimatedRowHeight = 14.0
+        tableView.rowHeight = UITableViewAutomaticDimension
     }
     
     @IBAction func addItemToPlaylist(sender: UIBarButtonItem) {
@@ -341,6 +348,8 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         let cell = tableView.dequeueReusableCellWithIdentifier("reviewCell", forIndexPath: indexPath) as! CommentTableViewCell
         let review = self.reviewArray[indexPath.row]
         cell.configureCell(review as! NSDictionary)
+        
+        cell.layoutMargins = UIEdgeInsetsMake(10, 0, 10, 0)
         return cell
 
     }

@@ -248,6 +248,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                     self.label_array.append("Playlists near me")
                     self.tableView.reloadData()
                     
+                    /*
                     let query2: PFQuery = PFQuery(className: "Playlists")
                     query2.whereKey("createdbyuser", equalTo: (PFUser.currentUser()?.username)!)
                     query2.orderByDescending("updatedAt")
@@ -294,7 +295,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                         {
                             print(error?.userInfo)
                         }
-                    }
+                    }*/
 
                 })
             }
