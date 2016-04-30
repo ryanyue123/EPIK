@@ -261,7 +261,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
                     self.all_playlists.append(self.playlists_location)
                     self.label_array.append("Playlists near me")
                     self.tableView.reloadData()
-                    
+                    /*
                     let query2: PFQuery = PFQuery(className: "Playlists")
                     query2.whereKey("createdbyuser", equalTo: (PFUser.currentUser()?.username)!)
                     query2.orderByDescending("updatedAt")
@@ -308,7 +308,7 @@ class TableViewController: UITableViewController, PFLogInViewControllerDelegate,
                         {
                             print(error?.userInfo)
                         }
-                    }
+                    }*/
 
                 })
             }

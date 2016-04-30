@@ -398,7 +398,8 @@ class APIDataHandler {
                             placePhotoRef = photos[0]["photo_reference"] as! String
                         }
                         
-                        var placeRating = place["rating"] as! Double
+                        var placeRating = place["rating"] as? Double
+                        
                         
                         var placeLat: Double?
                         var placeLng: Double?
