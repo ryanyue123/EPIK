@@ -9,9 +9,11 @@
 import UIKit
 import Parse
 import Haneke
+import Cosmos
 
 class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var cosmosRating: CosmosView!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
@@ -24,6 +26,8 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var hoursLabel: UILabel!
     @IBOutlet weak var ratingImageView: UIImageView!
     @IBOutlet weak var numOfReviewsLabel: UILabel!
+    
+    
     
     var statusBarView: UIView!
     var navBarShadowView: UIView!
@@ -75,9 +79,15 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             self.directionsButton.enabled = true
             self.callButton.enabled = true
             
-            self.reviewArray = detailedGPlace.reviews!
+            //self.reviewArray = detailedGPlace.reviews!
             
             self.object.businessPhone = detailedGPlace.phone!
+            if let ratingValue = detailedGPlace.rating{
+                print("Rating: ", ratingValue, "\n")
+                self.cosmosRating.rating = ratingValue
+            }
+            //let ratingValue = detailedGPlace.rating!
+            //self.cosmosRating.rating = ratingValue
             
             /*
             print("Hours: ", detailedGPlace.hours!, "\n")
@@ -89,16 +99,18 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             print("Website: ", detailedGPlace.website!, "\n")
             */
             
+            
             if detailedGPlace.photos?.count > 0 {
                 self.setCoverPhoto(detailedGPlace.photos![0] as! String)
             }
             
-            
+         
             self.tableView.reloadData()
         }
-        
-    }
     
+    
+    }
+
     override func viewWillAppear(animated: Bool) {
         self.loadedNavBar = true
         self.loadedStatusBar = true

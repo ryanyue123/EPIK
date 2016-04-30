@@ -8,9 +8,12 @@
 
 import UIKit
 import Haneke
+import Cosmos
 
 class BusinessTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var BusinessRating: CosmosView!
+  
     let cache = Shared.imageCache
     
     @IBOutlet weak var moreButton: UIButton!
@@ -32,8 +35,18 @@ class BusinessTableViewCell: UITableViewCell {
         //self.backgroundColor = UIColor(netHex:0x000000)
         //setCellColor()
         print(business.businessRating)
-        
-        self.businessBackgroundImage.image = UIImage(named:"default_restaurant")
+        if business.businessRating != nil{
+            if let ratingValue2 = business.businessRating{
+                self.BusinessRating.rating = ratingValue2
+                
+            }
+
+        }
+        else{
+            self.BusinessRating.rating = 0
+            
+        }
+                self.businessBackgroundImage.image = UIImage(named:"default_restaurant")
         
         if let photoReference = business.businessPhotoReference{
             googlePlacesClient.getImageFromPhotoReference(photoReference) { (key) -> Void in
