@@ -39,7 +39,7 @@ class CommentTableViewCell: UITableViewCell {
         
         
     if let ratingValue3 = review["rating"] as? Double{
-        if review["rating"] as? Double != -1{
+        if ratingValue3 != -1{
                 self.CommentRating.rating = ratingValue3
             }
         }
