@@ -9,8 +9,9 @@
 import UIKit
 import Haneke
 import Cosmos
+import MGSwipeTableCell
 
-class BusinessTableViewCell: UITableViewCell {
+class BusinessTableViewCell: MGSwipeTableCell {
     
     @IBOutlet weak var BusinessRating: CosmosView!
   
