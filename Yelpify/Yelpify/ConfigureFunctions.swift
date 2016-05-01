@@ -45,4 +45,5 @@ struct ConfigureFunctions {
         
         return addShadowToBar()
     }
+
 }

@@ -17,6 +17,8 @@ class InitialViewController: UIViewController {
         if (PFUser.currentUser() == nil) {
             self.performSegueWithIdentifier("loginscreen", sender: self)
             
+        }else{
+             self.performSegueWithIdentifier("showHome", sender: self)
         }
 
     }

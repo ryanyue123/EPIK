@@ -11,6 +11,11 @@ import Haneke
 import Cosmos
 import MGSwipeTableCell
 
+enum BusinessCellMode {
+    case Add
+    case More
+}
+
 class BusinessTableViewCell: MGSwipeTableCell {
     
     @IBOutlet weak var BusinessRating: CosmosView!
@@ -26,15 +31,23 @@ class BusinessTableViewCell: MGSwipeTableCell {
     @IBOutlet weak var businessAddressLabel: UILabel!
     @IBOutlet weak var businessOpenLabel: UILabel!
     
-    //let yelpBusinessClient = YelpAPIClient()
+    @IBOutlet weak var actionButton: UIButton!
+    
     let googlePlacesClient = GooglePlacesAPIClient()
         
-    func configureCellWith(business: Business, completion:() -> Void){
+    func configureCellWith(business: Business, mode: BusinessCellMode, completion:() -> Void){
+        
+        switch mode {
+        case .Add:
+            self.configureButton(UIImage(named: "checkMark")!)
+        case .More:
+            self.configureButton(UIImage(named: "more_icon")!)
+        default:
+            self.configureButton(UIImage(named: "more_icon")!)
+        }
+        
         businessTitleLabel.text = business.businessName
         businessAddressLabel.text = business.businessAddress
-        //self.backgroundColor = UIColor(netHex:0x000000)
-        //setCellColor()
-        print(business.businessRating)
         if business.businessRating != -1{
             if let ratingValue2 = business.businessRating{
                 self.BusinessRating.rating = ratingValue2
@@ -59,41 +72,19 @@ class BusinessTableViewCell: MGSwipeTableCell {
             }
 
         }
-        
-//        // If Business Object contains photo reference
-//        if photoReference != ""{
-//            
-//            googlePlacesClient.getImageFromPhotoReference(photoReference) { (key) -> Void in
-//                
-//                self.cache.fetch(key: key).onSuccess { image in
-//                    self.businessBackgroundImage.hnk_setImage(image, key: photoReference)
-//                    self.businessBackgroundImage.setNeedsDisplay()
-//                    self.businessBackgroundImage.setNeedsLayout()
-//                    
-//                    completion()
-//                    
-////                    self.applyBlurEffect(image, completion: { (blurredImage) -> Void in
-////                        self.businessBackgroundImage.hnk_setImage(blurredImage, key: photoReference)
-////                        self.businessBackgroundImage.setNeedsLayout()
-////                    })
-//        
-//                }
-//            }
-//        }
     }
     
-    func applyBlurEffect(image: UIImage, completion: (blurredImage: UIImage) -> Void){
-        let imageToBlur = CIImage(image: image)
-
-        let blurfilter = CIFilter(name: "CIGaussianBlur")!
-        blurfilter.setValue(1, forKey: kCIInputRadiusKey)
-        blurfilter.setValue(imageToBlur, forKey: "inputImage")
-        let resultImage = blurfilter.valueForKey("outputImage") as! CIImage
-        
-        let croppedImage:CIImage = resultImage.imageByCroppingToRect(CGRectMake(0, 0,imageToBlur!.extent.size.width, imageToBlur!.extent.size.height))
-        let finalImage = UIImage(CIImage: croppedImage)
-
-        completion(blurredImage: finalImage)
+    func configureButton(image: UIImage){
+        let tintedImage = image.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        if actionButton != nil{
+            self.actionButton.setImage(tintedImage, forState: .Normal)
+            self.actionButton.tintColor = appDefaults.color_darker
+        }
+    }
+    
+    
+    @IBAction func actionButtonPressed(sender: AnyObject) {
+        self.actionButton.tintColor = UIColor.greenColor()
     }
     
     override func awakeFromNib() {

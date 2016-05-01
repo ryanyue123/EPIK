@@ -9,6 +9,7 @@
 import UIKit
 import Haneke
 import SwiftyJSON
+import Cosmos
 
 class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var reviewTextView: UITextView!

@@ -122,13 +122,22 @@ class APIDataHandler {
                     }
                     
                     
-                    for (index,photo):(String, JSON) in place["photos"]! {
-                        if let photoDict = photo.dictionary{
+                    if let photoDict = place["photos"]!.dictionary{
+                        for (index,photo):(String, JSON) in photoDict{
                             if let ref = photoDict["photo_reference"]?.string{
                                 DetailedObject.photos.addObject(ref)
                             }
                         }
+
                     }
+                    
+//                    for (index,photo):(String, JSON) in place["photos"]!{
+//                        if let photoDict = photo.dictionary{
+//                            if let ref = photoDict["photo_reference"]?.string{
+//                                DetailedObject.photos.addObject(ref)
+//                            }
+//                        }
+//                    }
                     
                     if let placePrice = place["price_level"]!.int{
                         DetailedObject.priceRating = placePrice

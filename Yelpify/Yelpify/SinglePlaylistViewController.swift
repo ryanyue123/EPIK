@@ -130,10 +130,11 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 
         
         self.playlistTableView.backgroundColor = appDefaults.color
-        if (object["track"] == nil)
+        if (object == nil)
         {
             print("the object is nil")
             // Automatic edit mode
+            self.activateEditMode()
         }
         else if((object["createdbyuser"] as? String) == PFUser.currentUser()?.username) //later incorporate possibility of collaboration
         {
@@ -163,6 +164,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlistArray = resultArray
                     self.playlistTableView.reloadData()
+                    self.configureInfo()
                 })
             }
             // edit button is enabled
@@ -196,14 +198,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlistArray = resultArray
                     self.playlistTableView.reloadData()
+                    self.configureInfo()
                 })
             }
         }
 
         
-        setupCollaboratorViews()
+        //setupCollaboratorViews()
         //configurePlaylistInfoView()
-        configureInfo()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -491,7 +493,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let reuseIdentifier = "programmaticCell"
+//        let reuseIdentifier = "programmaticCell"
 //        var SwipeCell = self.playlistTableView.dequeueReusableCellWithIdentifier(reuseIdentifier) as! MGSwipeTableCell!
 //        if SwipeCell == nil
 //        {
@@ -501,10 +503,11 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
 
         switch contentToDisplay {
+        
         case .Places:
             let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-            //print(playlistArray[indexPath.row].businessRating)
-            cell.configureCellWith(playlistArray[indexPath.row]) {
+            
+            cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
                 //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             }
             
@@ -520,7 +523,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             
             
         case .Comments:
-            var cell = UITableViewCell()
+            let cell = UITableViewCell()
             cell.textLabel?.text = "Piccies!"
             cell.imageView?.image = UIImage(named: "header_bg")
         }
@@ -567,7 +570,15 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func savePlaylistToParse(sender: UIBarButtonItem)
     {
         if playlistArray.count > 0{
-            let saveobject = object
+            
+    // NEED TO CHANGE
+            
+            var saveobject: PFObject! = PFObject()
+            
+            if object != nil{
+                saveobject = object
+            }
+            
             if let lat = playlistArray[0].businessLatitude
             {
                 if let long = playlistArray[0].businessLongitude

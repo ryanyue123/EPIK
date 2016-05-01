@@ -26,9 +26,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var hoursLabel: UILabel!
     @IBOutlet weak var ratingImageView: UIImageView!
     @IBOutlet weak var numOfReviewsLabel: UILabel!
-    
-    
-    
+
     var statusBarView: UIView!
     var navBarShadowView: UIView!
     var loadedStatusBar = false
@@ -213,11 +211,9 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         if self.tableView.contentOffset.y < -headerHeight{
             headerRect.origin.y = tableView.contentOffset.y
             headerRect.size.height = -tableView.contentOffset.y
-            print("high")
         }else if self.tableView.contentOffset.y > headerHeight{
             self.navigationItem.title = "hi"
             self.navigationItem.titleView?.tintColor = UIColor.whiteColor()
-            print("low")
         }
         
         headerView.frame = headerRect

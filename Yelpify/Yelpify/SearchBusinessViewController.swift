@@ -168,7 +168,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         
         let business = self.businessObjects[indexPath.row]
         
-        cell.configureCellWith(business) { () -> Void in
+        cell.configureCellWith(business, mode: .Add) { () -> Void in
         }
         cell.moreButton.tag = indexPath.row
         cell.moreButton.addTarget(self, action: "addTrackToPlaylist:", forControlEvents: .TouchUpInside)
@@ -186,12 +186,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             
             let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
             
-            
             let indexPath = tableView.indexPathForSelectedRow
             let object = businessObjects[indexPath!.row]
-//            cache.fetch(key: object.businessPhotoReference!).onSuccess { image in
-//                upcoming.placePhoto = UIImage(data: image)
-//            }
             upcoming.object = object
             upcoming.index = indexPath!.row
             self.tableView.deselectRowAtIndexPath(indexPath!, animated: true)
@@ -212,7 +208,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     func addTrackToPlaylist(button: UIButton)
     {
         button.tintColor = UIColor.greenColor()
-        button.imageView?.image = UIImage(named: "checkMark") // Doesn't work for now
         print("pressed")
         let index = button.tag
         playlistArray.append(businessObjects[index])
@@ -222,7 +217,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     func addTrackToPlaylist(indx: Int!)
     {
-        print("pressed")
+        print("Added Business at Index", String(indx))
         playlistArray.append(businessObjects[indx])
     }
     
@@ -240,24 +235,23 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
 //        self.navigationController?.navigationBar.backgroundColor = appDefaults.color
 //        self.navigationController?.navigationItem.titleView?.tintColor = UIColor.whiteColor()
 //        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        self.tableView.backgroundColor = appDefaults.color_bg
         
         // Performs an API search and returns a master array of businesses (as dictionaries)
         performInitialSearch()
         playlistArray.removeAll()
         
-        // Pull to Refresh
-        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
-        loadingView.tintColor = UIColor.whiteColor()
-        tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-            // Add your logic here
-            print("refreshing")
-            self?.tableView.reloadData()
-            // Do not forget to call dg_stopLoading() at the end
-            self?.tableView.dg_stopLoading()
-            }, loadingView: loadingView)
-        tableView.dg_setPullToRefreshFillColor(appDefaults.color_darker)
-        tableView.dg_setPullToRefreshBackgroundColor(appDefaults.color_darker)
+//        // Pull to Refresh
+//        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
+//        loadingView.tintColor = UIColor.whiteColor()
+//        tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+//            // Add your logic here
+//            print("refreshing")
+//            self?.tableView.reloadData()
+//            // Do not forget to call dg_stopLoading() at the end
+//            self?.tableView.dg_stopLoading()
+//            }, loadingView: loadingView)
+//        tableView.dg_setPullToRefreshFillColor(appDefaults.color_darker)
+//        tableView.dg_setPullToRefreshBackgroundColor(appDefaults.color_darker)
     }
     
     override func viewWillAppear(animated: Bool) {
