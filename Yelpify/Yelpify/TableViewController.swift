@@ -193,8 +193,19 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                     dispatch_async(dispatch_get_main_queue(), {
                         if (objects!.count == 0)
                         {
-                            playlist.playlistname = self.inputTextField.text!
-                            self.performSegueWithIdentifier("createPlaylist", sender: self)
+                            let object = PFObject(className: "Playlists")
+                            object["playlistName"] = self.inputTextField.text!
+                            object["createdBy"] = PFUser.currentUser()!
+                            object["track"] = []
+                            object.saveInBackgroundWithBlock({ (success, error) in
+                                if(error == nil)
+                                {
+                                    let control = self.storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
+                                    control.object = object
+                                    control.newPlaylist = true
+                                    self.navigationController!.pushViewController(control, animated: true)
+                                }
+                            })
                         }
                         else
                         {
@@ -210,7 +221,6 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
         })
         alertController.addAction(okAction)
         presentViewController(alertController, animated: true, completion: nil)
-        
     }
     
     func getLocationAndFetch(){

@@ -49,6 +49,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     //var businessObjects: [Business] = []
     var playlistArray = [Business]()
     var object: PFObject!
+    var newPlaylist: Bool = false
+    
     var playlist_name: String!
     
     // The apps default color
@@ -130,15 +132,18 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 
         
         self.playlistTableView.backgroundColor = appDefaults.color
-        if (object == nil)
+        if (self.newPlaylist == true)
         {
-            print("the object is nil")
+            print("This is a new playlist")
             // Automatic edit mode
             self.activateEditMode()
         }
-        else if((object["createdbyuser"] as? String) == PFUser.currentUser()?.username) //later incorporate possibility of collaboration
+        
+        if((object["createdbyuser"] as? String) == PFUser.currentUser()?.username)
+            //later incorporate possibility of collaboration
         {
-            print("not nil")
+            
+            //print("not nil")
             self.convertParseArrayToBusinessArray(object["track"] as! [NSDictionary]) { (resultArray) in
                 let viewedlist: NSMutableArray = []
                 let recentlyviewed = PFUser.query()!
@@ -570,15 +575,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func savePlaylistToParse(sender: UIBarButtonItem)
     {
         if playlistArray.count > 0{
-            
-    // NEED TO CHANGE
-            
-            var saveobject: PFObject! = PFObject()
-            
-            if object != nil{
-                saveobject = object
-            }
-            
+            let saveobject = object
             if let lat = playlistArray[0].businessLatitude
             {
                 if let long = playlistArray[0].businessLongitude
