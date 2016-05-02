@@ -46,17 +46,36 @@ class BusinessTableViewCell: MGSwipeTableCell {
             self.configureButton(UIImage(named: "more_icon")!)
         }
         
+        // Set Name
         businessTitleLabel.text = business.businessName
+        
+        // Set Address
         businessAddressLabel.text = business.businessAddress
+        
+        // Set Rating
+        //print("\(business.businessName): \(business.businessRating)")
         if business.businessRating != -1{
+            self.BusinessRating.hidden = false
             if let ratingValue2 = business.businessRating{
                 self.BusinessRating.rating = ratingValue2
             }
-
         }else{
-            self.BusinessRating.rating = 0
+            self.BusinessRating.hidden = true
         }
-                self.businessBackgroundImage.image = UIImage(named:"default_restaurant")
+        
+        // Set Status
+        if business.businessStatus != nil{
+            if business.businessStatus == true{
+                businessOpenLabel.text = "Open Now"
+            }else{
+                businessOpenLabel.text = "Closed"
+            }
+        }else{
+            businessOpenLabel.text = ""
+        }
+        
+        // Set Background Image
+        self.businessBackgroundImage.image = UIImage(named:"default_restaurant")
         
         if let photoReference = business.businessPhotoReference{
             googlePlacesClient.getImageFromPhotoReference(photoReference) { (key) -> Void in
@@ -75,13 +94,12 @@ class BusinessTableViewCell: MGSwipeTableCell {
     }
     
     func configureButton(image: UIImage){
-        let tintedImage = image.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        //let tintedImage = image.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         if actionButton != nil{
-            self.actionButton.setImage(tintedImage, forState: .Normal)
+            //self.actionButton.setImage(tintedImage, forState: .Normal)
             self.actionButton.tintColor = appDefaults.color_darker
         }
     }
-    
     
     @IBAction func actionButtonPressed(sender: AnyObject) {
         self.actionButton.tintColor = UIColor.greenColor()

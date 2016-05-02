@@ -19,13 +19,12 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     
     @IBOutlet weak var darkOverlay: UIView!
     
+    @IBOutlet weak var priceRatingLabel: UILabel!
     @IBOutlet weak var placePhotoImageView: UIImageView!
-    @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var hoursLabel: UILabel!
     @IBOutlet weak var ratingImageView: UIImageView!
-    @IBOutlet weak var numOfReviewsLabel: UILabel!
 
     var statusBarView: UIView!
     var navBarShadowView: UIView!
@@ -57,6 +56,9 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         
         super.viewDidLoad()
         
+        // Register Nibs
+        self.tableView.registerNib(UINib(nibName: "ReviewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "reviewCell")
+        
         configureTableView()
         
         self.navBarShadowView = ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
@@ -74,18 +76,52 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         self.title = "Details"
         
         APIClient.performDetailedSearch(object.gPlaceID!) { (detailedGPlace) in
-            self.nameLabel.text = self.object.businessName
-            self.addressLabel.text = detailedGPlace.address
-            self.directionsButton.enabled = true
-            self.callButton.enabled = true
             
+            // Set Name
+            self.nameLabel.text = self.object.businessName
+            
+            // Set Address
+            self.addressLabel.text = detailedGPlace.address
+            
+            
+            // Set Reviews
             self.reviewArray = detailedGPlace.reviews!
             
+            // Set Phone
             self.object.businessPhone = detailedGPlace.phone!
+            
+            // Set Rating
             if let ratingValue = detailedGPlace.rating{
-                print("Rating: ", ratingValue, "\n")
-                self.cosmosRating.rating = ratingValue
+                if ratingValue != -1{
+                    self.cosmosRating.rating = ratingValue
+                }else{
+                    self.cosmosRating.hidden = true
+                    //self.cosmosRating.addSubview(UILabel)
+                }
             }
+            
+            // Set Price
+            if let price = detailedGPlace.priceRating{
+                var priceString = ""
+                for _ in 0..<price {
+                    priceString += "$"
+                }
+                self.priceRatingLabel.text = priceString
+            }
+            
+            // Set Hours
+            if detailedGPlace.hours!.count != 0{
+                self.hoursLabel.text = self.getHours(detailedGPlace.hours!)
+            }else{
+                self.hoursLabel.text = "No Hours Availible"
+            }
+        
+            // Set Photos
+            if detailedGPlace.photos?.count > 0 {
+                let randNum = Int(arc4random_uniform(UInt32(detailedGPlace.photos.count)))
+                self.setCoverPhoto(detailedGPlace.photos![randNum] as! String)
+            }
+            
             
             /*
             print("Hours: ", detailedGPlace.hours!, "\n")
@@ -97,16 +133,35 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             print("Website: ", detailedGPlace.website!, "\n")
             */
             
-            
-            if detailedGPlace.photos?.count > 0 {
-                self.setCoverPhoto(detailedGPlace.photos![0] as! String)
-            }
-            
+            // Set Action Buttons
+            self.directionsButton.enabled = true
+            self.callButton.enabled = true
          
             self.tableView.reloadData()
         }
     
     
+    }
+    
+    func getHours(hoursArray: NSMutableArray) -> String{
+        let dayDict = [0: "Saturday", 1: "Sunday", 2: "Monday", 3: "Tuesday", 4: "Wednesday", 5: "Thursday", 6: "Friday"]
+        
+        let hoursArr = hoursArray
+        hoursArr.insertObject(hoursArr[6], atIndex: 0)
+        hoursArr.insertObject(hoursArr[6], atIndex: 0)
+        hoursArr.removeLastObject()
+        hoursArr.removeLastObject()
+        
+        let today = getDayOfWeek()!
+        let hoursToday = hoursArr[today]
+        let hoursTodayArr = hoursToday.componentsSeparatedByString(",")
+        if hoursTodayArr.count > 1{
+            return "24 Hours"
+        }else{
+            let parsedString = hoursTodayArr[0].stringByReplacingOccurrencesOfString((dayDict[today]! + ":"), withString: "")
+            return parsedString
+        }
+        
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -184,20 +239,6 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     
     private let headerHeight: CGFloat = 320.0
     
-//    func configureNavigationBar(){
-//        addShadowToBar()
-//        for parent in self.navigationController!.navigationBar.subviews {
-//            for childView in parent.subviews {
-//                if(childView is UIImageView) {
-//                    childView.removeFromSuperview()
-//                }
-//            }
-//        }
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
-//        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-//
-//    }
-    
     func configureHeaderView(){
         tableView.tableHeaderView = nil
         tableView.addSubview(headerView)
@@ -254,9 +295,9 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func configureTableView(){
-        tableView.layoutMargins = UIEdgeInsetsMake(20, 0, 20, 0)
-        tableView.separatorInset = UIEdgeInsetsMake(20, 0, 20, 0)
-        tableView.estimatedRowHeight = 140.0
+        //tableView.layoutMargins = UIEdgeInsetsMake(20, 0, 20, 0)
+        //tableView.separatorInset = UIEdgeInsetsMake(20, 0, 20, 0)
+        //tableView.estimatedRowHeight = 140.0
         //tableView.rowHeight = UITableViewAutomaticDimension
     }
     
@@ -354,4 +395,25 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         
     }
 
+}
+
+func getDayOfWeek()->Int? {
+    
+    let date = NSDate()
+    let calendar = NSCalendar.currentCalendar()
+    let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+    
+    let today = String(format: "%04d", components.year) + "-" + String(format: "%02d", components.month) + "-" + String(format: "%02d", components.day)
+    
+    let formatter  = NSDateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd"
+    
+    if let todayDate = formatter.dateFromString(today) {
+        let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        let myComponents = myCalendar.components(.Weekday, fromDate: todayDate)
+        let weekDay = myComponents.weekday
+        return weekDay
+    } else {
+        return nil
+    }
 }

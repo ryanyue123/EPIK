@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Montserrat-Light.otf">
+            <string>Montserrat-Light</string>
+            <string>Montserrat-Light</string>
+        </mutableArray>
+        <mutableArray key="Montserrat-Regular.otf">
+            <string>Montserrat-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="reviewCell" rowHeight="146" id="2gI-mg-Swm" customClass="CommentTableViewCell" customModule="Yelpify" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="400" height="140"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2gI-mg-Swm" id="RQK-Zd-U4g">
+                <rect key="frame" x="0.0" y="0.0" width="400" height="139.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pp5-sH-2oq">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="135"/>
+                        <subviews>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hxE-b1-NkR" customClass="CosmosView" customModule="Cosmos">
+                                <rect key="frame" x="137" y="13" width="126" height="22"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="totalStars">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="starSize">
+                                        <real key="value" value="22"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="starMargin">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="rating">
+                                        <real key="value" value="0.75"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
+                                        <integer key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="updateOnTouch" value="NO"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="September 3, 2016" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="goZ-t9-e43">
+                                <rect key="frame" x="150" y="99" width="99.5" height="13.5"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Light" family="Montserrat" pointSize="11"/>
+                                <color key="textColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alejandro Hilario Trejo" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="puC-ky-cxG">
+                                <rect key="frame" x="133" y="113" width="133" height="15"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
+                                <color key="textColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="This steak tastes like horrible compared to Trump's steak. I will never come back to here again." textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qgF-x5-VGX">
+                                <rect key="frame" x="25" y="43" width="349" height="47.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Light" family="Montserrat" pointSize="13"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="hxE-b1-NkR" secondAttribute="trailing" constant="137" id="9nn-8u-Sr8"/>
+                            <constraint firstItem="qgF-x5-VGX" firstAttribute="leading" secondItem="pp5-sH-2oq" secondAttribute="leading" constant="25" id="CY0-Qr-vlS"/>
+                            <constraint firstAttribute="trailing" secondItem="qgF-x5-VGX" secondAttribute="trailing" constant="26" id="J4Q-jM-1nI"/>
+                            <constraint firstItem="hxE-b1-NkR" firstAttribute="leading" secondItem="pp5-sH-2oq" secondAttribute="leading" constant="137" id="MEz-mV-ajY"/>
+                            <constraint firstItem="puC-ky-cxG" firstAttribute="leading" secondItem="pp5-sH-2oq" secondAttribute="leading" constant="133" id="UJH-Tv-3so"/>
+                            <constraint firstItem="qgF-x5-VGX" firstAttribute="top" relation="greaterThanOrEqual" secondItem="hxE-b1-NkR" secondAttribute="bottom" constant="8" id="UNK-9j-qgi"/>
+                            <constraint firstItem="goZ-t9-e43" firstAttribute="top" relation="greaterThanOrEqual" secondItem="qgF-x5-VGX" secondAttribute="bottom" constant="8" id="X1w-J4-xSO"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="puC-ky-cxG" secondAttribute="bottom" constant="7" id="bMJ-M7-8Os"/>
+                            <constraint firstAttribute="trailing" secondItem="goZ-t9-e43" secondAttribute="trailing" constant="150.5" id="bRu-vC-feK"/>
+                            <constraint firstAttribute="trailing" secondItem="puC-ky-cxG" secondAttribute="trailing" constant="134" id="bgE-i3-TuR"/>
+                            <constraint firstAttribute="height" constant="135" id="gdu-Lr-WFw"/>
+                            <constraint firstItem="puC-ky-cxG" firstAttribute="top" relation="greaterThanOrEqual" secondItem="goZ-t9-e43" secondAttribute="bottom" id="mbo-I8-qML"/>
+                            <constraint firstItem="goZ-t9-e43" firstAttribute="leading" secondItem="pp5-sH-2oq" secondAttribute="leading" constant="150" id="nsu-9j-NT7"/>
+                            <constraint firstItem="hxE-b1-NkR" firstAttribute="top" secondItem="pp5-sH-2oq" secondAttribute="top" constant="13" id="wPD-Hg-Xpk"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" red="0.89543876259999999" green="0.89543876259999999" blue="0.89543876259999999" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstItem="pp5-sH-2oq" firstAttribute="leading" secondItem="RQK-Zd-U4g" secondAttribute="leadingMargin" constant="-8" id="0XM-zv-53l"/>
+                    <constraint firstItem="pp5-sH-2oq" firstAttribute="top" secondItem="RQK-Zd-U4g" secondAttribute="topMargin" constant="-8" id="J4n-Vg-vEF"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="pp5-sH-2oq" secondAttribute="trailing" constant="-8" id="Xva-7M-skH"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="CommentRating" destination="hxE-b1-NkR" id="haj-Pa-O9i"/>
+                <outlet property="reviewDate" destination="goZ-t9-e43" id="1R2-K3-x0O"/>
+                <outlet property="reviewName" destination="puC-ky-cxG" id="PL5-PZ-T65"/>
+                <outlet property="reviewTextView" destination="qgF-x5-VGX" id="x5f-06-F2H"/>
+            </connections>
+            <point key="canvasLocation" x="268" y="335"/>
+        </tableViewCell>
+    </objects>
+</document>

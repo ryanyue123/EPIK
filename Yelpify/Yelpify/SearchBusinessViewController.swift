@@ -231,6 +231,9 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         ConfigureFunctions.configureStatusBar(self.navigationController!)
         ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         
+        // Register Nibs
+        self.tableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
+        
 //        // Set up Nav Bar
 //        self.navigationController?.navigationBar.backgroundColor = appDefaults.color
 //        self.navigationController?.navigationItem.titleView?.tintColor = UIColor.whiteColor()

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Montserrat-Light.otf">
+            <string>Montserrat-Light</string>
+        </mutableArray>
+        <mutableArray key="Montserrat-Regular.otf">
+            <string>Montserrat-Regular</string>
+            <string>Montserrat-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="businessCell" rowHeight="110" id="6ro-66-9Xw" customClass="BusinessTableViewCell" customModule="Yelpify" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="400" height="105"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6ro-66-9Xw" id="xp5-Wz-efQ">
+                <rect key="frame" x="0.0" y="0.0" width="400" height="104.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XaJ-6M-PlA">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="100"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.65000000000000002" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="temp_profile" translatesAutoresizingMaskIntoConstraints="NO" id="mT1-mC-8Pn">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="JI9-hD-Caf"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U1O-y0-Y8S">
+                                <rect key="frame" x="100" y="0.0" width="5" height="100"/>
+                                <color key="backgroundColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="5" id="BZc-3h-bnC"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cup of Fruit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uu2-eA-gBO">
+                                <rect key="frame" x="119" y="12" width="93.5" height="19.5"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="16"/>
+                                <color key="textColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123 Health Street, Irvine CA 92134" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="roP-Ec-1in">
+                                <rect key="frame" x="119" y="57" width="193" height="14.5"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Light" family="Montserrat" pointSize="12"/>
+                                <color key="textColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open Now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qPl-BP-Rgz">
+                                <rect key="frame" x="119" y="72" width="63.5" height="14.5"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
+                                <color key="textColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fgm-SL-aq5" customClass="CosmosView" customModule="Cosmos">
+                                <rect key="frame" x="119" y="34" width="90" height="18"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="UeN-Oc-NFb"/>
+                                    <constraint firstAttribute="width" constant="90" id="zQ7-jA-5vc"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="starMargin">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="rating">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="starSize">
+                                        <real key="value" value="18"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vVT-hq-Qlq">
+                                <rect key="frame" x="361" y="38" width="24" height="24"/>
+                                <color key="tintColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="checkMark">
+                                    <color key="titleColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="restaurant_icon" translatesAutoresizingMaskIntoConstraints="NO" id="PFR-j6-cgi">
+                                <rect key="frame" x="30" y="30" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="KS0-hH-Poa"/>
+                                    <constraint firstAttribute="height" constant="40" id="nTa-BT-Pg8"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="U1O-y0-Y8S" firstAttribute="top" secondItem="XaJ-6M-PlA" secondAttribute="top" id="03H-0S-bzv"/>
+                            <constraint firstItem="Fgm-SL-aq5" firstAttribute="top" secondItem="uu2-eA-gBO" secondAttribute="bottom" constant="2.5" id="0md-Pv-Uol"/>
+                            <constraint firstItem="U1O-y0-Y8S" firstAttribute="leading" secondItem="mT1-mC-8Pn" secondAttribute="trailing" id="6O1-58-iTc"/>
+                            <constraint firstItem="PFR-j6-cgi" firstAttribute="centerX" secondItem="mT1-mC-8Pn" secondAttribute="centerX" id="7ZW-3v-3K0"/>
+                            <constraint firstItem="Fgm-SL-aq5" firstAttribute="leading" secondItem="U1O-y0-Y8S" secondAttribute="trailing" constant="14" id="BNM-OR-P7S"/>
+                            <constraint firstAttribute="bottom" secondItem="qPl-BP-Rgz" secondAttribute="bottom" constant="13.5" id="HRq-az-Ch9"/>
+                            <constraint firstItem="PFR-j6-cgi" firstAttribute="centerY" secondItem="mT1-mC-8Pn" secondAttribute="centerY" id="JXn-WG-HOe"/>
+                            <constraint firstItem="uu2-eA-gBO" firstAttribute="leading" secondItem="U1O-y0-Y8S" secondAttribute="trailing" constant="14" id="M6u-04-7Up"/>
+                            <constraint firstItem="roP-Ec-1in" firstAttribute="leading" secondItem="U1O-y0-Y8S" secondAttribute="trailing" constant="14" id="Riy-0X-Qfk"/>
+                            <constraint firstItem="uu2-eA-gBO" firstAttribute="top" secondItem="XaJ-6M-PlA" secondAttribute="top" constant="12" id="XE6-pZ-MXw"/>
+                            <constraint firstAttribute="trailing" secondItem="vVT-hq-Qlq" secondAttribute="trailing" constant="15" id="XlL-zl-tlh"/>
+                            <constraint firstItem="vVT-hq-Qlq" firstAttribute="centerY" secondItem="XaJ-6M-PlA" secondAttribute="centerY" id="ZGK-Wd-ra4"/>
+                            <constraint firstItem="qPl-BP-Rgz" firstAttribute="leading" secondItem="U1O-y0-Y8S" secondAttribute="trailing" constant="14" id="eUh-53-Csh"/>
+                            <constraint firstItem="qPl-BP-Rgz" firstAttribute="top" secondItem="roP-Ec-1in" secondAttribute="bottom" constant="0.5" id="jEx-4f-TLH"/>
+                            <constraint firstItem="mT1-mC-8Pn" firstAttribute="top" secondItem="XaJ-6M-PlA" secondAttribute="top" id="qmx-S7-Joc"/>
+                            <constraint firstAttribute="bottom" secondItem="U1O-y0-Y8S" secondAttribute="bottom" id="rtD-j3-bUm"/>
+                            <constraint firstItem="mT1-mC-8Pn" firstAttribute="leading" secondItem="XaJ-6M-PlA" secondAttribute="leading" id="rzc-cy-UsO"/>
+                            <constraint firstAttribute="bottom" secondItem="mT1-mC-8Pn" secondAttribute="bottom" id="xeP-8t-zOu"/>
+                            <constraint firstItem="U1O-y0-Y8S" firstAttribute="leading" secondItem="mT1-mC-8Pn" secondAttribute="trailing" id="z2z-WN-L0P"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" red="0.89543876259999999" green="0.89543876259999999" blue="0.89543876259999999" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstAttribute="bottomMargin" secondItem="XaJ-6M-PlA" secondAttribute="bottom" constant="-3.5" id="GRC-st-xkf"/>
+                    <constraint firstItem="XaJ-6M-PlA" firstAttribute="top" secondItem="xp5-Wz-efQ" secondAttribute="topMargin" constant="-8" id="gkj-Xy-by8"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="XaJ-6M-PlA" secondAttribute="trailing" constant="-8" id="nsO-Ic-gen"/>
+                    <constraint firstItem="XaJ-6M-PlA" firstAttribute="leading" secondItem="xp5-Wz-efQ" secondAttribute="leadingMargin" constant="-8" id="yeP-3e-xdo"/>
+                </constraints>
+                <variation key="widthClass=compact" ambiguous="YES">
+                    <rect key="frame" x="0.0" y="0.0" width="400" height="111.5"/>
+                </variation>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="BusinessRating" destination="Fgm-SL-aq5" id="h2T-Gd-vrq"/>
+                <outlet property="actionButton" destination="vVT-hq-Qlq" id="yCl-tp-DJD"/>
+                <outlet property="businessAddressLabel" destination="roP-Ec-1in" id="kk5-1Z-bBH"/>
+                <outlet property="businessBackgroundImage" destination="mT1-mC-8Pn" id="GQr-aE-Ud2"/>
+                <outlet property="businessOpenLabel" destination="qPl-BP-Rgz" id="Zwj-zx-xAI"/>
+                <outlet property="businessTitleLabel" destination="uu2-eA-gBO" id="Ovr-sT-oXE"/>
+                <outlet property="categoryIcon" destination="PFR-j6-cgi" id="Vli-Am-2ub"/>
+                <outlet property="moreButton" destination="vVT-hq-Qlq" id="zQc-Fj-arA"/>
+            </connections>
+            <point key="canvasLocation" x="356" y="-165.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="checkMark" width="24" height="24"/>
+        <image name="restaurant_icon" width="300" height="300"/>
+        <image name="temp_profile" width="640" height="426"/>
+    </resources>
+</document>

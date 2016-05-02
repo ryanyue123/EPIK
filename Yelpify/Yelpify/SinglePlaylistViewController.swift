@@ -122,6 +122,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Register Nibs 
+         self.playlistTableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
 
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false

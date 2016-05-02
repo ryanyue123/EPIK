@@ -61,7 +61,7 @@ struct GooglePlaceDetail {
     var address: String! = ""
     var phone: String! = ""
     var website: String! = ""
-    var hours: NSArray! = []
+    var hours: NSMutableArray! = []
     var priceRating: Int! = 0
     var rating: Double! = 0
     var reviews: NSMutableArray! = []
