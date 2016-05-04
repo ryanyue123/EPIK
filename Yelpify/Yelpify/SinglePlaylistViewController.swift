@@ -479,9 +479,21 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
+        
         cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
-            //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
+        
+        // configure left buttons
+        cell.leftButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_bg)]
+        cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
+
+        // configure right buttons
+        cell.rightButtons = [MGSwipeButton(title: "Add", backgroundColor: UIColor.redColor())]
+        cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
+        
+        cell.leftExpansion.buttonIndex = 0
+        cell.leftExpansion.fillOnTrigger = true
+        
 
 //        switch contentToDisplay {
 //        
@@ -572,10 +584,18 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     {
         var shareAction = UITableViewRowAction(style: .Normal, title: "Share") {(action:
             UITableViewRowAction!, indexPath: NSIndexPath!) -> Void in
-            print("hi")
+            print("sharing")
         }
-        shareAction.backgroundColor = UIColor.blueColor()
-        return [shareAction]
+        
+        shareAction.backgroundColor = appDefaults.color
+        
+        var routeAction = UITableViewRowAction(style: .Normal, title: "Route") { (action: UITableViewRowAction!, indexPath: NSIndexPath) in
+            print("routing")
+        }
+        
+        routeAction.backgroundColor = appDefaults.color_darker
+        
+        return [shareAction, routeAction]
     }
     
 //
