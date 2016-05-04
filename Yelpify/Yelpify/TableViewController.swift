@@ -375,13 +375,13 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("listCell", forIndexPath: indexPath) as! ListCollectionViewCell
         
-        let tempobject = all_playlists[collectionView.tag][indexPath.row] as! PFObject
+        let cellobject = all_playlists[collectionView.tag][indexPath.row] as! PFObject
         
         
         // CONFIGURE CELL
-        cell.listName.text = tempobject["playlistName"] as? String
-        cell.creatorName.text = "INSERT NAME" // CHANGE
-        cell.followerCount.text = "INSERT COUNT" // CHANGE
+        cell.listName.text = cellobject["playlistName"] as? String
+        cell.creatorName.text =  cellobject["createdBy"].username
+        cell.followerCount.text = cellobject["followerCount"]
         //cell.listIcon.image = UIImage(named: "cafe_icon") // CHANGE
         //cell.playlistImage.image = UIImage()
         

@@ -260,14 +260,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func configureInfo(){
         self.playlistInfoName.text = object["playlistName"] as? String
-        self.playlistInfoUser.titleLabel?.text = "BY" + "INSERT NAME FROM PARSE" // CHANGE
+        self.playlistInfoUser.titleLabel?.text = "BY" + object["createdBy"].username
         
         //self.collaboratorsImageView.addSubview(<#T##view: UIView##UIView#>)
         self.playlistInfoIcon.image = UIImage(named: "")
         self.playlistInfoBG.image = UIImage(named: "default_list_bg")
         
         self.numOfPlacesLabel.text = String(playlistArray.count)
-        self.numOfFollowersLabel.text = "0" // CHANGE
+        self.numOfFollowersLabel.text = object["followerCount"]
         self.averagePriceRating.text = "$$$" // CHANGE
     }
     
