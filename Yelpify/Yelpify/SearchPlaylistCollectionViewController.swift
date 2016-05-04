@@ -40,6 +40,12 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
         self.collectionView!.reloadData()
     }
 
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        searchForPlaylistWithName()
+        self.textField.endEditing(true)
+        return true
+    }
+    
     func searchForPlaylistWithName()
     {
         let query = PFQuery(className: "Playlists")
@@ -117,11 +123,4 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
     
     }
     */
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        searchForPlaylistWithName()
-        self.textField.endEditing(true)
-        return true
-    }
-
 }
