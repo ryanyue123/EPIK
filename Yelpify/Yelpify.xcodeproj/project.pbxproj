@@ -25,6 +25,8 @@
 		905F87941CD741BB004046CD /* SearchPlaylistCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */; };
 		905F87961CD742C7004046CD /* ListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 905F87951CD742C7004046CD /* ListCell.xib */; };
 		905F879A1CD99534004046CD /* ProfileHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 905F87991CD99534004046CD /* ProfileHeaderView.xib */; };
+		905F879D1CD99E3C004046CD /* ProfileCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905F879C1CD99E3C004046CD /* ProfileCollectionViewController.swift */; };
+		905F879F1CD9A453004046CD /* ProfileHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 905F879E1CD9A453004046CD /* ProfileHeader.xib */; };
 		9069D7681CD6B15E005650F4 /* BusinessCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9069D7671CD6B15E005650F4 /* BusinessCell.xib */; };
 		9069D76A1CD6B7F2005650F4 /* ReviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9069D7691CD6B7F2005650F4 /* ReviewCell.xib */; };
 		906CAA311C8977B700AF3515 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906CAA301C8977B700AF3515 /* TestViewController.swift */; };
@@ -128,6 +130,8 @@
 		905F87951CD742C7004046CD /* ListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ListCell.xib; path = Yelpify/ListCell.xib; sourceTree = "<group>"; };
 		905F87991CD99534004046CD /* ProfileHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileHeaderView.xib; sourceTree = "<group>"; };
 		905F879B1CD99A03004046CD /* Yelpify-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Yelpify-Bridging-Header.h"; sourceTree = "<group>"; };
+		905F879C1CD99E3C004046CD /* ProfileCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewController.swift; sourceTree = "<group>"; };
+		905F879E1CD9A453004046CD /* ProfileHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileHeader.xib; sourceTree = "<group>"; };
 		9069D7671CD6B15E005650F4 /* BusinessCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BusinessCell.xib; path = Yelpify/BusinessCell.xib; sourceTree = "<group>"; };
 		9069D7691CD6B7F2005650F4 /* ReviewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviewCell.xib; path = Yelpify/ReviewCell.xib; sourceTree = "<group>"; };
 		906CAA301C8977B700AF3515 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
@@ -312,6 +316,7 @@
 				905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */,
 				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
 				908A3BCA1CC0EFED00767736 /* ProfileViewController.swift */,
+				905F879C1CD99E3C004046CD /* ProfileCollectionViewController.swift */,
 				3CD034501CBA122A00675F88 /* TableViewController.swift */,
 				90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */,
 				90E505DE1C8E375200F47285 /* GPlacesSearchViewController.swift */,
@@ -342,6 +347,7 @@
 		9069D7651CD6B143005650F4 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				905F879E1CD9A453004046CD /* ProfileHeader.xib */,
 				905F87991CD99534004046CD /* ProfileHeaderView.xib */,
 				905F87951CD742C7004046CD /* ListCell.xib */,
 				9069D7671CD6B15E005650F4 /* BusinessCell.xib */,
@@ -506,7 +512,7 @@
 				TargetAttributes = {
 					3CE2EE7A1C6C5EC8000C9088 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = CQD8Z7UVJ4;
+						DevelopmentTeam = 3K6Q37NEBQ;
 					};
 					3CE2EE8E1C6C5EC8000C9088 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -549,6 +555,7 @@
 				901DFAEC1CBF481800AFD002 /* Main.storyboard in Resources */,
 				90DA32921C93616700D5EBDF /* Montserrat-Bold.otf in Resources */,
 				90DA32941C93616700D5EBDF /* Montserrat-Black.otf in Resources */,
+				905F879F1CD9A453004046CD /* ProfileHeader.xib in Resources */,
 				90DA328F1C93616700D5EBDF /* Montserrat-ExtraBold.otf in Resources */,
 				90DA32871C93616700D5EBDF /* OpenSans-Light.ttf in Resources */,
 				90DA328E1C93616700D5EBDF /* OpenSans-SemiboldItalic.ttf in Resources */,
@@ -668,6 +675,7 @@
 				907E0CE51C76768D00872135 /* LocuAPIClient.swift in Sources */,
 				90711BD51CAF4DEA0032A257 /* PlaylistObject.swift in Sources */,
 				90C96AAE1CCAF72B00E9EC28 /* ConfigureFunctions.swift in Sources */,
+				905F879D1CD99E3C004046CD /* ProfileCollectionViewController.swift in Sources */,
 				9038B75E1CBCD041004B220B /* ActionsViewController.swift in Sources */,
 				90B6D69E1CD49888006928E8 /* SearchPagerTabStripVC.swift in Sources */,
 				3CBFD89D1CD4355900290F25 /* SearchPlaylistCell.swift in Sources */,

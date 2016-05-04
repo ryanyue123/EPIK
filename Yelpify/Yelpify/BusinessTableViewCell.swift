@@ -9,14 +9,14 @@
 import UIKit
 import Haneke
 import Cosmos
-import MGSwipeTableCell
+//import MGSwipeTableCell
 
 enum BusinessCellMode {
     case Add
     case More
 }
 
-class BusinessTableViewCell: MGSwipeTableCell {
+class BusinessTableViewCell: UITableViewCell {
     
     @IBOutlet weak var BusinessRating: CosmosView!
   

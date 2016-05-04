@@ -149,7 +149,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             print("low")
         }
         
-        //profileHeaderView.frame = headerRect
+        headerView.frame = headerRect
     }
     
     func addShadowToBar() {
