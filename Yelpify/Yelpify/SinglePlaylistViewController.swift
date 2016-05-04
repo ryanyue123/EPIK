@@ -139,7 +139,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             self.activateEditMode()
         }
         
-        if((object["createdbyuser"] as? String) == PFUser.currentUser()?.username)
+        else if(object["createdBy"] as! PFUser == PFUser.currentUser()!)
             //later incorporate possibility of collaboration
         {
             
@@ -260,14 +260,23 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func configureInfo(){
         self.playlistInfoName.text = object["playlistName"] as? String
-        self.playlistInfoUser.titleLabel?.text = "BY" + "INSERT NAME FROM PARSE" // CHANGE
+        let user = object["createdBy"] as! PFUser
+        self.playlistInfoUser.titleLabel?.text = "BY" + user.username!
         
         //self.collaboratorsImageView.addSubview(<#T##view: UIView##UIView#>)
         self.playlistInfoIcon.image = UIImage(named: "")
         self.playlistInfoBG.image = UIImage(named: "default_list_bg")
         
         self.numOfPlacesLabel.text = String(playlistArray.count)
-        self.numOfFollowersLabel.text = "0" // CHANGE
+        let followCount = object["followerCount"]
+        if followCount == nil
+        {
+            self.numOfFollowersLabel.text = "0"
+        }
+        else
+        {
+            self.numOfFollowersLabel.text = String(followCount)
+        }
         self.averagePriceRating.text = "$$$" // CHANGE
     }
     
