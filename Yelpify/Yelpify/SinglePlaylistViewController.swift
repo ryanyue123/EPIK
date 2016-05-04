@@ -15,7 +15,7 @@ enum ContentTypes {
     case Places, Comments
 }
 
-class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
+class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate{
     
     //@IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
     
@@ -102,8 +102,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func showActionMenu(longPressGestureRecognizer: UILongPressGestureRecognizer) {
-        
+        print("Holding")
         if longPressGestureRecognizer.state == UIGestureRecognizerState.Began {
+            print("Holding")
             
             let touchPoint = longPressGestureRecognizer.locationInView(self.view)
             
@@ -126,12 +127,29 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
         
     }
-
+    
+    //Called, when long press occurred
+//    func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+//        
+//        if longPressGestureRecognizer.state == UIGestureRecognizerState.Began {
+//            
+//            let touchPoint = longPressGestureRecognizer.locationInView(self.view)
+//            if let indexPath = self.playlistTableView.indexPathForRowAtPoint(touchPoint) {
+//                print("hi")
+//                // your code here, get the row for the indexPath or do whatever you want
+//            }
+//        }
+//    }
+    
 
     // MARK: - ViewDidLoad and other View functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // tapRecognizer, placed in viewDidLoad
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPress:")
+        self.view.addGestureRecognizer(longPressRecognizer)
         
         // Register Nibs 
          self.playlistTableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
@@ -270,9 +288,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func configureInfo(){
         self.playlistInfoName.text = object["playlistName"] as? String
         let user = object["createdBy"] as! PFUser
-        
-        // CHANGE
-        //self.playlistInfoUser.titleLabel?.text = "BY" + user.username!
+    
+        self.playlistInfoUser.titleLabel?.text = "BY" + user.username!
         
         //self.collaboratorsImageView.addSubview(<#T##view: UIView##UIView#>)
         self.playlistInfoIcon.image = UIImage(named: "")
@@ -490,12 +507,17 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
         
         // Add Long Press Recognizer
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "showActionMenu:")
+        let longPressRecognizer = UILongPressGestureRecognizer(target: cell, action: "showActionMenu:")
+        longPressRecognizer.minimumPressDuration = 2.0
+        longPressRecognizer.numberOfTapsRequired = 1
+        longPressRecognizer.numberOfTouchesRequired = 1
         cell.addGestureRecognizer(longPressRecognizer)
         
+        // Configure Cell
         cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
         }
         
+        // Add Swipe Buttons
         // configure left buttons
         cell.leftButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_darker)]
         cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
@@ -507,59 +529,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         cell.leftExpansion.buttonIndex = 0
         cell.leftExpansion.fillOnTrigger = true
         
-
-//        switch contentToDisplay {
-//        
-//        case .Places:
-//            let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-//            
-//            cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
-//                //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-//            }
-//            
-//            //configure left buttons
-//            //cell.leftButtons = [MGSwipeButton(title: "noice", backgroundColor: UIColor.greenColor())
-//            //    ,MGSwipeButton(title: "aight", backgroundColor: UIColor.blueColor())]
-//            //cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
-//            
-//            //configure right buttons
-//            //cell.rightButtons = [MGSwipeButton(title: "Delete", backgroundColor: UIColor.redColor())
-//            //    ,MGSwipeButton(title: "More",backgroundColor: UIColor.lightGrayColor())]
-//            //cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
-//            
-//            
-//        case .Comments:
-//            let cell = UITableViewCell()
-//            cell.textLabel?.text = "Piccies!"
-//            cell.imageView?.image = UIImage(named: "header_bg")
-//        }
-        
-        // CHANGE
-//        switch contentToDisplay {
-//        
-//        case .Places:
-//            cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-//            
-//            cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
-//                //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-//            }
-//            
-////            //configure left buttons
-////            cell.leftButtons = [MGSwipeButton(title: "noice", backgroundColor: UIColor.greenColor())
-////                ,MGSwipeButton(title: "aight", backgroundColor: UIColor.blueColor())]
-////            cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
-////            
-////            //configure right buttons
-////            cell.rightButtons = [MGSwipeButton(title: "Delete", backgroundColor: UIColor.redColor())
-////                ,MGSwipeButton(title: "More",backgroundColor: UIColor.lightGrayColor())]
-////            cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
-////            
-//            
-//        case .Comments:
-//            let cell = UITableViewCell()
-//            cell.textLabel?.text = "Piccies!"
-//            cell.imageView?.image = UIImage(named: "header_bg")
-//        }
         
         return cell
     }
@@ -576,17 +545,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         print(indexPath.row)
         return true
     }
-    
-    // Override to support editing the table view.
-//    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-//        if editingStyle == .Delete {
-//            // Delete the row from the data source
-//            playlistArray.removeAtIndex(indexPath.row)
-//            playlistTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-//        } else if editingStyle == .Insert {
-//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-//        }
-//    }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
     {
