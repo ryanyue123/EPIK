@@ -17,6 +17,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var headerView: UIView!
     // MARK: - View Setup Methods
     
+    let profileHeaderView = NSBundle.mainBundle().loadNibNamed("ProfileHeaderView", owner: self, options: nil) as! UIView
+    
     var username: String!
     var userobject: PFObject!
     
@@ -129,7 +131,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func configureHeaderView(){
         tableView.tableHeaderView = nil
-        tableView.addSubview(headerView)
+        tableView.addSubview(profileHeaderView)
         tableView.contentInset = UIEdgeInsets(top: headerHeight, left: 0, bottom: 0, right: 0)
         tableView.contentOffset = CGPoint(x: 0, y: -headerHeight)
     }
@@ -147,7 +149,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             print("low")
         }
         
-        headerView.frame = headerRect
+        profileHeaderView.frame = headerRect
     }
     
     func addShadowToBar() {
