@@ -24,6 +24,7 @@
 		9038B75E1CBCD041004B220B /* ActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9038B75D1CBCD041004B220B /* ActionsViewController.swift */; };
 		905F87941CD741BB004046CD /* SearchPlaylistCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */; };
 		905F87961CD742C7004046CD /* ListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 905F87951CD742C7004046CD /* ListCell.xib */; };
+		905F879A1CD99534004046CD /* ProfileHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 905F87991CD99534004046CD /* ProfileHeaderView.xib */; };
 		9069D7681CD6B15E005650F4 /* BusinessCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9069D7671CD6B15E005650F4 /* BusinessCell.xib */; };
 		9069D76A1CD6B7F2005650F4 /* ReviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9069D7691CD6B7F2005650F4 /* ReviewCell.xib */; };
 		906CAA311C8977B700AF3515 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906CAA301C8977B700AF3515 /* TestViewController.swift */; };
@@ -125,6 +126,7 @@
 		9038B75D1CBCD041004B220B /* ActionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionsViewController.swift; sourceTree = "<group>"; };
 		905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlaylistCollectionViewController.swift; sourceTree = "<group>"; };
 		905F87951CD742C7004046CD /* ListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ListCell.xib; path = Yelpify/ListCell.xib; sourceTree = "<group>"; };
+		905F87991CD99534004046CD /* ProfileHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileHeaderView.xib; sourceTree = "<group>"; };
 		9069D7671CD6B15E005650F4 /* BusinessCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BusinessCell.xib; path = Yelpify/BusinessCell.xib; sourceTree = "<group>"; };
 		9069D7691CD6B7F2005650F4 /* ReviewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviewCell.xib; path = Yelpify/ReviewCell.xib; sourceTree = "<group>"; };
 		906CAA301C8977B700AF3515 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
@@ -178,8 +180,6 @@
 		981001A34CAB5A147D7CB122 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B140D093A1A89D68777F3561 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		ED405A0F1CC1D03C0017A9AB /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		ED405A111CC1D0E90017A9AB /* Yelpify-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Yelpify-Bridging-Header.h"; sourceTree = "<group>"; };
-		ED405A121CC1D0E90017A9AB /* NSMutableArray+Login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Login.h"; sourceTree = "<group>"; };
 		ED52E64A1CCB2E0300CEBAE2 /* YoutubeActionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeActionController.swift; sourceTree = "<group>"; };
 		ED52E64B1CCB2E0300CEBAE2 /* YoutubeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YoutubeCell.xib; sourceTree = "<group>"; };
 		ED52E64C1CCB2E0300CEBAE2 /* YoutubeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeViewController.swift; sourceTree = "<group>"; };
@@ -272,8 +272,6 @@
 				3CE2EE851C6C5EC8000C9088 /* Assets.xcassets */,
 				3CE2EE871C6C5EC8000C9088 /* LaunchScreen.storyboard */,
 				3CE2EE8A1C6C5EC8000C9088 /* Info.plist */,
-				ED405A121CC1D0E90017A9AB /* NSMutableArray+Login.h */,
-				ED405A111CC1D0E90017A9AB /* Yelpify-Bridging-Header.h */,
 			);
 			path = Yelpify;
 			sourceTree = "<group>";
@@ -342,6 +340,7 @@
 		9069D7651CD6B143005650F4 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				905F87991CD99534004046CD /* ProfileHeaderView.xib */,
 				905F87951CD742C7004046CD /* ListCell.xib */,
 				9069D7671CD6B15E005650F4 /* BusinessCell.xib */,
 				9069D7691CD6B7F2005650F4 /* ReviewCell.xib */,
@@ -563,6 +562,7 @@
 				90DA32901C93616700D5EBDF /* Montserrat-SemiBold.otf in Resources */,
 				90DA32881C93616700D5EBDF /* OpenSans-Semibold.ttf in Resources */,
 				90DA32911C93616700D5EBDF /* Montserrat-UltraLight.otf in Resources */,
+				905F879A1CD99534004046CD /* ProfileHeaderView.xib in Resources */,
 				905F87961CD742C7004046CD /* ListCell.xib in Resources */,
 				90DA32951C93616700D5EBDF /* Montserrat-Light.otf in Resources */,
 				90DA328D1C93616700D5EBDF /* OpenSans-Italic.ttf in Resources */,

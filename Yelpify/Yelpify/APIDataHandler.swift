@@ -122,10 +122,9 @@ class APIDataHandler {
                     }
                     
                     if let types = place["types"]?.array{
-                        var typeArray: [String] = []
                         for type in types{
                             if let t = type.string{
-                                typeArray.append(t)
+                                DetailedObject.types.addObject(t)
                             }
                         }
                     }
