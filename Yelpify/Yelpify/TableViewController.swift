@@ -286,31 +286,33 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                                     self.label_array.append("My playlists")
                                     self.tableView.reloadData()
                                 }
-                                let query3 = PFUser.query()!
-                                query3.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
-                                query3.findObjectsInBackgroundWithBlock {(objects1: [PFObject]?, error: NSError?) -> Void in
-                                    if ((error) == nil)
-                                    {
-                                        dispatch_async(dispatch_get_main_queue(), {
-                                            if let recentarray = objects1![0]["recentlyViewed"] as? [String]
-                                            {
-                                                let query4 = PFQuery(className: "Playlists")
-                                                query4.whereKey("objectId", containedIn: recentarray)
-                                                query4.findObjectsInBackgroundWithBlock {(objects2: [PFObject]?, error: NSError?) -> Void in
-                                                    if ((error) == nil)
-                                                    {
-                                                        dispatch_async(dispatch_get_main_queue(), {
-                                                            self.recent_playlists = objects2!
-                                                            self.all_playlists.append(self.recent_playlists)
-                                                            self.label_array.append("Recently viewed")
-                                                            self.tableView.reloadData()
-                                                        })
-                                                    }
-                                                }
-                                            }
-                                        })
-                                    }
-                                }
+                                // CHANGE
+//                                let query3 = PFUser.query()!
+//                                query3.whereKeyExists("username")
+//                                query3.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
+//                                query3.findObjectsInBackgroundWithBlock {(objects1: [PFObject]?, error: NSError?) -> Void in
+//                                    if ((error) == nil)
+//                                    {
+//                                        dispatch_async(dispatch_get_main_queue(), {
+//                                            if let recentarray = objects1![0]["recentlyViewed"] as? [String]
+//                                            {
+//                                                let query4 = PFQuery(className: "Playlists")
+//                                                query4.whereKey("objectId", containedIn: recentarray)
+//                                                query4.findObjectsInBackgroundWithBlock {(objects2: [PFObject]?, error: NSError?) -> Void in
+//                                                    if ((error) == nil)
+//                                                    {
+//                                                        dispatch_async(dispatch_get_main_queue(), {
+//                                                            self.recent_playlists = objects2!
+//                                                            self.all_playlists.append(self.recent_playlists)
+//                                                            self.label_array.append("Recently viewed")
+//                                                            self.tableView.reloadData()
+//                                                        })
+//                                                    }
+//                                                }
+//                                            }
+//                                        })
+//                                    }
+//                                }
                             })
                         }
                         else
@@ -378,8 +380,10 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         
         // CONFIGURE CELL
         cell.listName.text = cellobject["playlistName"] as? String
-        let createdByUser = cellobject["createdBy"] as! PFUser
-        cell.creatorName.text = createdByUser.username
+        
+        // CHANGE
+//        let createdByUser = cellobject["createdBy"] as! PFUser
+//        cell.creatorName.text = createdByUser.username
         let followCount = cellobject["followerCount"]
         if (followCount == nil)
         {

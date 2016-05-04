@@ -261,7 +261,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func configureInfo(){
         self.playlistInfoName.text = object["playlistName"] as? String
         let user = object["createdBy"] as! PFUser
-        self.playlistInfoUser.titleLabel?.text = "BY" + user.username!
+        
+        // CHANGE
+        //self.playlistInfoUser.titleLabel?.text = "BY" + user.username!
         
         //self.collaboratorsImageView.addSubview(<#T##view: UIView##UIView#>)
         self.playlistInfoIcon.image = UIImage(named: "")
@@ -476,33 +478,37 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-
-        switch contentToDisplay {
-        
-        case .Places:
-            let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-            
-            cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
-                //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-            }
-            
-            //configure left buttons
-            cell.leftButtons = [MGSwipeButton(title: "noice", backgroundColor: UIColor.greenColor())
-                ,MGSwipeButton(title: "aight", backgroundColor: UIColor.blueColor())]
-            cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
-            
-            //configure right buttons
-            cell.rightButtons = [MGSwipeButton(title: "Delete", backgroundColor: UIColor.redColor())
-                ,MGSwipeButton(title: "More",backgroundColor: UIColor.lightGrayColor())]
-            cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
-            
-            
-        case .Comments:
-            let cell = UITableViewCell()
-            cell.textLabel?.text = "Piccies!"
-            cell.imageView?.image = UIImage(named: "header_bg")
+        var cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
+        cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
+            //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
+        
+        // CHANGE
+//        switch contentToDisplay {
+//        
+//        case .Places:
+//            cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
+//            
+//            cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
+//                //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+//            }
+//            
+////            //configure left buttons
+////            cell.leftButtons = [MGSwipeButton(title: "noice", backgroundColor: UIColor.greenColor())
+////                ,MGSwipeButton(title: "aight", backgroundColor: UIColor.blueColor())]
+////            cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
+////            
+////            //configure right buttons
+////            cell.rightButtons = [MGSwipeButton(title: "Delete", backgroundColor: UIColor.redColor())
+////                ,MGSwipeButton(title: "More",backgroundColor: UIColor.lightGrayColor())]
+////            cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
+////            
+//            
+//        case .Comments:
+//            let cell = UITableViewCell()
+//            cell.textLabel?.text = "Piccies!"
+//            cell.imageView?.image = UIImage(named: "header_bg")
+//        }
         
         return cell
     }
