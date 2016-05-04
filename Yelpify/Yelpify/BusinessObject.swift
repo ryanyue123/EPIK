@@ -66,6 +66,7 @@ struct GooglePlaceDetail {
     var rating: Double! = 0
     var reviews: NSMutableArray! = []
     var photos: NSMutableArray! = []
+    var types: NSMutableArray! = []
     
     init(){
         

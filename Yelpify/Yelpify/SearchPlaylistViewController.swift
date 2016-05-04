@@ -16,16 +16,16 @@ class SearchPlaylistViewController: UITableViewController, UITextFieldDelegate, 
     
     var textField: UITextField!
     
-    init(style: UITableViewStyle, itemInfo: IndicatorInfo, textField: UITextField) {
-        self.textField = textField
-        self.itemInfo = itemInfo
-        super.init(style: style)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        //fatalError("init(coder:) has not been implemented")
-    }
+//    init(style: UITableViewStyle, itemInfo: IndicatorInfo, textField: UITextField) {
+//        self.textField = textField
+//        self.itemInfo = itemInfo
+//        super.init(style: style)
+//    }
+//    
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//        //fatalError("init(coder:) has not been implemented")
+//    }
     
     func indicatorInfoForPagerTabStrip(pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return itemInfo

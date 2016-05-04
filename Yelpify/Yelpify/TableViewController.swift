@@ -368,12 +368,22 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return all_playlists[collectionView.tag].count
     }
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
+        collectionView.registerNib(UINib(nibName: "ListCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "listCell")
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("listCell", forIndexPath: indexPath) as! ListCollectionViewCell
         
         let tempobject = all_playlists[collectionView.tag][indexPath.row] as! PFObject
-        cell.label.text = tempobject["playlistName"] as? String
+        
+        
+        // CONFIGURE CELL
+        cell.listName.text = tempobject["playlistName"] as? String
+        cell.creatorName.text = "INSERT NAME" // CHANGE
+        cell.followerCount.text = "INSERT COUNT" // CHANGE
+        //cell.listIcon.image = UIImage(named: "cafe_icon") // CHANGE
+        //cell.playlistImage.image = UIImage()
         
     
         //takes image of first business and uses it as icon for playlist
@@ -382,7 +392,7 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
             let businessdict = business[0]
             if let photoref = businessdict["photoReference"] as? String
             {
-                cell.configureCell(photoref)
+                //cell.configureCell(photoref) // CHANGE
             }
         }
         

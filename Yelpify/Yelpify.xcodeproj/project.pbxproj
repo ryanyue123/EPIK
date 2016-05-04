@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		3C2F1C7B1CD468020081CEFA /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2F1C7A1CD468020081CEFA /* InitialViewController.swift */; };
 		3C7C56451CD479EF009D8B34 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7C56441CD479EF009D8B34 /* SignUpViewController.swift */; };
-		3CB8D45C1CBB575F00870F38 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB8D45B1CBB575F00870F38 /* CollectionViewCell.swift */; };
+		3CB8D45C1CBB575F00870F38 /* ListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB8D45B1CBB575F00870F38 /* ListCollectionViewCell.swift */; };
 		3CBFD89B1CD42A7900290F25 /* SearchPlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBFD89A1CD42A7900290F25 /* SearchPlaylistViewController.swift */; };
 		3CBFD89D1CD4355900290F25 /* SearchPlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBFD89C1CD4355900290F25 /* SearchPlaylistCell.swift */; };
 		3CD0344F1CBA121300675F88 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD0344E1CBA121300675F88 /* TableViewCell.swift */; };
@@ -22,6 +22,9 @@
 		523E599553F6100C5348857C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68ACAEFF88A59BB74B411CE0 /* Pods.framework */; };
 		901DFAEC1CBF481800AFD002 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CE2EE821C6C5EC8000C9088 /* Main.storyboard */; };
 		9038B75E1CBCD041004B220B /* ActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9038B75D1CBCD041004B220B /* ActionsViewController.swift */; };
+		905F87941CD741BB004046CD /* SearchPlaylistCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */; };
+		905F87961CD742C7004046CD /* ListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 905F87951CD742C7004046CD /* ListCell.xib */; };
+		905F879A1CD99534004046CD /* ProfileHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 905F87991CD99534004046CD /* ProfileHeaderView.xib */; };
 		9069D7681CD6B15E005650F4 /* BusinessCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9069D7671CD6B15E005650F4 /* BusinessCell.xib */; };
 		9069D76A1CD6B7F2005650F4 /* ReviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9069D7691CD6B7F2005650F4 /* ReviewCell.xib */; };
 		906CAA311C8977B700AF3515 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906CAA301C8977B700AF3515 /* TestViewController.swift */; };
@@ -101,7 +104,7 @@
 /* Begin PBXFileReference section */
 		3C2F1C7A1CD468020081CEFA /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InitialViewController.swift; path = ../InitialViewController.swift; sourceTree = "<group>"; };
 		3C7C56441CD479EF009D8B34 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		3CB8D45B1CBB575F00870F38 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionViewCell.swift; path = Yelpify/CollectionViewCell.swift; sourceTree = "<group>"; };
+		3CB8D45B1CBB575F00870F38 /* ListCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListCollectionViewCell.swift; path = Yelpify/ListCollectionViewCell.swift; sourceTree = "<group>"; };
 		3CBFD89A1CD42A7900290F25 /* SearchPlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlaylistViewController.swift; sourceTree = "<group>"; };
 		3CBFD89C1CD4355900290F25 /* SearchPlaylistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchPlaylistCell.swift; path = Yelpify/SearchPlaylistCell.swift; sourceTree = "<group>"; };
 		3CD0344E1CBA121300675F88 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewCell.swift; path = Yelpify/TableViewCell.swift; sourceTree = "<group>"; };
@@ -121,6 +124,9 @@
 		68ACAEFF88A59BB74B411CE0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9025184D1C8825E700BB3E05 /* Haneke.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Haneke.framework; path = "Pods/../build/Debug-iphoneos/Haneke.framework"; sourceTree = "<group>"; };
 		9038B75D1CBCD041004B220B /* ActionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionsViewController.swift; sourceTree = "<group>"; };
+		905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlaylistCollectionViewController.swift; sourceTree = "<group>"; };
+		905F87951CD742C7004046CD /* ListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ListCell.xib; path = Yelpify/ListCell.xib; sourceTree = "<group>"; };
+		905F87991CD99534004046CD /* ProfileHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileHeaderView.xib; sourceTree = "<group>"; };
 		9069D7671CD6B15E005650F4 /* BusinessCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BusinessCell.xib; path = Yelpify/BusinessCell.xib; sourceTree = "<group>"; };
 		9069D7691CD6B7F2005650F4 /* ReviewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviewCell.xib; path = Yelpify/ReviewCell.xib; sourceTree = "<group>"; };
 		906CAA301C8977B700AF3515 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
@@ -174,8 +180,6 @@
 		981001A34CAB5A147D7CB122 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B140D093A1A89D68777F3561 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		ED405A0F1CC1D03C0017A9AB /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		ED405A111CC1D0E90017A9AB /* Yelpify-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Yelpify-Bridging-Header.h"; sourceTree = "<group>"; };
-		ED405A121CC1D0E90017A9AB /* NSMutableArray+Login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Login.h"; sourceTree = "<group>"; };
 		ED52E64A1CCB2E0300CEBAE2 /* YoutubeActionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeActionController.swift; sourceTree = "<group>"; };
 		ED52E64B1CCB2E0300CEBAE2 /* YoutubeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YoutubeCell.xib; sourceTree = "<group>"; };
 		ED52E64C1CCB2E0300CEBAE2 /* YoutubeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeViewController.swift; sourceTree = "<group>"; };
@@ -220,7 +224,7 @@
 				9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */,
 				90A943791CD2CDE8004ACE78 /* CommentTableViewCell.swift */,
 				3CD0344E1CBA121300675F88 /* TableViewCell.swift */,
-				3CB8D45B1CBB575F00870F38 /* CollectionViewCell.swift */,
+				3CB8D45B1CBB575F00870F38 /* ListCollectionViewCell.swift */,
 			);
 			name = Cells;
 			path = ..;
@@ -268,8 +272,6 @@
 				3CE2EE851C6C5EC8000C9088 /* Assets.xcassets */,
 				3CE2EE871C6C5EC8000C9088 /* LaunchScreen.storyboard */,
 				3CE2EE8A1C6C5EC8000C9088 /* Info.plist */,
-				ED405A121CC1D0E90017A9AB /* NSMutableArray+Login.h */,
-				ED405A111CC1D0E90017A9AB /* Yelpify-Bridging-Header.h */,
 			);
 			path = Yelpify;
 			sourceTree = "<group>";
@@ -305,10 +307,10 @@
 			isa = PBXGroup;
 			children = (
 				90B6D69D1CD49888006928E8 /* SearchPagerTabStripVC.swift */,
-				908A3BCA1CC0EFED00767736 /* ProfileViewController.swift */,
 				3CBFD89A1CD42A7900290F25 /* SearchPlaylistViewController.swift */,
+				905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */,
 				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
-				9038B75D1CBCD041004B220B /* ActionsViewController.swift */,
+				908A3BCA1CC0EFED00767736 /* ProfileViewController.swift */,
 				3CD034501CBA122A00675F88 /* TableViewController.swift */,
 				90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */,
 				90E505DE1C8E375200F47285 /* GPlacesSearchViewController.swift */,
@@ -317,6 +319,7 @@
 				ED405A0F1CC1D03C0017A9AB /* LoginViewController.swift */,
 				3C7C56441CD479EF009D8B34 /* SignUpViewController.swift */,
 				3C2F1C7A1CD468020081CEFA /* InitialViewController.swift */,
+				9038B75D1CBCD041004B220B /* ActionsViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -337,6 +340,8 @@
 		9069D7651CD6B143005650F4 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				905F87991CD99534004046CD /* ProfileHeaderView.xib */,
+				905F87951CD742C7004046CD /* ListCell.xib */,
 				9069D7671CD6B15E005650F4 /* BusinessCell.xib */,
 				9069D7691CD6B7F2005650F4 /* ReviewCell.xib */,
 			);
@@ -557,6 +562,8 @@
 				90DA32901C93616700D5EBDF /* Montserrat-SemiBold.otf in Resources */,
 				90DA32881C93616700D5EBDF /* OpenSans-Semibold.ttf in Resources */,
 				90DA32911C93616700D5EBDF /* Montserrat-UltraLight.otf in Resources */,
+				905F879A1CD99534004046CD /* ProfileHeaderView.xib in Resources */,
+				905F87961CD742C7004046CD /* ListCell.xib in Resources */,
 				90DA32951C93616700D5EBDF /* Montserrat-Light.otf in Resources */,
 				90DA328D1C93616700D5EBDF /* OpenSans-Italic.ttf in Resources */,
 				90C177DF1CCB5B85007344CE /* PostCell.xib in Resources */,
@@ -663,10 +670,11 @@
 				90B6D69E1CD49888006928E8 /* SearchPagerTabStripVC.swift in Sources */,
 				3CBFD89D1CD4355900290F25 /* SearchPlaylistCell.swift in Sources */,
 				3CD0344F1CBA121300675F88 /* TableViewCell.swift in Sources */,
+				905F87941CD741BB004046CD /* SearchPlaylistCollectionViewController.swift in Sources */,
 				907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */,
 				907E0CE71C77F34100872135 /* GooglePlacesAPIClient.swift in Sources */,
 				90E505E21C8E944100F47285 /* CustomSearchController.swift in Sources */,
-				3CB8D45C1CBB575F00870F38 /* CollectionViewCell.swift in Sources */,
+				3CB8D45C1CBB575F00870F38 /* ListCollectionViewCell.swift in Sources */,
 				90C177E01CCB5B85007344CE /* PostCell.swift in Sources */,
 				90C177DA1CCB5B4A007344CE /* ChildExampleViewController.swift in Sources */,
 				90C177D41CCB50A6007344CE /* YoutubeExampleViewController.swift in Sources */,
