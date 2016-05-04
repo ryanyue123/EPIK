@@ -1,5 +1,5 @@
 //
-//  CollectionViewCell.swift
+//  ListCollectionViewCell.swift
 //  Yelpify
 //
 //  Created by Ryan Yue on 4/10/16.
@@ -9,12 +9,15 @@
 import UIKit
 import Haneke
 
-class CollectionViewCell: UICollectionViewCell {
+class ListCollectionViewCell: UICollectionViewCell {
     
     let cache = Shared.imageCache
     
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var listIcon: UIImageView!
     @IBOutlet weak var playlistImage: UIImageView!
+    @IBOutlet weak var listName: UILabel!
+    @IBOutlet weak var creatorName: UILabel!
+    @IBOutlet weak var followerCount: UILabel!
     
     var gpAPIClient = GooglePlacesAPIClient()
     

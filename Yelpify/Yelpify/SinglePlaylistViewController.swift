@@ -46,7 +46,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     let offset_HeaderStop:CGFloat = 40.0
     var contentToDisplay: ContentTypes = .Places
     
-    //var businessObjects: [Business] = []
     var playlistArray = [Business]()
     var object: PFObject!
     var newPlaylist: Bool = false
@@ -60,7 +59,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     @IBAction func editPlaylistButtonAction(sender: AnyObject) {
         
-        //performSegueWithIdentifier("showActionsMenu", sender: self)
         let actionController = YoutubeActionController()
         
         actionController.addAction(Action(ActionData(title: "Add to Watch Later", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
@@ -117,7 +115,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
 
 
-    
     // MARK: - ViewDidLoad and other View functions
     
     override func viewDidLoad() {
@@ -256,8 +253,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
 
     
-
-    
     func unwindView(sender: UIBarButtonItem)
     {
         self.navigationController?.popToRootViewControllerAnimated(true)
@@ -265,6 +260,15 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func configureInfo(){
         self.playlistInfoName.text = object["playlistName"] as? String
+        self.playlistInfoUser.titleLabel?.text = "BY" + "INSERT NAME FROM PARSE" // CHANGE
+        
+        //self.collaboratorsImageView.addSubview(<#T##view: UIView##UIView#>)
+        self.playlistInfoIcon.image = UIImage(named: "")
+        self.playlistInfoBG.image = UIImage(named: "default_list_bg")
+        
+        self.numOfPlacesLabel.text = String(playlistArray.count)
+        self.numOfFollowersLabel.text = "0" // CHANGE
+        self.averagePriceRating.text = "$$$" // CHANGE
     }
     
     func activateEditMode()
@@ -272,10 +276,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.navigationItem.setHidesBackButton(true, animated: true)
         let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "savePlaylistToParse:")
         self.navigationItem.leftBarButtonItem = backButton
-        //self.navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "savePlaylistToParse:")
-        
-        //self.leftBarButtonItem.title = "Done"
-        //self.leftBarButtonItem.action = "savePlaylistToParse:"
         self.addPlaceButton.hidden = false
         self.addPlaceButton.enabled = true
     }
@@ -324,24 +324,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }else{
             
         }
-        
-        //print(offset)
-        
-//        // Segment control
-//        
-//        let segmentViewOffset = playlistInfoView.frame.height - segmentedBarView.frame.height - offset
-//        
-//        var segmentTransform = CATransform3DIdentity
-//        
-//        // Scroll the segment view until its offset reaches the same offset at which the header stopped shrinking
-//        segmentTransform = CATransform3DTranslate(segmentTransform, 0, max(segmentViewOffset, -offset_HeaderStop), 0)
-//        
-//        segmentedBarView.layer.transform = segmentTransform
-//        
-//        
-//        // Set scroll view insets just underneath the segment control
-//        playlistTableView.scrollIndicatorInsets = UIEdgeInsetsMake(segmentedBarView.frame.maxY, 0, 0, 0)
-        
         
         
     }
@@ -463,28 +445,11 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tappedCollaborators(){
-        //performSegueWithIdentifier("showProfileView", sender: self)
-        let actionController = YoutubeActionController()
         
-        actionController.addAction(Action(ActionData(title: "Edit", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
-            
-            
-        }))
-        actionController.addAction(Action(ActionData(title: "Copy", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
-            
-        }))
-        actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-share-icon")!), style: .Default, handler: { action in
-        }))
-        actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
-        
-        presentViewController(actionController, animated: true, completion: nil)
-        
-
     }
 
     
     // MARK: - Table View Functions
-    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -501,12 +466,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-//        let reuseIdentifier = "programmaticCell"
-//        var SwipeCell = self.playlistTableView.dequeueReusableCellWithIdentifier(reuseIdentifier) as! MGSwipeTableCell!
-//        if SwipeCell == nil
-//        {
-//            SwipeCell = MGSwipeTableCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: reuseIdentifier)
-//        }
         
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
 
@@ -615,9 +574,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             self.playlistTableView.deselectRowAtIndexPath(indexPath!, animated: true)
         }else if (segue.identifier == "showActionsMenu"){
             let upcoming: ActionsViewController = segue.destinationViewController as! ActionsViewController
-            //upcoming.view.backgroundColor = UIColor.clearColor()
-            //upcoming.tableView.backgroundColor = UIColor.clearColor()
-            //presentingViewController?.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
             presentingViewController?.presentViewController(self, animated: true, completion: nil)
         }
     }
