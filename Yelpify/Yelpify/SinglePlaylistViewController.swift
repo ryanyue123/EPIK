@@ -15,7 +15,7 @@ enum ContentTypes {
     case Places, Comments
 }
 
-class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
+class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate{
     
     //@IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
     
@@ -101,6 +101,34 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+    func showActionMenu(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        print("Holding")
+        if longPressGestureRecognizer.state == UIGestureRecognizerState.Began {
+            print("Holding")
+            
+            let touchPoint = longPressGestureRecognizer.locationInView(self.view)
+            
+            if let indexPath = playlistTableView.indexPathForRowAtPoint(touchPoint) {
+                
+                let actionController = YoutubeActionController()
+                
+                actionController.addAction(Action(ActionData(title: "Add to Watch Later", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
+                }))
+                actionController.addAction(Action(ActionData(title: "Edit Playlist", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
+                    print("Edit pressed")
+                    self.activateEditMode()
+                }))
+                actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-share-icon")!), style: .Default, handler: { action in
+                }))
+                actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
+                
+                presentViewController(actionController, animated: true, completion: nil)
+            }
+        }
+        
+    }
+    
+    //Called, when long press occurred
     func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
         
         if longPressGestureRecognizer.state == UIGestureRecognizerState.Began {
@@ -122,14 +150,17 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 // your code here, get the row for the indexPath or do whatever you want
             }
         }
-        
     }
-
+    
 
     // MARK: - ViewDidLoad and other View functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // tapRecognizer, placed in viewDidLoad
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPress:")
+        self.view.addGestureRecognizer(longPressRecognizer)
         
         // Register Nibs 
          self.playlistTableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
@@ -137,10 +168,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
         
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(SinglePlaylistViewController.longPress(_:)))
-        self.view.addGestureRecognizer(longPressRecognizer)
-        
-
         
         self.playlistTableView.backgroundColor = appDefaults.color
         if (self.newPlaylist == true)
@@ -272,9 +299,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func configureInfo(){
         self.playlistInfoName.text = object["playlistName"] as? String
         let user = object["createdBy"] as! PFUser
-        
-        // CHANGE
-        //self.playlistInfoUser.titleLabel?.text = "BY" + user.username!
+    
+        self.playlistInfoUser.titleLabel?.text = "BY" + user.username!
         
         //self.collaboratorsImageView.addSubview(<#T##view: UIView##UIView#>)
         self.playlistInfoIcon.image = UIImage(named: "")
@@ -490,62 +516,30 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-        cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
-            //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        }
-
-//        switch contentToDisplay {
-//        
-//        case .Places:
-//            let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-//            
-//            cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
-//                //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-//            }
-//            
-//            //configure left buttons
-//            //cell.leftButtons = [MGSwipeButton(title: "noice", backgroundColor: UIColor.greenColor())
-//            //    ,MGSwipeButton(title: "aight", backgroundColor: UIColor.blueColor())]
-//            //cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
-//            
-//            //configure right buttons
-//            //cell.rightButtons = [MGSwipeButton(title: "Delete", backgroundColor: UIColor.redColor())
-//            //    ,MGSwipeButton(title: "More",backgroundColor: UIColor.lightGrayColor())]
-//            //cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
-//            
-//            
-//        case .Comments:
-//            let cell = UITableViewCell()
-//            cell.textLabel?.text = "Piccies!"
-//            cell.imageView?.image = UIImage(named: "header_bg")
-//        }
         
-        // CHANGE
-//        switch contentToDisplay {
-//        
-//        case .Places:
-//            cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-//            
-//            cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
-//                //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-//            }
-//            
-////            //configure left buttons
-////            cell.leftButtons = [MGSwipeButton(title: "noice", backgroundColor: UIColor.greenColor())
-////                ,MGSwipeButton(title: "aight", backgroundColor: UIColor.blueColor())]
-////            cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
-////            
-////            //configure right buttons
-////            cell.rightButtons = [MGSwipeButton(title: "Delete", backgroundColor: UIColor.redColor())
-////                ,MGSwipeButton(title: "More",backgroundColor: UIColor.lightGrayColor())]
-////            cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
-////            
-//            
-//        case .Comments:
-//            let cell = UITableViewCell()
-//            cell.textLabel?.text = "Piccies!"
-//            cell.imageView?.image = UIImage(named: "header_bg")
-//        }
+        // Add Long Press Recognizer
+//        let longPressRecognizer = UILongPressGestureRecognizer(target: cell, action: "showActionMenu:")
+//        longPressRecognizer.minimumPressDuration = 2.0
+//        longPressRecognizer.numberOfTapsRequired = 1
+//        longPressRecognizer.numberOfTouchesRequired = 1
+//        cell.addGestureRecognizer(longPressRecognizer)
+        
+        // Configure Cell
+        cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
+        }
+        
+        // Add Swipe Buttons
+        // configure left buttons
+        cell.leftButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_darker)]
+        cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
+
+        // configure right buttons
+        cell.rightButtons = [MGSwipeButton(title: "Add", backgroundColor: UIColor.redColor())]
+        cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
+        
+        cell.leftExpansion.buttonIndex = 0
+        cell.leftExpansion.fillOnTrigger = true
+        
         
         return cell
     }
@@ -563,17 +557,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         return true
     }
     
-    // Override to support editing the table view.
-//    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-//        if editingStyle == .Delete {
-//            // Delete the row from the data source
-//            playlistArray.removeAtIndex(indexPath.row)
-//            playlistTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-//        } else if editingStyle == .Insert {
-//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-//        }
-//    }
-    
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
     {
         
@@ -583,10 +566,18 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     {
         var shareAction = UITableViewRowAction(style: .Normal, title: "Share") {(action:
             UITableViewRowAction!, indexPath: NSIndexPath!) -> Void in
-            print("hi")
+            print("sharing")
         }
-        shareAction.backgroundColor = UIColor.blueColor()
-        return [shareAction]
+        
+        shareAction.backgroundColor = appDefaults.color
+        
+        var routeAction = UITableViewRowAction(style: .Normal, title: "Route") { (action: UITableViewRowAction!, indexPath: NSIndexPath) in
+            print("routing")
+        }
+        
+        routeAction.backgroundColor = appDefaults.color_darker
+        
+        return [shareAction, routeAction]
     }
     
 //
@@ -659,9 +650,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             upcoming.object = object
             upcoming.index = indexPath!.row
             self.playlistTableView.deselectRowAtIndexPath(indexPath!, animated: true)
-        }else if (segue.identifier == "showActionsMenu"){
-            let upcoming: ActionsViewController = segue.destinationViewController as! ActionsViewController
-            presentingViewController?.presentViewController(self, animated: true, completion: nil)
         }
     }
     
