@@ -106,6 +106,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         if longPressGestureRecognizer.state == UIGestureRecognizerState.Began {
             
             let touchPoint = longPressGestureRecognizer.locationInView(self.view)
+            
             if let indexPath = playlistTableView.indexPathForRowAtPoint(touchPoint) {
                 print("HIIIII")
                 // your code here, get the row for the indexPath or do whatever you want
@@ -484,7 +485,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
         
         // configure left buttons
-        cell.leftButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_bg)]
+        cell.leftButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_darker)]
         cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
 
         // configure right buttons
