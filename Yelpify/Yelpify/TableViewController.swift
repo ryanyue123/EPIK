@@ -380,10 +380,15 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         
         // CONFIGURE CELL
         cell.listName.text = cellobject["playlistName"] as? String
-        
-        // CHANGE
-//        let createdByUser = cellobject["createdBy"] as! PFUser
-//        cell.creatorName.text = createdByUser.username
+        let createdByUser = cellobject["createdBy"] as! PFUser
+        createdByUser.fetchIfNeededInBackgroundWithBlock { (object, error) in
+            if (error == nil)
+            {
+                dispatch_async(dispatch_get_main_queue(), {
+                    cell.creatorName.text = object!["username"] as! String
+                })
+            }
+        }
         let followCount = cellobject["followerCount"]
         if (followCount == nil)
         {
