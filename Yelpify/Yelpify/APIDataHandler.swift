@@ -47,7 +47,7 @@ class APIDataHandler {
     }
     
 
-    // Gets Detailed Info from ID
+    // Detailed Search
     func parseGoogleDetailedData(data: NSData, completion: (detailedGPlace: GooglePlaceDetail) -> Void){
         let json = JSON(data: data)
         if json.count > 0 {
@@ -143,7 +143,7 @@ class APIDataHandler {
     
 
 
-    // For Regular Search
+    // Regular Search
     func parseGPlacesJSON(data: NSData, completion: (businessArray: [Business]) -> Void){
         let json = JSON(data: data)
         if let places = json["results"].array{
@@ -176,6 +176,14 @@ class APIDataHandler {
                         }
                         if let placeLng = placeLocation["lng"]!.double{
                             businessObject.businessLongitude = placeLng
+                        }
+                    }
+                    
+                    if let types = place["types"].array{
+                        for type in types{
+                            if let t = type.string{
+                                businessObject.businessTypes.addObject(t)
+                            }
                         }
                     }
                     

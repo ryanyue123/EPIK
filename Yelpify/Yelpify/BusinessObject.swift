@@ -14,38 +14,25 @@ struct Business {
     
     var businessName: String! = ""
     var businessAddress: String! = ""
-    //var businessCity: String! = ""
-    //var businessZip: String! = ""
     var businessPhone: String! = ""
-    //var businessImageURL: String! = ""
     var businessPhotoReference: String! = ""
     var businessLatitude: Double! = -1
     var businessLongitude: Double! = -1
-    //var businessDistance: Double! = -1
     var businessRating: Double! = -1
-    //var businessCategories: NSArray! = []
+    var businessTypes: NSMutableArray! = []
     var businessStatus: Bool! = nil
-    //var yelpID: String! = ""
     var gPlaceID: String! = ""
-    
-    init(){
-        
-    }
-    
+
     func getDictionary() -> NSDictionary{
         let businessDict = NSMutableDictionary()
         businessDict["id"] = gPlaceID
         businessDict["name"] = businessName
         businessDict["address"] = businessAddress
-        //businessDict["imageURL"] = businessImageURL
         businessDict["photoReference"] = businessPhotoReference
         businessDict["latitude"] = businessLatitude
         businessDict["longitude"] = businessLongitude
-        //businessDict["distance"] = businessDistance
         businessDict["rating"] = businessRating
-        //businessDict["categories"] = businessCategories
-        //businessDict["city"] = businessCity
-        //businessDict["zip"] = businessZip
+        businessDict["types"] = businessTypes
         businessDict["phone"] = businessPhone
         businessDict["status"] = businessStatus
         
@@ -53,9 +40,6 @@ struct Business {
     }
 
 }
-
-
-//completion(detailedGPlaceDict: ["phone": placePhone, "address": placeFormattedAddress, "website": placeWebsite, "priceRating": placePrice, "hours": placeWeekdayText, "placePhotos": placePhotoRefArray, "rating": placeRating, "reviews": placeReviews])
 
 struct GooglePlaceDetail {
     var address: String! = ""
@@ -67,8 +51,5 @@ struct GooglePlaceDetail {
     var reviews: NSMutableArray! = []
     var photos: NSMutableArray! = []
     var types: NSMutableArray! = []
-    
-    init(){
-        
-    }
+
 }
