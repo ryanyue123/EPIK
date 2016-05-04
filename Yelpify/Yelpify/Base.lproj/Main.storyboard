@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="xiI-OX-0fu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wjg-5v-mT1">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -196,7 +196,7 @@
                                                     <rect key="frame" x="0.0" y="-14" width="180" height="196.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                        <rect key="frame" x="0.0" y="0.0" width="180" height="197"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="180" height="196.5"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="default_restaurant" translatesAutoresizingMaskIntoConstraints="NO" id="G8x-dS-y3N">
@@ -2996,7 +2996,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="listCell" id="tHX-p9-uMr">
-                                <rect key="frame" x="0.0" y="64" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="181" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -3006,6 +3006,7 @@
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="h7K-2Q-yh4">
+                            <rect key="frame" x="0.0" y="64" width="600" height="117"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </collectionReusableView>
                         <connections>
@@ -3288,9 +3289,9 @@
         <image name="temp_rating" width="149" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="y7k-Hg-iYt"/>
-        <segue reference="C9p-Sr-17z"/>
-        <segue reference="IFd-Gd-HzU"/>
         <segue reference="1RX-FS-Umm"/>
+        <segue reference="y7k-Hg-iYt"/>
+        <segue reference="Ec9-0b-pIS"/>
+        <segue reference="IFd-Gd-HzU"/>
     </inferredMetricsTieBreakers>
 </document>
