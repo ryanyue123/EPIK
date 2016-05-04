@@ -101,15 +101,27 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
-    func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+    func showActionMenu(longPressGestureRecognizer: UILongPressGestureRecognizer) {
         
         if longPressGestureRecognizer.state == UIGestureRecognizerState.Began {
             
             let touchPoint = longPressGestureRecognizer.locationInView(self.view)
             
             if let indexPath = playlistTableView.indexPathForRowAtPoint(touchPoint) {
-                print("HIIIII")
-                // your code here, get the row for the indexPath or do whatever you want
+                
+                let actionController = YoutubeActionController()
+                
+                actionController.addAction(Action(ActionData(title: "Add to Watch Later", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
+                }))
+                actionController.addAction(Action(ActionData(title: "Edit Playlist", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
+                    print("Edit pressed")
+                    self.activateEditMode()
+                }))
+                actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-share-icon")!), style: .Default, handler: { action in
+                }))
+                actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
+                
+                presentViewController(actionController, animated: true, completion: nil)
             }
         }
         
@@ -127,10 +139,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
         
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(SinglePlaylistViewController.longPress(_:)))
-        self.view.addGestureRecognizer(longPressRecognizer)
-        
-
         
         self.playlistTableView.backgroundColor = appDefaults.color
         if (self.newPlaylist == true)
@@ -481,6 +489,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
         
+        // Add Long Press Recognizer
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "showActionMenu:")
+        cell.addGestureRecognizer(longPressRecognizer)
+        
         cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
         }
         
@@ -669,9 +681,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             upcoming.object = object
             upcoming.index = indexPath!.row
             self.playlistTableView.deselectRowAtIndexPath(indexPath!, animated: true)
-        }else if (segue.identifier == "showActionsMenu"){
-            let upcoming: ActionsViewController = segue.destinationViewController as! ActionsViewController
-            presentingViewController?.presentViewController(self, animated: true, completion: nil)
         }
     }
     
