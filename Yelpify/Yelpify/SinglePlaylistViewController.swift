@@ -139,7 +139,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             self.activateEditMode()
         }
         
-        if((object["createdbyuser"] as? String) == PFUser.currentUser()?.username)
+        else if(object["createdBy"] as! PFUser == PFUser.currentUser()!)
             //later incorporate possibility of collaboration
         {
             
@@ -260,14 +260,25 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func configureInfo(){
         self.playlistInfoName.text = object["playlistName"] as? String
-        self.playlistInfoUser.titleLabel?.text = "BY" + "INSERT NAME FROM PARSE" // CHANGE
+        let user = object["createdBy"] as! PFUser
+        
+        // CHANGE
+        //self.playlistInfoUser.titleLabel?.text = "BY" + user.username!
         
         //self.collaboratorsImageView.addSubview(<#T##view: UIView##UIView#>)
         self.playlistInfoIcon.image = UIImage(named: "")
         self.playlistInfoBG.image = UIImage(named: "default_list_bg")
         
         self.numOfPlacesLabel.text = String(playlistArray.count)
-        self.numOfFollowersLabel.text = "0" // CHANGE
+        let followCount = object["followerCount"]
+        if followCount == nil
+        {
+            self.numOfFollowersLabel.text = "0"
+        }
+        else
+        {
+            self.numOfFollowersLabel.text = String(followCount)
+        }
         self.averagePriceRating.text = "$$$" // CHANGE
     }
     
@@ -491,6 +502,33 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 //            //    ,MGSwipeButton(title: "More",backgroundColor: UIColor.lightGrayColor())]
 //            //cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
 //            
+//            
+//        case .Comments:
+//            let cell = UITableViewCell()
+//            cell.textLabel?.text = "Piccies!"
+//            cell.imageView?.image = UIImage(named: "header_bg")
+//        }
+        
+        // CHANGE
+//        switch contentToDisplay {
+//        
+//        case .Places:
+//            cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
+//            
+//            cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
+//                //self.playlistTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+//            }
+//            
+////            //configure left buttons
+////            cell.leftButtons = [MGSwipeButton(title: "noice", backgroundColor: UIColor.greenColor())
+////                ,MGSwipeButton(title: "aight", backgroundColor: UIColor.blueColor())]
+////            cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
+////            
+////            //configure right buttons
+////            cell.rightButtons = [MGSwipeButton(title: "Delete", backgroundColor: UIColor.redColor())
+////                ,MGSwipeButton(title: "More",backgroundColor: UIColor.lightGrayColor())]
+////            cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
+////            
 //            
 //        case .Comments:
 //            let cell = UITableViewCell()
