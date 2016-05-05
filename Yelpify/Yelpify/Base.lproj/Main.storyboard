@@ -1089,6 +1089,40 @@
             </objects>
             <point key="canvasLocation" x="6237" y="916.5"/>
         </scene>
+        <!--Search Playlist Collection View Controller-->
+        <scene sceneID="Nwl-4x-31T">
+            <objects>
+                <collectionViewController storyboardIdentifier="searchPlaylistVC" id="VLD-kD-Y5V" customClass="SearchPlaylistCollectionViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="0Nb-O0-Ioc">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ls1-jD-FT7">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="hmu-0A-RmK">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="VLD-kD-Y5V" id="N8m-zV-0ZJ"/>
+                            <outlet property="delegate" destination="VLD-kD-Y5V" id="4Aq-7D-RBY"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="JzC-yx-cBH"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZBO-Hm-LYA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6615" y="1618.5"/>
+        </scene>
         <!--Places Search View Controller-->
         <scene sceneID="DpG-32-Qpg">
             <objects>
@@ -1858,7 +1892,7 @@
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="64" y="11.5" width="112" height="16"/>
+                                                        <rect key="frame" x="64" y="11" width="112" height="16"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
@@ -2165,6 +2199,9 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="751"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="7pA-8d-Gw7" id="Dao-jk-UPh"/>
                                     <outlet property="delegate" destination="7pA-8d-Gw7" id="xSo-MP-MFj"/>
@@ -2904,70 +2941,6 @@
             </objects>
             <point key="canvasLocation" x="1620" y="282"/>
         </scene>
-        <!--Search Playlist View Controller-->
-        <scene sceneID="F0b-TN-LvD">
-            <objects>
-                <tableViewController storyboardIdentifier="searchPlaylistVC" id="RDd-T3-T8V" customClass="SearchPlaylistViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="T67-X2-u6X">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="2Bz-yG-Y8E" customClass="SearchPlaylistCell" customModule="Yelpify" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2Bz-yG-Y8E" id="tdq-63-yZF">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mxS-3c-Lzt">
-                                            <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                                <rect key="frame" x="8" y="11" width="250" height="21"/>
-                                            </variation>
-                                        </label>
-                                    </subviews>
-                                    <variation key="default">
-                                        <mask key="subviews">
-                                            <exclude reference="mxS-3c-Lzt"/>
-                                        </mask>
-                                    </variation>
-                                    <variation key="heightClass=regular-widthClass=compact">
-                                        <mask key="subviews">
-                                            <include reference="mxS-3c-Lzt"/>
-                                        </mask>
-                                    </variation>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="label" destination="mxS-3c-Lzt" id="7WI-6P-YGE"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="RDd-T3-T8V" id="vm0-GG-dcc"/>
-                            <outlet property="delegate" destination="RDd-T3-T8V" id="CmU-oW-rES"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="xcm-qI-eWc">
-                        <nil key="title"/>
-                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search playlists" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" id="qe2-Vz-Vbd">
-                            <rect key="frame" x="239" y="7" width="123" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
-                        </textField>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="textField" destination="qe2-Vz-Vbd" id="cX2-1g-c6g"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SQt-FX-tGz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5979" y="1713.75"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="pU5-QQ-URd">
             <objects>
@@ -3039,7 +3012,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wmc-2i-dOI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7032" y="2079"/>
+            <point key="canvasLocation" x="7950" y="2079"/>
         </scene>
         <!--Search-->
         <scene sceneID="Tf1-7N-Rpw">
@@ -3112,24 +3085,6 @@
             <point key="canvasLocation" x="3261" y="-272.25"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="av7-Yi-gCu">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="X3z-H0-NPz" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Xby-Uf-HZj">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="RDd-T3-T8V" kind="relationship" relationship="rootViewController" id="kfq-o9-KVf"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2eW-m6-iqK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5259" y="1707.75"/>
-        </scene>
-        <!--Navigation Controller-->
         <scene sceneID="OuH-SR-01a">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xiI-OX-0fu" sceneMemberID="viewController">
@@ -3194,9 +3149,6 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QjT-YD-9kt">
-                                <rect key="frame" x="0.0" y="40" width="600" height="496"/>
-                            </scrollView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xoQ-j9-5ga" customClass="ButtonBarView" customModule="XLPagerTabStrip">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
                                 <constraints>
@@ -3222,6 +3174,9 @@
                                     </mask>
                                 </variation>
                             </collectionView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QjT-YD-9kt">
+                                <rect key="frame" x="0.0" y="40" width="600" height="496"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -3267,16 +3222,38 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <action selector="didEditText:" destination="AwO-5K-rtr" eventType="editingChanged" id="Nvf-MS-W5v"/>
+                            </connections>
                         </textField>
                     </navigationItem>
                     <connections>
                         <outlet property="buttonBarView" destination="xoQ-j9-5ga" id="Xj3-Ie-yXe"/>
                         <outlet property="containerView" destination="QjT-YD-9kt" id="q5C-CY-obk"/>
+                        <outlet property="searchTextField" destination="3Gn-Uq-0Vt" id="tlq-SZ-VMR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yog-hb-FST" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4161" y="1890"/>
+        </scene>
+        <!--Search Play-->
+        <scene sceneID="oBj-fk-OQl">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fEn-L1-aeq" customClass="SearchPlay" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yOj-MB-vD9">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="VLD-kD-Y5V" kind="relationship" relationship="rootViewController" id="O2E-Lm-Qgz"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p7V-3U-Gkb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5697" y="1618.5"/>
         </scene>
     </scenes>
     <resources>
@@ -3292,9 +3269,9 @@
         <image name="temp_rating" width="149" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="1RX-FS-Umm"/>
-        <segue reference="y7k-Hg-iYt"/>
         <segue reference="Ec9-0b-pIS"/>
-        <segue reference="IFd-Gd-HzU"/>
+        <segue reference="y7k-Hg-iYt"/>
+        <segue reference="1RX-FS-Umm"/>
+        <segue reference="p83-lZ-EZB"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -8,6 +8,7 @@
 
 import XLPagerTabStrip
 import UIKit
+import Parse
 import Foundation
 
 class SearchPagerTabStrip: ButtonBarPagerTabStripViewController {
@@ -47,8 +48,8 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController {
     override func viewControllersForPagerTabStrip(pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let searchPlaylistVC = storyboard.instantiateViewControllerWithIdentifier("searchPlaylistVC") as! UITableViewController
-        let searchBusinessVC = storyboard.instantiateViewControllerWithIdentifier("searchBusinessVC") as! UIViewController
+        let searchPlaylistVC = storyboard.instantiateViewControllerWithIdentifier("searchPlaylistVC") as! SearchPlaylistCollectionViewController
+        let searchBusinessVC = storyboard.instantiateViewControllerWithIdentifier("searchBusinessVC") 
         
         let child_1 = searchBusinessVC //SearchPlaylistViewController(style: .Plain , itemInfo: "Lists", textField: searchTextField)
         let child_2 = searchPlaylistVC
@@ -79,5 +80,24 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController {
             pagerBehaviour = .Common(skipIntermediateViewControllers: rand() % 2 == 0)
         }
         super.reloadPagerTabStripView()
+    }
+    
+    @IBAction func didEditText(sender: UITextField) {
+        
+    }
+    func searchForPlaylistWithName()
+    {
+//        let query = PFQuery(className: "Playlists")
+//        query.whereKey("playlistName", containsString: "")
+//        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
+//            if (error == nil)
+//            {
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    self.playlist_query = objects!
+//                    self.collectionView!.reloadData()
+//                    print("dslkjflksd")
+//                })
+//            }
+//        }
     }
 }
