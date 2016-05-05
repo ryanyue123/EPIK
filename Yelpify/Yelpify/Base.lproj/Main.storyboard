@@ -3487,6 +3487,9 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QjT-YD-9kt">
+                                <rect key="frame" x="0.0" y="40" width="600" height="496"/>
+                            </scrollView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xoQ-j9-5ga" customClass="ButtonBarView" customModule="XLPagerTabStrip">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
                                 <constraints>
@@ -3512,19 +3515,20 @@
                                     </mask>
                                 </variation>
                             </collectionView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QjT-YD-9kt">
-                                <rect key="frame" x="0.0" y="40" width="600" height="496"/>
-                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="xoQ-j9-5ga" secondAttribute="trailing" constant="-20" id="20U-dO-T48"/>
                             <constraint firstAttribute="trailing" secondItem="xoQ-j9-5ga" secondAttribute="trailing" id="2Q3-S8-Nnk"/>
                             <constraint firstItem="QjT-YD-9kt" firstAttribute="top" secondItem="xoQ-j9-5ga" secondAttribute="bottom" id="4pK-Xf-Qxb"/>
+                            <constraint firstItem="qSp-zA-aS9" firstAttribute="top" secondItem="QjT-YD-9kt" secondAttribute="bottom" id="5gX-gW-7N5"/>
                             <constraint firstItem="QjT-YD-9kt" firstAttribute="top" secondItem="xoQ-j9-5ga" secondAttribute="bottom" id="AKK-HH-zkz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="QjT-YD-9kt" secondAttribute="trailing" constant="-20" id="btY-rF-RQM"/>
                             <constraint firstItem="qSp-zA-aS9" firstAttribute="top" secondItem="QjT-YD-9kt" secondAttribute="bottom" id="hDe-le-8o4"/>
                             <constraint firstItem="xoQ-j9-5ga" firstAttribute="top" secondItem="YTI-wv-MW1" secondAttribute="bottom" id="hcw-fJ-mmu"/>
                             <constraint firstAttribute="trailing" secondItem="QjT-YD-9kt" secondAttribute="trailing" id="jVU-Pm-W0G"/>
+                            <constraint firstItem="QjT-YD-9kt" firstAttribute="leading" secondItem="Urx-Cq-cAw" secondAttribute="leadingMargin" constant="-20" id="jsC-Q8-1Jp"/>
+                            <constraint firstItem="QjT-YD-9kt" firstAttribute="top" secondItem="xoQ-j9-5ga" secondAttribute="bottom" id="m9N-6V-EbE"/>
                             <constraint firstItem="QjT-YD-9kt" firstAttribute="leading" secondItem="Urx-Cq-cAw" secondAttribute="leading" id="mBw-QE-dYw"/>
                             <constraint firstItem="xoQ-j9-5ga" firstAttribute="leading" secondItem="Urx-Cq-cAw" secondAttribute="leading" id="o70-u1-wib"/>
                             <constraint firstItem="xoQ-j9-5ga" firstAttribute="leading" secondItem="Urx-Cq-cAw" secondAttribute="leadingMargin" constant="-20" id="shC-wZ-8Zg"/>
@@ -3536,6 +3540,10 @@
                                 <exclude reference="hcw-fJ-mmu"/>
                                 <exclude reference="shC-wZ-8Zg"/>
                                 <exclude reference="4pK-Xf-Qxb"/>
+                                <exclude reference="btY-rF-RQM"/>
+                                <exclude reference="jsC-Q8-1Jp"/>
+                                <exclude reference="m9N-6V-EbE"/>
+                                <exclude reference="5gX-gW-7N5"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -3548,6 +3556,10 @@
                                 <exclude reference="wEC-88-htj"/>
                                 <include reference="4pK-Xf-Qxb"/>
                                 <exclude reference="AKK-HH-zkz"/>
+                                <include reference="btY-rF-RQM"/>
+                                <include reference="jsC-Q8-1Jp"/>
+                                <include reference="m9N-6V-EbE"/>
+                                <include reference="5gX-gW-7N5"/>
                             </mask>
                         </variation>
                     </view>

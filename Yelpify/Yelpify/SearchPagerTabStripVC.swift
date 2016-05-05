@@ -49,7 +49,7 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let searchPlaylistVC = storyboard.instantiateViewControllerWithIdentifier("searchPlaylistVC") as! SearchPlaylistCollectionViewController
-        let searchBusinessVC = storyboard.instantiateViewControllerWithIdentifier("searchBusinessVC") 
+        let searchBusinessVC = storyboard.instantiateViewControllerWithIdentifier("searchBusinessVC") as! SearchBusinessViewController
         
         let child_1 = searchBusinessVC //SearchPlaylistViewController(style: .Plain , itemInfo: "Lists", textField: searchTextField)
         let child_2 = searchPlaylistVC
