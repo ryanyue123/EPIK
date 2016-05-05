@@ -24,9 +24,9 @@
 		9038B75E1CBCD041004B220B /* ActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9038B75D1CBCD041004B220B /* ActionsViewController.swift */; };
 		905F87941CD741BB004046CD /* SearchPlaylistCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */; };
 		905F87961CD742C7004046CD /* ListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 905F87951CD742C7004046CD /* ListCell.xib */; };
-		905F879A1CD99534004046CD /* ProfileHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 905F87991CD99534004046CD /* ProfileHeaderView.xib */; };
 		905F879D1CD99E3C004046CD /* ProfileCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905F879C1CD99E3C004046CD /* ProfileCollectionViewController.swift */; };
 		905F879F1CD9A453004046CD /* ProfileHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 905F879E1CD9A453004046CD /* ProfileHeader.xib */; };
+		905F87A11CD9D536004046CD /* ProfileHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905F87A01CD9D536004046CD /* ProfileHeaderCollectionReusableView.swift */; };
 		9069D7681CD6B15E005650F4 /* BusinessCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9069D7671CD6B15E005650F4 /* BusinessCell.xib */; };
 		9069D76A1CD6B7F2005650F4 /* ReviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9069D7691CD6B7F2005650F4 /* ReviewCell.xib */; };
 		906CAA311C8977B700AF3515 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906CAA301C8977B700AF3515 /* TestViewController.swift */; };
@@ -128,10 +128,10 @@
 		9038B75D1CBCD041004B220B /* ActionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionsViewController.swift; sourceTree = "<group>"; };
 		905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlaylistCollectionViewController.swift; sourceTree = "<group>"; };
 		905F87951CD742C7004046CD /* ListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ListCell.xib; path = Yelpify/ListCell.xib; sourceTree = "<group>"; };
-		905F87991CD99534004046CD /* ProfileHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileHeaderView.xib; sourceTree = "<group>"; };
 		905F879B1CD99A03004046CD /* Yelpify-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Yelpify-Bridging-Header.h"; sourceTree = "<group>"; };
 		905F879C1CD99E3C004046CD /* ProfileCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewController.swift; sourceTree = "<group>"; };
 		905F879E1CD9A453004046CD /* ProfileHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileHeader.xib; sourceTree = "<group>"; };
+		905F87A01CD9D536004046CD /* ProfileHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		9069D7671CD6B15E005650F4 /* BusinessCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BusinessCell.xib; path = Yelpify/BusinessCell.xib; sourceTree = "<group>"; };
 		9069D7691CD6B7F2005650F4 /* ReviewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviewCell.xib; path = Yelpify/ReviewCell.xib; sourceTree = "<group>"; };
 		906CAA301C8977B700AF3515 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
@@ -271,6 +271,7 @@
 				90DC57BA1C72844B001F1891 /* API */,
 				90C96AAF1CCAFA9D00E9EC28 /* Helper Modules */,
 				9025184F1C88276C00BB3E05 /* View Controllers */,
+				905F87A21CD9D5A2004046CD /* Header Views */,
 				9069D7651CD6B143005650F4 /* Xib */,
 				3CA6CFFB1CC05A880004B989 /* Cells */,
 				902518501C88277B00BB3E05 /* Testing VCs */,
@@ -344,11 +345,19 @@
 			name = "Testing VCs";
 			sourceTree = "<group>";
 		};
+		905F87A21CD9D5A2004046CD /* Header Views */ = {
+			isa = PBXGroup;
+			children = (
+				905F87A01CD9D536004046CD /* ProfileHeaderCollectionReusableView.swift */,
+			);
+			name = "Header Views";
+			path = ..;
+			sourceTree = "<group>";
+		};
 		9069D7651CD6B143005650F4 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
 				905F879E1CD9A453004046CD /* ProfileHeader.xib */,
-				905F87991CD99534004046CD /* ProfileHeaderView.xib */,
 				905F87951CD742C7004046CD /* ListCell.xib */,
 				9069D7671CD6B15E005650F4 /* BusinessCell.xib */,
 				9069D7691CD6B7F2005650F4 /* ReviewCell.xib */,
@@ -571,7 +580,6 @@
 				90DA32901C93616700D5EBDF /* Montserrat-SemiBold.otf in Resources */,
 				90DA32881C93616700D5EBDF /* OpenSans-Semibold.ttf in Resources */,
 				90DA32911C93616700D5EBDF /* Montserrat-UltraLight.otf in Resources */,
-				905F879A1CD99534004046CD /* ProfileHeaderView.xib in Resources */,
 				905F87961CD742C7004046CD /* ListCell.xib in Resources */,
 				90DA32951C93616700D5EBDF /* Montserrat-Light.otf in Resources */,
 				90DA328D1C93616700D5EBDF /* OpenSans-Italic.ttf in Resources */,
@@ -697,6 +705,7 @@
 				90E505E41C8E946700F47285 /* CustomSearchBar.swift in Sources */,
 				90B9B7D91C8A696F002D4BB1 /* BusinessDetailViewController.swift in Sources */,
 				906CAA311C8977B700AF3515 /* TestViewController.swift in Sources */,
+				905F87A11CD9D536004046CD /* ProfileHeaderCollectionReusableView.swift in Sources */,
 				90B09C601CBC7573004F38C2 /* CardView.swift in Sources */,
 				EDD44DAD1CB4BA31008DC4AB /* RandomPlaceController.swift in Sources */,
 				90FBF9121CCF27D800355AB3 /* ActionData.swift in Sources */,
