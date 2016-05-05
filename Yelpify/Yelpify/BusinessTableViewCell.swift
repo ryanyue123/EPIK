@@ -9,14 +9,14 @@
 import UIKit
 import Haneke
 import Cosmos
-//import MGSwipeTableCell
+import MGSwipeTableCell
 
 enum BusinessCellMode {
     case Add
     case More
 }
 
-class BusinessTableViewCell: UITableViewCell {
+class BusinessTableViewCell: MGSwipeTableCell {
     
     @IBOutlet weak var BusinessRating: CosmosView!
   
@@ -46,6 +46,14 @@ class BusinessTableViewCell: UITableViewCell {
             self.configureButton(UIImage(named: "more_icon")!)
         }
         
+        //Set Icon
+        let businessList = ["restaurant","food","amusement","bakery","bar","beauty_salon","bowling_alley","cafe","car_rental","car_repair","clothing_store","department_store","grocery_or_supermarket","gym","hospital","liquor_store","lodging","meal_takeaway","movie_theater","night_club","police","shopping_mall"]
+        
+        if business.businessTypes.count != 0 && businessList.contains(String(business.businessTypes[0])){
+            categoryIcon.image = UIImage(named: String(business.businessTypes[0]) + "_Icon")!
+        }else{
+            categoryIcon.image = UIImage(named: "default_Icon")!
+        }
         // Set Name
         businessTitleLabel.text = business.businessName
         
