@@ -10,6 +10,7 @@ import UIKit
 import Parse
 import XLActionController
 import MGSwipeTableCell
+import BetterSegmentedControl
 
 enum ContentTypes {
     case Places, Comments
@@ -28,8 +29,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var playlistInfoIcon: UIImageView!
     @IBOutlet weak var playlistInfoName: UILabel!
     @IBOutlet weak var playlistInfoUser: UIButton!
-    @IBOutlet weak var collaboratorsImageView: UIView!
-    
+    @IBOutlet weak var collaboratorsView: UIView!
+    @IBOutlet weak var creatorImageView: UIImageView!
     @IBOutlet weak var numOfPlacesLabel: UILabel!
     @IBOutlet weak var numOfFollowersLabel: UILabel!
     @IBOutlet weak var averagePriceRating: UILabel!
@@ -147,6 +148,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupProfilePicture()
+        
         // tapRecognizer, placed in viewDidLoad
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPress:")
         self.view.addGestureRecognizer(longPressRecognizer)
@@ -235,9 +238,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             }
         }
 
-        
-        //setupCollaboratorViews()
-        //configurePlaylistInfoView()
+        configureSegmentedBar()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -288,11 +289,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func configureInfo(){
         self.playlistInfoName.text = object["playlistName"] as? String
         let user = object["createdBy"] as! PFUser
-    
-        self.playlistInfoUser.titleLabel?.text = "BY" + user.username!
         
-        //self.collaboratorsImageView.addSubview(<#T##view: UIView##UIView#>)
-        self.playlistInfoIcon.image = UIImage(named: "")
+        
+        // CHANGE - ALIGN CREATOR TEXT IN MIDDLE
+        self.playlistInfoUser.contentHorizontalAlignment = .Center
+        //self.playlistInfoUser.titleLabel?.textAlignment = .Center
+        self.playlistInfoUser.titleLabel?.text = "BY " + user.username!.uppercaseString
+        
+        self.playlistInfoIcon.image = UIImage(named: "default_icon")
         self.playlistInfoBG.image = UIImage(named: "default_list_bg")
         
         self.numOfPlacesLabel.text = String(playlistArray.count)
@@ -346,21 +350,16 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         handleNavigationBarOnScroll()
         
         let offset = scrollView.contentOffset.y + playlistInfoView.bounds.height
+
         
-        if offset < 0{
-            
-        }else{
-            
-        }
-        
-        if offset > 323{
-            var segmentTransform = CATransform3DIdentity
-            segmentTransform = CATransform3DTranslate(segmentTransform, 0, (offset-315), 0)
-            
-            segmentedBarView.layer.transform = segmentTransform
-        }else{
-            
-        }
+//        if offset > 323{
+//            var segmentTransform = CATransform3DIdentity
+//            segmentTransform = CATransform3DTranslate(segmentTransform, 0, (offset-315), 0)
+//            
+//            segmentedBarView.layer.transform = segmentTransform
+//        }else{
+//            
+//        }
         
         
     }
@@ -390,7 +389,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     // MARK: - Setup Views
     
-    private var playlistTableHeaderHeight: CGFloat = 250.0
+    private var playlistTableHeaderHeight: CGFloat = 350.0
     
     func configurePlaylistInfoView(){
         playlistTableView.tableHeaderView = nil
@@ -415,10 +414,24 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             }
         }
         
-        // Change the back button item to display no text
-        //        let backItem = UIBarButtonItem()
-        //        backItem.title = ""
-        //        navigationController?.navigationItem.backBarButtonItem = backItem
+    }
+    
+    func configureSegmentedBar(){
+        let control = BetterSegmentedControl(
+            frame: CGRect(x: 0.0, y: 330.0, width: self.view.frame.width, height: 20.0),
+            titles: ["Places, Comments"],
+            index: 1,
+            backgroundColor: appDefaults.color,
+            titleColor: .whiteColor(),
+            indicatorViewBackgroundColor: appDefaults.color_bg,
+            selectedTitleColor: .blackColor())
+        control.titleFont = UIFont(name: "Montserrat-Regular", size: 10.0)!
+        control.addTarget(self, action: nil, forControlEvents: .ValueChanged)
+        self.view.addSubview(control)
+        control.tag = 302
+        
+        let controlView = view.viewWithTag(302)
+        self.view.bringSubviewToFront(controlView!)
     }
     
     func updateHeaderView(){
@@ -452,33 +465,22 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         shadowView.tag = 100
     }
     
-    // MARK: - Set Up Collaborator View
-    func setupCollaboratorViews(){
-        addGestureToCollaboratorView()
-        
-        var numOfCollaborators = 2 // Temp Var
-        var width: CGFloat = (collaboratorsImageView.frame.size.width / CGFloat(numOfCollaborators))
-        var setWidth: CGFloat = width
-        var height: CGFloat = collaboratorsImageView.frame.size.height
-        var x = collaboratorsImageView.frame.origin.x
-        
-        var image = UIImage(named: "default_restaurant")// Temp Image
-
-        for person in 0..<numOfCollaborators{
-            //print(person)
-            let imageView = UIImageView(frame: CGRectMake(x, collaboratorsImageView.frame.origin.y, width, height))
-            imageView.contentMode = UIViewContentMode.ScaleAspectFill
-            
-            collaboratorsImageView.addSubview(imageView)
-            setWidth += width
-            x += width
-        }
+    func setupProfilePicture(){
+        self.roundingUIView(self.creatorImageView, cornerRadiusParam: 15)
+        self.roundingUIView(self.collaboratorsView, cornerRadiusParam: 15)
+        self.collaboratorsView.layer.borderWidth = 2.0
+        self.collaboratorsView.layer.borderColor = UIColor.whiteColor().CGColor
+    }
+    
+    private func roundingUIView(let aView: UIView!, let cornerRadiusParam: CGFloat!) {
+        aView.clipsToBounds = true
+        aView.layer.cornerRadius = cornerRadiusParam
     }
     
     func addGestureToCollaboratorView(){
         let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:Selector("tappedCollaborators"))
-        self.collaboratorsImageView.userInteractionEnabled = true
-        self.collaboratorsImageView.addGestureRecognizer(tapGestureRecognizer)
+        self.collaboratorsView.userInteractionEnabled = true
+        self.collaboratorsView.addGestureRecognizer(tapGestureRecognizer)
     }
     
     func tappedCollaborators(){

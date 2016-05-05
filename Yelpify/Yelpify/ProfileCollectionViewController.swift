@@ -11,16 +11,13 @@ import UIKit
 private let reuseIdentifier = "listCell"
 
 class ProfileCollectionViewController: UICollectionViewController {
-
-    
-    var headerView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        headerView = NSBundle.mainBundle().loadNibNamed("ProfileHeaderView", owner: self, options: nil).first as! UIView
         
-        self.collectionView!.registerNib(UINib(nibName: "ListCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "listCell")
+        
+        // Register Nibs
+        self.collectionView!.registerNib(UINib(nibName: "ProfileHeader", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "profileHeader")
 
         // Uncomment the following line to preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
@@ -29,7 +26,7 @@ class ProfileCollectionViewController: UICollectionViewController {
         // Register cell classes
         self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
-        collectionView?.reloadData()
+        //collectionView?.reloadData()
 
         // Do any additional setup after loading the view.
     }
@@ -38,16 +35,6 @@ class ProfileCollectionViewController: UICollectionViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     // MARK: UICollectionViewDataSource
 
@@ -58,9 +45,12 @@ class ProfileCollectionViewController: UICollectionViewController {
             
         case UICollectionElementKindSectionHeader:
             
-            let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "ProfileHeaderView", forIndexPath: indexPath)
+            let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "profileHeader", forIndexPath: indexPath) as! ProfileHeaderCollectionReusableView
             
-            headerView.backgroundColor = UIColor.blueColor();
+            headerView.frame.size.height = 300.0
+            
+            headerView.configureView()
+            
             return headerView
             
 //        case UICollectionElementKindSectionFooter:
@@ -85,16 +75,14 @@ class ProfileCollectionViewController: UICollectionViewController {
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 2
+        return 10
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        self.collectionView!.registerNib(UINib(nibName: "ListCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "listCell")
-        
+        collectionView.registerNib(UINib(nibName: "ListCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "listCell")
+
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("listCell", forIndexPath: indexPath) as! ListCollectionViewCell
-        
-        cell.configureCell("CnRnAAAAmWmj0BqA0Jorm1_vjAvx1n6c7ZNBxyY-U9x99-oNyOxvMjDlo2npJzyIq7c3EK1YyoNXdMFDcRPzwLJtBzXAwCUFDGo_RtLRGBPJTA2CoerPdC5yvT2SjfDwH4bFf5MrznB0_YWa4Y2Qo7ABtAxgeBIQv46sGBwVNJQDI36Wd3PFYBoUTlVXa0wn-zRITjGp0zLEBh8oIBE")
     
         return cell
     }

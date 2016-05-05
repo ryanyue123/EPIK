@@ -33,4 +33,10 @@ class ListCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.contentView.autoresizingMask.insert(.FlexibleHeight)
+        self.contentView.autoresizingMask.insert(.FlexibleWidth)
+    }
+    
 }
