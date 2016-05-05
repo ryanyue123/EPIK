@@ -15,7 +15,6 @@ private let reuseIdentifier = "Cell"
 class SearchPlaylistCollectionViewController: UICollectionViewController, UITextFieldDelegate, IndicatorInfoProvider {
     
     var itemInfo: IndicatorInfo = "Lists"
-    var textField: UITextField!
     var playlist_query = [PFObject]()
     
     func indicatorInfoForPagerTabStrip(pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
@@ -24,8 +23,7 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        textField.delegate = self
-
+        self.view.backgroundColor = appDefaults.color_bg
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -40,27 +38,8 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
         self.collectionView!.reloadData()
     }
 
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        searchForPlaylistWithName()
-        self.textField.endEditing(true)
-        return true
-    }
+
     
-    func searchForPlaylistWithName()
-    {
-        let query = PFQuery(className: "Playlists")
-        query.whereKey("playlistName", containsString: self.textField.text!)
-        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
-            if (error == nil)
-            {
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.playlist_query = objects!
-                    self.collectionView!.reloadData()
-                    print("dslkjflksd")
-                })
-            }
-        }
-    }
     
     /*
     // MARK: - Navigation
