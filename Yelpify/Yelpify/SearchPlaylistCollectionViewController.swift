@@ -23,7 +23,7 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.collectionView!.backgroundColor = appDefaults.color_bg
+        self.collectionView!.backgroundColor = appDefaults.color_bg
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -55,18 +55,18 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 0
+        return 2
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
-    
+        cell.backgroundColor = UIColor.blueColor()
         // Configure the cell
     
         return cell
