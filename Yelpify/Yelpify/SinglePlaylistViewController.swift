@@ -16,6 +16,10 @@ enum ContentTypes {
     case Places, Comments
 }
 
+enum ListMode{
+    case View, Edit
+}
+
 class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate, MGSwipeTableCellDelegate{
     
     //@IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
@@ -42,6 +46,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var segmentedBar: UISegmentedControl!
     @IBOutlet weak var segmentedBarView: UIView!
     
+    var mode: ListMode! = .View
+    
     var statusBarView: UIView!
     
     let offset_HeaderStop:CGFloat = 40.0
@@ -50,6 +56,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var playlistArray = [Business]()
     var object: PFObject!
     var newPlaylist: Bool = false
+
     
     var playlist_name: String!
     
@@ -338,6 +345,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func activateEditMode()
     {
+        self.mode = .Edit
         self.navigationItem.setHidesBackButton(true, animated: true)
         let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "savePlaylistToParse:")
         self.navigationItem.leftBarButtonItem = backButton
@@ -544,18 +552,26 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
         }
         
+        switch self.mode{
+        case .View:
+            break
+        case .Edit:
+            
+            
+        }
         // Add Swipe Buttons
         // configure left buttons
-        cell.leftButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_darker, padding: 30)]
-        cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
+        cell.rightButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_darker, padding: 30),
+                             MGSwipeButton(title: "Add", backgroundColor: UIColor.greenColor())]
+        cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
 
         // configure right buttons
-        cell.rightButtons = [MGSwipeButton(title: "Add", backgroundColor: UIColor.redColor())]
-        cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
+        //cell.rightButtons = []
+        //cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
         
-        cell.leftExpansion.buttonIndex = 0
-        cell.leftExpansion.fillOnTrigger = false
-        cell.leftExpansion.threshold = 1.75
+        cell.rightExpansion.buttonIndex = 0
+        cell.rightExpansion.fillOnTrigger = false
+        cell.rightExpansion.threshold = 1.75
         
        
         
