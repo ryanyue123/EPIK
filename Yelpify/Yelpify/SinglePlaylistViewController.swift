@@ -521,7 +521,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         // Add Swipe Buttons
         // configure left buttons
-        cell.leftButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_darker)]
+        cell.leftButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_darker, padding: 30)]
         cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
 
         // configure right buttons
@@ -529,7 +529,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
         
         cell.leftExpansion.buttonIndex = 0
-        cell.leftExpansion.fillOnTrigger = true
+        cell.leftExpansion.fillOnTrigger = false
+        cell.leftExpansion.threshold = 1.75
+        
         
         
         return cell
