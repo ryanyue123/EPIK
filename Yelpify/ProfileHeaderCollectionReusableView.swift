@@ -7,13 +7,16 @@
 //
 
 import UIKit
-
+import Parse
 class ProfileHeaderCollectionReusableView: UICollectionReusableView {
     
+    var user: PFUser!
+    var listnum: Int!
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
+    @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var followerCount: UILabel!
@@ -22,12 +25,18 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
     
     
     func configureView(){
+        let firstname = user["first_name"] as! String
+        let lastname = user["last_name"] as! String
+        nameLabel.text = firstname + " " + lastname
+        listCount.text = String(listnum)
         setupProfilePicture()
     }
     
+    
     private func setupProfilePicture(){
-        self.roundingUIView(self.profileImageView, cornerRadiusParam: 35)
-        self.profileImageView.layer.borderWidth = 3.0
+        self.roundingUIView(self.profileImageView, cornerRadiusParam: 50)
+        self.roundingUIView(self.profileView, cornerRadiusParam: 50)
+        self.profileImageView.layer.borderWidth = 4.0
         self.profileImageView.layer.borderColor = UIColor.whiteColor().CGColor
     }
 
