@@ -159,6 +159,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let control = BetterSegmentedControl(
+            frame: CGRect(x: 0.0, y: 0.0, width: view.bounds.width, height: self.segmentedBarView.frame.size.height),
+            titles: ["Places", "Comments"],
+            index: 1,
+            backgroundColor: appDefaults.color_bg,
+            titleColor: UIColor.whiteColor(),
+            indicatorViewBackgroundColor: UIColor.whiteColor(),
+            selectedTitleColor: .blackColor())
+        control.titleFont = UIFont(name: "Montserrat-Regular", size: 12.0)!
+        control.addTarget(self, action: nil, forControlEvents: .ValueChanged)
+        self.segmentedBarView.addSubview(control)
+        
+        
         setupProfilePicture()
         
         // tapRecognizer, placed in viewDidLoad
@@ -532,7 +545,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         // Add Swipe Buttons
         // configure left buttons
-        cell.leftButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_darker)]
+        cell.leftButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_darker, padding: 30)]
         cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
 
         // configure right buttons
@@ -540,7 +553,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
         
         cell.leftExpansion.buttonIndex = 0
-        cell.leftExpansion.fillOnTrigger = true
+        cell.leftExpansion.fillOnTrigger = false
+        cell.leftExpansion.threshold = 1.75
+        
         
         
         return cell
