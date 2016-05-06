@@ -16,6 +16,7 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
     
     var itemInfo: IndicatorInfo = "Lists"
     var playlist_query = [PFObject]()
+    var searchTextField: UITextField!
     
     func indicatorInfoForPagerTabStrip(pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return itemInfo

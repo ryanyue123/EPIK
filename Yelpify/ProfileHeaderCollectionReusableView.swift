@@ -26,7 +26,7 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
     }
     
     private func setupProfilePicture(){
-        self.roundingUIView(self.profileImageView, cornerRadiusParam: 45)
+        self.roundingUIView(self.profileImageView, cornerRadiusParam: 35)
         self.profileImageView.layer.borderWidth = 3.0
         self.profileImageView.layer.borderColor = UIColor.whiteColor().CGColor
     }
