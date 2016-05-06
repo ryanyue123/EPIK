@@ -25,6 +25,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var hoursLabel: UILabel!
     @IBOutlet weak var ratingImageView: UIImageView!
+    @IBOutlet weak var typeIconImageView: UIImageView!
 
     var statusBarView: UIView!
     var navBarShadowView: UIView!
@@ -83,6 +84,8 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             // Set Address
             self.addressLabel.text = detailedGPlace.address
             
+            // Set Icon
+            self.typeIconImageView.image = UIImage()
             
             // Set Reviews
             self.reviewArray = detailedGPlace.reviews!

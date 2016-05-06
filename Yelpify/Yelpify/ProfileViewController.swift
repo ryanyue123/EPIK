@@ -43,10 +43,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        if (userobject == nil)
-//        {
-//            fetchUserData()
-//        }
         
         configureNavigationBar()
         setupProfilePicture()
