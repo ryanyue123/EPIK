@@ -546,6 +546,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
+        cell.delegate = self
 
         
         // Configure Cell
@@ -565,9 +566,27 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         cell.leftExpansion.fillOnTrigger = false
         cell.leftExpansion.threshold = 1.75
         
-       
         
         return cell
+    }
+    
+    // MGSwipeTableCell Delegate Methods
+    
+    func swipeTableCell(cell: MGSwipeTableCell!, tappedButtonAtIndex index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
+        let indexPath = playlistTableView.indexPathForCell(cell)
+        let business = playlistArray[indexPath!.row] as! Business
+        let actions = PlaceActions()
+        actions.openInMaps(business)
+        
+        return true
+    }
+    
+    func swipeTableCell(cell: MGSwipeTableCell!, canSwipe direction: MGSwipeDirection) -> Bool {
+        return true
+    }
+    
+    func swipeTableCell(cell: MGSwipeTableCell!, didChangeSwipeState state: MGSwipeState, gestureIsActive: Bool) {
+        
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
