@@ -30,7 +30,7 @@ struct PlaceActions{
         return Int(result)!
     }
     
-    private func openInMaps(business: Business) {
+    func openInMaps(business: Business) {
         let latitude = business.businessLatitude!
         let longitude = business.businessLongitude!
         
@@ -49,7 +49,7 @@ struct PlaceActions{
         }
     }
     
-    private func openInPhone(business: Business)
+    func openInPhone(business: Business)
     {
         let telnum = convertPhone(business.businessPhone!)
         if(UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel://")!))
@@ -58,7 +58,7 @@ struct PlaceActions{
             UIApplication.sharedApplication().openURL(url!)
         }
     }
-    private func openInWeb(business: Business)
+    func openInWeb(business: Business)
     {
         //check is self.object.businessURL is nil
         //let url = self.object.businessURL
