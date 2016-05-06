@@ -65,17 +65,32 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     var viewDisappearing = false
     
+    func sortMethods(businesses: Array<Business>, type: String)->Array<Business>{
+        var sortedBusinesses: Array<Business> = []
+        if type == "name"{
+            sortedBusinesses = businesses.sort{$0.businessName < $1.businessName}
+        } else if type == "rating"{
+            sortedBusinesses = businesses.sort{$0.businessRating > $1.businessRating}
+        }
+        return sortedBusinesses
+        
+    }
+
+    
     @IBAction func editPlaylistButtonAction(sender: AnyObject) {
         
         let actionController = YoutubeActionController()
         
-        actionController.addAction(Action(ActionData(title: "Add to Watch Later", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
+        actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
+            print("Share")
         }))
         actionController.addAction(Action(ActionData(title: "Edit Playlist", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
             print("Edit pressed")
             self.activateEditMode()
         }))
-        actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-share-icon")!), style: .Default, handler: { action in
+        actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "yt-share-icon")!), style: .Default, handler: { action in
+            self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
+            self.playlistTableView.reloadData()
         }))
         actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
         
@@ -539,14 +554,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-        
         cell.delegate = self
-        // Add Long Press Recognizer
-//        let longPressRecognizer = UILongPressGestureRecognizer(target: cell, action: "showActionMenu:")
-//        longPressRecognizer.minimumPressDuration = 2.0
-//        longPressRecognizer.numberOfTapsRequired = 1
-//        longPressRecognizer.numberOfTouchesRequired = 1
-//        cell.addGestureRecognizer(longPressRecognizer)
+
         
         // Configure Cell
         cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
@@ -573,11 +582,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         cell.rightExpansion.fillOnTrigger = false
         cell.rightExpansion.threshold = 1.75
         
-       
         
         return cell
     }
-    
     
     // MGSwipeTableCell Delegate Methods
     
@@ -598,8 +605,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
     }
 
-    
-    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //print(indexPath.row)
         performSegueWithIdentifier("showBusinessDetail", sender: self)

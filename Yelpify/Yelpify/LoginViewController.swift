@@ -13,39 +13,84 @@ import FBSDKLoginKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
-    let loginButton: FBSDKLoginButton = {
-        let button = FBSDKLoginButton()
-        button.readPermissions = ["email"]
-        return button
-    }()
+//    let loginButton: FBSDKLoginButton = {
+//        let button = FBSDKLoginButton()
+//        button.readPermissions = ["email"]
+//        return button
+//    }()
     
 
     @IBOutlet weak var fbLogin: UIView!
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
-
+    @IBOutlet weak var usernameBG: UIImageView!
+    @IBOutlet weak var passwordBG: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.usernameField.delegate = self
+        self.passwordField.delegate = self
         
-        view.addSubview(loginButton)
-        //loginButton.center = view.center
-        self.loginButton.translatesAutoresizingMaskIntoConstraints = false
+        // Add Login Button - CHANGE
         
+//        view.addSubview(loginButton)
+//        //loginButton.center = view.center
+//        self.loginButton.translatesAutoresizingMaskIntoConstraints = false
+//        
+//        
+//        let verticalCenterConstraint = NSLayoutConstraint(item: loginButton, attribute: .CenterY, relatedBy:.Equal, toItem: self.view, attribute: .CenterY, multiplier: 1, constant: 100)
+//        
+//        let horizontalCenterConstraint = NSLayoutConstraint(item: loginButton, attribute: .CenterX, relatedBy:.Equal, toItem: self.view, attribute: .CenterX, multiplier: 1, constant: 0)
+//        
+//        self.view.addConstraints([verticalCenterConstraint, horizontalCenterConstraint])
         
-        let verticalCenterConstraint = NSLayoutConstraint(item: loginButton, attribute: .CenterY, relatedBy:.Equal, toItem: self.view, attribute: .CenterY, multiplier: 1, constant: 100)
-        
-        let horizontalCenterConstraint = NSLayoutConstraint(item: loginButton, attribute: .CenterX, relatedBy:.Equal, toItem: self.view, attribute: .CenterX, multiplier: 1, constant: 0)
-        
-        self.view.addConstraints([verticalCenterConstraint, horizontalCenterConstraint])
-        
-        if let token = FBSDKAccessToken.currentAccessToken(){
-            fetchProfile()
-        }
+//        if let token = FBSDKAccessToken.currentAccessToken(){
+//            fetchProfile()
+//        }
         // Do any additional setup after loading the view, typically from a nib.
     }
     override func viewDidAppear(animated: Bool) {
 
     }
+    
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {   //delegate method
+        textField.resignFirstResponder()
+        if textField == usernameField{
+            self.fadeNewImage(self.usernameBG, newImage: UIImage(named: "text_field_white")!)
+        }else{
+            self.fadeNewImage(self.passwordBG, newImage: UIImage(named: "text_field_white")!)
+        }
+        return true
+    }
+    
+    @IBAction func usernameFieldDidBeginEditing(sender: AnyObject) {
+        self.fadeNewImage(self.usernameBG, newImage: UIImage(named: "text_field_grey")!)
+    }
+    
+    @IBAction func passwordFieldDidBeginEditing(sender: AnyObject) {
+        self.fadeNewImage(self.passwordBG, newImage: UIImage(named: "text_field_grey")!)
+    }
+    
+    func fadeNewImage(imageView: UIImageView, newImage: UIImage){
+        func fadeInImage(image: UIImageView){
+            UIImageView.animateWithDuration(0.5) {
+                image.alpha = 1
+            }
+        }
+        
+        func fadeOutImage(image: UIImageView){
+            UIImageView.animateWithDuration(0.5) {
+                image.alpha = 0
+            }
+        }
+        
+        fadeOutImage(imageView)
+        imageView.image = newImage
+        fadeInImage(imageView)
+    }
+    
+    
+    
 
     func fetchProfile() {
         print("Profile Fetched!")

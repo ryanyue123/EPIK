@@ -216,7 +216,9 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     // MARK: - VIEWDIDLOAD
     
     override func viewDidAppear(animated: Bool) {
-        searchTextField.delegate = self
+        if searchTextField != nil{
+            searchTextField.delegate = self
+        }
     }
 
     

@@ -1,10 +1,10 @@
-//
-//  SortMethods.swift
-//  Yelpify
-//
-//  Created by Kay Lab on 4/1/16.
-//  Copyright © 2016 Yelpify. All rights reserved.
-//
+////
+////  SortMethods.swift
+////  Yelpify
+////
+////  Created by Kay Lab on 4/1/16.
+////  Copyright © 2016 Yelpify. All rights reserved.
+////
 //
 //import Foundation
 //

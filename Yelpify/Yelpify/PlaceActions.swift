@@ -39,7 +39,7 @@ struct PlaceActions{
             let name = convertAddress(business.businessAddress!)
             //let name = self.object.businessName//self.object.businessName?.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
             print(name)
-            let url = NSURL(string: "comgooglemaps://?saddr=\(name)&center=\(latitude),\(longitude)&directionsmode=driving")!
+            let url = NSURL(string: "comgooglemaps://?daddr=\(name)&center=\(latitude),\(longitude)&directionsmode=driving")!
             print(url)
             UIApplication.sharedApplication().openURL(url)
         }
