@@ -135,8 +135,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         if longPressGestureRecognizer.state == UIGestureRecognizerState.Began {
             
             let touchPoint = longPressGestureRecognizer.locationInView(self.view)
-            if let indexPath = self.playlistTableView.indexPathForRowAtPoint(touchPoint) {
-                print("hi")
+            if let indexPath = playlistTableView.indexPathForRowAtPoint(touchPoint) {
+                let actionController = YoutubeActionController()
+                
+                actionController.addAction(Action(ActionData(title: "Add to Watch Later", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
+                }))
+                actionController.addAction(Action(ActionData(title: "Add to Playlist...", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
+                }))
+                actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-share-icon")!), style: .Default, handler: { action in
+                }))
+                actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
+                
+                presentViewController(actionController, animated: true, completion: nil)
+
                 // your code here, get the row for the indexPath or do whatever you want
             }
         }
@@ -521,7 +532,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         // Add Swipe Buttons
         // configure left buttons
-        cell.leftButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_darker)]
+        cell.leftButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_darker, padding: 30)]
         cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
 
         // configure right buttons
@@ -529,7 +540,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
         
         cell.leftExpansion.buttonIndex = 0
-        cell.leftExpansion.fillOnTrigger = true
+        cell.leftExpansion.fillOnTrigger = false
+        cell.leftExpansion.threshold = 1.75
+        
         
         
         return cell
