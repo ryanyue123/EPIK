@@ -13,9 +13,6 @@ import Foundation
 
 class SearchPagerTabStrip: ButtonBarPagerTabStripViewController {
     
-    
-    @IBOutlet weak var searchTextField: UITextField!
-    
     var isReload = false
     
     override func viewDidLoad() {
@@ -82,24 +79,5 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController {
             pagerBehaviour = .Common(skipIntermediateViewControllers: rand() % 2 == 0)
         }
         super.reloadPagerTabStripView()
-    }
-    
-    @IBAction func didEditText(sender: UITextField) {
-        
-    }
-    func searchForPlaylistWithName()
-    {
-//        let query = PFQuery(className: "Playlists")
-//        query.whereKey("playlistName", containsString: "")
-//        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
-//            if (error == nil)
-//            {
-//                dispatch_async(dispatch_get_main_queue(), {
-//                    self.playlist_query = objects!
-//                    self.collectionView!.reloadData()
-//                    print("dslkjflksd")
-//                })
-//            }
-//        }
     }
 }
