@@ -53,10 +53,12 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstAttribute="width" constant="100" id="8tX-Ma-EgH"/>
                         <constraint firstAttribute="trailing" secondItem="DCT-O6-dsQ" secondAttribute="trailing" id="HmU-mB-5bU"/>
                         <constraint firstItem="DCT-O6-dsQ" firstAttribute="leading" secondItem="gOv-Kj-N9t" secondAttribute="leading" id="OSS-Qc-9Wa"/>
                         <constraint firstItem="DCT-O6-dsQ" firstAttribute="top" secondItem="gOv-Kj-N9t" secondAttribute="top" id="fqi-4T-WAa"/>
                         <constraint firstAttribute="bottom" secondItem="DCT-O6-dsQ" secondAttribute="bottom" id="fuf-8S-wru"/>
+                        <constraint firstAttribute="height" constant="100" id="hcU-g3-7WW"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kenny Nguyen" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ct4-m3-Cu0">
@@ -97,13 +99,11 @@
                 <constraint firstItem="5eD-3z-HMK" firstAttribute="centerX" secondItem="Qg9-Je-SG8" secondAttribute="centerX" id="aWU-9J-Ys4"/>
                 <constraint firstItem="dYN-9X-VNE" firstAttribute="top" secondItem="tS8-1R-IRM" secondAttribute="bottom" constant="2" id="f98-cS-4SI"/>
                 <constraint firstAttribute="bottom" secondItem="UyY-Qr-ZoE" secondAttribute="bottom" id="gnj-kK-ECt"/>
-                <constraint firstAttribute="bottom" secondItem="gOv-Kj-N9t" secondAttribute="bottom" constant="139" id="gqR-lE-a2c"/>
                 <constraint firstItem="5eD-3z-HMK" firstAttribute="top" secondItem="Qg9-Je-SG8" secondAttribute="bottom" constant="2" id="hnA-bx-lbI"/>
                 <constraint firstItem="ct4-m3-Cu0" firstAttribute="centerX" secondItem="gOv-Kj-N9t" secondAttribute="centerX" id="mTF-3u-w47"/>
                 <constraint firstItem="ct4-m3-Cu0" firstAttribute="top" secondItem="gOv-Kj-N9t" secondAttribute="bottom" constant="8" id="nas-8r-2kg"/>
                 <constraint firstItem="UyY-Qr-ZoE" firstAttribute="leading" secondItem="0V1-gs-n3J" secondAttribute="leading" id="o7l-CQ-ErZ"/>
                 <constraint firstItem="gOv-Kj-N9t" firstAttribute="centerX" secondItem="UyY-Qr-ZoE" secondAttribute="centerX" id="pTj-de-0Fr"/>
-                <constraint firstItem="gOv-Kj-N9t" firstAttribute="leading" secondItem="0V1-gs-n3J" secondAttribute="leading" constant="150" id="rcF-xW-P4H"/>
                 <constraint firstItem="5eD-3z-HMK" firstAttribute="centerY" secondItem="dYN-9X-VNE" secondAttribute="centerY" id="rjN-Zn-WLZ"/>
                 <constraint firstItem="gOv-Kj-N9t" firstAttribute="top" secondItem="0V1-gs-n3J" secondAttribute="top" constant="61" id="tyI-lo-03l"/>
                 <constraint firstAttribute="trailing" secondItem="UyY-Qr-ZoE" secondAttribute="trailing" id="xhE-vW-YgE"/>
@@ -115,6 +115,7 @@
                 <outlet property="listCount" destination="Qg9-Je-SG8" id="dMe-Z1-qXu"/>
                 <outlet property="nameLabel" destination="ct4-m3-Cu0" id="7h6-Wn-evZ"/>
                 <outlet property="profileImageView" destination="DCT-O6-dsQ" id="VNt-xC-q18"/>
+                <outlet property="profileView" destination="gOv-Kj-N9t" id="hbV-bI-X04"/>
             </connections>
             <point key="canvasLocation" x="245" y="164"/>
         </collectionReusableView>
