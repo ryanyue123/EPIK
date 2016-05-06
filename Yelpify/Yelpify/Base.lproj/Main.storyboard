@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="xiI-OX-0fu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wjg-5v-mT1">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -1081,8 +1081,8 @@
                         <outlet property="playlistTableView" destination="n6r-Ge-7w9" id="5fF-p3-emf"/>
                         <outlet property="segmentedBarView" destination="xU3-9P-ToB" id="h5L-Hb-CvQ"/>
                         <segue destination="4gw-Mw-ac6" kind="show" id="zYA-Hc-nft"/>
-                        <segue destination="p6T-7v-0MJ" kind="show" identifier="showProfileView" id="1RX-FS-Umm"/>
                         <segue destination="7pA-8d-Gw7" kind="show" identifier="showBusinessDetail" id="IFd-Gd-HzU"/>
+                        <segue destination="TIl-fd-tes" kind="show" identifier="showProfileView" id="W5i-Qt-2dL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bt3-DI-9NP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1660,7 +1660,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wJO-Js-5jv" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="nyU-rd-931" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4326" y="438"/>
+            <point key="canvasLocation" x="4188" y="436.5"/>
         </scene>
         <!--Business Detail View Controller-->
         <scene sceneID="9Yv-IZ-Ip6">
@@ -2264,6 +2264,7 @@
                         <outlet property="priceRatingLabel" destination="D8K-WL-102" id="PoM-5e-G3w"/>
                         <outlet property="ratingImageView" destination="BCP-tx-DfP" id="R21-AB-ThE"/>
                         <outlet property="tableView" destination="4z7-0h-kSn" id="EJx-BY-qag"/>
+                        <outlet property="typeIconImageView" destination="3lN-sO-mVD" id="s6E-5D-1aP"/>
                         <outlet property="webButton" destination="bga-tI-XA3" id="HT8-b2-7Mz"/>
                     </connections>
                 </viewController>
@@ -2321,7 +2322,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="nEE-s8-wT5" userLabel="Header View">
-                                    <rect key="frame" x="0.0" y="64" width="240" height="128"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" alpha="0.25" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="restaurantImage - MCD" translatesAutoresizingMaskIntoConstraints="NO" id="iRl-pM-lZV">
@@ -2582,7 +2583,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="playlistCell" rowHeight="100" id="g7p-QP-Rfn">
-                                        <rect key="frame" x="0.0" y="220" width="240" height="100"/>
+                                        <rect key="frame" x="0.0" y="156" width="240" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g7p-QP-Rfn" id="G1g-Dj-AGB">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="99"/>
@@ -2700,6 +2701,9 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="751"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="p6T-7v-0MJ" id="Ogb-0B-VBi"/>
                                     <outlet property="delegate" destination="p6T-7v-0MJ" id="bKg-sw-gJr"/>
@@ -2743,7 +2747,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BGj-Xk-T2S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4308" y="1137"/>
+            <point key="canvasLocation" x="4956" y="1783.5"/>
         </scene>
         <!--Login-->
         <scene sceneID="dNT-ql-eCM">
@@ -2954,22 +2958,6 @@
             </objects>
             <point key="canvasLocation" x="1620" y="282"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="pU5-QQ-URd">
-            <objects>
-                <navigationController id="C9k-hd-oJZ" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="cYE-Ht-gSL">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="TIl-fd-tes" kind="relationship" relationship="rootViewController" id="cgc-8u-X7Z"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Bvl-DU-ek2" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5259" y="2430"/>
-        </scene>
         <!--Profile Collection View Controller-->
         <scene sceneID="P1t-iH-qLG">
             <objects>
@@ -2989,7 +2977,7 @@
                                 <rect key="frame" x="15" y="379" width="162" height="178.84999999999999"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="162" height="179"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="162" height="178.84999999999999"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="default_restaurant" translatesAutoresizingMaskIntoConstraints="NO" id="Gdc-vn-MFt">
@@ -3036,6 +3024,9 @@
                                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="11"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
+                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="30.5" y="149.5" width="101.5" height="13"/>
+                                            </variation>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fqr-Fh-ceK">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -3145,7 +3136,7 @@
                                 <rect key="frame" x="219" y="379" width="162" height="178.84999999999999"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="162" height="179"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="162" height="178.84999999999999"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="default_restaurant" translatesAutoresizingMaskIntoConstraints="NO" id="POZ-wp-fE3">
@@ -3192,6 +3183,9 @@
                                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="11"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
+                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="30.5" y="149.5" width="101.5" height="13"/>
+                                            </variation>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kfw-id-zHQ">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -3311,7 +3305,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X8r-gu-aBn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5979" y="2430"/>
+            <point key="canvasLocation" x="4239" y="1139.25"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="M69-KY-4WL">
@@ -3369,13 +3363,13 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="p6T-7v-0MJ" kind="relationship" relationship="rootViewController" id="AX2-eb-7Av"/>
+                        <segue destination="TIl-fd-tes" kind="relationship" relationship="rootViewController" id="MLc-Do-gVB"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g5y-ZW-WqI" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="0yi-rr-RK0" customClass="RAMBounceAnimation" customModule="RAMAnimatedTabBarController"/>
             </objects>
-            <point key="canvasLocation" x="3261" y="1118.25"/>
+            <point key="canvasLocation" x="3345" y="1139.25"/>
         </scene>
         <!--Favorites-->
         <scene sceneID="GYL-PM-mR8">
@@ -3452,7 +3446,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I8k-vJ-6bk" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="79Z-Tl-cbn" customClass="RAMBounceAnimation" customModule="RAMAnimatedTabBarController"/>
             </objects>
-            <point key="canvasLocation" x="3261" y="1890"/>
+            <point key="canvasLocation" x="3345" y="1890"/>
         </scene>
         <!--Search Pager Tab Strip-->
         <scene sceneID="He3-jj-jKK">
@@ -3561,7 +3555,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yog-hb-FST" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4161" y="1890"/>
+            <point key="canvasLocation" x="4239" y="1890"/>
         </scene>
         <!--Search Play-->
         <scene sceneID="oBj-fk-OQl">
@@ -3601,6 +3595,6 @@
         <segue reference="Ec9-0b-pIS"/>
         <segue reference="y7k-Hg-iYt"/>
         <segue reference="IFd-Gd-HzU"/>
-        <segue reference="1RX-FS-Umm"/>
+        <segue reference="W5i-Qt-2dL"/>
     </inferredMetricsTieBreakers>
 </document>

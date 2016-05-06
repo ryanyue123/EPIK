@@ -25,11 +25,13 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var hoursLabel: UILabel!
     @IBOutlet weak var ratingImageView: UIImageView!
+    @IBOutlet weak var typeIconImageView: UIImageView!
 
     var statusBarView: UIView!
     var navBarShadowView: UIView!
     var loadedStatusBar = false
     var loadedNavBar = false
+    
     
     //var placePhoto: UIImage? = UIImage(named: "default_restaurant")
     let cache = Shared.dataCache
@@ -76,13 +78,25 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         self.title = "Details"
         
         APIClient.performDetailedSearch(object.gPlaceID!) { (detailedGPlace) in
+    
+    
+            // Set Icon
+            let businessList = ["restaurant","food","amusement","bakery","bar","beauty_salon","bowling_alley","cafe","car_rental","car_repair","clothing_store","department_store","grocery_or_supermarket","gym","hospital","liquor_store","lodging","meal_takeaway","movie_theater","night_club","police","shopping_mall"]
             
+            func setIcon(){
+                if self.object.businessTypes.count != 0 && businessList.contains(String(self.object.businessTypes[0])){
+                    self.typeIconImageView.image = UIImage(named: String(self.object.businessTypes[0]) + "_Icon")!
+                }else{
+                    self.typeIconImageView.image = UIImage(named: "default_Icon")!
+                }
+            }
+            
+            setIcon()
             // Set Name
             self.nameLabel.text = self.object.businessName
             
             // Set Address
             self.addressLabel.text = detailedGPlace.address
-            
             
             // Set Reviews
             self.reviewArray = detailedGPlace.reviews!
