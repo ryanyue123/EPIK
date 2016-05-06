@@ -148,6 +148,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let control = BetterSegmentedControl(
+            frame: CGRect(x: 0.0, y: 0.0, width: view.bounds.width, height: self.segmentedBarView.frame.size.height),
+            titles: ["Places", "Comments"],
+            index: 1,
+            backgroundColor: appDefaults.color_bg,
+            titleColor: UIColor.whiteColor(),
+            indicatorViewBackgroundColor: UIColor.whiteColor(),
+            selectedTitleColor: .blackColor())
+        control.titleFont = UIFont(name: "Montserrat-Regular", size: 12.0)!
+        control.addTarget(self, action: nil, forControlEvents: .ValueChanged)
+        self.segmentedBarView.addSubview(control)
+        
+        
         setupProfilePicture()
         
         // tapRecognizer, placed in viewDidLoad
