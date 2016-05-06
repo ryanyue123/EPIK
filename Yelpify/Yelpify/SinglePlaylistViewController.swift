@@ -531,13 +531,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-        
-        // Add Long Press Recognizer
-//        let longPressRecognizer = UILongPressGestureRecognizer(target: cell, action: "showActionMenu:")
-//        longPressRecognizer.minimumPressDuration = 2.0
-//        longPressRecognizer.numberOfTapsRequired = 1
-//        longPressRecognizer.numberOfTouchesRequired = 1
-//        cell.addGestureRecognizer(longPressRecognizer)
+
         
         // Configure Cell
         cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
@@ -560,7 +554,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         return cell
     }
-    
+
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //print(indexPath.row)
         performSegueWithIdentifier("showBusinessDetail", sender: self)
