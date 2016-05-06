@@ -15,6 +15,7 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController {
     
     var isReload = false
     
+    @IBOutlet weak var searchTextField: UITextField!
     override func viewDidLoad() {
         // change selected bar color
         settings.style.buttonBarBackgroundColor = appDefaults.color
