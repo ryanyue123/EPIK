@@ -344,7 +344,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! TableViewCell
         cell.reloadCollectionView()
-        cell.titleLabel.text = label_array[indexPath.row] as! String
+        cell.titleLabel.text = label_array[indexPath.row] 
         cell.titleLabel.textColor = appDefaults.color
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         return cell

@@ -13,7 +13,7 @@ import Parse
 import DGElasticPullToRefresh
 import XLPagerTabStrip
 
-class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, IndicatorInfoProvider  {
+class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, IndicatorInfoProvider, UITextFieldDelegate  {
     
     var itemInfo: IndicatorInfo = "Places"
     
@@ -29,29 +29,13 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var searchDidChange = false
     var searchQuery = ""
     
+    var searchTextField: UITextField!
+    
     // MARK: - OUTLETS
     
     func indicatorInfoForPagerTabStrip(pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return itemInfo
     }
-    
-//    
-//    var itemInfo: IndicatorInfo = "Places"
-//    
-//    init(itemInfo: IndicatorInfo) {
-//        self.itemInfo = itemInfo
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//        //fatalError("init(coder:) has not been implemented")
-//    }
-//    
-//    func indicatorInfoForPagerTabStrip(pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-//        return itemInfo
-//    }
-//
     
     @IBAction func searchWithGPlaces(sender: AnyObject) {
     }
@@ -221,13 +205,26 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         playlistArray.append(businessObjects[indx])
     }
     
+    func textFieldDidChange(textField: UITextField){
+        print("hi")
+    }
+    
+    
+    
 
 
     // MARK: - VIEWDIDLOAD
     
+    override func viewDidAppear(animated: Bool) {
+        searchTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: .EditingChanged)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        searchTextField.removeTarget(self, action: "textFieldDidChange:", forControlEvents: .EditingChanged)
+    }
+    
     override func viewDidLoad(){
         //getCurrentLocation()
-        
         ConfigureFunctions.configureStatusBar(self.navigationController!)
         ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         

@@ -10,10 +10,10 @@
 		3C2F1C7B1CD468020081CEFA /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2F1C7A1CD468020081CEFA /* InitialViewController.swift */; };
 		3C7C56451CD479EF009D8B34 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7C56441CD479EF009D8B34 /* SignUpViewController.swift */; };
 		3CB8D45C1CBB575F00870F38 /* ListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB8D45B1CBB575F00870F38 /* ListCollectionViewCell.swift */; };
-		3CBFD89B1CD42A7900290F25 /* SearchPlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBFD89A1CD42A7900290F25 /* SearchPlaylistViewController.swift */; };
 		3CBFD89D1CD4355900290F25 /* SearchPlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBFD89C1CD4355900290F25 /* SearchPlaylistCell.swift */; };
 		3CD0344F1CBA121300675F88 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD0344E1CBA121300675F88 /* TableViewCell.swift */; };
 		3CD034511CBA122A00675F88 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD034501CBA122A00675F88 /* TableViewController.swift */; };
+		3CD916CE1CDC085200CB5AEA /* CollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD916CD1CDC085200CB5AEA /* CollectionViewLayout.swift */; };
 		3CE2EE7F1C6C5EC8000C9088 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE2EE7E1C6C5EC8000C9088 /* AppDelegate.swift */; };
 		3CE2EE861C6C5EC8000C9088 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3CE2EE851C6C5EC8000C9088 /* Assets.xcassets */; };
 		3CE2EE891C6C5EC8000C9088 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CE2EE871C6C5EC8000C9088 /* LaunchScreen.storyboard */; };
@@ -24,9 +24,9 @@
 		9038B75E1CBCD041004B220B /* ActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9038B75D1CBCD041004B220B /* ActionsViewController.swift */; };
 		905F87941CD741BB004046CD /* SearchPlaylistCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */; };
 		905F87961CD742C7004046CD /* ListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 905F87951CD742C7004046CD /* ListCell.xib */; };
-		905F879A1CD99534004046CD /* ProfileHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 905F87991CD99534004046CD /* ProfileHeaderView.xib */; };
 		905F879D1CD99E3C004046CD /* ProfileCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905F879C1CD99E3C004046CD /* ProfileCollectionViewController.swift */; };
 		905F879F1CD9A453004046CD /* ProfileHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 905F879E1CD9A453004046CD /* ProfileHeader.xib */; };
+		905F87A11CD9D536004046CD /* ProfileHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905F87A01CD9D536004046CD /* ProfileHeaderCollectionReusableView.swift */; };
 		9069D7681CD6B15E005650F4 /* BusinessCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9069D7671CD6B15E005650F4 /* BusinessCell.xib */; };
 		9069D76A1CD6B7F2005650F4 /* ReviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9069D7691CD6B7F2005650F4 /* ReviewCell.xib */; };
 		906CAA311C8977B700AF3515 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906CAA301C8977B700AF3515 /* TestViewController.swift */; };
@@ -107,10 +107,10 @@
 		3C2F1C7A1CD468020081CEFA /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InitialViewController.swift; path = ../InitialViewController.swift; sourceTree = "<group>"; };
 		3C7C56441CD479EF009D8B34 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		3CB8D45B1CBB575F00870F38 /* ListCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListCollectionViewCell.swift; path = Yelpify/ListCollectionViewCell.swift; sourceTree = "<group>"; };
-		3CBFD89A1CD42A7900290F25 /* SearchPlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlaylistViewController.swift; sourceTree = "<group>"; };
 		3CBFD89C1CD4355900290F25 /* SearchPlaylistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchPlaylistCell.swift; path = Yelpify/SearchPlaylistCell.swift; sourceTree = "<group>"; };
 		3CD0344E1CBA121300675F88 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewCell.swift; path = Yelpify/TableViewCell.swift; sourceTree = "<group>"; };
 		3CD034501CBA122A00675F88 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		3CD916CD1CDC085200CB5AEA /* CollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewLayout.swift; sourceTree = "<group>"; };
 		3CE2EE7B1C6C5EC8000C9088 /* Yelpify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yelpify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CE2EE7E1C6C5EC8000C9088 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3CE2EE831C6C5EC8000C9088 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -128,10 +128,10 @@
 		9038B75D1CBCD041004B220B /* ActionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionsViewController.swift; sourceTree = "<group>"; };
 		905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlaylistCollectionViewController.swift; sourceTree = "<group>"; };
 		905F87951CD742C7004046CD /* ListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ListCell.xib; path = Yelpify/ListCell.xib; sourceTree = "<group>"; };
-		905F87991CD99534004046CD /* ProfileHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileHeaderView.xib; sourceTree = "<group>"; };
 		905F879B1CD99A03004046CD /* Yelpify-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Yelpify-Bridging-Header.h"; sourceTree = "<group>"; };
 		905F879C1CD99E3C004046CD /* ProfileCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewController.swift; sourceTree = "<group>"; };
 		905F879E1CD9A453004046CD /* ProfileHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileHeader.xib; sourceTree = "<group>"; };
+		905F87A01CD9D536004046CD /* ProfileHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		9069D7671CD6B15E005650F4 /* BusinessCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BusinessCell.xib; path = Yelpify/BusinessCell.xib; sourceTree = "<group>"; };
 		9069D7691CD6B7F2005650F4 /* ReviewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviewCell.xib; path = Yelpify/ReviewCell.xib; sourceTree = "<group>"; };
 		906CAA301C8977B700AF3515 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
@@ -266,11 +266,13 @@
 				908481831C750816009B6099 /* BusinessObject.swift */,
 				90711BD41CAF4DEA0032A257 /* PlaylistObject.swift */,
 				EDA8CEF41CAF506400A5C2ED /* SortMethods.swift */,
+				3CD916CD1CDC085200CB5AEA /* CollectionViewLayout.swift */,
 				ED52E6501CCB2E0B00CEBAE2 /* ActionView */,
 				90DA327A1C93614700D5EBDF /* Fonts */,
 				90DC57BA1C72844B001F1891 /* API */,
 				90C96AAF1CCAFA9D00E9EC28 /* Helper Modules */,
 				9025184F1C88276C00BB3E05 /* View Controllers */,
+				905F87A21CD9D5A2004046CD /* Header Views */,
 				9069D7651CD6B143005650F4 /* Xib */,
 				3CA6CFFB1CC05A880004B989 /* Cells */,
 				902518501C88277B00BB3E05 /* Testing VCs */,
@@ -312,9 +314,8 @@
 			isa = PBXGroup;
 			children = (
 				90B6D69D1CD49888006928E8 /* SearchPagerTabStripVC.swift */,
-				3CBFD89A1CD42A7900290F25 /* SearchPlaylistViewController.swift */,
-				905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */,
 				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
+				905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */,
 				908A3BCA1CC0EFED00767736 /* ProfileViewController.swift */,
 				905F879C1CD99E3C004046CD /* ProfileCollectionViewController.swift */,
 				3CD034501CBA122A00675F88 /* TableViewController.swift */,
@@ -344,11 +345,19 @@
 			name = "Testing VCs";
 			sourceTree = "<group>";
 		};
+		905F87A21CD9D5A2004046CD /* Header Views */ = {
+			isa = PBXGroup;
+			children = (
+				905F87A01CD9D536004046CD /* ProfileHeaderCollectionReusableView.swift */,
+			);
+			name = "Header Views";
+			path = ..;
+			sourceTree = "<group>";
+		};
 		9069D7651CD6B143005650F4 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
 				905F879E1CD9A453004046CD /* ProfileHeader.xib */,
-				905F87991CD99534004046CD /* ProfileHeaderView.xib */,
 				905F87951CD742C7004046CD /* ListCell.xib */,
 				9069D7671CD6B15E005650F4 /* BusinessCell.xib */,
 				9069D7691CD6B7F2005650F4 /* ReviewCell.xib */,
@@ -571,7 +580,6 @@
 				90DA32901C93616700D5EBDF /* Montserrat-SemiBold.otf in Resources */,
 				90DA32881C93616700D5EBDF /* OpenSans-Semibold.ttf in Resources */,
 				90DA32911C93616700D5EBDF /* Montserrat-UltraLight.otf in Resources */,
-				905F879A1CD99534004046CD /* ProfileHeaderView.xib in Resources */,
 				905F87961CD742C7004046CD /* ListCell.xib in Resources */,
 				90DA32951C93616700D5EBDF /* Montserrat-Light.otf in Resources */,
 				90DA328D1C93616700D5EBDF /* OpenSans-Italic.ttf in Resources */,
@@ -681,6 +689,7 @@
 				3CBFD89D1CD4355900290F25 /* SearchPlaylistCell.swift in Sources */,
 				3CD0344F1CBA121300675F88 /* TableViewCell.swift in Sources */,
 				905F87941CD741BB004046CD /* SearchPlaylistCollectionViewController.swift in Sources */,
+				3CD916CE1CDC085200CB5AEA /* CollectionViewLayout.swift in Sources */,
 				907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */,
 				907E0CE71C77F34100872135 /* GooglePlacesAPIClient.swift in Sources */,
 				90E505E21C8E944100F47285 /* CustomSearchController.swift in Sources */,
@@ -689,7 +698,6 @@
 				90C177DA1CCB5B4A007344CE /* ChildExampleViewController.swift in Sources */,
 				90C177D41CCB50A6007344CE /* YoutubeExampleViewController.swift in Sources */,
 				3C7C56451CD479EF009D8B34 /* SignUpViewController.swift in Sources */,
-				3CBFD89B1CD42A7900290F25 /* SearchPlaylistViewController.swift in Sources */,
 				EDA8CEF51CAF506400A5C2ED /* SortMethods.swift in Sources */,
 				90DC57B91C72843A001F1891 /* YelpAPIClient.swift in Sources */,
 				90BAD1C31C86639E0047277E /* TestTableViewCell.swift in Sources */,
@@ -697,6 +705,7 @@
 				90E505E41C8E946700F47285 /* CustomSearchBar.swift in Sources */,
 				90B9B7D91C8A696F002D4BB1 /* BusinessDetailViewController.swift in Sources */,
 				906CAA311C8977B700AF3515 /* TestViewController.swift in Sources */,
+				905F87A11CD9D536004046CD /* ProfileHeaderCollectionReusableView.swift in Sources */,
 				90B09C601CBC7573004F38C2 /* CardView.swift in Sources */,
 				EDD44DAD1CB4BA31008DC4AB /* RandomPlaceController.swift in Sources */,
 				90FBF9121CCF27D800355AB3 /* ActionData.swift in Sources */,
@@ -865,7 +874,7 @@
 				INFOPLIST_FILE = Yelpify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Yelpify.Yelpify-1";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Yelpify.Yelpify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Yelpify/Yelpify-Bridging-Header.h";
@@ -890,7 +899,7 @@
 				INFOPLIST_FILE = Yelpify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Yelpify.Yelpify-1";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Yelpify.Yelpify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Yelpify/Yelpify-Bridging-Header.h";

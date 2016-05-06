@@ -10,13 +10,14 @@ import UIKit
 import Parse
 import XLPagerTabStrip
 
-private let reuseIdentifier = "Cell"
+private let reuseIdentifier = "listCell"
 
 class SearchPlaylistCollectionViewController: UICollectionViewController, UITextFieldDelegate, IndicatorInfoProvider {
     
+    @IBOutlet var collection_view: UICollectionView!
     var itemInfo: IndicatorInfo = "Lists"
-    var textField: UITextField!
     var playlist_query = [PFObject]()
+    var searchTextField: UITextField!
     
     func indicatorInfoForPagerTabStrip(pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return itemInfo
@@ -24,11 +25,10 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        textField.delegate = self
-
+        self.collection_view.backgroundColor = appDefaults.color_bg
+        self.collection_view.collectionViewLayout = CollectionViewLayout()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
         // Register cell classes
         self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
@@ -40,27 +40,10 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
         self.collectionView!.reloadData()
     }
 
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        searchForPlaylistWithName()
-        self.textField.endEditing(true)
-        return true
+    override func viewDidAppear(animated: Bool) {
+        
     }
     
-    func searchForPlaylistWithName()
-    {
-        let query = PFQuery(className: "Playlists")
-        query.whereKey("playlistName", containsString: self.textField.text!)
-        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
-            if (error == nil)
-            {
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.playlist_query = objects!
-                    self.collectionView!.reloadData()
-                    print("dslkjflksd")
-                })
-            }
-        }
-    }
     
     /*
     // MARK: - Navigation
@@ -76,20 +59,18 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 0
+        return 10
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        collectionView.registerNib(UINib(nibName: "ListCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "listCell")
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
-    
-        // Configure the cell
-    
         return cell
     }
 
