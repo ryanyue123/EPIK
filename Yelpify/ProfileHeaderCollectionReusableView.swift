@@ -7,9 +7,11 @@
 //
 
 import UIKit
-
+import Parse
 class ProfileHeaderCollectionReusableView: UICollectionReusableView {
     
+    var user: PFUser!
+    var listnum: Int!
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,8 +24,13 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
     
     
     func configureView(){
+        let firstname = user["first_name"] as! String
+        let lastname = user["last_name"] as! String
+        nameLabel.text = firstname + " " + lastname
+        listCount.text = String(listnum)
         setupProfilePicture()
     }
+    
     
     private func setupProfilePicture(){
         self.roundingUIView(self.profileImageView, cornerRadiusParam: 35)

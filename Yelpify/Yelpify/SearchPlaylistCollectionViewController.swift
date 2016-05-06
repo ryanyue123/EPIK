@@ -99,6 +99,12 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
         return cell
     }
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let controller = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
+        controller.object = playlist_query[indexPath.row]
+        self.navigationController!.pushViewController(controller, animated: true)
+        
+    }
 
     // MARK: UICollectionViewDelegate
 

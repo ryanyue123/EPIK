@@ -7,13 +7,31 @@
 //
 
 import UIKit
-
+import Parse
 private let reuseIdentifier = "listCell"
 
 class ProfileCollectionViewController: UICollectionViewController {
     
+    var user: PFUser!
+    var user_playlists = [PFObject]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if (user == nil)
+        {
+            user = PFUser.currentUser()
+        }
+        let query = PFQuery(className: "Playlists")
+        query.whereKey("createdBy", equalTo: user)
+        query.findObjectsInBackgroundWithBlock { (objects, error) in
+            if (error == nil)
+            {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.user_playlists = objects!
+                    self.collectionView?.reloadData()
+                })
+            }
+        }
         
         
         // Register Nibs
@@ -25,7 +43,7 @@ class ProfileCollectionViewController: UICollectionViewController {
 
         // Register cell classes
         self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        self.collectionView!.collectionViewLayout = CollectionViewLayout()
+        //self.collectionView!.collectionViewLayout = CollectionViewLayout()
         //collectionView?.reloadData()
 
         // Do any additional setup after loading the view.
@@ -48,7 +66,8 @@ class ProfileCollectionViewController: UICollectionViewController {
             let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "profileHeader", forIndexPath: indexPath) as! ProfileHeaderCollectionReusableView
             
             headerView.frame.size.height = 300.0
-            
+            headerView.user = user
+            headerView.listnum = self.user_playlists.count
             headerView.configureView()
             
             return headerView
@@ -75,7 +94,7 @@ class ProfileCollectionViewController: UICollectionViewController {
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 10
+        return user_playlists.count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
