@@ -25,7 +25,7 @@ class ProfileCollectionViewController: UICollectionViewController {
 
         // Register cell classes
         self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
+        self.collectionView!.collectionViewLayout = CollectionViewLayout()
         //collectionView?.reloadData()
 
         // Do any additional setup after loading the view.

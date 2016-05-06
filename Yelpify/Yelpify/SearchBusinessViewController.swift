@@ -216,12 +216,9 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     // MARK: - VIEWDIDLOAD
     
     override func viewDidAppear(animated: Bool) {
-        searchTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: .EditingChanged)
+        searchTextField.delegate = self
     }
-    
-    override func viewDidDisappear(animated: Bool) {
-        searchTextField.removeTarget(self, action: "textFieldDidChange:", forControlEvents: .EditingChanged)
-    }
+
     
     override func viewDidLoad(){
         //getCurrentLocation()
@@ -279,6 +276,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     }
     
     func textFieldShouldReturn(textField:UITextField) -> Bool {
+        print("olleh")
         textField.resignFirstResponder() //close keyboard
         return true
         // Will allow user to press "return" button to close keyboard

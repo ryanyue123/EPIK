@@ -31,19 +31,44 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
         // self.clearsSelectionOnViewWillAppear = false
         // Register cell classes
         self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
+        let query = PFQuery(className: "Playlists")
+        query.limit = 10
+        query.findObjectsInBackgroundWithBlock { (objects, error) in
+            if (error == nil)
+            {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.playlist_query = objects!
+                    self.collection_view.reloadData()
+                })
+            }
+        }
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.collectionView!.reloadData()
+        self.collection_view.reloadData()
     }
 
     override func viewDidAppear(animated: Bool) {
-        
+        searchTextField.delegate = self
     }
-    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        print("hello")
+        let query = PFQuery(className: "Playlists")
+        query.whereKey("playlistName", containsString: textField.text)
+        query.whereKey("playlistName", containsString: textField.text?.uppercaseString)
+        query.whereKey("playlistName", containsString: textField.text?.lowercaseString)
+        
+        query.findObjectsInBackgroundWithBlock { (objects, error) in
+            if (error == nil)
+            {
+                self.playlist_query = objects!
+                self.collection_view.reloadData()
+            }
+        }
+        return true
+    }
     
     /*
     // MARK: - Navigation
@@ -65,7 +90,8 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 10
+        print(playlist_query.count)
+        return playlist_query.count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {

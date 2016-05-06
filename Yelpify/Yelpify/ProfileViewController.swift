@@ -20,7 +20,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     //let profileHeaderView = NSBundle.mainBundle().loadNibNamed("ProfileHeaderView", owner: self, options: nil) as! UIView
     
     var username: String!
-    var userobject: PFObject!
+    var userobject: PFUser!
     
     func fetchUserData()
     {
@@ -30,7 +30,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             if ((error) == nil)
             {
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.userobject = objects![0]
+                    self.userobject = objects![0] as! PFUser
                 })
             }
             else
@@ -43,10 +43,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        if (userobject == nil)
-//        {
-//            fetchUserData()
-//        }
+        if (userobject == nil)
+        {
+            userobject = PFUser.currentUser()
+        }
         
         configureNavigationBar()
         setupProfilePicture()
