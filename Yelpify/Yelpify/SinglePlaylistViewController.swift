@@ -15,7 +15,9 @@ import BetterSegmentedControl
 enum ContentTypes {
     case Places, Comments
 }
-
+enum ListMode {
+    case View, Edit
+}
 class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate, MGSwipeTableCellDelegate{
     
     //@IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
@@ -41,6 +43,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     @IBOutlet weak var segmentedBar: UISegmentedControl!
     @IBOutlet weak var segmentedBarView: UIView!
+    
+    var mode:ListMode! = .View
     
     var statusBarView: UIView!
     
@@ -335,13 +339,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func activateEditMode()
     {
+        self.mode = .Edit
         self.navigationItem.setHidesBackButton(true, animated: true)
         let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "savePlaylistToParse:")
         self.navigationItem.leftBarButtonItem = backButton
         self.addPlaceButton.hidden = false
         self.addPlaceButton.enabled = true
     }
-    
+    func deactivateEditMode()
+    {
+        self.addPlaceButton.hidden = true
+        self.addPlaceButton.enabled = false
+        self.mode = .View
+    }
     // MARK: - Reload Data After Pass
     
     func convertParseArrayToBusinessArray(parseArray: [NSDictionary], completion: (resultArray: [Business])->Void){
@@ -658,6 +668,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         self.navigationItem.setHidesBackButton(false, animated: true)
         self.navigationItem.leftBarButtonItem = nil
+        deactivateEditMode()
     }
     
     @IBAction func showProfileView(sender: UIButton) {
