@@ -327,11 +327,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func configureInfo(){
         self.playlistInfoName.text = object["playlistName"] as? String
         let user = object["createdBy"] as! PFUser
-        
-        
-        // CHANGE - ALIGN CREATOR TEXT IN MIDDLE
-        self.playlistInfoUser.contentHorizontalAlignment = .Center
-        //self.playlistInfoUser.titleLabel?.textAlignment = .Center
         self.playlistInfoUser.titleLabel?.text = "BY " + user.username!.uppercaseString
         
         self.playlistInfoIcon.image = UIImage(named: "default_icon")
@@ -647,8 +642,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                     saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
                 }
             }
-            saveobject["createdbyuser"] = PFUser.currentUser()?.username
-            saveobject["playlistName"] = playlist_name
             saveobject["track"] = convertPlacesArrayToDictionary(playlistArray)
             saveobject.saveInBackgroundWithBlock { (success, error)  -> Void in
                 if (error == nil){
@@ -664,6 +657,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.navigationItem.leftBarButtonItem = nil
     }
     
+    @IBAction func showProfileView(sender: UIButton) {
+        performSegueWithIdentifier("showProfileView", sender: self)
+    }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "showBusinessDetail"){
             let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
@@ -674,6 +670,11 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             upcoming.object = object
             upcoming.index = indexPath!.row
             self.playlistTableView.deselectRowAtIndexPath(indexPath!, animated: true)
+        }
+        else if (segue.identifier == "showProfileView")
+        {
+            let upcoming = segue.destinationViewController as! ProfileCollectionViewController
+            upcoming.user = object["createdBy"] as! PFUser
         }
     }
     
