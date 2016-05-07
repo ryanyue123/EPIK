@@ -11,6 +11,7 @@ import Parse
 import XLActionController
 import MGSwipeTableCell
 import BetterSegmentedControl
+import CZPicker
 
 enum ContentTypes {
     case Places, Comments
@@ -82,8 +83,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             self.activateEditMode()
         }))
         actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "yt-share-icon")!), style: .Default, handler: { action in
-            self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
-            self.playlistTableView.reloadData()
+            actionController.onWillDismissView()
+            let pickerController = CZPickerViewController()
+            self.presentViewController(pickerController, animated: true, completion: nil)
+            
+            //self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
+            //self.playlistTableView.reloadData()
         }))
         actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
         
