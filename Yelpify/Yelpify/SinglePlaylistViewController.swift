@@ -449,7 +449,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         //control.autoresizingMask = [.FlexibleWidth]
         control.cornerRadius = 10.0
         control.panningDisabled = true
-        control.titleFont = UIFont(name: "Monserrat-Regular", size: 12.0)!
+        control.titleFont = UIFont(name: "Montserrat", size: 12.0)!
         control.addTarget(self, action: nil, forControlEvents: .ValueChanged)
         self.segmentedBarView.addSubview(control)
 
