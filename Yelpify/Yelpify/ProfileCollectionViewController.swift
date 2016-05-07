@@ -16,7 +16,6 @@ class ProfileCollectionViewController: UICollectionViewController {
     var user_playlists = [PFObject]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if (user == nil)
         {
             user = PFUser.currentUser()
@@ -47,6 +46,7 @@ class ProfileCollectionViewController: UICollectionViewController {
         //collectionView?.reloadData()
 
         // Do any additional setup after loading the view.
+        self.collectionView?.contentInset = UIEdgeInsets(top: 200, left: 10, bottom: 10, right: 10)
     }
 
     override func didReceiveMemoryWarning() {
