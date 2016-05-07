@@ -22,26 +22,17 @@ class ListCollectionViewCell: UICollectionViewCell {
     var gpAPIClient = GooglePlacesAPIClient()
     
     func configureCellLayout(){
-//        self.layer.cornerRadius = 4.0
-//        self.layer.masksToBounds = true
-        
-        //self.customObject = customObject
-        
         // Round the banner's corners
-        var maskPath: UIBezierPath = UIBezierPath(roundedRect: self.layer.bounds, byRoundingCorners: ([.TopLeft, .TopRight, .BottomLeft, .BottomRight]), cornerRadii: CGSizeMake(20, 20))
+        var maskPath: UIBezierPath = UIBezierPath(roundedRect: self.layer.bounds, byRoundingCorners: ([.TopLeft, .TopRight, .BottomLeft, .BottomRight]), cornerRadii: CGSizeMake(5, 5))
         var maskLayer: CAShapeLayer = CAShapeLayer()
         maskLayer.frame = self.layer.bounds
         maskLayer.path = maskPath.CGPath
         self.layer.mask = maskLayer
         
         // Round cell corners
-        self.layer.cornerRadius = 20
+        self.layer.cornerRadius = 3
         // Add shadow
         self.layer.masksToBounds = false
-        self.layer.shadowOpacity = 0.75
-        self.layer.shadowRadius = 20.0
-        self.layer.shouldRasterize = false
-        self.layer.shadowPath = UIBezierPath(rect: CGRectMake(self.frame.size.width / 2 - (self.frame.size.width - 50) / 2, self.frame.size.height, self.frame.size.width - 50, 10)).CGPath
     }
     
     func configureCell(imageref: String)

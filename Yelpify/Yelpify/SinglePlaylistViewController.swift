@@ -458,7 +458,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             indicatorViewBackgroundColor: appDefaults.color_darker,
             selectedTitleColor: .whiteColor())
         control.autoresizingMask = [.FlexibleWidth]
-        control.cornerRadius = 10.0
+        //control.cornerRadius = 10.0
         control.panningDisabled = true
         control.titleFont = UIFont(name: "Montserrat", size: 12.0)!
         control.addTarget(self, action: nil, forControlEvents: .ValueChanged)
