@@ -93,19 +93,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "yt-share-icon")!), style: .Cancel, handler: { action in
             let pickerController = CZPickerViewController()
 
-            actionController.dismissViewControllerAnimated(true, completion: {
-                pickerController.showWithMultipleSelections(UIViewController)
-                
-            })
-            
-            
-            
-            //self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
-            //self.playlistTableView.reloadData()
+            pickerController.showWithMultipleSelections(UIViewController)
+//            if sortMethod == "Name"{
+//                self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
+//                self.playlistTableView.reloadData()
+//            }else if sortMethod == "Rating"{
+//                self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
+//                self.playlistTableView.reloadData()
+//
+//            }
         }))
         actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
         
-        self.presentViewController(actionController, animated: true, completion: nil)
+        presentViewController(actionController, animated: true, completion: nil)
 
     }
     

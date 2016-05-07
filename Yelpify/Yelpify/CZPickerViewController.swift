@@ -12,14 +12,14 @@ import CZPicker
 
 class CZPickerViewController: UIViewController {
     
-    var fruits = [String]()
+    var fruits = ["Name","Rating"]
     var fruitImages = [UIImage]()
     var pickerWithImage: CZPickerView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fruits = ["Apple", "Banana", "Grape", "Watermelon", "Lychee"]
-        fruitImages = [UIImage(named: "default_Icon")!, UIImage(named: "default_Icon")!, UIImage(named: "default_Icon")!, UIImage(named: "default_Icon")!, UIImage(named: "default_Icon")!]
+        //fruits = ["Apple", "Banana", "Grape", "Watermelon", "Lychee"]
+        //fruitImages = [UIImage(named: "default_Icon")!, UIImage(named: "default_Icon")!, UIImage(named: "default_Icon")!, UIImage(named: "default_Icon")!, UIImage(named: "default_Icon")!]
 
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -46,16 +46,14 @@ class CZPickerViewController: UIViewController {
     }
     
     
-    func showWithMultipleSelections(sender: AnyObject) {
+    func showWithMultipleSelections(sender: AnyObject){
         let picker = CZPickerView(headerTitle: "Sort Options", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
-        self.czpickerView(picker, imageForRow: 1)
         picker.delegate = self
         picker.dataSource = self
         picker.needFooterView = false
         picker.allowMultipleSelection = true
-        
-        
         picker.show()
+        
     }
     
     @IBAction func showWithImages(sender: AnyObject) {
@@ -80,7 +78,6 @@ extension CZPickerViewController: CZPickerViewDelegate, CZPickerViewDataSource {
     }
     
     func czpickerView(pickerView: CZPickerView!, titleForRow row: Int) -> String! {
-        print(fruits)
         return fruits[row]
     }
     
