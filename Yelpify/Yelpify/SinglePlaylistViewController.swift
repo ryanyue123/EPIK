@@ -179,18 +179,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let control = BetterSegmentedControl(
-            frame: CGRect(x: 0.0, y: 0.0, width: view.bounds.width, height: self.segmentedBarView.frame.size.height),
-            titles: ["Places", "Comments"],
-            index: 1,
-            backgroundColor: appDefaults.color_bg,
-            titleColor: UIColor.whiteColor(),
-            indicatorViewBackgroundColor: UIColor.whiteColor(),
-            selectedTitleColor: .blackColor())
-        control.titleFont = UIFont(name: "Montserrat-Regular", size: 12.0)!
-        control.addTarget(self, action: nil, forControlEvents: .ValueChanged)
-        self.segmentedBarView.addSubview(control)
-        
+        configureSegmentedBar()
         
         setupProfilePicture()
         
@@ -281,8 +270,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 })
             }
         }
-
-        configureSegmentedBar()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -333,11 +320,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func configureInfo(){
         self.playlistInfoName.text = object["playlistName"] as? String
         let user = object["createdBy"] as! PFUser
-        
-        
-        // CHANGE - ALIGN CREATOR TEXT IN MIDDLE
-        self.playlistInfoUser.contentHorizontalAlignment = .Center
-        //self.playlistInfoUser.titleLabel?.textAlignment = .Center
         self.playlistInfoUser.titleLabel?.text = "BY " + user.username!.uppercaseString
         
         self.playlistInfoIcon.image = UIImage(named: "default_icon")
@@ -462,20 +444,35 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func configureSegmentedBar(){
         let control = BetterSegmentedControl(
-            frame: CGRect(x: 0.0, y: 330.0, width: self.view.frame.width, height: 20.0),
-            titles: ["Places, Comments"],
-            index: 1,
+            frame: CGRect(x: 0.0, y: 0.0, width: view.bounds.width + 16, height: 40),
+            titles: ["Places", "Comments"],
+            index: 0,
             backgroundColor: appDefaults.color,
-            titleColor: .whiteColor(),
-            indicatorViewBackgroundColor: appDefaults.color_bg,
-            selectedTitleColor: .blackColor())
-        control.titleFont = UIFont(name: "Montserrat-Regular", size: 10.0)!
+            titleColor: UIColor.whiteColor(),
+            indicatorViewBackgroundColor: appDefaults.color_darker,
+            selectedTitleColor: .whiteColor())
+        //control.autoresizingMask = [.FlexibleWidth]
+        control.cornerRadius = 10.0
+        control.panningDisabled = true
+        control.titleFont = UIFont(name: "Montserrat", size: 12.0)!
         control.addTarget(self, action: nil, forControlEvents: .ValueChanged)
-        self.view.addSubview(control)
-        control.tag = 302
-        
-        let controlView = view.viewWithTag(302)
-        self.view.bringSubviewToFront(controlView!)
+        self.segmentedBarView.addSubview(control)
+
+//        let control = BetterSegmentedControl(
+//            frame: CGRect(x: 0.0, y: 330.0, width: self.view.frame.width, height: 20.0),
+//            titles: ["Places, Comments"],
+//            index: 1,
+//            backgroundColor: appDefaults.color,
+//            titleColor: .whiteColor(),
+//            indicatorViewBackgroundColor: appDefaults.color_bg,
+//            selectedTitleColor: .blackColor())
+//        control.titleFont = UIFont(name: "Montserrat-Regular", size: 10.0)!
+//        control.addTarget(self, action: nil, forControlEvents: .ValueChanged)
+//        self.view.addSubview(control)
+//        control.tag = 302
+//        
+//        let controlView = view.viewWithTag(302)
+//        self.view.bringSubviewToFront(controlView!)
     }
     
     func updateHeaderView(){
@@ -630,28 +627,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         return [shareAction, routeAction]
     }
     
-//
-//    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) ->
-//        [AnyObject]?
-//    {
-//        var shareAction = UITableViewRowAction(style: .Normal, title: "Share") {(action:
-//            UITableViewRowAction!, indexPath: NSIndexPath!) -> Void in
-//            
-//            let firstActivityItem = self.playlistArray[indexPath.row] as! Business
-//            
-//            let activityViewController = UIActivityViewController(activityItems: [firstActivityItem.businessName], applicationActivities: nil)
-//            
-//            self.presentViewController(activityViewController, animated: true, completion: nil)
-//            
-//    }
-//        shareAction.backgroundColor = UIColor.blueColor()
-//        return [shareAction]
-//    }
-    
-    
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
-        //self.playlistTableView.setEditing(editing, animated: animated)
     }
     
     func convertPlacesArrayToDictionary(placesArray: [Business])-> [NSDictionary]{
@@ -673,8 +650,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                     saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
                 }
             }
-            saveobject["createdbyuser"] = PFUser.currentUser()?.username
-            saveobject["playlistName"] = playlist_name
             saveobject["track"] = convertPlacesArrayToDictionary(playlistArray)
             saveobject.saveInBackgroundWithBlock { (success, error)  -> Void in
                 if (error == nil){
@@ -690,6 +665,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.navigationItem.leftBarButtonItem = nil
     }
     
+    @IBAction func showProfileView(sender: UIButton) {
+        performSegueWithIdentifier("showProfileView", sender: self)
+    }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "showBusinessDetail"){
             let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
@@ -700,6 +678,11 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             upcoming.object = object
             upcoming.index = indexPath!.row
             self.playlistTableView.deselectRowAtIndexPath(indexPath!, animated: true)
+        }
+        else if (segue.identifier == "showProfileView")
+        {
+            let upcoming = segue.destinationViewController as! ProfileCollectionViewController
+            upcoming.user = object["createdBy"] as! PFUser
         }
     }
     

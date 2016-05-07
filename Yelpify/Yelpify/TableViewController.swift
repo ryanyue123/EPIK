@@ -194,6 +194,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                         {
                             let object = PFObject(className: "Playlists")
                             object["playlistName"] = self.inputTextField.text!
+                            object["search_name"] = self.inputTextField.text!.uppercaseString
                             object["createdBy"] = PFUser.currentUser()!
                             object["track"] = []
                             object.saveInBackgroundWithBlock({ (success, error) in
@@ -401,18 +402,6 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         
     
         //takes image of first business and uses it as icon for playlist
-        
-        if let business = cellobject["track"] as? [NSDictionary]{
-            if(business.count != 0)
-            {
-                let businessdict = business[0]
-                if let photoref = businessdict["photoReference"] as? String
-                {
-                    //cell.configureCell(photoref) // CHANGE
-                }
-            }
-        }
-        
         return cell
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
