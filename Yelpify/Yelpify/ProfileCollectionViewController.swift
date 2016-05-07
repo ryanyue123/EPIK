@@ -16,7 +16,6 @@ class ProfileCollectionViewController: UICollectionViewController {
     var user_playlists = [PFObject]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if (user == nil)
         {
             user = PFUser.currentUser()
@@ -102,6 +101,8 @@ class ProfileCollectionViewController: UICollectionViewController {
         collectionView.registerNib(UINib(nibName: "ListCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "listCell")
 
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("listCell", forIndexPath: indexPath) as! ListCollectionViewCell
+        
+        cell.configureCellLayout()
     
         return cell
     }

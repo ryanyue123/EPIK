@@ -25,14 +25,14 @@ class CollectionViewLayout: UICollectionViewFlowLayout {
         get {
             let numberOfColumns: CGFloat = 2
             
-            let itemWidth = (CGRectGetWidth(self.collectionView!.frame) - (5 * (numberOfColumns - 1))) / numberOfColumns
+            let itemWidth = (CGRectGetWidth(self.collectionView!.frame) - (30 * (numberOfColumns - 1))) / numberOfColumns
             return CGSizeMake(itemWidth, itemWidth)
         }
     }
     func setupLayout()
     {
-        minimumInteritemSpacing = 5
-        minimumLineSpacing = 5
+        minimumInteritemSpacing = 10
+        minimumLineSpacing = 10
         scrollDirection = .Vertical
     }
 }

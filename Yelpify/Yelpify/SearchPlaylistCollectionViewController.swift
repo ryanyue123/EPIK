@@ -25,6 +25,9 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.collection_view.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        
         self.collection_view.backgroundColor = appDefaults.color_bg
         self.collection_view.collectionViewLayout = CollectionViewLayout()
         // Uncomment the following line to preserve selection between presentations
@@ -73,16 +76,7 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
         return true
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
     // MARK: UICollectionViewDataSource
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -99,7 +93,28 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         collectionView.registerNib(UINib(nibName: "ListCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "listCell")
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("listCell", forIndexPath: indexPath) as! ListCollectionViewCell
+        let cellobject = self.playlist_query[indexPath.row]
+        cell.configureCellLayout()
+        
+        cell.listName.text = cellobject["playlistName"] as? String
+        let createdByUser = cellobject["createdBy"] as! PFUser
+        createdByUser.fetchIfNeededInBackgroundWithBlock { (object, error) in
+            if (error == nil)
+            {
+                dispatch_async(dispatch_get_main_queue(), {
+                    cell.creatorName.text = object!["username"] as? String
+                })
+            }
+        }
+        let followCount = cellobject["followerCount"]
+        if (followCount == nil)
+        {
+            cell.followerCount.text = "0"
+        }
+        else{
+            cell.followerCount.text = String(followCount)
+        }
         return cell
     }
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
