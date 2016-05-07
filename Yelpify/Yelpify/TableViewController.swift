@@ -416,8 +416,8 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         return cell
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        //self.row = collectionView.tag
-        //self.col = indexPath.row
+        self.row = collectionView.tag
+        self.col = indexPath.row
 
         // Perform Segue and Pass List Data
         let controller = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
@@ -428,14 +428,14 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-//        if (segue.identifier == "showPlaylist")
-//        {
-//            let upcoming = segue.destinationViewController as? SinglePlaylistViewController
-//            let temparray = all_playlists[row]
-//            
-//            let navController: UINavigationController = self.navigationController!
-//            upcoming?.object = temparray[col] as! PFObject
-//        }
+        if (segue.identifier == "showPlaylist")
+        {
+            let upcoming = segue.destinationViewController as? SinglePlaylistViewController
+            let temparray = all_playlists[row]
+            
+            let navController: UINavigationController = self.navigationController!
+            upcoming?.object = temparray[col] as! PFObject
+        }
     }
     
     override func segueForUnwindingToViewController(toViewController: UIViewController, fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {

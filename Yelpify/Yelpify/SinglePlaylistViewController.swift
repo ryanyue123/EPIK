@@ -205,8 +205,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
-        
-        
+
         self.playlistTableView.backgroundColor = appDefaults.color
         if (self.newPlaylist == true)
         {
@@ -214,7 +213,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             // Automatic edit mode
             self.activateEditMode()
         }
-        
         else if(object["createdBy"] as! PFUser == PFUser.currentUser()!)
             //later incorporate possibility of collaboration
         {
@@ -561,17 +559,17 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
         }
         
-        switch self.mode{
+        switch self.mode!{
         case .View:
             break
         case .Edit:
-            
+            break
             
         }
         // Add Swipe Buttons
         // configure left buttons
         cell.rightButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_darker, padding: 30),
-                             MGSwipeButton(title: "Add", backgroundColor: UIColor.greenColor())]
+                             MGSwipeButton(title: "Add", backgroundColor: UIColor.greenColor(), padding: 30)]
         cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
 
         // configure right buttons
@@ -579,8 +577,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         //cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
         
         cell.rightExpansion.buttonIndex = 0
-        cell.rightExpansion.fillOnTrigger = false
-        cell.rightExpansion.threshold = 1.75
+        cell.rightExpansion.fillOnTrigger = true
+        cell.rightExpansion.threshold = 0.7
         
         
         return cell
