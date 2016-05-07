@@ -15,6 +15,7 @@ class CZPickerViewController: UIViewController {
     var fruits = ["Name","Rating"]
     var fruitImages = [UIImage]()
     var pickerWithImage: CZPickerView?
+    var item = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,11 +49,12 @@ class CZPickerViewController: UIViewController {
     
     func showWithMultipleSelections(sender: AnyObject){
         let picker = CZPickerView(headerTitle: "Sort Options", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
+    
         picker.delegate = self
         picker.dataSource = self
         picker.needFooterView = false
         picker.allowMultipleSelection = true
-        picker.show() 
+        picker.show()
         
     }
     
@@ -88,6 +90,7 @@ extension CZPickerViewController: CZPickerViewDelegate, CZPickerViewDataSource {
     func czpickerView(pickerView: CZPickerView!, didConfirmWithItemsAtRows rows: [AnyObject]!) {
         for row in rows {
             if let row = row as? Int {
+                item = fruits[row]
                 print(fruits[row])
             }
         }
