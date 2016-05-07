@@ -88,4 +88,27 @@ public class YoutubeActionController: ActionController<YoutubeCell, ActionData, 
             }
         }
     }
+    
+    override public func dismissView(presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((completed: Bool) -> Void)?) {
+        onWillDismissView()
+        let animationSettings = settings.animation.dismiss
+        let upTime = 0.1
+        UIView.animateWithDuration(upTime, delay: 0, options: .CurveEaseIn, animations: { [weak self] in
+            self?.collectionView.frame.origin.y -= 10
+            }, completion: { [weak self] (completed) -> Void in
+                UIView.animateWithDuration(animationDuration - upTime,
+                    delay: 0,
+                    usingSpringWithDamping: animationSettings.damping,
+                    initialSpringVelocity: animationSettings.springVelocity,
+                    options: UIViewAnimationOptions.CurveEaseIn,
+                    animations: { [weak self] in
+                        presentingView.transform = CGAffineTransformIdentity
+                        self?.performCustomDismissingAnimation(presentedView, presentingView: presentingView)
+                    },
+                    completion: { [weak self] finished in
+                        self?.onDidDismissView()
+                        completion?(completed: finished)
+                    })
+            })
+    }
 }
