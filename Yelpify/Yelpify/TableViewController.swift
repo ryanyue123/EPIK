@@ -194,6 +194,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                         {
                             let object = PFObject(className: "Playlists")
                             object["playlistName"] = self.inputTextField.text!
+                            object["search_name"] = self.inputTextField.text!.uppercaseString
                             object["createdBy"] = PFUser.currentUser()!
                             object["track"] = []
                             object.saveInBackgroundWithBlock({ (success, error) in

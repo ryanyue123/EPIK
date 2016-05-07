@@ -51,20 +51,23 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
     }
 
     override func viewDidAppear(animated: Bool) {
-        searchTextField.delegate = self
+        if (searchTextField != nil)
+        {
+            searchTextField.delegate = self
+        }
     }
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         print("hello")
         let query = PFQuery(className: "Playlists")
-        query.whereKey("playlistName", containsString: textField.text)
-        query.whereKey("playlistName", containsString: textField.text?.uppercaseString)
-        query.whereKey("playlistName", containsString: textField.text?.lowercaseString)
-        
+        query.whereKey("playlistName", containsString: textField.text?.uppercaseString)        
         query.findObjectsInBackgroundWithBlock { (objects, error) in
             if (error == nil)
             {
-                self.playlist_query = objects!
-                self.collection_view.reloadData()
+                dispatch_async(dispatch_get_main_queue(), {
+
+                    self.playlist_query = objects!
+                    self.collection_view.reloadData()
+                })
             }
         }
         return true

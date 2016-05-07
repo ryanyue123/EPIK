@@ -22,24 +22,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     var username: String!
     var userobject: PFUser!
     
-    func fetchUserData()
-    {
-        let query = PFUser.query()!
-        query.whereKey("username", equalTo: username)
-        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
-            if ((error) == nil)
-            {
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.userobject = objects![0] as! PFUser
-                })
-            }
-            else
-            {
-                print(error?.userInfo)
-            }
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
