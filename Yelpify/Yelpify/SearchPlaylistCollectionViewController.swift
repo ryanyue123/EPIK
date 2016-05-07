@@ -25,6 +25,9 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.collection_view.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        
         self.collection_view.backgroundColor = appDefaults.color_bg
         self.collection_view.collectionViewLayout = CollectionViewLayout()
         // Uncomment the following line to preserve selection between presentations
@@ -70,16 +73,7 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
         return true
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
     // MARK: UICollectionViewDataSource
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -96,7 +90,12 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         collectionView.registerNib(UINib(nibName: "ListCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "listCell")
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("listCell", forIndexPath: indexPath) as! ListCollectionViewCell
+        cell.configureCellLayout()
+        
+        //let business = playlist_query[indexPath.row] as! Business // CHANGE
+        
+        //cell.configureCell() // CHANGE - insert imageref
         return cell
     }
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {

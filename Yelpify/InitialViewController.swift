@@ -14,11 +14,21 @@ class InitialViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+//        if (PFUser.currentUser() == nil) {
+//            self.performSegueWithIdentifier("loginscreen", sender: self)
+//            
+//        }else{
+//             self.performSegueWithIdentifier("showHome", sender: self)
+//        }
+
+    }
+    
+    override func viewDidAppear(animated: Bool) {
         if (PFUser.currentUser() == nil) {
             self.performSegueWithIdentifier("loginscreen", sender: self)
             
         }else{
-             self.performSegueWithIdentifier("showHome", sender: self)
+            self.performSegueWithIdentifier("showHome", sender: self)
         }
 
     }

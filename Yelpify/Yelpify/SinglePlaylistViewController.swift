@@ -175,17 +175,16 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         super.viewDidLoad()
         
         let control = BetterSegmentedControl(
-            frame: CGRect(x: 0.0, y: 0.0, width: view.bounds.width, height: self.segmentedBarView.frame.size.height),
+            frame: CGRect(x: 0.0, y: 0.0, width: view.bounds.width + 16, height: self.segmentedBarView.frame.size.height),
             titles: ["Places", "Comments"],
             index: 1,
-            backgroundColor: appDefaults.color_bg,
+            backgroundColor: appDefaults.color,
             titleColor: UIColor.whiteColor(),
-            indicatorViewBackgroundColor: UIColor.whiteColor(),
-            selectedTitleColor: .blackColor())
+            indicatorViewBackgroundColor: .whiteColor(),
+            selectedTitleColor: .whiteColor())
         control.titleFont = UIFont(name: "Montserrat-Regular", size: 12.0)!
         control.addTarget(self, action: nil, forControlEvents: .ValueChanged)
         self.segmentedBarView.addSubview(control)
-        
         
         setupProfilePicture()
         
@@ -625,28 +624,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         return [shareAction, routeAction]
     }
     
-//
-//    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) ->
-//        [AnyObject]?
-//    {
-//        var shareAction = UITableViewRowAction(style: .Normal, title: "Share") {(action:
-//            UITableViewRowAction!, indexPath: NSIndexPath!) -> Void in
-//            
-//            let firstActivityItem = self.playlistArray[indexPath.row] as! Business
-//            
-//            let activityViewController = UIActivityViewController(activityItems: [firstActivityItem.businessName], applicationActivities: nil)
-//            
-//            self.presentViewController(activityViewController, animated: true, completion: nil)
-//            
-//    }
-//        shareAction.backgroundColor = UIColor.blueColor()
-//        return [shareAction]
-//    }
-    
-    
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
-        //self.playlistTableView.setEditing(editing, animated: animated)
     }
     
     func convertPlacesArrayToDictionary(placesArray: [Business])-> [NSDictionary]{
