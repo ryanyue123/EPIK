@@ -52,7 +52,7 @@ class CZPickerViewController: UIViewController {
         picker.dataSource = self
         picker.needFooterView = false
         picker.allowMultipleSelection = true
-        picker.show()
+        picker.show() 
         
     }
     
