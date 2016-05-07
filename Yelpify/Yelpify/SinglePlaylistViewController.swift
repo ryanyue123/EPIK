@@ -69,7 +69,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         return sortedBusinesses
         
     }
-
+    
     
     @IBAction func editPlaylistButtonAction(sender: AnyObject) {
         
@@ -82,17 +82,22 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             print("Edit pressed")
             self.activateEditMode()
         }))
-        actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "yt-share-icon")!), style: .Default, handler: { action in
-            actionController.onWillDismissView()
+        actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "yt-share-icon")!), style: .Cancel, handler: { action in
             let pickerController = CZPickerViewController()
-            self.presentViewController(pickerController, animated: true, completion: nil)
+
+            actionController.dismissViewControllerAnimated(true, completion: {
+                pickerController.showWithMultipleSelections(UIViewController)
+                
+            })
+            
+            
             
             //self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
             //self.playlistTableView.reloadData()
         }))
         actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
         
-        presentViewController(actionController, animated: true, completion: nil)
+        self.presentViewController(actionController, animated: true, completion: nil)
 
     }
     
