@@ -24,6 +24,7 @@ class InitialViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        print(PFUser.currentUser())
         if (PFUser.currentUser() == nil) {
             self.performSegueWithIdentifier("loginscreen", sender: self)
             

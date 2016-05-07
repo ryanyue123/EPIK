@@ -94,11 +94,27 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         collectionView.registerNib(UINib(nibName: "ListCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "listCell")
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("listCell", forIndexPath: indexPath) as! ListCollectionViewCell
+        let cellobject = self.playlist_query[indexPath.row]
         cell.configureCellLayout()
         
-        //let business = playlist_query[indexPath.row] as! Business // CHANGE
-        
-        //cell.configureCell() // CHANGE - insert imageref
+        cell.listName.text = cellobject["playlistName"] as? String
+        let createdByUser = cellobject["createdBy"] as! PFUser
+        createdByUser.fetchIfNeededInBackgroundWithBlock { (object, error) in
+            if (error == nil)
+            {
+                dispatch_async(dispatch_get_main_queue(), {
+                    cell.creatorName.text = object!["username"] as? String
+                })
+            }
+        }
+        let followCount = cellobject["followerCount"]
+        if (followCount == nil)
+        {
+            cell.followerCount.text = "0"
+        }
+        else{
+            cell.followerCount.text = String(followCount)
+        }
         return cell
     }
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
