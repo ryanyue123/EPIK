@@ -28,18 +28,18 @@ class ListCollectionViewCell: UICollectionViewCell {
         //self.customObject = customObject
         
         // Round the banner's corners
-        var maskPath: UIBezierPath = UIBezierPath(roundedRect: self.layer.bounds, byRoundingCorners: ([.TopLeft, .TopRight]), cornerRadii: CGSizeMake(10, 10))
+        var maskPath: UIBezierPath = UIBezierPath(roundedRect: self.layer.bounds, byRoundingCorners: ([.TopLeft, .TopRight, .BottomLeft, .BottomRight]), cornerRadii: CGSizeMake(20, 20))
         var maskLayer: CAShapeLayer = CAShapeLayer()
         maskLayer.frame = self.layer.bounds
         maskLayer.path = maskPath.CGPath
         self.layer.mask = maskLayer
         
         // Round cell corners
-        self.layer.cornerRadius = 10
+        self.layer.cornerRadius = 20
         // Add shadow
         self.layer.masksToBounds = false
         self.layer.shadowOpacity = 0.75
-        self.layer.shadowRadius = 10.0
+        self.layer.shadowRadius = 20.0
         self.layer.shouldRasterize = false
         self.layer.shadowPath = UIBezierPath(rect: CGRectMake(self.frame.size.width / 2 - (self.frame.size.width - 50) / 2, self.frame.size.height, self.frame.size.width - 50, 10)).CGPath
     }
