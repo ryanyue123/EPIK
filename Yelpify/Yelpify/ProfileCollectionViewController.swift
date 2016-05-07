@@ -16,7 +16,6 @@ class ProfileCollectionViewController: UICollectionViewController {
     var user_playlists = [PFObject]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if (user == nil)
         {
             user = PFUser.currentUser()
