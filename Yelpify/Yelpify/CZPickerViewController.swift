@@ -54,7 +54,7 @@ class CZPickerViewController: UIViewController {
     }
     
 
-    @IBAction func showWithFooter(sender: AnyObject) {
+    func showWithFooter(sender: AnyObject) {
         let picker = CZPickerView(headerTitle: "Sort Options", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
         picker.delegate = self
         picker.dataSource = self
