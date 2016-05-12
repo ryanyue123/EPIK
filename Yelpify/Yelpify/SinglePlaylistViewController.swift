@@ -81,7 +81,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     @IBAction func editPlaylistButtonAction(sender: AnyObject) {
         
         let actionController = YoutubeActionController()
-        
+        let pickerController = CZPickerViewController()
         actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
             print("Share")
         }))
@@ -91,24 +91,25 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             self.playlistTableView.reloadData()
         }))
         actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "yt-share-icon")!), style: .Cancel, handler: { action in
-            let pickerController = CZPickerViewController()
-
+            
             pickerController.showWithMultipleSelections(UIViewController)
             
-            let sortMethod = pickerController.item
             
-            if sortMethod == "Name"{
-               self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
-               self.playlistTableView.reloadData()
-            }else if sortMethod == "Rating"{
-                self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
-                self.playlistTableView.reloadData()
-
-            }
         }))
         actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
         
         presentViewController(actionController, animated: true, completion: nil)
+        
+        let sortMethod = pickerController.item
+        
+        if sortMethod == "Name"{
+            self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
+            self.playlistTableView.reloadData()
+        }else if sortMethod == "Rating"{
+            self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
+            self.playlistTableView.reloadData()
+            
+        }
 
     }
     
