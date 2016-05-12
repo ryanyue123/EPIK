@@ -18,7 +18,7 @@ protocol ModalViewControllerDelegate
 
 class CZPickerViewController: UIViewController {
     
-    var fruits = ["Name","Rating"]
+    var fruits = ["Alphabetical","Rating"]
     var fruitImages = [UIImage]()
     var pickerWithImage: CZPickerView?
     var item = String()
@@ -55,7 +55,7 @@ class CZPickerViewController: UIViewController {
     
 
     @IBAction func showWithFooter(sender: AnyObject) {
-        let picker = CZPickerView(headerTitle: "Fruits", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
+        let picker = CZPickerView(headerTitle: "Sort Options", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
         picker.delegate = self
         picker.dataSource = self
         picker.needFooterView = true

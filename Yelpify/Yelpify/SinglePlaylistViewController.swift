@@ -102,19 +102,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             
             pickerController.businessArrayToSort = self.playlistArray
             pickerController.showWithFooter(UIViewController)
-
-           
-//            if pickerController.view.window == nil{
-//                print("here")
-//                if self.sortMethod == "Name"{
-//                    self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
-//                    self.playlistTableView.reloadData()
-//                }else if self.sortMethod == "Rating"{
-//                    self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
-//                    self.playlistTableView.reloadData()
-//                }
-//            }
-//            
             
         }))
         actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
