@@ -196,8 +196,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureSegmentedBar()
-        
         setupProfilePicture()
         
         // tapRecognizer, placed in viewDidLoad
@@ -288,6 +286,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     override func viewDidAppear(animated: Bool) {
+        configureSegmentedBar()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -465,35 +464,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func configureSegmentedBar(){
         let control = BetterSegmentedControl(
-            frame: CGRect(x: 0.0, y: 0.0, width: view.bounds.width + 16, height: 40),
+            frame: CGRect(x: 0.0, y: 0.0, width: self.playlistInfoView.frame.size.width, height: 40),
             titles: ["Places", "Comments"],
             index: 0,
             backgroundColor: appDefaults.color,
             titleColor: UIColor.whiteColor(),
             indicatorViewBackgroundColor: appDefaults.color_darker,
             selectedTitleColor: .whiteColor())
-        //control.autoresizingMask = [.FlexibleWidth]
-        control.cornerRadius = 10.0
+        control.autoresizingMask = [.FlexibleWidth]
+        //control.cornerRadius = 10.0
         control.panningDisabled = true
         control.titleFont = UIFont(name: "Montserrat", size: 12.0)!
         control.addTarget(self, action: nil, forControlEvents: .ValueChanged)
         self.segmentedBarView.addSubview(control)
-
-//        let control = BetterSegmentedControl(
-//            frame: CGRect(x: 0.0, y: 330.0, width: self.view.frame.width, height: 20.0),
-//            titles: ["Places, Comments"],
-//            index: 1,
-//            backgroundColor: appDefaults.color,
-//            titleColor: .whiteColor(),
-//            indicatorViewBackgroundColor: appDefaults.color_bg,
-//            selectedTitleColor: .blackColor())
-//        control.titleFont = UIFont(name: "Montserrat-Regular", size: 10.0)!
-//        control.addTarget(self, action: nil, forControlEvents: .ValueChanged)
-//        self.view.addSubview(control)
-//        control.tag = 302
-//        
-//        let controlView = view.viewWithTag(302)
-//        self.view.bringSubviewToFront(controlView!)
     }
     
     func updateHeaderView(){
