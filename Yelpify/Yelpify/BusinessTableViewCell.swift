@@ -97,11 +97,16 @@ class BusinessTableViewCell: MGSwipeTableCell {
             }
             return result
         }
-       
-        let PhotoURL = buildPlacePhotoURLString(business.businessPhotoReference)
-        //let URLString = self.items[indexPath.row]
-        let URL = NSURL(string:PhotoURL)!
-        businessBackgroundImage.hnk_setImageFromURL(URL)
+        if business.businessPhotoReference != ""{
+            let PhotoURL = buildPlacePhotoURLString(business.businessPhotoReference)
+            //let URLString = self.items[indexPath.row]
+            let URL = NSURL(string:PhotoURL)!
+            businessBackgroundImage.hnk_setImageFromURL(URL)
+        }
+        else{
+            businessBackgroundImage.image =  UIImage(named: "default_restaurant")
+                
+            }
         
 //        self.businessBackgroundImage.image = UIImage(named:"default_restaurant")
 //        
