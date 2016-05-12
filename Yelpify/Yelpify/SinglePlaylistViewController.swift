@@ -109,6 +109,37 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 
     }
     
+   func shownActionsMenu(sender: AnyObject) {
+        
+        let actionController = YoutubeActionController()
+        
+        actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
+            print("Share")
+        }))
+        actionController.addAction(Action(ActionData(title: "Edit Playlist", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
+            print("Edit pressed")
+            self.activateEditMode()
+            self.playlistTableView.reloadData()
+        }))
+        actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "yt-share-icon")!), style: .Cancel, handler: { action in
+            let pickerController = CZPickerViewController()
+            
+            pickerController.showWithMultipleSelections(UIViewController)
+            //            if sortMethod == "Name"{
+            //                self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
+            //                self.playlistTableView.reloadData()
+            //            }else if sortMethod == "Rating"{
+            //                self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
+            //                self.playlistTableView.reloadData()
+            //
+            //            }
+        }))
+        actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
+        
+        presentViewController(actionController, animated: true, completion: nil)
+        
+    }
+    
     @IBAction func selectContentType(sender: AnyObject) {
         // crap code I know
         if sender.selectedSegmentIndex == 0 {
@@ -279,6 +310,16 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 })
             }
         }
+        
+        // Setup Navigation Bar
+        let navigationBar = navigationController!.navigationBar
+        navigationBar.tintColor = UIColor.whiteColor()
+        
+        //let leftButton =  UIBarButtonItem(image: UIImage(named: "sort_icon"), style: .Plain, target: self, action: nil)
+        let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "showActionMenu:")
+        
+        //navigationItem.leftBarButtonItem = leftButton
+        navigationItem.rightBarButtonItem = rightButton
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -554,58 +595,36 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         // Configure Cell
         cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
         }
-        
-//        switch self.mode!{
-//        case .View:
-//            func swipeTableCell(cell: MGSwipeTableCell!, tappedButtonAtIndex index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
-//                let indexPath = playlistTableView.indexPathForCell(cell)
-//                let business = playlistArray[indexPath!.row] as! Business
-//                let actions = PlaceActions()
-//                actions.openInMaps(business)
-//                
-//                return true
-//            }
-//        case .Edit:
-//            func swipeTableCell(cell: MGSwipeTableCell!, tappedButtonAtIndex index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
-//                let indexPath = playlistTableView.indexPathForCell(cell)
-//                let business = playlistArray[indexPath!.row] as! Business
-//                
-//                
-//                return true
-//            }
-        
-//        }
+    
         // Add Swipe Buttons
         // configure left buttons
         if self.mode == ListMode.View{
-        cell.leftButtons.removeAll()
-        cell.rightButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_darker, padding: 25),
-                             MGSwipeButton(title: "Add", backgroundColor: UIColor.greenColor())]
-        cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
-        cell.rightExpansion.buttonIndex = 0
-        cell.rightExpansion.fillOnTrigger = false
-        cell.rightExpansion.threshold = 1
-        return cell
+            cell.leftButtons.removeAll()
+            cell.rightButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_darker, padding: 25),
+                                 MGSwipeButton(title: "Add", backgroundColor: UIColor.greenColor())]
+            cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
+            cell.rightExpansion.buttonIndex = 0
+            cell.rightExpansion.fillOnTrigger = false
+            cell.rightExpansion.threshold = 1
+            
+        //return cell
         }
         
         if self.mode == ListMode.Edit{
-        cell.rightButtons.removeAll()
-        cell.leftButtons = [MGSwipeButton(title: "Delete", backgroundColor: UIColor.redColor(),padding: 25)]
-        cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
-        cell.leftExpansion.buttonIndex = 0
-        cell.leftExpansion.fillOnTrigger = false
-        cell.leftExpansion.threshold = 1
+            cell.rightButtons.removeAll()
+            cell.leftButtons = [MGSwipeButton(title: "Delete", backgroundColor: UIColor.redColor(),padding: 25)]
+            cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
+            cell.leftExpansion.buttonIndex = 0
+            cell.leftExpansion.fillOnTrigger = false
+            cell.leftExpansion.threshold = 1
         
-        
-        return cell
+        //return cell
         }
     return cell
     }
     
     // MGSwipeTableCell Delegate Methods
-    
 
-    
     func swipeTableCell(cell: MGSwipeTableCell!, canSwipe direction: MGSwipeDirection) -> Bool {
         return true
     }

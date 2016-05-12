@@ -38,7 +38,8 @@
 		907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907E0CEA1C7828E100872135 /* APIDataHandler.swift */; };
 		908481801C7504AF009B6099 /* BusinessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */; };
 		908481841C750816009B6099 /* BusinessObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908481831C750816009B6099 /* BusinessObject.swift */; };
-		90A9437A1CD2CDE8004ACE78 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A943791CD2CDE8004ACE78 /* CommentTableViewCell.swift */; };
+		908851961CDEE43700F63A40 /* DataFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908851951CDEE43700F63A40 /* DataFunctions.swift */; };
+		90A9437A1CD2CDE8004ACE78 /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A943791CD2CDE8004ACE78 /* ReviewTableViewCell.swift */; };
 		90B09C601CBC7573004F38C2 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B09C5F1CBC7573004F38C2 /* CardView.swift */; };
 		90B6D69C1CD35BBE006928E8 /* CustomSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B6D69B1CD35BBE006928E8 /* CustomSegue.swift */; };
 		90B6D69E1CD49888006928E8 /* SearchPagerTabStripVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B6D69D1CD49888006928E8 /* SearchPagerTabStripVC.swift */; };
@@ -146,7 +147,8 @@
 		907E0CEA1C7828E100872135 /* APIDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIDataHandler.swift; sourceTree = "<group>"; };
 		9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BusinessTableViewCell.swift; path = Yelpify/BusinessTableViewCell.swift; sourceTree = "<group>"; };
 		908481831C750816009B6099 /* BusinessObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessObject.swift; sourceTree = "<group>"; };
-		90A943791CD2CDE8004ACE78 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentTableViewCell.swift; path = Yelpify/CommentTableViewCell.swift; sourceTree = "<group>"; };
+		908851951CDEE43700F63A40 /* DataFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFunctions.swift; sourceTree = "<group>"; };
+		90A943791CD2CDE8004ACE78 /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReviewTableViewCell.swift; path = Yelpify/ReviewTableViewCell.swift; sourceTree = "<group>"; };
 		90B09C5F1CBC7573004F38C2 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		90B6D69B1CD35BBE006928E8 /* CustomSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSegue.swift; sourceTree = "<group>"; };
 		90B6D69D1CD49888006928E8 /* SearchPagerTabStripVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPagerTabStripVC.swift; sourceTree = "<group>"; };
@@ -234,7 +236,7 @@
 				3CBFD89C1CD4355900290F25 /* SearchPlaylistCell.swift */,
 				3CD814DD1CDD659F00D2BEC6 /* SearchPeopleCell.swift */,
 				9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */,
-				90A943791CD2CDE8004ACE78 /* CommentTableViewCell.swift */,
+				90A943791CD2CDE8004ACE78 /* ReviewTableViewCell.swift */,
 				3CD0344E1CBA121300675F88 /* TableViewCell.swift */,
 				3CB8D45B1CBB575F00870F38 /* ListCollectionViewCell.swift */,
 			);
@@ -398,6 +400,7 @@
 				90E505E31C8E946700F47285 /* CustomSearchBar.swift */,
 				90B6D69B1CD35BBE006928E8 /* CustomSegue.swift */,
 				90C96AAD1CCAF72B00E9EC28 /* ConfigureFunctions.swift */,
+				908851951CDEE43700F63A40 /* DataFunctions.swift */,
 			);
 			name = "Helper Modules";
 			sourceTree = "<group>";
@@ -707,6 +710,7 @@
 				3CB8D45C1CBB575F00870F38 /* ListCollectionViewCell.swift in Sources */,
 				90C177E01CCB5B85007344CE /* PostCell.swift in Sources */,
 				90C177DA1CCB5B4A007344CE /* ChildExampleViewController.swift in Sources */,
+				908851961CDEE43700F63A40 /* DataFunctions.swift in Sources */,
 				90C177D41CCB50A6007344CE /* YoutubeExampleViewController.swift in Sources */,
 				3C7C56451CD479EF009D8B34 /* SignUpViewController.swift in Sources */,
 				EDA8CEF51CAF506400A5C2ED /* SortMethods.swift in Sources */,
@@ -730,7 +734,7 @@
 				90BAD1C11C8662ED0047277E /* TestTableViewController.swift in Sources */,
 				ED52E64D1CCB2E0300CEBAE2 /* YoutubeActionController.swift in Sources */,
 				3C2F1C7B1CD468020081CEFA /* InitialViewController.swift in Sources */,
-				90A9437A1CD2CDE8004ACE78 /* CommentTableViewCell.swift in Sources */,
+				90A9437A1CD2CDE8004ACE78 /* ReviewTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
