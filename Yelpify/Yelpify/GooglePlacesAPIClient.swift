@@ -142,7 +142,7 @@ class GooglePlacesAPIClient: NSObject {
         return result
     }
     
-    private func buildPlacePhotoURLString(parameters: Dictionary<String, String>) -> String{
+    func buildPlacePhotoURLString(parameters: Dictionary<String, String>) -> String{
         var result = "https://maps.googleapis.com/maps/api/place/photo?"
         for (key, value) in parameters{
             let addString = key + "=" + value + "&"

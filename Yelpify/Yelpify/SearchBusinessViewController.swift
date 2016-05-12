@@ -222,11 +222,15 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     override func viewDidAppear(animated: Bool) {
         if searchTextField != nil{
             searchTextField.delegate = self
+            self.tableView.reloadData()
         }
     }
 
     
     override func viewDidLoad(){
+        print("hellooo")
+        self.tableView.reloadData()
+        
         
         // Get Location and Perform Search
         DataFunctions.getLocation { (coordinates) in
