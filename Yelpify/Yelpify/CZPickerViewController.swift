@@ -10,12 +10,24 @@ import Foundation
 import UIKit
 import CZPicker
 
+protocol ModalViewControllerDelegate
+{
+    func sendValue(var value : [Business])
+}
+
+
 class CZPickerViewController: UIViewController {
     
     var fruits = ["Name","Rating"]
     var fruitImages = [UIImage]()
     var pickerWithImage: CZPickerView?
     var item = String()
+    
+    var businessArrayToSort: [Business]!
+    
+    var delegate:ModalViewControllerDelegate!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,11 +37,23 @@ class CZPickerViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
     
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning(){
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    func sortMethods(businesses: Array<Business>, type: String)->Array<Business>{
+        var sortedBusinesses: Array<Business> = []
+        if type == "name"{
+            sortedBusinesses = businesses.sort{$0.businessName < $1.businessName}
+        } else if type == "rating"{
+            sortedBusinesses = businesses.sort{$0.businessRating > $1.businessRating}
+        }
+        return sortedBusinesses
+        
+    }
+    
+
     @IBAction func showWithFooter(sender: AnyObject) {
         let picker = CZPickerView(headerTitle: "Fruits", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
         picker.delegate = self
@@ -53,8 +77,9 @@ class CZPickerViewController: UIViewController {
         picker.delegate = self
         picker.dataSource = self
         picker.needFooterView = false
-        picker.allowMultipleSelection = true
+        picker.allowMultipleSelection = false
         picker.show()
+        
         
     }
     
@@ -80,19 +105,21 @@ extension CZPickerViewController: CZPickerViewDelegate, CZPickerViewDataSource {
     }
     
     func czpickerView(pickerView: CZPickerView!, titleForRow row: Int) -> String! {
+        print(fruits[row])
         return fruits[row]
     }
     
-    func czpickerView(pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int){
-        print(fruits[row])
-    }
-    
-    func czpickerView(pickerView: CZPickerView!, didConfirmWithItemsAtRows rows: [AnyObject]!) {
-        for row in rows {
-            if let row = row as? Int {
-                item = fruits[row]
-                print(fruits[row])
-            }
+    func czpickerView(pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int) {
+        if row == 0{
+            let sortedList = self.sortMethods(businessArrayToSort, type: "name")
+            delegate.sendValue(sortedList)
+        }else if row == 1{
+            let sortedList = self.sortMethods(businessArrayToSort, type: "rating")
+            delegate.sendValue(sortedList)
         }
     }
+  
+    
+    
+    
 }

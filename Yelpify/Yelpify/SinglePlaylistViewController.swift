@@ -21,7 +21,9 @@ enum ListMode{
     case View, Edit
 }
 
-class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate, MGSwipeTableCellDelegate{
+
+
+class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate, MGSwipeTableCellDelegate, ModalViewControllerDelegate{
     
     //@IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
     
@@ -57,7 +59,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var playlistArray = [Business]()
     var object: PFObject!
     var newPlaylist: Bool = false
-
+    var sortMethod:String!
     
     var playlist_name: String!
     
@@ -65,6 +67,11 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     let defaultAppColor = UIColor(netHex: 0xFFFFFF)
     
     var viewDisappearing = false
+    
+    func sendValue(value:[Business]) {
+        playlistArray = value
+        self.playlistTableView.reloadData()
+    }
     
     func sortMethods(businesses: Array<Business>, type: String)->Array<Business>{
         var sortedBusinesses: Array<Business> = []
@@ -76,8 +83,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         return sortedBusinesses
         
     }
-    
-    
+   
     @IBAction func editPlaylistButtonAction(sender: AnyObject) {
         
         let actionController = YoutubeActionController()
@@ -92,25 +98,30 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }))
         actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "yt-share-icon")!), style: .Cancel, handler: { action in
             
-            pickerController.showWithMultipleSelections(UIViewController)
+            pickerController.delegate = self
             
+            pickerController.businessArrayToSort = self.playlistArray
+            pickerController.showWithFooter(UIViewController)
+
+           
+//            if pickerController.view.window == nil{
+//                print("here")
+//                if self.sortMethod == "Name"{
+//                    self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
+//                    self.playlistTableView.reloadData()
+//                }else if self.sortMethod == "Rating"{
+//                    self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
+//                    self.playlistTableView.reloadData()
+//                }
+//            }
+//            
             
         }))
         actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
         
         presentViewController(actionController, animated: true, completion: nil)
         
-        let sortMethod = pickerController.item
         
-        if sortMethod == "Name"{
-            self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
-            self.playlistTableView.reloadData()
-        }else if sortMethod == "Rating"{
-            self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
-            self.playlistTableView.reloadData()
-            
-        }
-
     }
     
     @IBAction func selectContentType(sender: AnyObject) {
@@ -197,6 +208,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         super.viewDidLoad()
         
         setupProfilePicture()
+        self.playlistTableView.reloadData()
         
         // tapRecognizer, placed in viewDidLoad
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPress:")
