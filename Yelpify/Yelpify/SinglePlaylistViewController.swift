@@ -11,13 +11,16 @@ import Parse
 import XLActionController
 import MGSwipeTableCell
 import BetterSegmentedControl
+import CZPicker
 
 enum ContentTypes {
     case Places, Comments
 }
-enum ListMode {
+
+enum ListMode{
     case View, Edit
 }
+
 class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate, MGSwipeTableCellDelegate{
     
     //@IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
@@ -44,7 +47,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var segmentedBar: UISegmentedControl!
     @IBOutlet weak var segmentedBarView: UIView!
     
-    var mode:ListMode! = .View
+    var mode: ListMode! = .View
     
     var statusBarView: UIView!
     
@@ -54,6 +57,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var playlistArray = [Business]()
     var object: PFObject!
     var newPlaylist: Bool = false
+
     
     var playlist_name: String!
     
@@ -72,7 +76,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         return sortedBusinesses
         
     }
-
+    
     
     @IBAction func editPlaylistButtonAction(sender: AnyObject) {
         
@@ -84,10 +88,20 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         actionController.addAction(Action(ActionData(title: "Edit Playlist", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
             print("Edit pressed")
             self.activateEditMode()
-        }))
-        actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "yt-share-icon")!), style: .Default, handler: { action in
-            self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
             self.playlistTableView.reloadData()
+        }))
+        actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "yt-share-icon")!), style: .Cancel, handler: { action in
+            let pickerController = CZPickerViewController()
+
+            pickerController.showWithMultipleSelections(UIViewController)
+//            if sortMethod == "Name"{
+//                self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
+//                self.playlistTableView.reloadData()
+//            }else if sortMethod == "Rating"{
+//                self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
+//                self.playlistTableView.reloadData()
+//
+//            }
         }))
         actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
         
@@ -178,8 +192,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureSegmentedBar()
-        
         setupProfilePicture()
         
         // tapRecognizer, placed in viewDidLoad
@@ -191,8 +203,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
-        
-        
+
         self.playlistTableView.backgroundColor = appDefaults.color
         if (self.newPlaylist == true)
         {
@@ -200,7 +211,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             // Automatic edit mode
             self.activateEditMode()
         }
-        
         else if(object["createdBy"] as! PFUser == PFUser.currentUser()!)
             //later incorporate possibility of collaboration
         {
@@ -272,6 +282,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     override func viewDidAppear(animated: Bool) {
+        configureSegmentedBar()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -449,35 +460,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func configureSegmentedBar(){
         let control = BetterSegmentedControl(
-            frame: CGRect(x: 0.0, y: 0.0, width: view.bounds.width + 16, height: 40),
+            frame: CGRect(x: 0.0, y: 0.0, width: self.playlistInfoView.frame.size.width, height: 40),
             titles: ["Places", "Comments"],
             index: 0,
             backgroundColor: appDefaults.color,
             titleColor: UIColor.whiteColor(),
             indicatorViewBackgroundColor: appDefaults.color_darker,
             selectedTitleColor: .whiteColor())
-        //control.autoresizingMask = [.FlexibleWidth]
-        control.cornerRadius = 10.0
+        control.autoresizingMask = [.FlexibleWidth]
+        //control.cornerRadius = 10.0
         control.panningDisabled = true
         control.titleFont = UIFont(name: "Montserrat", size: 12.0)!
         control.addTarget(self, action: nil, forControlEvents: .ValueChanged)
         self.segmentedBarView.addSubview(control)
-
-//        let control = BetterSegmentedControl(
-//            frame: CGRect(x: 0.0, y: 330.0, width: self.view.frame.width, height: 20.0),
-//            titles: ["Places, Comments"],
-//            index: 1,
-//            backgroundColor: appDefaults.color,
-//            titleColor: .whiteColor(),
-//            indicatorViewBackgroundColor: appDefaults.color_bg,
-//            selectedTitleColor: .blackColor())
-//        control.titleFont = UIFont(name: "Montserrat-Regular", size: 10.0)!
-//        control.addTarget(self, action: nil, forControlEvents: .ValueChanged)
-//        self.view.addSubview(control)
-//        control.tag = 302
-//        
-//        let controlView = view.viewWithTag(302)
-//        self.view.bringSubviewToFront(controlView!)
     }
     
     func updateHeaderView(){
@@ -560,35 +555,73 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
         }
         
+//        switch self.mode!{
+//        case .View:
+//            func swipeTableCell(cell: MGSwipeTableCell!, tappedButtonAtIndex index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
+//                let indexPath = playlistTableView.indexPathForCell(cell)
+//                let business = playlistArray[indexPath!.row] as! Business
+//                let actions = PlaceActions()
+//                actions.openInMaps(business)
+//                
+//                return true
+//            }
+//        case .Edit:
+//            func swipeTableCell(cell: MGSwipeTableCell!, tappedButtonAtIndex index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
+//                let indexPath = playlistTableView.indexPathForCell(cell)
+//                let business = playlistArray[indexPath!.row] as! Business
+//                
+//                
+//                return true
+//            }
+        
+//        }
         // Add Swipe Buttons
         // configure left buttons
-        cell.leftButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_darker, padding: 30)]
-        cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
-
-        // configure right buttons
-        cell.rightButtons = [MGSwipeButton(title: "Add", backgroundColor: UIColor.redColor())]
+        if self.mode == ListMode.View{
+        cell.leftButtons.removeAll()
+        cell.rightButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_darker, padding: 25),
+                             MGSwipeButton(title: "Add", backgroundColor: UIColor.greenColor())]
         cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
+        cell.rightExpansion.buttonIndex = 0
+        cell.rightExpansion.fillOnTrigger = false
+        cell.rightExpansion.threshold = 1
+        return cell
+        }
         
+        if self.mode == ListMode.Edit{
+        cell.rightButtons.removeAll()
+        cell.leftButtons = [MGSwipeButton(title: "Delete", backgroundColor: UIColor.redColor(),padding: 25)]
+        cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
         cell.leftExpansion.buttonIndex = 0
         cell.leftExpansion.fillOnTrigger = false
-        cell.leftExpansion.threshold = 1.75
+        cell.leftExpansion.threshold = 1
         
         
         return cell
+        }
+    return cell
     }
     
     // MGSwipeTableCell Delegate Methods
     
-    func swipeTableCell(cell: MGSwipeTableCell!, tappedButtonAtIndex index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
-        let indexPath = playlistTableView.indexPathForCell(cell)
-        let business = playlistArray[indexPath!.row] as! Business
-        let actions = PlaceActions()
-        actions.openInMaps(business)
-        
+
+    
+    func swipeTableCell(cell: MGSwipeTableCell!, canSwipe direction: MGSwipeDirection) -> Bool {
         return true
     }
     
-    func swipeTableCell(cell: MGSwipeTableCell!, canSwipe direction: MGSwipeDirection) -> Bool {
+    func swipeTableCell(cell: MGSwipeTableCell!, tappedButtonAtIndex index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
+        let indexPath = playlistTableView.indexPathForCell(cell)
+        let business = playlistArray[indexPath!.row] 
+        let actions = PlaceActions()
+        if self.mode == ListMode.View{
+        actions.openInMaps(business)
+        }
+        else if self.mode == ListMode.Edit{
+            playlistArray.removeAtIndex(indexPath!.row)
+            self.playlistTableView.reloadData()
+        }
+        
         return true
     }
     
@@ -614,23 +647,23 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
     }
     
-    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]?
-    {
-        var shareAction = UITableViewRowAction(style: .Normal, title: "Share") {(action:
-            UITableViewRowAction!, indexPath: NSIndexPath!) -> Void in
-            print("sharing")
-        }
-        
-        shareAction.backgroundColor = appDefaults.color
-        
-        var routeAction = UITableViewRowAction(style: .Normal, title: "Route") { (action: UITableViewRowAction!, indexPath: NSIndexPath) in
-            print("routing")
-        }
-        
-        routeAction.backgroundColor = appDefaults.color_darker
-        
-        return [shareAction, routeAction]
-    }
+//    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]?
+//    {
+//        var shareAction = UITableViewRowAction(style: .Normal, title: "Share") {(action:
+//            UITableViewRowAction!, indexPath: NSIndexPath!) -> Void in
+//            print("sharing")
+//        }
+//        
+//        shareAction.backgroundColor = appDefaults.color
+//        
+//        var routeAction = UITableViewRowAction(style: .Normal, title: "Route") { (action: UITableViewRowAction!, indexPath: NSIndexPath) in
+//            print("routing")
+//        }
+//        
+//        routeAction.backgroundColor = appDefaults.color_darker
+//        
+//        return [shareAction, routeAction]
+//    }
     
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
@@ -668,7 +701,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         self.navigationItem.setHidesBackButton(false, animated: true)
         self.navigationItem.leftBarButtonItem = nil
-        deactivateEditMode()
+        self.playlistTableView.reloadData()
     }
     
     @IBAction func showProfileView(sender: UIButton) {

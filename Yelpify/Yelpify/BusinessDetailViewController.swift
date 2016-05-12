@@ -158,12 +158,10 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func getHours(hoursArray: NSMutableArray) -> String{
-        let dayDict = [0: "Saturday", 1: "Sunday", 2: "Monday", 3: "Tuesday", 4: "Wednesday", 5: "Thursday", 6: "Friday"]
+        let dayDict = [0: "Sunday", 1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday"]
         
         let hoursArr = hoursArray
         hoursArr.insertObject(hoursArr[6], atIndex: 0)
-        hoursArr.insertObject(hoursArr[6], atIndex: 0)
-        hoursArr.removeLastObject()
         hoursArr.removeLastObject()
         
         let today = getDayOfWeek()!
@@ -426,7 +424,7 @@ func getDayOfWeek()->Int? {
         let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         let myComponents = myCalendar.components(.Weekday, fromDate: todayDate)
         let weekDay = myComponents.weekday
-        return weekDay
+        return weekDay - 1
     } else {
         return nil
     }
