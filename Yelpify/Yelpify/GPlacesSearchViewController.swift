@@ -1,6 +1,12 @@
 import UIKit
 import GoogleMaps
 
+enum SearchType {
+    case City
+    case Address
+    case Place
+}
+
 class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate, UITableViewDelegate, CustomSearchControllerDelegate{
     
     @IBOutlet weak var resultsTableView: UITableView!
@@ -14,7 +20,7 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
     var customSearchController: CustomSearchController!
     //var customSearchPlaceController : CustomSearchController!
     
-    var searchType: String! = "Location"
+    var searchType: SearchType = .Address
     
     var currentLocation: String! = "Current Location"
     var currentLocationCoordinates: String! = "-33.0,180.0"
@@ -26,7 +32,17 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
         
         searchQuery = searchText
         
-        searchType = "Business"
+        print(searchQuery)
+        if searchQuery.characters.count > 0{
+            do{
+                if let _ =  try Int(searchText![0]){
+                    print("is int")
+                    searchType = .Address
+                }
+            }catch{}
+        }
+        
+        searchType = .City
         configureFilterType()
         tableDataSource?.sourceTextHasChanged(searchText)
         resultsTableView.reloadData()
@@ -40,29 +56,34 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
         
         configureTableDataSource()
         configureFilterType()
-        configureCustomSearchController()
+        //configureCustomSearchController()
 
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        print(currentLocationCoordinates)
     }
     
     override func viewWillAppear(animated: Bool) {
         self.mainSearchTextField.text = searchQuery
         self.mainSearchTextField.becomeFirstResponder()
         
-        self.customSearchController.customSearchBar.placeholder = currentLocationCoordinates
+        //self.customSearchController.customSearchBar.placeholder = currentLocationCoordinates
     }
     
     func configureFilterType(){
-        
         let filter = GMSAutocompleteFilter()
+        filter.type = GMSPlacesAutocompleteTypeFilter.Address
+        
         switch searchType{
-            case "Location":
+            case .Address:
                 filter.type = GMSPlacesAutocompleteTypeFilter.Address
-            case "Business":
-                filter.type = GMSPlacesAutocompleteTypeFilter.Establishment
+            case .City:
+                filter.type = GMSPlacesAutocompleteTypeFilter.City
             default:
                 filter.type = GMSPlacesAutocompleteTypeFilter.NoFilter
         }
-        
+
         tableDataSource?.autocompleteFilter = filter
     }
     
@@ -78,8 +99,8 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
         let northEastBound = CLLocationCoordinate2D(latitude: currentLat + 0.1, longitude: currentLng + 0.1)
         let southWestBound = CLLocationCoordinate2D(latitude: currentLat - 0.1, longitude: currentLng - 0.1)
         
-        print(northEastBound.latitude, northEastBound.longitude)
-        print(southWestBound.latitude, southWestBound.longitude)
+        //print(northEastBound.latitude, northEastBound.longitude)
+        //print(southWestBound.latitude, southWestBound.longitude)
         
         tableDataSource?.autocompleteBounds = GMSCoordinateBounds(coordinate: northEastBound, coordinate: southWestBound)
         
@@ -105,7 +126,7 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
     }
     
     func didStartSearching() {
-        searchType = "Location"
+        searchType = .Address
         configureFilterType()
         customSearchController.customSearchBar.placeholder = "Search Location"
         
@@ -163,23 +184,23 @@ extension GPlacesSearchViewController: GMSAutocompleteTableDataSourceDelegate {
         customSearchController?.active = false
         
         // Do something with the selected place.
-        if searchType == "Location"{
+        if searchType == .Address{
             currentLocation = place.formattedAddress!
             customSearchController.customSearchBar.resignFirstResponder()
             customSearchController.customSearchBar.text = ""
             customSearchController.customSearchBar.placeholder = place.formattedAddress!
-        }else if searchType == "Business"{
+        }else if searchType == .Place{
             mainSearchTextField.resignFirstResponder()
             mainSearchTextField.text = place.name
         }
         
-        print("Place name: \(place.name)")
-        print("Place address: \(place.formattedAddress)")
-        print("Place attributions: \(place.attributions)")
+        //print("Place name: \(place.name)")
+        //print("Place address: \(place.formattedAddress)")
+        //print("Place attributions: \(place.attributions)")
         
-        searchQuery = place.name
+        let placeCoordinate = place.coordinate
+        currentLocationCoordinates = "\(placeCoordinate.latitude),\(placeCoordinate.longitude)"
         performSegueWithIdentifier("unwindToSearch", sender: self)
-        //dismissViewControllerAnimated(true, completion: nil)
     }
     
     func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String?) -> Bool {

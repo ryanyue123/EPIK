@@ -83,22 +83,47 @@ class BusinessTableViewCell: MGSwipeTableCell {
         }
         
         // Set Background Image
-        self.businessBackgroundImage.image = UIImage(named:"default_restaurant")
         
-        if let photoReference = business.businessPhotoReference{
-            googlePlacesClient.getImageFromPhotoReference(photoReference) { (key) -> Void in
-                
-                self.cache.fetch(key: key).onSuccess { image in
-                    self.businessBackgroundImage.hnk_setImage(image, key: photoReference)
-                    self.businessBackgroundImage.setNeedsDisplay()
-                    self.businessBackgroundImage.setNeedsLayout()
-                    
-                    completion()
-                    
-                }
+        func buildPlacePhotoURLString(photoReference: String) -> String{
+            let photoParameters = [
+                "key" : "AIzaSyDkxzICx5QqztP8ARvq9z0DxNOF_1Em8Qc",
+                "photoreference" : photoReference,
+                "maxheight" : "800"
+            ]
+            var result = "https://maps.googleapis.com/maps/api/place/photo?"
+            for (key, value) in photoParameters{
+                let addString = key + "=" + value + "&"
+                result += addString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
             }
-
+            return result
         }
+        if business.businessPhotoReference != ""{
+            let PhotoURL = buildPlacePhotoURLString(business.businessPhotoReference)
+            //let URLString = self.items[indexPath.row]
+            let URL = NSURL(string:PhotoURL)!
+            businessBackgroundImage.hnk_setImageFromURL(URL)
+        }
+        else{
+            businessBackgroundImage.image =  UIImage(named: "default_restaurant")
+                
+            }
+        
+//        self.businessBackgroundImage.image = UIImage(named:"default_restaurant")
+//        
+//        if let photoReference = business.businessPhotoReference{
+//            googlePlacesClient.getImageFromPhotoReference(photoReference) { (key) -> Void in
+//                
+//                self.cache.fetch(key: key).onSuccess { image in
+//                    self.businessBackgroundImage.hnk_setImage(image, key: photoReference)
+//                    self.businessBackgroundImage.setNeedsDisplay()
+//                    self.businessBackgroundImage.setNeedsLayout()
+//                    
+//                    completion()
+//                    
+//                }
+//            }
+//
+//        }
     }
     
     func configureButton(image: UIImage){
