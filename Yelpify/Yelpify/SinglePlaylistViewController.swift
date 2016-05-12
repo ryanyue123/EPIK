@@ -598,15 +598,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func configureSwipeButtons(cell: MGSwipeTableCell, mode: ListMode){
         if mode == .View{
             cell.leftButtons.removeAll()
-            cell.rightButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_darker, padding: 25),
-                                 MGSwipeButton(title: "Add", backgroundColor: UIColor.greenColor())]
+            cell.rightButtons = [routeButton, addButton]
             cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
             cell.rightExpansion.buttonIndex = 0
-            cell.rightExpansion.fillOnTrigger = false
+            cell.rightExpansion.fillOnTrigger = true
             cell.rightExpansion.threshold = 1
         }else if mode == .Edit{
             cell.rightButtons.removeAll()
-            cell.leftButtons = [MGSwipeButton(title: "Delete", backgroundColor: UIColor.redColor(),padding: 25)]
+            cell.leftButtons = [MGSwipeButton(title: "Delete",backgroundColor: UIColor.redColor(),padding: 25)]
             cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
             cell.leftExpansion.buttonIndex = 0
             cell.leftExpansion.fillOnTrigger = false
@@ -625,7 +624,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         let business = playlistArray[indexPath!.row] 
         let actions = PlaceActions()
         if self.mode == ListMode.View{
-        actions.openInMaps(business)
+            if index == 0{
+                actions.openInMaps(business)
+        }
         }
         else if self.mode == ListMode.Edit{
             playlistArray.removeAtIndex(indexPath!.row)
@@ -636,7 +637,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func swipeTableCell(cell: MGSwipeTableCell!, didChangeSwipeState state: MGSwipeState, gestureIsActive: Bool) {
-        
+        let routeButton = cell.rightButtons.first as! MGSwipeButton
+        let addButton = cell.rightButtons[1] as! MGSwipeButton
+        if cell.swipeState.rawValue == 2{
+            routeButton.backgroundColor = appDefaults.color
+            addButton.backgroundColor = UIColor.greenColor()
+        }
+        else if cell.swipeState.rawValue >= 4{
+            addButton.backgroundColor = appDefaults.color
+            routeButton.backgroundColor = appDefaults.color
+            cell.swipeBackgroundColor = appDefaults.color
+            }
+    
+
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -647,15 +660,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     // Override to support conditional editing of the table view.
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        print("this is row ")
-        print(indexPath.row)
         return true
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
-    {
-        
-    }
+//    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
+//    {
+    
+    //}
     
 //    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]?
 //    {
