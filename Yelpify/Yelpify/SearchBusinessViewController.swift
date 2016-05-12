@@ -223,6 +223,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
 
     
     override func viewDidLoad(){
+        self.tableView.reloadData()
         //getCurrentLocation()
         ConfigureFunctions.configureStatusBar(self.navigationController!)
         ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
