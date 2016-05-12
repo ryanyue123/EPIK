@@ -598,21 +598,27 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
         // Add Swipe Buttons
         // configure left buttons
+        
         if self.mode == ListMode.View{
+            let routeButton = MGSwipeButton(title: "Route", icon: UIImage(named: "location_icon"),backgroundColor: appDefaults.color_darker)
+            routeButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+            routeButton.centerIconOverTextWithSpacing(5)
+            routeButton.titleLabel?.font = UIFont(name: appDefaults.font, size: 12)
             cell.leftButtons.removeAll()
-            cell.rightButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_darker, padding: 25),
-                                 MGSwipeButton(title: "Add", backgroundColor: UIColor.greenColor())]
+            cell.rightButtons = [routeButton, MGSwipeButton(title: "Add", backgroundColor: UIColor.greenColor())]
             cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
             cell.rightExpansion.buttonIndex = 0
             cell.rightExpansion.fillOnTrigger = false
             cell.rightExpansion.threshold = 1
+            
+            
             
         //return cell
         }
         
         if self.mode == ListMode.Edit{
             cell.rightButtons.removeAll()
-            cell.leftButtons = [MGSwipeButton(title: "Delete", backgroundColor: UIColor.redColor(),padding: 25)]
+            cell.leftButtons = [MGSwipeButton(title: "Delete",backgroundColor: UIColor.redColor(),padding: 25)]
             cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
             cell.leftExpansion.buttonIndex = 0
             cell.leftExpansion.fillOnTrigger = false
