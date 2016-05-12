@@ -34,6 +34,7 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
         
         print(searchQuery)
         if searchQuery.characters.count > 0{
+            searchType = .City
             do{
                 if let _ =  try Int(searchText![0]){
                     print("is int")
@@ -42,7 +43,6 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
             }catch{}
         }
         
-        searchType = .City
         configureFilterType()
         tableDataSource?.sourceTextHasChanged(searchText)
         resultsTableView.reloadData()
