@@ -22,7 +22,7 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        queryParseForPeople()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
