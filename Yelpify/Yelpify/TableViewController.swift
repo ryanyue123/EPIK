@@ -16,7 +16,7 @@ struct playlist
 }
 
 struct appDefaults {
-    static let font: UIFont! = UIFont(name: "Montserrat-Regular", size: 12)
+    static let font: UIFont! = UIFont(name: "Montserrat-Regular", size: 14)
     static let color: UIColor! = UIColor.init(netHex: 0x52abc0)
     static let color_bg: UIColor! = UIColor.init(netHex: 0xe4e4e4)
     static let color_darker: UIColor! = UIColor.init(netHex: 0x3a7b8a)

@@ -573,16 +573,22 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         // configure left buttons
         
         if self.mode == ListMode.View{
-            let routeButton = MGSwipeButton(title: "Route", icon: UIImage(named: "location_icon"),backgroundColor: appDefaults.color_darker)
-            routeButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
-            routeButton.centerIconOverTextWithSpacing(5)
-            routeButton.titleLabel?.font = UIFont(name: appDefaults.font, size: 12)
+            let routeButton = MGSwipeButton(title: "Route", icon: UIImage(named: "location_icon"),backgroundColor: appDefaults.color, padding: 25)
+            routeButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
+            routeButton.centerIconOverText()
+            routeButton.titleLabel?.font = appDefaults.font
+            let addButton = MGSwipeButton(title: "Add", icon: UIImage(named: "location_icon"),backgroundColor: appDefaults.color, padding: 25)
+            addButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
+            addButton.centerIconOverText()
+            addButton.titleLabel?.font = appDefaults.font
+            
             cell.leftButtons.removeAll()
-            cell.rightButtons = [routeButton, MGSwipeButton(title: "Add", backgroundColor: UIColor.greenColor())]
+            cell.rightButtons = [routeButton, addButton]
             cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
             cell.rightExpansion.buttonIndex = 0
-            cell.rightExpansion.fillOnTrigger = false
+            cell.rightExpansion.fillOnTrigger = true
             cell.rightExpansion.threshold = 1
+            
             
             
             
@@ -613,7 +619,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         let business = playlistArray[indexPath!.row] 
         let actions = PlaceActions()
         if self.mode == ListMode.View{
-        actions.openInMaps(business)
+            if index == 0{
+                actions.openInMaps(business)
+        }
         }
         else if self.mode == ListMode.Edit{
             playlistArray.removeAtIndex(indexPath!.row)
@@ -624,7 +632,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func swipeTableCell(cell: MGSwipeTableCell!, didChangeSwipeState state: MGSwipeState, gestureIsActive: Bool) {
-        
+        let routeButton = cell.rightButtons.first as! MGSwipeButton
+        let addButton = cell.rightButtons[1] as! MGSwipeButton
+        if cell.swipeState.rawValue == 2{
+            routeButton.backgroundColor = appDefaults.color
+            addButton.backgroundColor = UIColor.greenColor()
+        }
+        else if cell.swipeState.rawValue >= 4{
+            addButton.backgroundColor = appDefaults.color
+            routeButton.backgroundColor = appDefaults.color
+            cell.swipeBackgroundColor = appDefaults.color
+            }
+    
+
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -635,15 +655,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     // Override to support conditional editing of the table view.
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        print("this is row ")
-        print(indexPath.row)
         return true
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
-    {
-        
-    }
+//    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
+//    {
+    
+    //}
     
 //    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]?
 //    {
