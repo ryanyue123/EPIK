@@ -8,10 +8,7 @@
 
 import UIKit
 import Parse
-import CoreLocation
-import MapKit
 import DGElasticPullToRefresh
-import SwiftLocation
 
 struct playlist
 {
@@ -32,7 +29,14 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.getLocationAndFetch()
+        
+        // Get Location and Fetch
+        DataFunctions.getLocation { (coordinates) in
+            self.parameters["ll"] = String(coordinates.latitude) + "," + String(coordinates.longitude)
+            self.userlatitude = coordinates.latitude
+            self.userlongitude = coordinates.longitude
+            self.fetchPlaylists()
+        }
         self.configureColors()
         self.configureHeaderView()
         
@@ -53,7 +57,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
             // Add your logic here
             print("refreshing")
             self?.all_playlists.removeAll()
-            self?.getLocationAndFetch()
+            self!.fetchPlaylists()
             // Do not forget to call dg_stopLoading() at the end
             self?.tableView.dg_stopLoading()
             }, loadingView: loadingView)
@@ -223,41 +227,6 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
         presentViewController(alertController, animated: true, completion: nil)
     }
     
-    func getLocationAndFetch(){
-        LocationManager.shared.observeLocations(.Block, frequency: .OneShot, onSuccess: { location in
-            self.userlatitude = location.coordinate.latitude
-            self.userlongitude = location.coordinate.longitude
-
-            self.fetchPlaylists()
-
-            self.parameters["ll"] = String(self.userlatitude) + "," + String(self.userlongitude)
-
-        }) { error in
-            // Something went wrong. error will tell you what
-        }
-        self.userlatitude = 37.322998
-        self.userlongitude = -122.032182
-        self.parameters["ll"] = String(self.userlatitude) + "," + String(self.userlongitude)
-//
-//        // SwiftLocation
-//        do {
-//            try SwiftLocation.shared.currentLocation(Accuracy.Block, timeout: 20, onSuccess: { (location) -> Void in
-//                // location is a CLPlacemark
-//                self.userlatitude = location?.coordinate.latitude
-//                self.userlongitude = location?.coordinate.longitude
-//                
-//                self.fetchPlaylists()
-//                
-//                self.parameters["ll"] = String(self.userlatitude) + "," + String(self.userlongitude)
-//                
-//                print("1. Location found \(location?.description)")
-//            }) { (error) -> Void in
-//                print("1. Something went wrong -> \(error?.localizedDescription)")
-//            }
-//        } catch (let error) {
-//            print("Error \(error)")
-//        }
-    }
 
     func fetchPlaylists()
     {

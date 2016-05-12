@@ -1,5 +1,5 @@
 //
-//  CommentTableViewCell.swift
+//  ReviewTableViewCell.swift
 //  Yelpify
 //
 //  Created by Jonathan Lam on 4/28/16.
@@ -11,11 +11,11 @@ import Haneke
 import SwiftyJSON
 import Cosmos
 
-class CommentTableViewCell: UITableViewCell {
+class ReviewTableViewCell: UITableViewCell {
     @IBOutlet weak var reviewTextView: UITextView!
     @IBOutlet weak var reviewName: UILabel!
     @IBOutlet weak var reviewDate: UILabel!
-    //@IBOutlet weak var reviewProfileImage: UIImageView!
+    @IBOutlet weak var reviewProfileImage: UIImageView!
     @IBOutlet weak var CommentRating: CosmosView!
     
     let cache = Shared.dataCache
@@ -34,16 +34,19 @@ class CommentTableViewCell: UITableViewCell {
     
     func configureCell(review: NSDictionary){
         
+        // Set Review Text
         self.reviewTextView.text = review["text"] as? String
+        
+        // Set Review Author Name
         self.reviewName.text = review["author_name"] as? String
         
-        
-    if let ratingValue3 = review["rating"] as? Double{
-        if ratingValue3 != -1{
-                self.CommentRating.rating = ratingValue3
+        // Set Review Rating
+        if let ratingValue3 = review["rating"] as? Double{
+            if ratingValue3 != -1{
+                    self.CommentRating.rating = ratingValue3
+                }
             }
-        }
-        
+        // Set Review Author Profile Picture
 //        if let profilePhotoURL = review["profile_photo_url"] as? String{
 //            
 //            //let fetcher = NetworkFetcher<UIImage>(URL: NSURL(string: profilePhotoURL)!)

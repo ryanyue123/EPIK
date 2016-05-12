@@ -25,7 +25,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     let cache = Shared.imageCache
     var dataHandler = APIDataHandler()
     var locationManager = CLLocationManager()
-    var googleParameters = ["key": "AIzaSyDkxzICx5QqztP8ARvq9z0DxNOF_1Em8Qc", "location": "33.6450038818185,-117.837313786366", "rankby":"distance", "keyword": "food"]
+    var googleParameters = ["key": "AIzaSyDkxzICx5QqztP8ARvq9z0DxNOF_1Em8Qc", "location":"", "rankby":"distance", "keyword": "food"]
     var searchDidChange = false
     var searchQuery = ""
     
@@ -35,9 +35,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     func indicatorInfoForPagerTabStrip(pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return itemInfo
-    }
-    
-    @IBAction func searchWithGPlaces(sender: AnyObject) {
     }
     
     
@@ -58,16 +55,23 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             if segue.identifier == "unwindToSearch" {
                 
                 let gPlacesVC = segue.sourceViewController as! GPlacesSearchViewController
+                let searchVC = self.parentViewController as! SearchPagerTabStrip
                 
-                if let searchQuery = gPlacesVC.searchQuery{
-                    if searchQuery != ""{
-                        self.navigationItem.title = searchQuery
-                    }else{
-                        self.navigationItem.title = "Around You"
-                    }
-                    searchWithKeyword(searchQuery)
-                    
-                }
+                searchVC.chosenCoordinates = gPlacesVC.currentLocationCoordinates
+                
+                self.googleParameters["location"] = searchVC.chosenCoordinates
+                
+                self.searchWithKeyword(searchQuery)
+                
+//                if let searchQuery = gPlacesVC.searchQuery{
+//                    if searchQuery != ""{
+//                        self.navigationItem.title = searchQuery
+//                    }else{
+//                        self.navigationItem.title = "Around You"
+//                    }
+//                    searchWithKeyword(searchQuery)
+//                    
+//                }
             }
         }
     }
@@ -223,35 +227,20 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
 
     
     override func viewDidLoad(){
-        self.tableView.reloadData()
-        //getCurrentLocation()
+        
+        // Get Location and Perform Search
+        DataFunctions.getLocation { (coordinates) in
+            self.googleParameters["location"] = "\(coordinates.latitude),\(coordinates.longitude)"
+            self.performInitialSearch()
+            self.playlistArray.removeAll()
+        }
+        
+        // Configure Functions
         ConfigureFunctions.configureStatusBar(self.navigationController!)
-        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+        //ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         
         // Register Nibs
         self.tableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
-        
-//        // Set up Nav Bar
-//        self.navigationController?.navigationBar.backgroundColor = appDefaults.color
-//        self.navigationController?.navigationItem.titleView?.tintColor = UIColor.whiteColor()
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        
-        // Performs an API search and returns a master array of businesses (as dictionaries)
-        performInitialSearch()
-        playlistArray.removeAll()
-        
-//        // Pull to Refresh
-//        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
-//        loadingView.tintColor = UIColor.whiteColor()
-//        tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-//            // Add your logic here
-//            print("refreshing")
-//            self?.tableView.reloadData()
-//            // Do not forget to call dg_stopLoading() at the end
-//            self?.tableView.dg_stopLoading()
-//            }, loadingView: loadingView)
-//        tableView.dg_setPullToRefreshFillColor(appDefaults.color_darker)
-//        tableView.dg_setPullToRefreshBackgroundColor(appDefaults.color_darker)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -279,7 +268,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     }
     
     func textFieldShouldReturn(textField:UITextField) -> Bool {
-        print("olleh")
+        searchQuery = textField.text!
+        searchWithKeyword(searchQuery)
         textField.resignFirstResponder() //close keyboard
         return true
         // Will allow user to press "return" button to close keyboard

@@ -15,8 +15,11 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController {
     
     var isReload = false
     
+    var chosenCoordinates: String!
+    
     @IBOutlet weak var searchTextField: UITextField!
     override func viewDidLoad() {
+        
         // change selected bar color
         settings.style.buttonBarBackgroundColor = appDefaults.color
         settings.style.buttonBarItemBackgroundColor = .whiteColor()
@@ -24,21 +27,49 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController {
         settings.style.buttonBarItemFont = .boldSystemFontOfSize(14)
         settings.style.selectedBarHeight = 2.0
         settings.style.buttonBarMinimumLineSpacing = 0
-        settings.style.buttonBarItemTitleColor = .blackColor()
+        settings.style.buttonBarItemTitleColor = UIColor.grayColor()
         settings.style.buttonBarItemsShouldFillAvailiableWidth = true
-        settings.style.buttonBarLeftContentInset = 0
-        settings.style.buttonBarRightContentInset = -19
+        //settings.style.buttonBarLeftContentInset = 0
+        settings.style.buttonBarRightContentInset = -1
         
         changeCurrentIndexProgressive = { [weak self] (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             guard changeCurrentIndex == true else { return }
-            oldCell?.label.textColor = .blackColor()
+            oldCell?.label.textColor = UIColor.grayColor()
             newCell?.label.textColor = appDefaults.color
         }
+        
         super.viewDidLoad()
+        
+        // Setup Navigation Bar
+        let navigationBar = navigationController!.navigationBar
+        navigationBar.tintColor = UIColor.whiteColor()
+        
+        let leftButton =  UIBarButtonItem(image: UIImage(named: "sort_icon"), style: .Plain, target: self, action: nil)
+        let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")
+        
+        navigationItem.leftBarButtonItem = leftButton
+        navigationItem.rightBarButtonItem = rightButton
 
 //        buttonBarView.selectedBar.backgroundColor = .orangeColor()
 //        buttonBarView.backgroundColor = UIColor(red: 7/255, green: 185/255, blue: 155/255, alpha: 1)
         
+    }
+    
+    func pressedLocation(sender: UIBarButtonItem){
+        performSegueWithIdentifier("pickLocation", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "pickLocation" {
+            let navVC = segue.destinationViewController as! UINavigationController
+            let destVC = navVC.childViewControllers[0] as! GPlacesSearchViewController
+            
+            DataFunctions.getLocation({ (coordinates) in
+                destVC.currentLocationCoordinates = "\(coordinates.latitude),\(coordinates.longitude)"
+                print("Sending location \(coordinates.latitude),\(coordinates.longitude)")
+                
+            })
+        }
     }
     
     // MARK: - PagerTabStripDataSource
