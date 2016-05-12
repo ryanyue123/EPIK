@@ -37,9 +37,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         return itemInfo
     }
     
-    @IBAction func searchWithGPlaces(sender: AnyObject) {
-    }
-    
     
     @IBAction func unwindToSearchBusinessVC(segue: UIStoryboardSegue) {
         if (segue.identifier != nil)
@@ -58,16 +55,23 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             if segue.identifier == "unwindToSearch" {
                 
                 let gPlacesVC = segue.sourceViewController as! GPlacesSearchViewController
+                let searchVC = self.parentViewController as! SearchPagerTabStrip
                 
-                if let searchQuery = gPlacesVC.searchQuery{
-                    if searchQuery != ""{
-                        self.navigationItem.title = searchQuery
-                    }else{
-                        self.navigationItem.title = "Around You"
-                    }
-                    searchWithKeyword(searchQuery)
-                    
-                }
+                searchVC.chosenCoordinates = gPlacesVC.currentLocationCoordinates
+                
+                self.googleParameters["location"] = searchVC.chosenCoordinates
+                
+                self.searchWithKeyword(searchQuery)
+                
+//                if let searchQuery = gPlacesVC.searchQuery{
+//                    if searchQuery != ""{
+//                        self.navigationItem.title = searchQuery
+//                    }else{
+//                        self.navigationItem.title = "Around You"
+//                    }
+//                    searchWithKeyword(searchQuery)
+//                    
+//                }
             }
         }
     }
@@ -264,7 +268,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     }
     
     func textFieldShouldReturn(textField:UITextField) -> Bool {
-        print("olleh")
+        searchQuery = textField.text!
+        searchWithKeyword(searchQuery)
         textField.resignFirstResponder() //close keyboard
         return true
         // Will allow user to press "return" button to close keyboard

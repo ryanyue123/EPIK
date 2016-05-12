@@ -1116,7 +1116,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8DH-cU-31C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5223" y="1462.5"/>
+            <point key="canvasLocation" x="5151" y="1630.5"/>
         </scene>
         <!--Search Playlist Collection View Controller-->
         <scene sceneID="Nwl-4x-31T">
@@ -1416,7 +1416,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rFe-V7-JC5" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="MaZ-WG-NVz" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5968.5" y="1441.5"/>
+            <point key="canvasLocation" x="5887.5" y="1624.5"/>
         </scene>
         <!--Random Place Controller-->
         <scene sceneID="jUW-qe-1S9">
@@ -3533,11 +3533,12 @@
                         <outlet property="buttonBarView" destination="xoQ-j9-5ga" id="Xj3-Ie-yXe"/>
                         <outlet property="containerView" destination="QjT-YD-9kt" id="q5C-CY-obk"/>
                         <outlet property="searchTextField" destination="3Gn-Uq-0Vt" id="32U-m7-wFi"/>
+                        <segue destination="tvs-Kb-9f9" kind="presentation" identifier="pickLocation" modalTransitionStyle="crossDissolve" id="arz-0e-QTj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yog-hb-FST" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3918" y="1959"/>
+            <point key="canvasLocation" x="4056" y="1968"/>
         </scene>
         <!--Search Play-->
         <scene sceneID="oBj-fk-OQl">
@@ -3598,6 +3599,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="y7k-Hg-iYt"/>
         <segue reference="Ec9-0b-pIS"/>
+        <segue reference="arz-0e-QTj"/>
         <segue reference="MLc-Do-gVB"/>
         <segue reference="p83-lZ-EZB"/>
     </inferredMetricsTieBreakers>

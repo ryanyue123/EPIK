@@ -15,8 +15,11 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController {
     
     var isReload = false
     
+    var chosenCoordinates: String!
+    
     @IBOutlet weak var searchTextField: UITextField!
     override func viewDidLoad() {
+        
         // change selected bar color
         settings.style.buttonBarBackgroundColor = appDefaults.color
         settings.style.buttonBarItemBackgroundColor = .whiteColor()
@@ -42,7 +45,7 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController {
         navigationBar.tintColor = UIColor.whiteColor()
         
         let leftButton =  UIBarButtonItem(image: UIImage(named: "sort_icon"), style: .Plain, target: self, action: nil)
-        let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: nil)
+        let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")
         
         navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton
@@ -50,6 +53,23 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController {
 //        buttonBarView.selectedBar.backgroundColor = .orangeColor()
 //        buttonBarView.backgroundColor = UIColor(red: 7/255, green: 185/255, blue: 155/255, alpha: 1)
         
+    }
+    
+    func pressedLocation(sender: UIBarButtonItem){
+        performSegueWithIdentifier("pickLocation", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "pickLocation" {
+            let navVC = segue.destinationViewController as! UINavigationController
+            let destVC = navVC.childViewControllers[0] as! GPlacesSearchViewController
+            
+            DataFunctions.getLocation({ (coordinates) in
+                destVC.currentLocationCoordinates = "\(coordinates.latitude),\(coordinates.longitude)"
+                print("Sending location \(coordinates.latitude),\(coordinates.longitude)")
+                
+            })
+        }
     }
     
     // MARK: - PagerTabStripDataSource

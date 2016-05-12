@@ -109,7 +109,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 
     }
     
-   func shownActionsMenu(sender: AnyObject) {
+   func showActionsMenu(sender: AnyObject) {
         
         let actionController = YoutubeActionController()
         
@@ -316,7 +316,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         navigationBar.tintColor = UIColor.whiteColor()
         
         //let leftButton =  UIBarButtonItem(image: UIImage(named: "sort_icon"), style: .Plain, target: self, action: nil)
-        let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "showActionMenu:")
+        let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "showActionsMenu:")
         
         //navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton

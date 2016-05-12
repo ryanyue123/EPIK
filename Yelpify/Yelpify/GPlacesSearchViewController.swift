@@ -40,20 +40,25 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
         
         configureTableDataSource()
         configureFilterType()
-        configureCustomSearchController()
+        //configureCustomSearchController()
 
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        print(currentLocationCoordinates)
     }
     
     override func viewWillAppear(animated: Bool) {
         self.mainSearchTextField.text = searchQuery
         self.mainSearchTextField.becomeFirstResponder()
         
-        self.customSearchController.customSearchBar.placeholder = currentLocationCoordinates
+        //self.customSearchController.customSearchBar.placeholder = currentLocationCoordinates
     }
     
     func configureFilterType(){
-        
         let filter = GMSAutocompleteFilter()
+        filter.type = GMSPlacesAutocompleteTypeFilter.Address
+        
         switch searchType{
             case "Location":
                 filter.type = GMSPlacesAutocompleteTypeFilter.Address
@@ -62,7 +67,7 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
             default:
                 filter.type = GMSPlacesAutocompleteTypeFilter.NoFilter
         }
-        
+
         tableDataSource?.autocompleteFilter = filter
     }
     
@@ -78,8 +83,8 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
         let northEastBound = CLLocationCoordinate2D(latitude: currentLat + 0.1, longitude: currentLng + 0.1)
         let southWestBound = CLLocationCoordinate2D(latitude: currentLat - 0.1, longitude: currentLng - 0.1)
         
-        print(northEastBound.latitude, northEastBound.longitude)
-        print(southWestBound.latitude, southWestBound.longitude)
+        //print(northEastBound.latitude, northEastBound.longitude)
+        //print(southWestBound.latitude, southWestBound.longitude)
         
         tableDataSource?.autocompleteBounds = GMSCoordinateBounds(coordinate: northEastBound, coordinate: southWestBound)
         
@@ -173,13 +178,13 @@ extension GPlacesSearchViewController: GMSAutocompleteTableDataSourceDelegate {
             mainSearchTextField.text = place.name
         }
         
-        print("Place name: \(place.name)")
-        print("Place address: \(place.formattedAddress)")
-        print("Place attributions: \(place.attributions)")
+        //print("Place name: \(place.name)")
+        //print("Place address: \(place.formattedAddress)")
+        //print("Place attributions: \(place.attributions)")
         
-        searchQuery = place.name
+        let placeCoordinate = place.coordinate
+        currentLocationCoordinates = "\(placeCoordinate.latitude),\(placeCoordinate.longitude)"
         performSegueWithIdentifier("unwindToSearch", sender: self)
-        //dismissViewControllerAnimated(true, completion: nil)
     }
     
     func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String?) -> Bool {

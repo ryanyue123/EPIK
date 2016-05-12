@@ -36,6 +36,10 @@
 		907E0CE51C76768D00872135 /* LocuAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907E0CE41C76768D00872135 /* LocuAPIClient.swift */; };
 		907E0CE71C77F34100872135 /* GooglePlacesAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907E0CE61C77F34100872135 /* GooglePlacesAPIClient.swift */; };
 		907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907E0CEA1C7828E100872135 /* APIDataHandler.swift */; };
+		9081EF811CE44A8600E571E2 /* CellConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9081EF7C1CE44A8600E571E2 /* CellConfigurator.swift */; };
+		9081EF821CE44A8600E571E2 /* ConfigurableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9081EF7E1CE44A8600E571E2 /* ConfigurableTableViewController.swift */; };
+		9081EF831CE44A8600E571E2 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9081EF7F1CE44A8600E571E2 /* Info.plist */; };
+		9081EF841CE44A8600E571E2 /* Updatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9081EF801CE44A8600E571E2 /* Updatable.swift */; };
 		908481801C7504AF009B6099 /* BusinessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */; };
 		908481841C750816009B6099 /* BusinessObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908481831C750816009B6099 /* BusinessObject.swift */; };
 		908851961CDEE43700F63A40 /* DataFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908851951CDEE43700F63A40 /* DataFunctions.swift */; };
@@ -145,6 +149,11 @@
 		907E0CE41C76768D00872135 /* LocuAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocuAPIClient.swift; sourceTree = "<group>"; };
 		907E0CE61C77F34100872135 /* GooglePlacesAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GooglePlacesAPIClient.swift; sourceTree = "<group>"; };
 		907E0CEA1C7828E100872135 /* APIDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIDataHandler.swift; sourceTree = "<group>"; };
+		9081EF7C1CE44A8600E571E2 /* CellConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellConfigurator.swift; sourceTree = "<group>"; };
+		9081EF7D1CE44A8600E571E2 /* ConfigurableTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurableTableViewController.h; sourceTree = "<group>"; };
+		9081EF7E1CE44A8600E571E2 /* ConfigurableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableTableViewController.swift; sourceTree = "<group>"; };
+		9081EF7F1CE44A8600E571E2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9081EF801CE44A8600E571E2 /* Updatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Updatable.swift; sourceTree = "<group>"; };
 		9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BusinessTableViewCell.swift; path = Yelpify/BusinessTableViewCell.swift; sourceTree = "<group>"; };
 		908481831C750816009B6099 /* BusinessObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessObject.swift; sourceTree = "<group>"; };
 		908851951CDEE43700F63A40 /* DataFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFunctions.swift; sourceTree = "<group>"; };
@@ -325,12 +334,12 @@
 			children = (
 				90B6D69D1CD49888006928E8 /* SearchPagerTabStripVC.swift */,
 				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
+				90E505DE1C8E375200F47285 /* GPlacesSearchViewController.swift */,
 				905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */,
 				3CE1DEF71CDC831A007B08C2 /* SearchPeopleTableViewController.swift */,
 				905F879C1CD99E3C004046CD /* ProfileCollectionViewController.swift */,
 				3CD034501CBA122A00675F88 /* TableViewController.swift */,
 				90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */,
-				90E505DE1C8E375200F47285 /* GPlacesSearchViewController.swift */,
 				90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */,
 				EDD44DAC1CB4BA31008DC4AB /* RandomPlaceController.swift */,
 				ED405A0F1CC1D03C0017A9AB /* LoginViewController.swift */,
@@ -377,6 +386,18 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
+		9081EF7B1CE44A8600E571E2 /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				9081EF7C1CE44A8600E571E2 /* CellConfigurator.swift */,
+				9081EF7D1CE44A8600E571E2 /* ConfigurableTableViewController.h */,
+				9081EF7E1CE44A8600E571E2 /* ConfigurableTableViewController.swift */,
+				9081EF7F1CE44A8600E571E2 /* Info.plist */,
+				9081EF801CE44A8600E571E2 /* Updatable.swift */,
+			);
+			path = Framework;
+			sourceTree = "<group>";
+		};
 		90C177D71CCB50AE007344CE /* TabSwipe */ = {
 			isa = PBXGroup;
 			children = (
@@ -395,6 +416,7 @@
 		90C96AAF1CCAFA9D00E9EC28 /* Helper Modules */ = {
 			isa = PBXGroup;
 			children = (
+				9081EF7B1CE44A8600E571E2 /* Framework */,
 				90C177D71CCB50AE007344CE /* TabSwipe */,
 				90E505E11C8E944100F47285 /* CustomSearchController.swift */,
 				90E505E31C8E946700F47285 /* CustomSearchBar.swift */,
@@ -588,6 +610,7 @@
 				90DA328B1C93616700D5EBDF /* OpenSans-BoldItalic.ttf in Resources */,
 				90DA32961C93616700D5EBDF /* Montserrat-Hairline.otf in Resources */,
 				90DA328C1C93616700D5EBDF /* OpenSans-LightItalic.ttf in Resources */,
+				9081EF831CE44A8600E571E2 /* Info.plist in Resources */,
 				90DA32851C93616700D5EBDF /* OpenSans-Bold.ttf in Resources */,
 				90DA32901C93616700D5EBDF /* Montserrat-SemiBold.otf in Resources */,
 				90DA32881C93616700D5EBDF /* OpenSans-Semibold.ttf in Resources */,
@@ -700,6 +723,7 @@
 				9038B75E1CBCD041004B220B /* ActionsViewController.swift in Sources */,
 				90B6D69E1CD49888006928E8 /* SearchPagerTabStripVC.swift in Sources */,
 				3CBFD89D1CD4355900290F25 /* SearchPlaylistCell.swift in Sources */,
+				9081EF811CE44A8600E571E2 /* CellConfigurator.swift in Sources */,
 				3CD0344F1CBA121300675F88 /* TableViewCell.swift in Sources */,
 				905F87941CD741BB004046CD /* SearchPlaylistCollectionViewController.swift in Sources */,
 				3CD916CE1CDC085200CB5AEA /* CollectionViewLayout.swift in Sources */,
@@ -728,11 +752,13 @@
 				908481841C750816009B6099 /* BusinessObject.swift in Sources */,
 				3CD814DE1CDD659F00D2BEC6 /* SearchPeopleCell.swift in Sources */,
 				ED52E64F1CCB2E0300CEBAE2 /* YoutubeViewController.swift in Sources */,
+				9081EF821CE44A8600E571E2 /* ConfigurableTableViewController.swift in Sources */,
 				908481801C7504AF009B6099 /* BusinessTableViewCell.swift in Sources */,
 				ED99B82B1CDC4C1900C7E43F /* PlaceActions.swift in Sources */,
 				ED405A101CC1D03C0017A9AB /* LoginViewController.swift in Sources */,
 				90BAD1C11C8662ED0047277E /* TestTableViewController.swift in Sources */,
 				ED52E64D1CCB2E0300CEBAE2 /* YoutubeActionController.swift in Sources */,
+				9081EF841CE44A8600E571E2 /* Updatable.swift in Sources */,
 				3C2F1C7B1CD468020081CEFA /* InitialViewController.swift in Sources */,
 				90A9437A1CD2CDE8004ACE78 /* ReviewTableViewCell.swift in Sources */,
 			);
