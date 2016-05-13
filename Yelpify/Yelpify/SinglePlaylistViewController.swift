@@ -597,6 +597,16 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func configureSwipeButtons(cell: MGSwipeTableCell, mode: ListMode){
         if mode == .View{
+            let routeButton = MGSwipeButton(title: "Route", icon: UIImage(named: "location_icon"),backgroundColor: appDefaults.color, padding: 25)
+            routeButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
+            routeButton.centerIconOverText()
+            routeButton.titleLabel?.font = appDefaults.font
+            
+            let addButton = MGSwipeButton(title: "Add", icon: UIImage(named: "location_icon"),backgroundColor: appDefaults.color, padding: 25)
+            addButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
+            addButton.centerIconOverText()
+            addButton.titleLabel?.font = appDefaults.font
+            
             cell.leftButtons.removeAll()
             cell.rightButtons = [routeButton, addButton]
             cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
