@@ -10,6 +10,7 @@ import UIKit
 import Parse
 import Haneke
 import Cosmos
+import BetterSegmentedControl
 
 class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -27,6 +28,8 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var ratingImageView: UIImageView!
     @IBOutlet weak var typeIconImageView: UIImageView!
 
+    @IBOutlet weak var segmentedView: UIView!
+    
     var statusBarView: UIView!
     var navBarShadowView: UIView!
     var loadedStatusBar = false
@@ -71,6 +74,8 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         self.loadedNavBar = true
         
         configureHeaderView()
+        
+        configureSegmentedBar()
 
         self.directionsButton.enabled = false
         self.callButton.enabled = false
@@ -96,7 +101,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             self.nameLabel.text = self.object.businessName
             
             // Set Address
-            self.addressLabel.text = detailedGPlace.address
+            //self.addressLabel.text = detailedGPlace.address
             
             // Set Reviews
             self.reviewArray = detailedGPlace.reviews!
@@ -305,6 +310,23 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         }
         imageView.alpha = endAlpha
     }
+    
+    func configureSegmentedBar(){
+        let control = BetterSegmentedControl(
+            frame: CGRect(x: 0.0, y: 0.0, width: self.headerView.frame.size.width, height: 40),
+            titles: ["Info", "Reviews"],
+            index: 0,
+            backgroundColor: appDefaults.color,
+            titleColor: UIColor.whiteColor(),
+            indicatorViewBackgroundColor: appDefaults.color_darker,
+            selectedTitleColor: .whiteColor())
+        control.autoresizingMask = [.FlexibleWidth]
+        control.panningDisabled = true
+        control.titleFont = UIFont(name: "Montserrat", size: 12.0)!
+        control.addTarget(self, action: nil, forControlEvents: .ValueChanged)
+        self.segmentedView.addSubview(control)
+    }
+
     
     func configureTableView(){
         //tableView.layoutMargins = UIEdgeInsetsMake(20, 0, 20, 0)

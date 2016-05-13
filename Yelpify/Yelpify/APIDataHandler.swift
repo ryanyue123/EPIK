@@ -105,7 +105,7 @@ class APIDataHandler {
                                     resultDict["text"] = text
                                 }
                                 if let author = reviewDict["author_name"]?.string{
-                                    resultDict["author"] = author
+                                    resultDict["author_name"] = author
                                 }
                                 if let author_url = reviewDict["author_url"]?.string{
                                     resultDict["author_url"] = author_url

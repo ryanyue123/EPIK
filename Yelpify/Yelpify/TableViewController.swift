@@ -20,6 +20,7 @@ struct appDefaults {
     static let color: UIColor! = UIColor.init(netHex: 0x52abc0)
     static let color_bg: UIColor! = UIColor.init(netHex: 0xe4e4e4)
     static let color_darker: UIColor! = UIColor.init(netHex: 0x3a7b8a)
+    
 }
 
 class TableViewController: UITableViewController, CLLocationManagerDelegate {

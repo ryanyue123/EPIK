@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -60,7 +60,7 @@
                                 <color key="textColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WiN-jO-KSg">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="temp_profile" translatesAutoresizingMaskIntoConstraints="NO" id="WiN-jO-KSg">
                                 <rect key="frame" x="36" y="33" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="abu-lf-PZn"/>
@@ -90,6 +90,7 @@
                             <constraint firstAttribute="height" constant="135" id="gdu-Lr-WFw"/>
                             <constraint firstAttribute="trailing" secondItem="hxE-b1-NkR" secondAttribute="trailing" constant="35" id="lMR-ny-dEC"/>
                             <constraint firstItem="WiN-jO-KSg" firstAttribute="top" secondItem="pp5-sH-2oq" secondAttribute="top" constant="33" id="uwa-sR-0X1"/>
+                            <constraint firstAttribute="bottom" secondItem="qgF-x5-VGX" secondAttribute="bottom" constant="14.5" id="zEL-Vo-hAQ"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -98,6 +99,7 @@
                     <constraint firstItem="pp5-sH-2oq" firstAttribute="leading" secondItem="RQK-Zd-U4g" secondAttribute="leadingMargin" constant="-8" id="0XM-zv-53l"/>
                     <constraint firstItem="pp5-sH-2oq" firstAttribute="top" secondItem="RQK-Zd-U4g" secondAttribute="topMargin" constant="-8" id="J4n-Vg-vEF"/>
                     <constraint firstAttribute="trailingMargin" secondItem="pp5-sH-2oq" secondAttribute="trailing" constant="-8" id="Xva-7M-skH"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="pp5-sH-2oq" secondAttribute="bottom" constant="-3.5" id="t92-Z0-KIo"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -110,4 +112,7 @@
             <point key="canvasLocation" x="268" y="335"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="temp_profile" width="640" height="426"/>
+    </resources>
 </document>

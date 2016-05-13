@@ -47,7 +47,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     @IBOutlet weak var addPlaceButton: UIButton!
     
-    @IBOutlet weak var segmentedBar: UISegmentedControl!
     @IBOutlet weak var segmentedBarView: UIView!
     
     var mode: ListMode! = .View
@@ -209,7 +208,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.view.addGestureRecognizer(longPressRecognizer)
         
         // Register Nibs 
-         self.playlistTableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
+        self.playlistTableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
+        self.playlistTableView.registerNib(UINib(nibName: "ReviewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "reviewCell")
 
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
@@ -500,9 +500,20 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         //control.cornerRadius = 10.0
         control.panningDisabled = true
         control.titleFont = UIFont(name: "Montserrat", size: 12.0)!
-        control.addTarget(self, action: nil, forControlEvents: .ValueChanged)
+        control.addTarget(self, action: "switchContentType", forControlEvents: .ValueChanged)
         self.segmentedBarView.addSubview(control)
     }
+    
+    func switchContentType(){
+        if self.contentToDisplay == .Places{
+            self.contentToDisplay = .Comments
+            self.playlistTableView.reloadData()
+        }else{
+            self.contentToDisplay = .Places
+            self.playlistTableView.reloadData()
+        }
+    }
+    
     
     func updateHeaderView(){
         //playlistTableHeaderHeight = playlistInfoView.frame.size.height
@@ -576,22 +587,36 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-        cell.delegate = self
+        // IF SEGMENTED IS ON PLACES
+        if self.contentToDisplay == .Places{
+            let businessCell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
 
-        
-        // Configure Cell
-        cell.configureCellWith(playlistArray[indexPath.row], mode: .More) {
+            businessCell.delegate = self
+            configureSwipeButtons(businessCell, mode: self.mode)
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                businessCell.configureCellWith(self.playlistArray[indexPath.row], mode: .More) {
+                    return businessCell
+                }
+            })
+            return businessCell
+              
+            // IF SEGMENTED IS ON COMMENTS
+        }else if self.contentToDisplay == .Comments{
+            let reviewCell = tableView.dequeueReusableCellWithIdentifier("reviewCell", forIndexPath: indexPath) as! ReviewTableViewCell
+            return reviewCell
+        }else{
+            return UITableViewCell()
         }
+    }
     
-        // Add Swipe Buttons
-        // configure left buttons
-        
-        if self.mode == ListMode.View{
+    func configureSwipeButtons(cell: MGSwipeTableCell, mode: ListMode){
+        if mode == .View{
             let routeButton = MGSwipeButton(title: "Route", icon: UIImage(named: "location_icon"),backgroundColor: appDefaults.color, padding: 25)
             routeButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
             routeButton.centerIconOverText()
             routeButton.titleLabel?.font = appDefaults.font
+            
             let addButton = MGSwipeButton(title: "Add", icon: UIImage(named: "location_icon"),backgroundColor: appDefaults.color, padding: 25)
             addButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
             addButton.centerIconOverText()
@@ -603,24 +628,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             cell.rightExpansion.buttonIndex = 0
             cell.rightExpansion.fillOnTrigger = true
             cell.rightExpansion.threshold = 1
-            
-            
-            
-            
-        //return cell
-        }
-        
-        if self.mode == ListMode.Edit{
+        }else if mode == .Edit{
             cell.rightButtons.removeAll()
             cell.leftButtons = [MGSwipeButton(title: "Delete",backgroundColor: UIColor.redColor(),padding: 25)]
             cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
             cell.leftExpansion.buttonIndex = 0
             cell.leftExpansion.fillOnTrigger = false
             cell.leftExpansion.threshold = 1
-        
-        //return cell
         }
-    return cell
     }
     
     // MGSwipeTableCell Delegate Methods
