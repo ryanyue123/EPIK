@@ -2389,6 +2389,9 @@
                                         </mask>
                                     </variation>
                                 </view>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="800"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="7pA-8d-Gw7" id="Dao-jk-UPh"/>
                                     <outlet property="delegate" destination="7pA-8d-Gw7" id="xSo-MP-MFj"/>
@@ -2990,7 +2993,7 @@
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="30" y="150" width="102" height="13"/>
+                                                <rect key="frame" x="30" y="149" width="102" height="13"/>
                                             </variation>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fqr-Fh-ceK">
@@ -3153,7 +3156,7 @@
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="30" y="150" width="102" height="13"/>
+                                                <rect key="frame" x="30" y="149" width="102" height="13"/>
                                             </variation>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kfw-id-zHQ">
@@ -3570,10 +3573,10 @@
         <image name="text_field_white" width="545" height="88"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="W5i-Qt-2dL"/>
-        <segue reference="y7k-Hg-iYt"/>
         <segue reference="Ec9-0b-pIS"/>
+        <segue reference="y7k-Hg-iYt"/>
+        <segue reference="IFd-Gd-HzU"/>
+        <segue reference="W5i-Qt-2dL"/>
         <segue reference="LJY-RO-ffD"/>
-        <segue reference="p83-lZ-EZB"/>
     </inferredMetricsTieBreakers>
 </document>

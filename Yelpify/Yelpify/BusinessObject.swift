@@ -34,7 +34,6 @@ struct Business {
         businessDict["rating"] = businessRating
         businessDict["types"] = businessTypes
         businessDict["phone"] = businessPhone
-        businessDict["status"] = businessStatus
         
         return businessDict
     }
