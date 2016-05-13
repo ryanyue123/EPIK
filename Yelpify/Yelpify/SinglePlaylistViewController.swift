@@ -27,6 +27,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     //@IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
     
+    @IBOutlet weak var addPlaceImageButton: UIImageView!
     @IBOutlet weak var editPlaylistButton: UIBarButtonItem!
 
     @IBOutlet weak var playlistInfoView: UIView!
@@ -83,30 +84,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         return sortedBusinesses
         
     }
-   
-    @IBAction func editPlaylistButtonAction(sender: AnyObject) {
-        
-        let actionController = YoutubeActionController()
-        let pickerController = CZPickerViewController()
-        actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
-            print("Share")
-        }))
-        actionController.addAction(Action(ActionData(title: "Edit Playlist", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
-            print("Edit pressed")
-            self.activateEditMode()
-            self.playlistTableView.reloadData()
-        }))
-        actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "yt-share-icon")!), style: .Cancel, handler: { action in
-            
-            
-        }))
-        actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
-        
-        presentViewController(actionController, animated: true, completion: nil)
-        
-        
-    }
     
+
    func showActionsMenu(sender: AnyObject) {
         
         let actionController = YoutubeActionController()
@@ -216,9 +195,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.addPlaceImageButton.hidden = true
+        let tap = UITapGestureRecognizer(target: self, action: "handleTap:")
+        self.addPlaceImageButton.userInteractionEnabled = true
+        self.addPlaceImageButton.addGestureRecognizer(tap)
         
         setupProfilePicture()
         self.playlistTableView.reloadData()
+        
         
         // tapRecognizer, placed in viewDidLoad
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPress:")
@@ -316,6 +300,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         //navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton
     }
+    func handleTap(img: AnyObject){
+       performSegueWithIdentifier("tapImageButton", sender: self)
+        
+    }
     
     override func viewDidAppear(animated: Bool) {
         configureSegmentedBar()
@@ -386,15 +374,20 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func activateEditMode()
     {
+        self.addPlaceImageButton.hidden = false
         self.mode = .Edit
         self.navigationItem.setHidesBackButton(true, animated: true)
         let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "savePlaylistToParse:")
         self.navigationItem.leftBarButtonItem = backButton
         self.addPlaceButton.hidden = false
         self.addPlaceButton.enabled = true
+        
+        
     }
+    
     func deactivateEditMode()
     {
+        self.addPlaceImageButton.hidden = true
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
         self.mode = .View
@@ -593,21 +586,33 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
         // Add Swipe Buttons
         // configure left buttons
+        
         if self.mode == ListMode.View{
+            let routeButton = MGSwipeButton(title: "Route", icon: UIImage(named: "location_icon"),backgroundColor: appDefaults.color, padding: 25)
+            routeButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
+            routeButton.centerIconOverText()
+            routeButton.titleLabel?.font = appDefaults.font
+            let addButton = MGSwipeButton(title: "Add", icon: UIImage(named: "location_icon"),backgroundColor: appDefaults.color, padding: 25)
+            addButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
+            addButton.centerIconOverText()
+            addButton.titleLabel?.font = appDefaults.font
+            
             cell.leftButtons.removeAll()
-            cell.rightButtons = [MGSwipeButton(title: "Route", backgroundColor: appDefaults.color_darker, padding: 25),
-                                 MGSwipeButton(title: "Add", backgroundColor: UIColor.greenColor())]
+            cell.rightButtons = [routeButton, addButton]
             cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
             cell.rightExpansion.buttonIndex = 0
-            cell.rightExpansion.fillOnTrigger = false
+            cell.rightExpansion.fillOnTrigger = true
             cell.rightExpansion.threshold = 1
+            
+            
+            
             
         //return cell
         }
         
         if self.mode == ListMode.Edit{
             cell.rightButtons.removeAll()
-            cell.leftButtons = [MGSwipeButton(title: "Delete", backgroundColor: UIColor.redColor(),padding: 25)]
+            cell.leftButtons = [MGSwipeButton(title: "Delete",backgroundColor: UIColor.redColor(),padding: 25)]
             cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
             cell.leftExpansion.buttonIndex = 0
             cell.leftExpansion.fillOnTrigger = false
@@ -629,7 +634,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         let business = playlistArray[indexPath!.row] 
         let actions = PlaceActions()
         if self.mode == ListMode.View{
-        actions.openInMaps(business)
+            if index == 0{
+                actions.openInMaps(business)
+        }
         }
         else if self.mode == ListMode.Edit{
             playlistArray.removeAtIndex(indexPath!.row)
@@ -640,7 +647,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func swipeTableCell(cell: MGSwipeTableCell!, didChangeSwipeState state: MGSwipeState, gestureIsActive: Bool) {
-        
+        let routeButton = cell.rightButtons.first as! MGSwipeButton
+        let addButton = cell.rightButtons[1] as! MGSwipeButton
+        if cell.swipeState.rawValue == 2{
+            routeButton.backgroundColor = appDefaults.color
+            addButton.backgroundColor = UIColor.greenColor()
+        }
+        else if cell.swipeState.rawValue >= 4{
+            addButton.backgroundColor = appDefaults.color
+            routeButton.backgroundColor = appDefaults.color
+            cell.swipeBackgroundColor = appDefaults.color
+            }
+    
+
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -651,15 +670,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     // Override to support conditional editing of the table view.
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        print("this is row ")
-        print(indexPath.row)
         return true
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
-    {
-        
-    }
+//    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
+//    {
+    
+    //}
     
 //    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]?
 //    {
