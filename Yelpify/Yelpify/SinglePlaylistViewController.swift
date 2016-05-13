@@ -27,6 +27,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     //@IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
     
+    @IBOutlet weak var addPlaceImageButton: UIImageView!
     @IBOutlet weak var editPlaylistButton: UIBarButtonItem!
 
     @IBOutlet weak var playlistInfoView: UIView!
@@ -194,9 +195,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.addPlaceImageButton.hidden = true
+        let tap = UITapGestureRecognizer(target: self, action: "handleTap:")
+        self.addPlaceImageButton.userInteractionEnabled = true
+        self.addPlaceImageButton.addGestureRecognizer(tap)
         
         setupProfilePicture()
         self.playlistTableView.reloadData()
+        
         
         // tapRecognizer, placed in viewDidLoad
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPress:")
@@ -294,6 +300,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         //navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton
     }
+    func handleTap(img: AnyObject){
+       performSegueWithIdentifier("tapImageButton", sender: self)
+        
+    }
     
     override func viewDidAppear(animated: Bool) {
         configureSegmentedBar()
@@ -364,15 +374,20 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func activateEditMode()
     {
+        self.addPlaceImageButton.hidden = false
         self.mode = .Edit
         self.navigationItem.setHidesBackButton(true, animated: true)
         let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "savePlaylistToParse:")
         self.navigationItem.leftBarButtonItem = backButton
         self.addPlaceButton.hidden = false
         self.addPlaceButton.enabled = true
+        
+        
     }
+    
     func deactivateEditMode()
     {
+        self.addPlaceImageButton.hidden = true
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
         self.mode = .View

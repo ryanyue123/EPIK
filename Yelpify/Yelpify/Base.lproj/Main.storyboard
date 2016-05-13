@@ -1022,7 +1022,7 @@
                                         </mask>
                                     </variation>
                                     <connections>
-                                        <segue destination="UL9-SW-wCG" kind="presentation" id="ggw-N4-5Ir"/>
+                                        <segue destination="UL9-SW-wCG" kind="presentation" identifier="tapImageButton" id="ggw-N4-5Ir"/>
                                     </connections>
                                 </button>
                                 <connections>
@@ -1126,6 +1126,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addPlaceButton" destination="mrg-gd-QNF" id="D2B-Rh-Bk5"/>
+                        <outlet property="addPlaceImageButton" destination="aHp-YR-q7e" id="pvV-nn-45l"/>
                         <outlet property="averagePriceRating" destination="jmE-FE-vZB" id="WS5-Uz-DvI"/>
                         <outlet property="collaboratorsView" destination="Oqf-Af-7td" id="Z38-YY-TWP"/>
                         <outlet property="creatorImageView" destination="bmQ-dS-USr" id="1jl-bq-IQX"/>
