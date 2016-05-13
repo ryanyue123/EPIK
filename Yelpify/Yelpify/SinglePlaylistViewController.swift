@@ -719,6 +719,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         var placeDictArray = [NSDictionary]()
         for business in placesArray{
             placeDictArray.append(business.getDictionary())
+            print(business)
         }
         return placeDictArray
     }
