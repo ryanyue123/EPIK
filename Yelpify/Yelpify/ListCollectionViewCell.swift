@@ -37,6 +37,7 @@ class ListCollectionViewCell: UICollectionViewCell {
     
     func configureCell(imageref: String)
     {
+        
         gpAPIClient.getImageFromPhotoReference(imageref) { (key) -> Void in
             
             self.cache.fetch(key: key).onSuccess { image in
