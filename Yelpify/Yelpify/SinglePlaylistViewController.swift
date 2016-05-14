@@ -170,9 +170,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
 
     // MARK: - ViewDidLoad and other View functions
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.addPlaceImageButton.hidden = true
@@ -351,6 +349,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
     
         self.mode = .Edit
+        self.setEditing(true, animated: true)
         self.navigationItem.setHidesBackButton(true, animated: true)
         let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(SinglePlaylistViewController.savePlaylistToParse(_:)))
         self.navigationItem.leftBarButtonItem = backButton
@@ -359,6 +358,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func deactivateEditMode() {
+        
+        self.setEditing(false, animated: true)
         self.addPlaceImageButton.hidden = true
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
@@ -549,7 +550,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         case .Comments:
             return 20
         }
+        
     }
+    
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -675,8 +678,38 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         return true
     }
     
+    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if self.mode == .Edit{
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    
+    func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+        var itemToMove = playlistArray[fromIndexPath.row]
+        var idOfItemToMove = placeIDs[fromIndexPath.row]
+        playlistArray.removeAtIndex(fromIndexPath.row)
+        placeIDs.removeAtIndex(fromIndexPath.row)
+        playlistArray.insert(itemToMove, atIndex: toIndexPath.row)
+        placeIDs.insert(idOfItemToMove, atIndex: toIndexPath.row)
+    }
+    
+    func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return false
+    }
+    
+    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        return .None
+    }
+    
+    
+
+    
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
+        self.playlistTableView.setEditing(editing, animated: animated)
     }
     
     func convertPlacesArrayToDictionary(placesArray: [Business])-> [NSDictionary]{
