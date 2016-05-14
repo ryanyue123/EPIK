@@ -681,6 +681,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func savePlaylistToParse(sender: UIBarButtonItem)
     {
+        
+        self.deactivateEditMode()
         if placeIDs.count > 0{
             let saveobject = object
 //            if let lat = playlistArray[0].businessLatitude
