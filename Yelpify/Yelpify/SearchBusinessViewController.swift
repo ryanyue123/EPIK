@@ -62,16 +62,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
                 self.googleParameters["location"] = searchVC.chosenCoordinates
                 
                 self.searchWithKeyword(searchQuery)
-                
-//                if let searchQuery = gPlacesVC.searchQuery{
-//                    if searchQuery != ""{
-//                        self.navigationItem.title = searchQuery
-//                    }else{
-//                        self.navigationItem.title = "Around You"
-//                    }
-//                    searchWithKeyword(searchQuery)
-//                    
-//                }
             }
         }
     }
@@ -131,7 +121,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
 
     // Parse variables
     var index: NSIndexPath!
-    var playlistArray = [Business]()
+    var playlistArray = [String]()
 
     // MARK: - TABLEVIEW FUNCTIONS
 
@@ -157,7 +147,9 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         let business = self.businessObjects[indexPath.row]
         
         cell.configureCellWith(business, mode: .Add) { () -> Void in
+            
         }
+        
         cell.moreButton.tag = indexPath.row
         cell.moreButton.addTarget(self, action: "addTrackToPlaylist:", forControlEvents: .TouchUpInside)
         return cell
@@ -198,7 +190,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         button.tintColor = UIColor.greenColor()
         print("pressed")
         let index = button.tag
-        playlistArray.append(businessObjects[index])
+        playlistArray.append(businessObjects[index].gPlaceID)
        
     }
     
@@ -206,7 +198,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     func addTrackToPlaylist(indx: Int!)
     {
         print("Added Business at Index", String(indx))
-        playlistArray.append(businessObjects[indx])
+        playlistArray.append(businessObjects[indx].gPlaceID)
     }
     
     func textFieldDidChange(textField: UITextField){
