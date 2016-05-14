@@ -234,6 +234,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 {
                     playlistArray.appendContentsOf(sourceVC.businessArray)
                     placeIDs.appendContentsOf(sourceVC.placeIDs)
+                    
+                    // Appends empty GooglePlaceDetail Objects to make list parallel to placeIDs and playlistArray
+                    for _ in 0..<(placeIDs.count - placeArray.count){
+                        placeArray.append(GooglePlaceDetail())
+                    }
+                    
+                    
+                    
                     self.playlistTableView.reloadData()
                 }
             }
@@ -618,11 +626,22 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-            return false
+            return true
     }
 
     func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-            return .None
+            return .Delete
+    }
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete{
+            playlistArray.removeAtIndex(indexPath.row)
+            placeArray.removeAtIndex(indexPath.row)
+            placeIDs.removeAtIndex(indexPath.row)
+            self.playlistTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            self.playlistTableView.reloadData()
+        }
+        
+    
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -832,7 +851,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             let index = playlistTableView.indexPathForSelectedRow!.row
             
             // IF NO NEW PLACE IS ADDED
-            if index <= placeArray.count - 1{
+            if placeArray[index].name != ""{
                 let gPlaceObject = placeArray[index]
                 upcoming.gPlaceObject = gPlaceObject
                 upcoming.index = index
