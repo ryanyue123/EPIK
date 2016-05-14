@@ -66,7 +66,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var editable: Bool = false
     var sortMethod:String!
     
+    var itemReceived: String!
     var playlist_name: String!
+    
+    var apiClient = APIDataHandler()
     
     // The apps default color
     let defaultAppColor = UIColor(netHex: 0xFFFFFF)
@@ -115,7 +118,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             
          
             
-            performSegueWithIdentifier(randomPlace, sender: <#T##AnyObject?#>)
+            self.performSegueWithIdentifier("randomPlace", sender: self)
 //            
 //            let randomPlace = randomController.getRandomPlace(self.playlistArray)
 //            print(String(randomPlace.businessName))
@@ -165,7 +168,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             if(segue.identifier == "unwindToPlaylist") {
                 if let sourceVC = segue.sourceViewController as? SearchBusinessViewController
                 {
-                    playlistArray.appendContentsOf(sourceVC.playlistArray)
+                    playlistArray.appendContentsOf(sourceVC.businessArray)
                     self.playlistTableView.reloadData()
                 }
             }
@@ -340,11 +343,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 })
                 
             }
-            dispatch_async(dispatch_get_main_queue(), {
-                self.playlistArray = resultArray
-                self.playlistTableView.reloadData()
-                self.configureInfo()
-            })
+            self.configureInfo()
+//            dispatch_async(dispatch_get_main_queue(), {
+//                self.playlistArray = resultArray
+//                self.playlistTableView.reloadData()
+//                self.configureInfo()
+//            })
         }
     }
     
