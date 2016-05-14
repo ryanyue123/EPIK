@@ -75,12 +75,12 @@ class CZPickerViewController: UIViewController {
     
     
     func showWithMultipleSelections(sender: AnyObject){
-        let picker = CZPickerView(headerTitle: "Sort Options", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
+        let picker = CZPickerView(headerTitle: headerTitle, cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
     
         picker.delegate = self
         picker.dataSource = self
-        picker.needFooterView = false
-        picker.allowMultipleSelection = false
+        picker.needFooterView = true
+        picker.allowMultipleSelection = true
         picker.show()
         
         
@@ -113,16 +113,16 @@ extension CZPickerViewController: CZPickerViewDelegate, CZPickerViewDataSource {
     }
     
     func czpickerView(pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int) {
-        //print((fruits[row] as! String) + "hi")
         delegate.sendValue(fruits[row])
         didSet = true
-//        if row == 0{
-//            let sortedList = self.sortMethods(businessArrayToSort, type: "name")
-//            delegate.sendValue(sortedList as! AnyObject)
-//        }else if row == 1{
-//            let sortedList = self.sortMethods(businessArrayToSort, type: "rating")
-//            delegate.sendValue(sortedList as! AnyObject)
-//        }
+    }
+    
+    func czpickerView(pickerView: CZPickerView!, didConfirmWithItemsAtRows rows: [AnyObject]!) {
+        for row in rows {
+            if let row = row as? Int {
+                print(fruits[row])
+            }
+        }
     }
   
     

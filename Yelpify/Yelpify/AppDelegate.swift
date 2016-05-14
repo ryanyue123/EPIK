@@ -11,6 +11,7 @@ import Parse
 import GoogleMaps
 import FBSDKCoreKit
 import Buglife
+import RAMAnimatedTabBarController
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -40,22 +41,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         
         
-        //UINavigationBar.appearance().backgroundColor = UIColor.darkGrayColor()
-        //UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        
-        //UILabel.appearance().font = UIFont(name: "Montserrat", size: 14)
-        
-        
-        // Set navigation bar tint / background colour
-//        UINavigationBar.appearance().barTintColor = UIColor.whiteColor()
+        // UITabBar Configuration
+//        UITabBar.appearance().translucent = false
+//        //UITabBar.appearance().tintColor = appDefaults.color
+//        UITabBar.appearance().backgroundColor = appDefaults.color
 //        
-//        UINavigationBar.appearance().backgroundColor = UIColor.whiteColor()
-//        
-        // Set navigation bar ItemButton tint colour
-        //UIBarButtonItem.appearance().tintColor = UIColor.orangeColor()
+//        UITabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName: appDefaults.font!], forState: .Normal)
         
-        //Set navigation bar Back button tint colour
-        //UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        RAMAnimatedTabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName: appDefaults.font!], forState: .Normal)
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions:
             launchOptions)
