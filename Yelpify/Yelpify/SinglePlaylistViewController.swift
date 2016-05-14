@@ -344,6 +344,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                                     UIView.animateWithDuration(0.6){self.addPlaceImageButton.transform = CGAffineTransformIdentity}
         })
         
+        self.setEditing(true, animated: true)
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
         self.mode = .Edit
@@ -550,6 +551,32 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+    
+    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if self.mode == .Edit{
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+        var itemToMove = playlistArray[fromIndexPath.row]
+        var idOfItemToMove = placeIDs[fromIndexPath.row]
+        playlistArray.removeAtIndex(fromIndexPath.row)
+        placeIDs.removeAtIndex(fromIndexPath.row)
+        playlistArray.insert(itemToMove, atIndex: toIndexPath.row)
+        placeIDs.insert(idOfItemToMove, atIndex: toIndexPath.row)
+    }
+    
+    func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+            return false
+    }
+
+    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+            return .None
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         // IF SEGMENTED IS ON PLACES
@@ -675,6 +702,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
+        self.playlistTableView.setEditing(editing, animated: animated)
     }
     
     func convertPlacesArrayToDictionary(placesArray: [Business])-> [NSDictionary]{
