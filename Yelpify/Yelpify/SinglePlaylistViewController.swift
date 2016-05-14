@@ -65,7 +65,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var object: PFObject!
     var editable: Bool = false
     var sortMethod:String!
-    
+    var itemReceived: String!
     var playlist_name: String!
     
     // The apps default color
@@ -113,9 +113,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 
         actionController.addAction(Action(ActionData(title: "Get Random Place", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
             
-         
-            
-            performSegueWithIdentifier(randomPlace, sender: <#T##AnyObject?#>)
+            self.performSegueWithIdentifier("randomPlace", sender: self)
 //            
 //            let randomPlace = randomController.getRandomPlace(self.playlistArray)
 //            print(String(randomPlace.businessName))
@@ -165,7 +163,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             if(segue.identifier == "unwindToPlaylist") {
                 if let sourceVC = segue.sourceViewController as? SearchBusinessViewController
                 {
-                    playlistArray.appendContentsOf(sourceVC.playlistArray)
+                    self.playlistArray.appendContentsOf(sourceVC.playlistArray)
                     self.playlistTableView.reloadData()
                 }
             }
@@ -724,6 +722,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         else if (segue.identifier == "showProfileView") {
             let upcoming = segue.destinationViewController as! ProfileCollectionViewController
             upcoming.user = object["createdBy"] as! PFUser
+        }else if (segue.identifier == "randomPlace") {
+            let upcoming = segue.destinationViewController as! RandomPlaceController
+            upcoming.businessArray = self.playlistArray
         }
     }
 }
