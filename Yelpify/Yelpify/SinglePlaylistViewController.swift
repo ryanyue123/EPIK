@@ -100,8 +100,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
     }
     
-
-   func showActionsMenu(sender: AnyObject) {
+    
+    
+    func showActionsMenu(sender: AnyObject) {
         
         let actionController = YoutubeActionController()
         let pickerController = CZPickerViewController()
@@ -109,10 +110,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 
         actionController.addAction(Action(ActionData(title: "Get Random Place", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
             
-            let randomPlace = randomController.getRandomPlace(self.playlistArray)
-            print(String(randomPlace.businessName))
-            randomController.RestaurantName.text = randomPlace.businessName
-            randomController.RestaurantAddress.text = randomPlace.businessAddress
+         
+            
+            performSegueWithIdentifier(randomPlace, sender: <#T##AnyObject?#>)
+//            
+//            let randomPlace = randomController.getRandomPlace(self.playlistArray)
+//            print(String(randomPlace.businessName))
+//            randomController.RestaurantName.text = randomPlace.businessName
+//            randomController.RestaurantAddress.text = randomPlace.businessAddress
             
         }))
         actionController.addAction(Action(ActionData(title: "Edit Playlist", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
@@ -215,6 +220,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
 
     // MARK: - ViewDidLoad and other View functions
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
