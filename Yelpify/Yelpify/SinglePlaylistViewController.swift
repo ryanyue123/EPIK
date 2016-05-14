@@ -138,7 +138,11 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             if(segue.identifier == "unwindToPlaylist")
             {
                 let sourceVC = segue.sourceViewController as! SearchBusinessViewController
-                placeIDs.appendContentsOf(sourceVC.playlistArray)
+                placeIDs.appendContentsOf(sourceVC.placeIDs)
+                playlistArray.appendContentsOf(sourceVC.businessArray)
+                
+                //placeArray.appendContentsOf(sourceVC.newPlacesArray)
+                
                 self.playlistTableView.reloadData()
             }
         }
@@ -303,11 +307,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         let placeIDs = object["place_id_list"] as! [String]
         self.placeIDs = placeIDs
         
-        self.convertIDsToBusiness(placeIDs) { (businessArray, placeArray) in
-            self.playlistArray = businessArray
-            self.placeArray = placeArray
-            self.playlistTableView.reloadData()
-        }
+        print(placeIDs)
+        self.updateBusinessesFromIDs(placeIDs)
+//        self.convertIDsToBusiness(placeIDs) { (businessArray, placeArray) in
+//            self.playlistArray = businessArray
+//            self.placeArray = placeArray
+//            self.playlistTableView.reloadData()
+//            
+//        }
         
         // Setup Navigation Bar
         let navigationBar = navigationController!.navigationBar
@@ -318,19 +325,29 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         navigationItem.rightBarButtonItem = rightButton
     }
     
-    
-    func convertIDsToBusiness(ids: [String], completion: (businessArray: [Business], placeArray: [GooglePlaceDetail]) -> Void){
-        var businessArray:[Business] = []
-        var placeArray: [GooglePlaceDetail] = []
-        
+    func updateBusinessesFromIDs(ids: [String]){
         for id in ids{
             apiClient.performDetailedSearch(id, completion: { (detailedGPlace) in
-                placeArray.append(detailedGPlace)
-                businessArray.append(detailedGPlace.convertToBusiness())
+                self.placeArray.append(detailedGPlace)
+                self.playlistArray.append(detailedGPlace.convertToBusiness())
+                self.playlistTableView.reloadData()
             })
         }
-        completion(businessArray: businessArray, placeArray: placeArray)
     }
+//    func convertIDsToBusiness(ids: [String], completion: (businessArray: [Business], placeArray: [GooglePlaceDetail]) -> Void){
+//        var businessArray:[Business] = []
+//        var placeArray: [GooglePlaceDetail] = []
+//        
+//        for id in ids{
+//            apiClient.performDetailedSearch(id, completion: { (detailedGPlace) in
+//                //placeArray.append(detailedGPlace)
+//                self.playlistArray.append(detailedGPlace.convertToBusiness())
+//                self.placeIDs.append(id)
+//                //businessArray.append(detailedGPlace.convertToBusiness())
+//            })
+//        }
+//        completion(businessArray: businessArray, placeArray: placeArray)
+//    }
     
     func convertBusinessesToIDs(businesses: [Business], completion: (ids: [String]) -> Void) {
         var ids: [String] = []
@@ -766,21 +783,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func savePlaylistToParse(sender: UIBarButtonItem)
     {
-        if playlistArray.count > 0{
+        if placeIDs.count > 0{
             let saveobject = object
-            if let lat = playlistArray[0].businessLatitude
-            {
-                if let long = playlistArray[0].businessLongitude
-                {
-                    saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
-                }
-            }
-            saveobject["track"] = convertPlacesArrayToDictionary(playlistArray)
+//            if let lat = playlistArray[0].businessLatitude
+//            {
+//                if let long = playlistArray[0].businessLongitude
+//                {
+//                    saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
+//                }
+//            }
+            //saveobject["track"] = convertPlacesArrayToDictionary(playlistArray)
             
             // Saves Businesses to Parse as [String] Ids
-            self.convertBusinessesToIDs(self.playlistArray, completion: { (ids) in
-                saveobject["place_id_list"] = ids
-            })
+            saveobject["place_id_list"] = placeIDs
             
             saveobject.saveInBackgroundWithBlock { (success, error)  -> Void in
                 if (error == nil){
@@ -806,10 +821,18 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             
             let index = playlistTableView.indexPathForSelectedRow!.row
             
-            let gPlaceObject = placeArray[index]
+            // IF NO NEW PLACE IS ADDED
+            if index <= placeArray.count - 1{
+                let gPlaceObject = placeArray[index]
+                upcoming.gPlaceObject = gPlaceObject
+                upcoming.index = index
+            }else{
+            // IF NEW PLACES ARE ADDED
+                let businessObject = playlistArray[index]
+                upcoming.object = businessObject
+                upcoming.index = index
+            }
             
-            upcoming.gPlaceObject = gPlaceObject
-            upcoming.index = index
             self.playlistTableView.deselectRowAtIndexPath(playlistTableView.indexPathForSelectedRow!, animated: true)
         }
         else if (segue.identifier == "showProfileView")

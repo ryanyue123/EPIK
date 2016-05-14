@@ -18,8 +18,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var itemInfo: IndicatorInfo = "Places"
     
     // MARK: - GLOBAL VARIABLES
-    //var yelpClient = YelpAPIClient()
-    //var locuClient = LocuAPIClient()
     var googlePlacesClient = GooglePlacesAPIClient()
     var customSearchController: CustomSearchController!
     let cache = Shared.imageCache
@@ -116,12 +114,14 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     
     // MARK: - TABLEVIEW VARIABLES
-    var businessObjects: [Business] = []
-    var businessShown: [Bool] = []
+    private var businessObjects: [Business] = []
+    private var businessShown: [Bool] = []
 
     // Parse variables
-    var index: NSIndexPath!
-    var playlistArray = [String]()
+    private var index: NSIndexPath!
+    var placeIDs = [String]()
+    var businessArray = [Business]()
+    var newPlacesArray = [GooglePlaceDetail]()
 
     // MARK: - TABLEVIEW FUNCTIONS
 
@@ -146,7 +146,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         
         let business = self.businessObjects[indexPath.row]
         
-        cell.configureCellWith(business, mode: .Add) { () -> Void in
+        cell.configureCellWith(business, mode: .Add) { (place) -> Void in
             
         }
         
@@ -185,20 +185,25 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         }
     }
     
+    // This one is added through the button in cell
     func addTrackToPlaylist(button: UIButton)
     {
         button.tintColor = UIColor.greenColor()
         print("pressed")
         let index = button.tag
-        playlistArray.append(businessObjects[index].gPlaceID)
-       
+        placeIDs.append(businessObjects[index].gPlaceID)
+        businessArray.append(businessObjects[index])
     }
     
     
+    // This one is added through DetailedVC
     func addTrackToPlaylist(indx: Int!)
     {
         print("Added Business at Index", String(indx))
-        playlistArray.append(businessObjects[indx].gPlaceID)
+        placeIDs.append(businessObjects[indx].gPlaceID)
+        businessArray.append(businessObjects[indx])
+        
+        
     }
     
     func textFieldDidChange(textField: UITextField){
@@ -228,7 +233,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         DataFunctions.getLocation { (coordinates) in
             self.googleParameters["location"] = "\(coordinates.latitude),\(coordinates.longitude)"
             self.performInitialSearch()
-            self.playlistArray.removeAll()
+            self.placeIDs.removeAll()
         }
         
         // Configure Functions
