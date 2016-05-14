@@ -403,6 +403,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.playlistInfoBG.image = UIImage(named: "default_list_bg")
         
         self.numOfPlacesLabel.text = String(self.placeIDs.count)
+        
         let followCount = object["followerCount"]
         if followCount == nil {
             self.numOfFollowersLabel.text = "0"
@@ -410,9 +411,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         else {
             self.numOfFollowersLabel.text = String(followCount)
         }
-        getAveragePrice({ (avg) in
-            self.averagePriceRating.text = String(avg)
-        })
+        
+        // CHANGE - NEED TO MAKE AVERAGEPRICE IN PARSE
+        // let avgPrice = object["average_price"] as! Int
+        // self.setPriceRating(avgPrice)
     }
     
     func configureRecentlyViewed() {
@@ -858,12 +860,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             
             // Saves Average Price
             let averagePrice = getAveragePrice({ (avg) in
-                // saveobject["average_price"] = avg // CHANGE // THIS IS AN INT
+                // saveobject["average_price"] = avg // CHANGE // MAKE AVERAGE_PRICE IN PARSE
             })
-            
-            // Saves Number of Places
-            let numOfPlaces = placeIDs.count
-            // saveobject["num_places"] = numOfPlaces // CHANGE
             
             
             // Saves Businesses to Parse as [String] Ids

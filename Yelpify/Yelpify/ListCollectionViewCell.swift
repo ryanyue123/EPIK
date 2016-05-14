@@ -18,6 +18,8 @@ class ListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var listName: UILabel!
     @IBOutlet weak var creatorName: UILabel!
     @IBOutlet weak var followerCount: UILabel!
+    @IBOutlet weak var avgPrice: UILabel!
+    @IBOutlet weak var numOfPlaces: UILabel!
     
     var gpAPIClient = GooglePlacesAPIClient()
     
