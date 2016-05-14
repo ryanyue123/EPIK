@@ -39,6 +39,8 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     //var placePhoto: UIImage? = UIImage(named: "default_restaurant")
     let cache = Shared.dataCache
     var object: Business!
+    var gPlaceObject: GooglePlaceDetail!
+    
     var index: Int!
     
     var photoRefs = [String]()
@@ -82,81 +84,90 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         //self.webButton.enabled = false
         self.title = "Details"
         
-        APIClient.performDetailedSearch(object.gPlaceID!) { (detailedGPlace) in
-    
-    
-            // Set Icon
-            let businessList = ["restaurant","food","amusement","bakery","bar","beauty_salon","bowling_alley","cafe","car_rental","car_repair","clothing_store","department_store","grocery_or_supermarket","gym","hospital","liquor_store","lodging","meal_takeaway","movie_theater","night_club","police","shopping_mall"]
-            
-            func setIcon(){
-                if self.object.businessTypes.count != 0 && businessList.contains(String(self.object.businessTypes[0])){
-                    self.typeIconImageView.image = UIImage(named: String(self.object.businessTypes[0]) + "_Icon")!
-                }else{
-                    self.typeIconImageView.image = UIImage(named: "default_Icon")!
-                }
-            }
-            
-            setIcon()
-            // Set Name
-            self.nameLabel.text = self.object.businessName
-            
-            // Set Address
-            //self.addressLabel.text = detailedGPlace.address
-            
-            // Set Reviews
-            self.reviewArray = detailedGPlace.reviews!
-            
-            // Set Phone
-            self.object.businessPhone = detailedGPlace.phone!
-            
-            // Set Rating
-            if let ratingValue = detailedGPlace.rating{
-                if ratingValue != -1{
-                    self.cosmosRating.rating = ratingValue
-                }else{
-                    self.cosmosRating.hidden = true
-                    //self.cosmosRating.addSubview(UILabel)
-                }
-            }
-            
-            // Set Price
-            if let price = detailedGPlace.priceRating{
-                var priceString = ""
-                for _ in 0..<price {
-                    priceString += "$"
-                }
-                self.priceRatingLabel.text = priceString
-            }
-            
-            // Set Hours
-            if detailedGPlace.hours!.count != 0{
-                self.hoursLabel.text = self.getHours(detailedGPlace.hours!)
-            }else{
-                self.hoursLabel.text = "No Hours Availible"
-            }
+        // IF SEGUEING FROM SEARCHBUSINESSCONTROLLER
+        if object != nil{
+            APIClient.performDetailedSearch(object.gPlaceID!) { (detailedGPlace) in
         
-            // Set Photos
-            if detailedGPlace.photos?.count > 0 {
-                let randNum = Int(arc4random_uniform(UInt32(detailedGPlace.photos.count)))
-                self.setCoverPhoto(detailedGPlace.photos![randNum] as! String)
+                // Set Icon
+                let businessList = ["restaurant","food","amusement","bakery","bar","beauty_salon","bowling_alley","cafe","car_rental","car_repair","clothing_store","department_store","grocery_or_supermarket","gym","hospital","liquor_store","lodging","meal_takeaway","movie_theater","night_club","police","shopping_mall"]
+                
+                func setIcon(){
+                    if self.object.businessTypes.count != 0 && businessList.contains(String(self.object.businessTypes[0])){
+                        self.typeIconImageView.image = UIImage(named: String(self.object.businessTypes[0]) + "_Icon")!
+                    }else{
+                        self.typeIconImageView.image = UIImage(named: "default_Icon")!
+                    }
+                }
+                
+                setIcon()
+                // Set Name
+                self.nameLabel.text = self.object.businessName
+                
+                // Set Address
+                //self.addressLabel.text = detailedGPlace.address
+                
+                // Set Reviews
+                self.reviewArray = detailedGPlace.reviews!
+                
+                // Set Phone
+                self.object.businessPhone = detailedGPlace.phone!
+                
+                // Set Rating
+                if let ratingValue = detailedGPlace.rating{
+                    if ratingValue != -1{
+                        self.cosmosRating.rating = ratingValue
+                    }else{
+                        self.cosmosRating.hidden = true
+                        //self.cosmosRating.addSubview(UILabel)
+                    }
+                }
+                
+                // Set Price
+                if let price = detailedGPlace.priceRating{
+                    var priceString = ""
+                    for _ in 0..<price {
+                        priceString += "$"
+                    }
+                    self.priceRatingLabel.text = priceString
+                }
+                
+                // Set Hours
+                if detailedGPlace.hours!.count != 0{
+                    self.hoursLabel.text = self.getHours(detailedGPlace.hours!)
+                }else{
+                    self.hoursLabel.text = "No Hours Availible"
+                }
+            
+                // Set Photos
+                if detailedGPlace.photos?.count > 0 {
+                    let randNum = Int(arc4random_uniform(UInt32(detailedGPlace.photos.count)))
+                    self.setCoverPhoto(detailedGPlace.photos![randNum] as! String)
+                }
+                
+                
+                /*
+                print("Hours: ", detailedGPlace.hours!, "\n")
+                print("Phone: ", detailedGPlace.phone!, "\n")
+                print("Photos: ", detailedGPlace.photos!, "\n")
+                print("Price Rating: ", detailedGPlace.priceRating!, "\n")
+                print("Rating: ", detailedGPlace.rating!, "\n")
+                print("Reviews: ", detailedGPlace.reviews, "\n")
+                print("Website: ", detailedGPlace.website!, "\n")
+                */
+                
+                // Set Action Buttons
+                self.directionsButton.enabled = true
+                self.callButton.enabled = true
+             
+                self.tableView.reloadData()
             }
-            
-            
-            /*
-            print("Hours: ", detailedGPlace.hours!, "\n")
-            print("Phone: ", detailedGPlace.phone!, "\n")
-            print("Photos: ", detailedGPlace.photos!, "\n")
-            print("Price Rating: ", detailedGPlace.priceRating!, "\n")
-            print("Rating: ", detailedGPlace.rating!, "\n")
-            print("Reviews: ", detailedGPlace.reviews, "\n")
-            print("Website: ", detailedGPlace.website!, "\n")
-            */
-            
-            // Set Action Buttons
-            self.directionsButton.enabled = true
-            self.callButton.enabled = true
-         
-            self.tableView.reloadData()
+        }else{
+        // IF SEGUEING FROM SINGLEPLAYLISTCONTROLLER
+            // Set Name
+            self.nameLabel.text = gPlaceObject.name
+            self.cosmosRating.rating = gPlaceObject.rating
+            self.priceRatingLabel.text = String(gPlaceObject.priceRating)
+            self.hoursLabel.text = getHours(gPlaceObject.hours)
         }
     
     

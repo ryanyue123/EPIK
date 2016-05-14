@@ -41,6 +41,7 @@ struct Business {
 }
 
 struct GooglePlaceDetail {
+    var name: String! = "" //
     var address: String! = ""
     var phone: String! = ""
     var website: String! = ""
@@ -50,5 +51,23 @@ struct GooglePlaceDetail {
     var reviews: NSMutableArray! = []
     var photos: NSMutableArray! = []
     var types: NSMutableArray! = []
-
+    
+    var longitude: Double! = -1 //
+    var latitude: Double! = -1 //
+    
+    func convertToBusiness() -> Business{
+        var business = Business()
+        business.businessAddress = self.address
+        business.businessLatitude = self.latitude
+        business.businessLongitude = self.longitude
+        business.businessName = self.name
+        business.businessAddress = self.address
+        business.businessPhone = self.phone
+        if self.photos.count > 0 {
+            business.businessPhotoReference = self.photos[0] as! String
+        }
+        business.businessTypes = self.types
+        
+        return business
+    }
 }

@@ -56,7 +56,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     let offset_HeaderStop:CGFloat = 40.0
     var contentToDisplay: ContentTypes = .Places
     
+    var apiClient = APIDataHandler()
+    
     var playlistArray = [Business]()
+    
+    var placeArray = [GooglePlaceDetail]()
+    var placeIDs = [String]()
+    
     var object: PFObject!
     var newPlaylist: Bool = false
     
@@ -146,7 +152,11 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             if(segue.identifier == "unwindToPlaylist")
             {
                 let sourceVC = segue.sourceViewController as! SearchBusinessViewController
-                playlistArray.appendContentsOf(sourceVC.playlistArray)
+                placeIDs.appendContentsOf(sourceVC.placeIDs)
+                playlistArray.appendContentsOf(sourceVC.businessArray)
+                
+                //placeArray.appendContentsOf(sourceVC.newPlacesArray)
+                
                 self.playlistTableView.reloadData()
             }
         }
@@ -261,12 +271,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                     })
                     
                 }
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.playlistArray = resultArray
-                    self.playlistTableView.reloadData()
-                    self.configureInfo()
-                })
+//                
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    self.playlistArray = resultArray
+//                    self.playlistTableView.reloadData()
+//                    self.configureInfo()
+//                })
             }
             // edit button is enabled
         }
@@ -296,35 +306,90 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                     })
                     
                 }
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.playlistArray = resultArray
-                    self.playlistTableView.reloadData()
-                    self.configureInfo()
-                })
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    self.playlistArray = resultArray
+//                    self.playlistTableView.reloadData()
+//                    self.configureInfo()
+//                })
+                self.configureInfo()
             }
         }
+        
+        
+        
+        // Get Array of IDs from Parse
+        let placeIDs = object["place_id_list"] as! [String]
+        self.placeIDs = placeIDs
+        
+        print(placeIDs)
+        self.updateBusinessesFromIDs(placeIDs)
+//        self.convertIDsToBusiness(placeIDs) { (businessArray, placeArray) in
+//            self.playlistArray = businessArray
+//            self.placeArray = placeArray
+//            self.playlistTableView.reloadData()
+//            
+//        }
         
         // Setup Navigation Bar
         let navigationBar = navigationController!.navigationBar
         navigationBar.tintColor = UIColor.whiteColor()
         
-        //let leftButton =  UIBarButtonItem(image: UIImage(named: "sort_icon"), style: .Plain, target: self, action: nil)
         let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "showActionsMenu:")
         
-        //navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton
     }
+    
+    func updateBusinessesFromIDs(ids: [String]){
+        for id in ids{
+            apiClient.performDetailedSearch(id, completion: { (detailedGPlace) in
+                self.placeArray.append(detailedGPlace)
+                self.playlistArray.append(detailedGPlace.convertToBusiness())
+                self.playlistTableView.reloadData()
+            })
+        }
+    }
+//    func convertIDsToBusiness(ids: [String], completion: (businessArray: [Business], placeArray: [GooglePlaceDetail]) -> Void){
+//        var businessArray:[Business] = []
+//        var placeArray: [GooglePlaceDetail] = []
+//        
+//        for id in ids{
+//            apiClient.performDetailedSearch(id, completion: { (detailedGPlace) in
+//                //placeArray.append(detailedGPlace)
+//                self.playlistArray.append(detailedGPlace.convertToBusiness())
+//                self.placeIDs.append(id)
+//                //businessArray.append(detailedGPlace.convertToBusiness())
+//            })
+//        }
+//        completion(businessArray: businessArray, placeArray: placeArray)
+//    }
+    
+    func convertBusinessesToIDs(businesses: [Business], completion: (ids: [String]) -> Void) {
+        var ids: [String] = []
+        for business in businesses{
+            ids.append(business.gPlaceID)
+        }
+        completion(ids: ids)
+    }
+
     func handleTap(img: AnyObject){
        performSegueWithIdentifier("tapImageButton", sender: self)
         
     }
     
     override func viewDidAppear(animated: Bool) {
+        
         configureSegmentedBar()
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         //Configure Functions
+        super.viewWillAppear(animated)
+        UIView.animateWithDuration(0.3,delay: 0.0,options: UIViewAnimationOptions.BeginFromCurrentState,animations: {
+            self.addPlaceImageButton.transform = CGAffineTransformMakeScale(0.5, 0.5)},
+                                   completion: { finish in
+                                    UIView.animateWithDuration(0.6){self.addPlaceImageButton.transform = CGAffineTransformIdentity}
+        })
         
         ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         self.statusBarView = ConfigureFunctions.configureStatusBar(self.navigationController!)
@@ -615,7 +680,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             })
             return businessCell
               
-            // IF SEGMENTED IS ON COMMENTS
+        // IF SEGMENTED IS ON COMMENTS
         }else if self.contentToDisplay == .Comments{
             let reviewCell = tableView.dequeueReusableCellWithIdentifier("reviewCell", forIndexPath: indexPath) as! ReviewTableViewCell
             return reviewCell
@@ -744,17 +809,20 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func savePlaylistToParse(sender: UIBarButtonItem)
     {
-        self.deactivateEditMode()
-        if playlistArray.count > 0{
+        if placeIDs.count > 0{
             let saveobject = object
-            if let lat = playlistArray[0].businessLatitude
-            {
-                if let long = playlistArray[0].businessLongitude
-                {
-                    saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
-                }
-            }
-            saveobject["track"] = convertPlacesArrayToDictionary(playlistArray)
+//            if let lat = playlistArray[0].businessLatitude
+//            {
+//                if let long = playlistArray[0].businessLongitude
+//                {
+//                    saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
+//                }
+//            }
+            //saveobject["track"] = convertPlacesArrayToDictionary(playlistArray)
+            
+            // Saves Businesses to Parse as [String] Ids
+            saveobject["place_id_list"] = placeIDs
+            
             saveobject.saveInBackgroundWithBlock { (success, error)  -> Void in
                 if (error == nil){
                     print("saved")
@@ -777,12 +845,21 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         if (segue.identifier == "showBusinessDetail"){
             let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
             
-            let indexPath = playlistTableView.indexPathForSelectedRow
-            let temp = indexPath!.row
-            let object = playlistArray[temp]
-            upcoming.object = object
-            upcoming.index = indexPath!.row
-            self.playlistTableView.deselectRowAtIndexPath(indexPath!, animated: true)
+            let index = playlistTableView.indexPathForSelectedRow!.row
+            
+            // IF NO NEW PLACE IS ADDED
+            if index <= placeArray.count - 1{
+                let gPlaceObject = placeArray[index]
+                upcoming.gPlaceObject = gPlaceObject
+                upcoming.index = index
+            }else{
+            // IF NEW PLACES ARE ADDED
+                let businessObject = playlistArray[index]
+                upcoming.object = businessObject
+                upcoming.index = index
+            }
+            
+            self.playlistTableView.deselectRowAtIndexPath(playlistTableView.indexPathForSelectedRow!, animated: true)
         }
         else if (segue.identifier == "showProfileView")
         {
