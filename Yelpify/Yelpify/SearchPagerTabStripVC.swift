@@ -18,7 +18,7 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
     
     var chosenCoordinates: String!
     
-    var itemReceived: Array<String> = []
+    var itemReceived: Array<Int> = []
     
     @IBOutlet weak var searchTextField: UITextField!
     override func viewDidLoad() {
@@ -59,7 +59,7 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
     }
     
     func sendValue(value: AnyObject){
-        itemReceived.append(value as! String)
+        itemReceived.append(value as! Int)
         print(String(itemReceived))
     }
     

@@ -111,7 +111,7 @@ extension CZPickerViewController: CZPickerViewDelegate, CZPickerViewDataSource {
         
         for row in rows {
             if let row = row as? Int {
-                delegate.sendValue(fruits[row])
+                delegate.sendValue(row)
             }
         }
     }
