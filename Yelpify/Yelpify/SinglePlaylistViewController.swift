@@ -192,9 +192,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     // MARK: - ViewDidLoad and other View functions
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         

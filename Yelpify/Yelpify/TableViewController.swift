@@ -35,6 +35,9 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+        ConfigureFunctions.configureStatusBar(self.navigationController!)
+        
         // Get Location and Fetch
         DataFunctions.getLocation { (coordinates) in
             self.parameters["ll"] = String(coordinates.latitude) + "," + String(coordinates.longitude)
@@ -52,8 +55,6 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
         
         navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton
-        
-        
         
         // Pull to Refresh
         let loadingView = DGElasticPullToRefreshLoadingViewCircle()
@@ -75,16 +76,15 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
         tableView.dg_removePullToRefresh()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(1) ]
+        self.tableView.reloadData()
+        self.navigationController?.navigationBar.backgroundColor = appDefaults.color.colorWithAlphaComponent(1)
+    }
+    
     override func viewWillAppear(animated: Bool) {
         // Configure Views
-        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
-        ConfigureFunctions.configureStatusBar(self.navigationController!)
-    }
-
-    override func viewDidAppear(animated: Bool) {
-
-        //configureHeaderView()
-        self.tableView.reloadData()
     }
     
     override func viewWillLayoutSubviews() {
@@ -129,6 +129,8 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         self.fadeBG()
         self.updateHeaderView()
+        
+        
     }
     
     func configureCarousel(){

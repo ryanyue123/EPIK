@@ -188,25 +188,36 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     // This one is added through the button in cell
     func addTrackToPlaylist(button: UIButton)
     {
-        button.tintColor = UIColor.greenColor()
-        print("pressed")
-        let index = button.tag
-        placeIDs.append(businessObjects[index].gPlaceID)
-        businessArray.append(businessObjects[index])
+    
+        // If button already pressed
+        if button.tintColor == UIColor.greenColor(){
+            button.tintColor = appDefaults.color_darker
+            print("removed")
+            let index = button.tag
+            let indexToRemove = self.placeIDs.indexOf(businessObjects[index].gPlaceID)
+            print(indexToRemove)
+            placeIDs.removeAtIndex(indexToRemove!)
+            businessArray.removeAtIndex(indexToRemove!)
+        }else{
+            button.tintColor = UIColor.greenColor()
+            print("pressed")
+            let index = button.tag
+            placeIDs.append(businessObjects[index].gPlaceID)
+            businessArray.append(businessObjects[index])
+        }
         
-        print(placeIDs)
     }
     
     
     // This one is added through DetailedVC
+    
+    // CHANGE
     func addTrackToPlaylist(indx: Int!)
     {
         print("Added Business at Index", String(indx))
         placeIDs.append(businessObjects[indx].gPlaceID)
         businessArray.append(businessObjects[indx])
         print(placeIDs)
-        
-        
     }
     
     func textFieldDidChange(textField: UITextField){
