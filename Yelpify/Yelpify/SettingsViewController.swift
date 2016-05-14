@@ -15,14 +15,12 @@ class SettingsViewController: UITableViewController {
     @IBAction func logoutButton(sender: AnyObject) {
         logoutUser(PFUser.currentUser()!)
     }
-//    @IBAction func logoutButton(sender: UIButton!) {
-//        logoutUser(PFUser.currentUser()!)
-//    }
     
     func logoutUser(user: PFUser){
         PFUser.logOut()
-        let storyboard = UIStoryboard()
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let Login = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as! UIViewController
+        self.presentViewController(Login, animated: true, completion: nil)
         
     }
 
