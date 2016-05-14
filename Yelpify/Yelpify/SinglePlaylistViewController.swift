@@ -59,7 +59,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var playlistArray = [Business]()
     var object: PFObject!
     var newPlaylist: Bool = false
-    var sortMethod:String!
+    
+    var itemReceived: String!
+    
+    var itemToSend: String!
     
     var playlist_name: String!
     
@@ -68,9 +71,16 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     var viewDisappearing = false
     
-    func sendValue(value:[Business]) {
-        playlistArray = value
-        self.playlistTableView.reloadData()
+    func sendValue(value: AnyObject){
+        itemReceived = value as! String
+        
+        if value as! String == "Alphabetical"{
+            self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
+            self.playlistTableView.reloadData()
+        }else if self.itemReceived == "Rating"{
+            self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
+            self.playlistTableView.reloadData()
+        }
     }
     
     func sortMethods(businesses: Array<Business>, type: String)->Array<Business>{
@@ -90,6 +100,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         let actionController = YoutubeActionController()
         let pickerController = CZPickerViewController()
 
+
         actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
             print("Share")
         }))
@@ -99,17 +110,15 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             self.playlistTableView.reloadData()
         }))
         actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "yt-share-icon")!), style: .Cancel, handler: { action in
-            
-            pickerController.delegate = self
-            
-            pickerController.businessArrayToSort = self.playlistArray
+            pickerController.headerTitle = "Sort Options"
+            pickerController.fruits = ["Alphabetical","Rating"]
             pickerController.showWithFooter(UIViewController)
-
+            pickerController.delegate = self
         }))
         actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
         
         presentViewController(actionController, animated: true, completion: nil)
-        
+    
     }
     
     @IBAction func selectContentType(sender: AnyObject) {

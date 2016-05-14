@@ -12,21 +12,20 @@ import CZPicker
 
 protocol ModalViewControllerDelegate
 {
-    func sendValue(var value : [Business])
+    func sendValue(var value: AnyObject)
 }
 
 
 class CZPickerViewController: UIViewController {
     
-    var fruits = ["Alphabetical","Rating"]
+    var fruits = []
     var fruitImages = [UIImage]()
     var pickerWithImage: CZPickerView?
     var item = String()
-    
+    var headerTitle = String()
     var businessArrayToSort: [Business]!
-    
+    var didSet = false
     var delegate:ModalViewControllerDelegate!
-    
     
     
     override func viewDidLoad() {
@@ -42,20 +41,20 @@ class CZPickerViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func sortMethods(businesses: Array<Business>, type: String)->Array<Business>{
-        var sortedBusinesses: Array<Business> = []
-        if type == "name"{
-            sortedBusinesses = businesses.sort{$0.businessName < $1.businessName}
-        } else if type == "rating"{
-            sortedBusinesses = businesses.sort{$0.businessRating > $1.businessRating}
-        }
-        return sortedBusinesses
-        
-    }
+//    func sortMethods(businesses: Array<Business>, type: String){
+//        var sortedBusinesses: Array<Business> = []
+//        if type == "name"{
+//            sortedBusinesses = businesses.sort{$0.businessName < $1.businessName}
+//        } else if type == "rating"{
+//            sortedBusinesses = businesses.sort{$0.businessRating > $1.businessRating}
+//        }
+//        delegate.sendValue(sortedBusinesses as Array<Business>)
+//        
+//    }
     
 
     func showWithFooter(sender: AnyObject) {
-        let picker = CZPickerView(headerTitle: "Sort Options", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
+        let picker = CZPickerView(headerTitle: headerTitle, cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
         picker.headerBackgroundColor = appDefaults.color
         picker.confirmButtonBackgroundColor = appDefaults.color
         picker.tapBackgroundToDismiss = true
@@ -109,18 +108,21 @@ extension CZPickerViewController: CZPickerViewDelegate, CZPickerViewDataSource {
     }
     
     func czpickerView(pickerView: CZPickerView!, titleForRow row: Int) -> String! {
-        print(fruits[row])
-        return fruits[row]
+        //print(fruits[row])
+        return fruits[row] as! String
     }
     
     func czpickerView(pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int) {
-        if row == 0{
-            let sortedList = self.sortMethods(businessArrayToSort, type: "name")
-            delegate.sendValue(sortedList)
-        }else if row == 1{
-            let sortedList = self.sortMethods(businessArrayToSort, type: "rating")
-            delegate.sendValue(sortedList)
-        }
+        //print((fruits[row] as! String) + "hi")
+        delegate.sendValue(fruits[row])
+        didSet = true
+//        if row == 0{
+//            let sortedList = self.sortMethods(businessArrayToSort, type: "name")
+//            delegate.sendValue(sortedList as! AnyObject)
+//        }else if row == 1{
+//            let sortedList = self.sortMethods(businessArrayToSort, type: "rating")
+//            delegate.sendValue(sortedList as! AnyObject)
+//        }
     }
   
     
