@@ -373,11 +373,10 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
             }
         }
         let followCount = cellobject["followerCount"]
-        if (followCount == nil)
-        {
+        if (followCount == nil) {
             cell.followerCount.text = "0"
         }
-        else{
+        else {
             cell.followerCount.text = String(followCount)
         }
         //cell.listIcon.image = UIImage(named: "cafe_icon") // CHANGE
