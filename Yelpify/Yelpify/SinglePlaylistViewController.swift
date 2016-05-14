@@ -67,8 +67,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var object: PFObject!
     var editable: Bool = false
     var sortMethod:String!
-    
-    var itemReceived: [Int]!
+    var addToOwnPlaylists: [PFObject]!
+    var playlist_swiped: String!
+    var itemReceived: Array<AnyObject> = []
     var playlist_name: String!
     
     // The apps default color
@@ -79,13 +80,27 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func sendValue(value: AnyObject){
         itemReceived.append(value as! NSObject)
         
-        for item in itemReceived{
-            if item as! NSObject == "Alphabetical"{
+        for item in itemReceived {
+            if item as! NSObject == "Alphabetical" {
                 self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
                 self.playlistTableView.reloadData()
-            }else if item as! NSObject == "Rating"{
+            }
+            else if item as! NSObject == "Rating" {
                 self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
                 self.playlistTableView.reloadData()
+            }
+            else {
+                let index = item as! Int
+                var playlist = addToOwnPlaylists[index]["place_id_list"] as! [String]
+                print(playlist)
+                playlist.append(self.playlist_swiped)
+                print(playlist)
+                addToOwnPlaylists[index]["place_id_list"] = playlist
+                addToOwnPlaylists[index].saveInBackgroundWithBlock({ (success, error) in
+                    if (error == nil) {
+                        print("Saved")
+                    }
+                })
             }
             itemReceived = []
         }
@@ -218,9 +233,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         
         // Get Array of IDs from Parse
-        let placeIDs = object["place_id_list"] as! [String]
-        self.placeIDs = placeIDs
-        self.updateBusinessesFromIDs(placeIDs)
+        if let placeIDs = object["place_id_list"] as? [String] {
+            self.placeIDs = placeIDs
+            self.updateBusinessesFromIDs(placeIDs)
+        }
         
         // Setup HeaderView with information
         self.configureInfo()
@@ -642,6 +658,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func swipeTableCell(cell: MGSwipeTableCell!, tappedButtonAtIndex index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
         let indexPath = playlistTableView.indexPathForCell(cell)
+        self.playlist_swiped = self.placeIDs[(indexPath?.row)!]
         let business = playlistArray[indexPath!.row] 
         let actions = PlaceActions()
         let pickerController = CZPickerViewController()
@@ -655,6 +672,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                     query.whereKey("createdBy", equalTo: PFUser.currentUser()!)
                     query.findObjectsInBackgroundWithBlock({ (object, error) in
                         if (error == nil) {
+                            self.addToOwnPlaylists = object!
                             var user_array = [String]()
                             dispatch_async(dispatch_get_main_queue(), {
                                
