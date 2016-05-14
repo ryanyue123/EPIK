@@ -24,6 +24,9 @@ class ListCollectionViewCell: UICollectionViewCell {
     var gpAPIClient = GooglePlacesAPIClient()
     
     func configureCellLayout(){
+        
+        //addShadowToCell()
+        
         // Round the banner's corners
         var maskPath: UIBezierPath = UIBezierPath(roundedRect: self.layer.bounds, byRoundingCorners: ([.TopLeft, .TopRight, .BottomLeft, .BottomRight]), cornerRadii: CGSizeMake(5, 5))
         var maskLayer: CAShapeLayer = CAShapeLayer()
@@ -35,6 +38,7 @@ class ListCollectionViewCell: UICollectionViewCell {
         self.layer.cornerRadius = 3
         // Add shadow
         self.layer.masksToBounds = false
+        
     }
     
     func configureCell(imageref: String)
@@ -48,6 +52,17 @@ class ListCollectionViewCell: UICollectionViewCell {
                 self.playlistImage.setNeedsLayout()
             }
         }
+    }
+    
+    func addShadowToCell(){
+        //self.backgroundColor = UIColor.whiteColor()
+        self.layer.masksToBounds = false
+        self.layer.shadowOpacity = 0.5
+        self.layer.shadowRadius = 30.0
+        self.layer.shadowOffset = CGSizeZero
+        self.layer.shadowColor = UIColor.blackColor().CGColor
+        //self.layer.shouldRasterize = true
+        //self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.contentView.layer.cornerRadius).CGPath
     }
     
     override func awakeFromNib() {

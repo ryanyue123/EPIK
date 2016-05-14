@@ -21,9 +21,7 @@ enum ListMode{
     case View, Edit
 }
 
-
-
-class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate, MGSwipeTableCellDelegate, ModalViewControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate, MGSwipeTableCellDelegate, ModalViewControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate, UITextFieldDelegate{
     
     //@IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
     
@@ -35,15 +33,30 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     @IBOutlet weak var playlistInfoBG: UIImageView!
     
+    
+    let imagePicker = UIImagePickerController()
+    
     @IBAction func loadImageButton(sender: AnyObject) {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .PhotoLibrary
         
+        // Configure Status Bar
+        let statusBarRect = CGRect(x: 0, y: 0, width: imagePicker.navigationBar.frame.size.width, height: 20.0)
+        let statusBarView = UIView(frame: statusBarRect)
+        statusBarView.backgroundColor = appDefaults.color
+        imagePicker.view.addSubview(statusBarView)
+        
+        // Configure Navigation Bar
+        imagePicker.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Top, barMetrics: .Default)
+        imagePicker.navigationBar.backgroundColor = appDefaults.color
+        
         presentViewController(imagePicker, animated: true, completion: nil)
     }
-    let imagePicker = UIImagePickerController()
+    
+    @IBOutlet weak var changePlaylistImageButton: UIButton!
+    
     @IBOutlet weak var playlistInfoIcon: UIImageView!
-    @IBOutlet weak var playlistInfoName: UILabel!
+    @IBOutlet weak var playlistInfoName: UITextField!
     @IBOutlet weak var playlistInfoUser: UIButton!
     @IBOutlet weak var collaboratorsView: UIView!
     @IBOutlet weak var creatorImageView: UIImageView!
@@ -53,9 +66,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     @IBOutlet weak var followListButton: UIButton!
     
-    @IBOutlet weak var addPlaceButton: UIButton!
-    
     @IBOutlet weak var segmentedBarView: UIView!
+    
+    var customImage: UIImage! = nil
     
     var mode: ListMode! = .View
     
@@ -92,10 +105,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             playlistInfoBG.contentMode = .ScaleAspectFill
             playlistInfoBG.clipsToBounds = true
             playlistInfoBG.image = pickedImage
+            self.customImage = pickedImage
         }
         
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
@@ -273,9 +288,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.playlistTableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
         self.playlistTableView.registerNib(UINib(nibName: "ReviewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "reviewCell")
         
-        self.addPlaceButton.hidden = true
-        self.addPlaceButton.enabled = false
-        
         self.playlistTableView.backgroundColor = appDefaults.color_bg
         if (self.editable == true) {
             self.activateEditMode()
@@ -440,40 +452,74 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+    
+    // MARK: Activate and Deactivate Edit Modes
     func activateEditMode() {
-        self.addPlaceImageButton.hidden = false
+        
+        // Make Title Text Editable
+        self.playlistInfoName.userInteractionEnabled = true
+        self.playlistInfoName.delegate = self
+        
+        // Show Change BG Image Button
+        self.changePlaylistImageButton.hidden = false
+    
+        // Replace More Button With Cancel Button
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "deactivateEditMode")
+        
+        // Animate and Show Add Place Button
+        self.addPlaceImageButton.hidden = false
         UIView.animateWithDuration(0.3,delay: 0.0,options: UIViewAnimationOptions.BeginFromCurrentState,animations: {
             self.addPlaceImageButton.transform = CGAffineTransformMakeScale(0.5, 0.5)},
                                    completion: { finish in
                                     UIView.animateWithDuration(0.6){self.addPlaceImageButton.transform = CGAffineTransformIdentity}
         })
         
+        // Set Editing to True
         self.setEditing(true, animated: true)
-        self.addPlaceButton.hidden = true
-        self.addPlaceButton.enabled = false
+        
+        // Set Edit Mode
         self.mode = .Edit
+        
+        // Replace Back Button with Done
         self.navigationItem.setHidesBackButton(true, animated: true)
         let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(SinglePlaylistViewController.savePlaylistToParse(_:)))
         self.navigationItem.leftBarButtonItem = backButton
-        self.addPlaceButton.hidden = true
-        self.addPlaceButton.enabled = false
     }
     
     func deactivateEditMode() {
+        
+        // Make Title Text Editable
+        self.playlistInfoName.userInteractionEnabled = false
+        self.playlistInfoName.delegate = nil
+        
+        // Hide Change BG Image Button
+        self.changePlaylistImageButton.hidden = true
+        
+        // Restore More Icon to Right Side of Nav Bar
         let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "showActionsMenu:")
         navigationItem.rightBarButtonItem = rightButton
         
+        // Restore Back Button
         self.navigationItem.setHidesBackButton(false, animated: true)
         self.navigationItem.leftBarButtonItem = nil
         
-        self.addPlaceButton.hidden = true
+        // Set Editing to False
         self.setEditing(false, animated: true)
+        
+        // Hide Add Place Button
         self.addPlaceImageButton.hidden = true
-        self.addPlaceButton.hidden = true
-        self.addPlaceButton.enabled = false
+        
+        // Change to View Mode
         self.mode = .View
     }
+    
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        return true
+    }
+    
     // MARK: - Reload Data After Pass
     
     func convertParseArrayToBusinessArray(parseArray: [NSDictionary], completion: (resultArray: [Business])->Void){
@@ -845,11 +891,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+    // MARK: - SAVE PLAYLIST
     func savePlaylistToParse(sender: UIBarButtonItem)
     {
         self.deactivateEditMode()
         if placeIDs.count > 0{
             let saveobject = object
+            
+            // Save Location of First Object
             if let lat = playlistArray[0].businessLatitude
             {
                 if let long = playlistArray[0].businessLongitude
@@ -857,6 +906,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                     saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
                 }
             }
+            
+            // Saves List Name
+            saveobject["playlistName"] = playlistInfoName.text
             
             // Saves Average Price
             let averagePrice = getAveragePrice({ (avg) in
