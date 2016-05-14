@@ -315,15 +315,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         // Get Array of IDs from Parse
         let placeIDs = object["place_id_list"] as! [String]
         self.placeIDs = placeIDs
-        
-        print(placeIDs)
         self.updateBusinessesFromIDs(placeIDs)
-//        self.convertIDsToBusiness(placeIDs) { (businessArray, placeArray) in
-//            self.playlistArray = businessArray
-//            self.placeArray = placeArray
-//            self.playlistTableView.reloadData()
-//            
-//        }
         
         // Setup Navigation Bar
         let navigationBar = navigationController!.navigationBar
@@ -343,20 +335,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             })
         }
     }
-//    func convertIDsToBusiness(ids: [String], completion: (businessArray: [Business], placeArray: [GooglePlaceDetail]) -> Void){
-//        var businessArray:[Business] = []
-//        var placeArray: [GooglePlaceDetail] = []
-//        
-//        for id in ids{
-//            apiClient.performDetailedSearch(id, completion: { (detailedGPlace) in
-//                //placeArray.append(detailedGPlace)
-//                self.playlistArray.append(detailedGPlace.convertToBusiness())
-//                self.placeIDs.append(id)
-//                //businessArray.append(detailedGPlace.convertToBusiness())
-//            })
-//        }
-//        completion(businessArray: businessArray, placeArray: placeArray)
-//    }
     
     func convertBusinessesToIDs(businesses: [Business], completion: (ids: [String]) -> Void) {
         var ids: [String] = []
@@ -765,29 +743,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    
-//    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
-//    {
-    
-    //}
-    
-//    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]?
-//    {
-//        var shareAction = UITableViewRowAction(style: .Normal, title: "Share") {(action:
-//            UITableViewRowAction!, indexPath: NSIndexPath!) -> Void in
-//            print("sharing")
-//        }
-//        
-//        shareAction.backgroundColor = appDefaults.color
-//        
-//        var routeAction = UITableViewRowAction(style: .Normal, title: "Route") { (action: UITableViewRowAction!, indexPath: NSIndexPath) in
-//            print("routing")
-//        }
-//        
-//        routeAction.backgroundColor = appDefaults.color_darker
-//        
-//        return [shareAction, routeAction]
-//    }
     
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
