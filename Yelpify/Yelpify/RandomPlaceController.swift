@@ -11,12 +11,14 @@ import UIKit
 
 class RandomPlaceController: UIViewController{
     
-    
     @IBOutlet weak var RestaurantName: UILabel!
     @IBOutlet weak var RestaurantAddress: UILabel!
     
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var cardImageView: UIImageView!
+    
+    var businessArray: [Business]!
+    var googleClient = GooglePlacesAPIClient()
     
     func getRandomPlace(playlist: [Business])->Business{
         let num = Int32(arc4random_uniform(UInt32(playlist.count)))
@@ -39,12 +41,16 @@ class RandomPlaceController: UIViewController{
         backgroundImage.addSubview(blurEffectView)
         backgroundImage.addSubview(vibrancyEffectView)
     }
-
     
     override func viewDidLoad() {
-//        let randomBusiness = getRandomPlace([business1, business2, business2])
-//       RestaurantName.text = randomBusiness.businessName
-//       RestaurantAddress.text = randomBusiness.businessAddress
+        
+        let randomBusiness = getRandomPlace(businessArray)
+        RestaurantName.text = randomBusiness.businessName
+        RestaurantAddress.text = randomBusiness.businessAddress
+        googleClient.getImage(randomBusiness.businessPhotoReference) { (image) in
+            self.backgroundImage.image = image
+            self.cardImageView.image = image
+        }
         applyBackgroundBlurEffect()
         cardImageView.layer.cornerRadius = 30.0
     }

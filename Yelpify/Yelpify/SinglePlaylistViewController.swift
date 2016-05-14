@@ -74,6 +74,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     var playlist_name: String!
     
+    var apiClient = APIDataHandler()
+    
     // The apps default color
     let defaultAppColor = UIColor(netHex: 0xFFFFFF)
     
@@ -85,7 +87,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         if value as! String == "Alphabetical"{
             self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
             self.playlistTableView.reloadData()
-        }else if self.itemReceived == "Rating"{
+        }else if itemReceived == "Rating"{
             self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
             self.playlistTableView.reloadData()
         }
@@ -109,18 +111,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.presentViewController(searchVC!, animated: true, completion: nil)
     }
     
-    func saveCollaborators() {
-        print(self.collaborators)
-    }
-
+    
+    
     func showActionsMenu(sender: AnyObject) {
         
         let actionController = YoutubeActionController()
         let pickerController = CZPickerViewController()
+        let randomController = RandomPlaceController()
 
-
-        actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
-            print("Share")
+        actionController.addAction(Action(ActionData(title: "Get Random Place", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
+            if self.playlistArray.count != 0{
+                self.performSegueWithIdentifier("randomPlace", sender: self)
+            }
+            
         }))
         if (editable) {
             actionController.addAction(Action(ActionData(title: "Edit Playlist", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
@@ -176,6 +179,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 
     // MARK: - ViewDidLoad and other View functions
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.addPlaceImageButton.hidden = true
@@ -187,9 +192,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.playlistTableView.reloadData()
         
         
-        // tapRecognizer, placed in viewDidLoad
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPress:")
-        self.view.addGestureRecognizer(longPressRecognizer)
+//        // tapRecognizer, placed in viewDidLoad
+//        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPress:")
+//        self.view.addGestureRecognizer(longPressRecognizer)
         
         // Register Nibs 
         self.playlistTableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
@@ -198,7 +203,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
 
-        self.playlistTableView.backgroundColor = appDefaults.color
+        self.playlistTableView.backgroundColor = appDefaults.color_bg
         if (self.editable == true) {
             self.activateEditMode()
         }
@@ -217,15 +222,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         // Get Array of IDs from Parse
         let placeIDs = object["place_id_list"] as! [String]
         self.placeIDs = placeIDs
-        
-        print(placeIDs)
         self.updateBusinessesFromIDs(placeIDs)
-//        self.convertIDsToBusiness(placeIDs) { (businessArray, placeArray) in
-//            self.playlistArray = businessArray
-//            self.placeArray = placeArray
-//            self.playlistTableView.reloadData()
-//            
-//        }
+        
+        // Setup HeaderView with information
+        self.configureInfo()
         
         // Setup Navigation Bar
         let navigationBar = navigationController!.navigationBar
@@ -282,8 +282,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     override func viewWillAppear(animated: Bool) {
         //Configure Functions
         
-        
-        
         ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         self.statusBarView = ConfigureFunctions.configureStatusBar(self.navigationController!)
         
@@ -328,7 +326,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.playlistInfoIcon.image = UIImage(named: "default_icon")
         self.playlistInfoBG.image = UIImage(named: "default_list_bg")
         
-        self.numOfPlacesLabel.text = String(playlistArray.count)
+        self.numOfPlacesLabel.text = String(self.placeIDs.count)
         let followCount = object["followerCount"]
         if followCount == nil {
             self.numOfFollowersLabel.text = "0"
@@ -362,11 +360,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 })
                 
             }
-            dispatch_async(dispatch_get_main_queue(), {
-                self.playlistArray = resultArray
-                self.playlistTableView.reloadData()
-                self.configureInfo()
-            })
         }
     }
     
@@ -618,14 +611,21 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             addButton.centerIconOverText()
             addButton.titleLabel?.font = appDefaults.font
             
-            cell.leftButtons.removeAll()
-            cell.rightButtons = [routeButton, addButton]
+            
+            cell.rightButtons = [addButton]
             cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
             cell.rightExpansion.buttonIndex = 0
-            cell.rightExpansion.fillOnTrigger = true
+            cell.rightExpansion.fillOnTrigger = false
             cell.rightExpansion.threshold = 1
+            
+            cell.leftButtons = [routeButton]
+            cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
+            cell.leftExpansion.buttonIndex = 0
+            cell.leftExpansion.fillOnTrigger = true
+            cell.leftExpansion.threshold = 1
         }else if mode == .Edit{
             cell.rightButtons.removeAll()
+            cell.leftButtons.removeAll()
             let deleteButton = MGSwipeButton(title: "Delete",icon: UIImage(named: "location_icon"),backgroundColor: UIColor.redColor(),padding: 25)
             deleteButton.centerIconOverText()
             cell.leftButtons = [deleteButton]
@@ -646,10 +646,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         let indexPath = playlistTableView.indexPathForCell(cell)
         let business = playlistArray[indexPath!.row] 
         let actions = PlaceActions()
+        let pickerController = CZPickerViewController()
         if self.mode == ListMode.View{
             if index == 0{
-                actions.openInMaps(business)
-        }
+                if direction == MGSwipeDirection.LeftToRight{
+                    actions.openInMaps(business)
+                }}
         }
         else if self.mode == ListMode.Edit{
             playlistArray.removeAtIndex(indexPath!.row)
@@ -661,14 +663,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func swipeTableCell(cell: MGSwipeTableCell!, didChangeSwipeState state: MGSwipeState, gestureIsActive: Bool) {
         if self.mode == .View{
-            let routeButton = cell.rightButtons.first as! MGSwipeButton
-            let addButton = cell.rightButtons[1] as! MGSwipeButton
+            let routeButton = cell.leftButtons.first as! MGSwipeButton
+            let addButton = cell.rightButtons[0] as! MGSwipeButton
             if cell.swipeState.rawValue == 2{
                 routeButton.backgroundColor = appDefaults.color
                 addButton.backgroundColor = UIColor.greenColor()
             }
             else if cell.swipeState.rawValue >= 4{
-                addButton.backgroundColor = appDefaults.color
+                addButton.backgroundColor = UIColor.greenColor()
                 routeButton.backgroundColor = appDefaults.color
                 cell.swipeBackgroundColor = appDefaults.color
                 }
@@ -757,6 +759,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         else if (segue.identifier == "showProfileView") {
             let upcoming = segue.destinationViewController as! ProfileCollectionViewController
             upcoming.user = object["createdBy"] as! PFUser
+        }else if (segue.identifier == "randomPlace") {
+            let upcoming = segue.destinationViewController as! RandomPlaceController
+            upcoming.businessArray = self.playlistArray
         }
     }
 }

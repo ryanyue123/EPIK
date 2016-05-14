@@ -25,6 +25,9 @@ struct appDefaults {
 
 class TableViewController: UITableViewController, CLLocationManagerDelegate {
     
+    @IBOutlet weak var tableViewImage: UIImageView!
+    @IBOutlet weak var tableViewDescrip: UILabel!
+    @IBOutlet weak var tableViewTitle: UILabel!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var darkOverlay: UIView!
@@ -126,6 +129,12 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         self.fadeBG()
         self.updateHeaderView()
+    }
+    
+    func configureCarousel(){
+        self.tableViewImage.image = UIImage(named:"bucket")
+        self.tableViewTitle.text = "Discover Irvine"
+        self.tableViewDescrip.text = "A specially curated list created for you."
     }
     
     func fadeBG(){

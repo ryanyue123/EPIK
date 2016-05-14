@@ -16,8 +16,19 @@ class ProfileCollectionViewController: UICollectionViewController {
     
     var user: PFUser!
     var user_playlists = [PFObject]()
+    
+    func goToSettings(){
+        performSegueWithIdentifier("SettingsView", sender: self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        let navigationBar = navigationController!.navigationBar
+        navigationBar.tintColor = UIColor.whiteColor()
+        
+        let rightButton = UIBarButtonItem(title: "Settings", style: .Plain , target: self, action: "goToSettings")
+        
+        navigationItem.rightBarButtonItem = rightButton
         if (user == nil)
         {
             user = PFUser.currentUser()

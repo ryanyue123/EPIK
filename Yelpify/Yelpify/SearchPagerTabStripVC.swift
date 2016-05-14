@@ -10,12 +10,15 @@ import XLPagerTabStrip
 import UIKit
 import Parse
 import Foundation
+import XLActionController
 
-class SearchPagerTabStrip: ButtonBarPagerTabStripViewController {
+class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewControllerDelegate {
     
     var isReload = false
     
     var chosenCoordinates: String!
+    
+    var itemReceived: Array<String> = []
     
     @IBOutlet weak var searchTextField: UITextField!
     override func viewDidLoad() {
@@ -44,19 +47,31 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController {
         let navigationBar = navigationController!.navigationBar
         navigationBar.tintColor = UIColor.whiteColor()
         
-        let leftButton =  UIBarButtonItem(image: UIImage(named: "sort_icon"), style: .Plain, target: self, action: nil)
+        let leftButton =  UIBarButtonItem(image: UIImage(named: "sort_icon"), style: .Plain, target: self, action: "pressedSearchBy:")
         let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")
         
         navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton
-
-//        buttonBarView.selectedBar.backgroundColor = .orangeColor()
-//        buttonBarView.backgroundColor = UIColor(red: 7/255, green: 185/255, blue: 155/255, alpha: 1)
-        
     }
     
     func pressedLocation(sender: UIBarButtonItem){
         performSegueWithIdentifier("pickLocation", sender: self)
+    }
+    
+    func sendValue(value: AnyObject){
+        itemReceived.append(value as! String)
+        print(String(itemReceived))
+    }
+    
+    func pressedSearchBy(sender: UIBarButtonItem){
+        // Open Now, By Distance
+        let pickerController = CZPickerViewController()
+        pickerController.fruits = ["Open Now","Distance"]
+        pickerController.headerTitle = "Search By"
+        pickerController.showWithMultipleSelections(UIViewController)
+        pickerController.delegate = self
+        
+    
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
