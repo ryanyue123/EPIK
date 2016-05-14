@@ -208,7 +208,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                                 {
                                     let control = self.storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
                                     control.object = object
-                                    control.newPlaylist = true
+                                    control.editable = true
                                     self.navigationController!.pushViewController(control, animated: true)
                                 }
                             })

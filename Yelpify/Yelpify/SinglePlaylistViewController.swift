@@ -58,7 +58,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     var playlistArray = [Business]()
     var object: PFObject!
-    var newPlaylist: Bool = false
+    var editable: Bool = false
     var sortMethod:String!
     
     var playlist_name: String!
@@ -215,79 +215,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.addPlaceButton.enabled = false
 
         self.playlistTableView.backgroundColor = appDefaults.color
-        if (self.newPlaylist == true)
+        if (self.editable == true)
         {
             print("This is a new playlist")
             // Automatic edit mode
             self.activateEditMode()
         }
-        else if(object["createdBy"] as! PFUser == PFUser.currentUser()!)
-            //later incorporate possibility of collaboration
-        {
-            
-            //print("not nil")
-            self.convertParseArrayToBusinessArray(object["track"] as! [NSDictionary]) { (resultArray) in
-                let viewedlist: NSMutableArray = []
-                let recentlyviewed = PFUser.query()!
-                recentlyviewed.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
-                recentlyviewed.findObjectsInBackgroundWithBlock {(objects1: [PFObject]?, error: NSError?) -> Void in
-                    let recent = objects1![0]
-                    if let recentarray = recent["recentlyViewed"] as? [String]
-                    {
-                    
-                        viewedlist.addObjectsFromArray(recentarray)
-                    }
-                    viewedlist.insertObject(self.object.objectId!, atIndex: 0)
-                    
-                    recent["recentlyViewed"] = viewedlist
-                    recent.saveInBackgroundWithBlock({ (success, error) in
-                        if (error == nil)
-                        {
-                        }
-                    })
-                    
-                }
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.playlistArray = resultArray
-                    self.playlistTableView.reloadData()
-                    self.configureInfo()
-                })
-            }
-            // edit button is enabled
+        else if(object["createdBy"] as! PFUser == PFUser.currentUser()!) {
+            configureRecentlyViewed()
         }
-        else
-        {
+        else {
             print("not nil")
             self.view.reloadInputViews()
-            self.convertParseArrayToBusinessArray(object["track"] as! [NSDictionary]) { (resultArray) in
-                
-                let viewedlist: NSMutableArray = []
-                let recentlyviewed = PFUser.query()!
-                recentlyviewed.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
-                recentlyviewed.findObjectsInBackgroundWithBlock {(objects1: [PFObject]?, error: NSError?) -> Void in
-                    let recent = objects1![0]
-                    if let recentarray = recent["recentlyViewed"] as? [String]
-                    {
-                        viewedlist.addObjectsFromArray(recentarray)
-                    }
-                    viewedlist.insertObject(self.object.objectId!, atIndex: 0)
-                    
-                    recent["recentlyViewed"] = viewedlist
-                    recent.saveInBackgroundWithBlock({ (success, error) in
-                        if (error == nil)
-                        {
-                            print("Success")
-                        }
-                    })
-                    
-                }
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.playlistArray = resultArray
-                    self.playlistTableView.reloadData()
-                    self.configureInfo()
-                })
-            }
+            configureRecentlyViewed()
         }
         
         // Setup Navigation Bar
@@ -300,7 +240,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         //navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton
     }
-    func handleTap(img: AnyObject){
+    func handleTap(img: AnyObject) {
        performSegueWithIdentifier("tapImageButton", sender: self)
         
     }
@@ -346,12 +286,11 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
 
     
-    func unwindView(sender: UIBarButtonItem)
-    {
+    func unwindView(sender: UIBarButtonItem) {
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
-    func configureInfo(){
+    func configureInfo() {
         self.playlistInfoName.text = object["playlistName"] as? String
         let user = object["createdBy"] as! PFUser
         self.playlistInfoUser.titleLabel?.text = "BY " + user.username!.uppercaseString
@@ -361,19 +300,47 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         self.numOfPlacesLabel.text = String(playlistArray.count)
         let followCount = object["followerCount"]
-        if followCount == nil
-        {
+        if followCount == nil {
             self.numOfFollowersLabel.text = "0"
         }
-        else
-        {
+        else {
             self.numOfFollowersLabel.text = String(followCount)
         }
         self.averagePriceRating.text = "$$$" // CHANGE
     }
     
-    func activateEditMode()
-    {
+    func configureRecentlyViewed() {
+        self.convertParseArrayToBusinessArray(object["track"] as! [NSDictionary]) { (resultArray) in
+            
+            let viewedlist: NSMutableArray = []
+            let recentlyviewed = PFUser.query()!
+            recentlyviewed.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
+            recentlyviewed.findObjectsInBackgroundWithBlock {(objects1: [PFObject]?, error: NSError?) -> Void in
+                let recent = objects1![0]
+                if let recentarray = recent["recentlyViewed"] as? [String]
+                {
+                    viewedlist.addObjectsFromArray(recentarray)
+                }
+                viewedlist.insertObject(self.object.objectId!, atIndex: 0)
+                
+                recent["recentlyViewed"] = viewedlist
+                recent.saveInBackgroundWithBlock({ (success, error) in
+                    if (error == nil)
+                    {
+                        print("Success")
+                    }
+                })
+                
+            }
+            dispatch_async(dispatch_get_main_queue(), {
+                self.playlistArray = resultArray
+                self.playlistTableView.reloadData()
+                self.configureInfo()
+            })
+        }
+    }
+    
+    func activateEditMode() {
         self.addPlaceImageButton.hidden = false
         self.mode = .Edit
         self.navigationItem.setHidesBackButton(true, animated: true)
@@ -381,12 +348,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.navigationItem.leftBarButtonItem = backButton
         self.addPlaceButton.hidden = false
         self.addPlaceButton.enabled = true
-        
-        
     }
     
-    func deactivateEditMode()
-    {
+    func deactivateEditMode() {
         self.addPlaceImageButton.hidden = true
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
