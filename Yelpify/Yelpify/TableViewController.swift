@@ -395,7 +395,7 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         let controller = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
         let temparray = all_playlists[collectionView.tag]
         controller.object = temparray[indexPath.row] as! PFObject
-        self.navigationController!.pushViewController(controller, animated: true)
+        self.navigationController!.pushViewController( controller, animated: true)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
