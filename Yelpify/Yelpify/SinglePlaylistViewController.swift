@@ -639,10 +639,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             cell.rightExpansion.threshold = 1
         }else if mode == .Edit{
             cell.rightButtons.removeAll()
-            cell.leftButtons = [MGSwipeButton(title: "Delete",backgroundColor: UIColor.redColor(),padding: 25)]
+            let deleteButton = MGSwipeButton(title: "Delete",icon: UIImage(named: "location_icon"),backgroundColor: UIColor.redColor(),padding: 25)
+            deleteButton.centerIconOverText()
+            cell.leftButtons = [deleteButton]
             cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
             cell.leftExpansion.buttonIndex = 0
-            cell.leftExpansion.fillOnTrigger = false
+            cell.leftExpansion.fillOnTrigger = true
             cell.leftExpansion.threshold = 1
         }
     }
@@ -671,19 +673,21 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func swipeTableCell(cell: MGSwipeTableCell!, didChangeSwipeState state: MGSwipeState, gestureIsActive: Bool) {
-        let routeButton = cell.rightButtons.first as! MGSwipeButton
-        let addButton = cell.rightButtons[1] as! MGSwipeButton
-        if cell.swipeState.rawValue == 2{
-            routeButton.backgroundColor = appDefaults.color
-            addButton.backgroundColor = UIColor.greenColor()
-        }
-        else if cell.swipeState.rawValue >= 4{
-            addButton.backgroundColor = appDefaults.color
-            routeButton.backgroundColor = appDefaults.color
-            cell.swipeBackgroundColor = appDefaults.color
+        if self.mode == .View{
+            let routeButton = cell.rightButtons.first as! MGSwipeButton
+            let addButton = cell.rightButtons[1] as! MGSwipeButton
+            if cell.swipeState.rawValue == 2{
+                routeButton.backgroundColor = appDefaults.color
+                addButton.backgroundColor = UIColor.greenColor()
             }
+            else if cell.swipeState.rawValue >= 4{
+                addButton.backgroundColor = appDefaults.color
+                routeButton.backgroundColor = appDefaults.color
+                cell.swipeBackgroundColor = appDefaults.color
+                }
     
-
+        }
+    
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -735,6 +739,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func savePlaylistToParse(sender: UIBarButtonItem)
     {
+        self.deactivateEditMode()
         if playlistArray.count > 0{
             let saveobject = object
             if let lat = playlistArray[0].businessLatitude
