@@ -367,25 +367,25 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func activateEditMode() {
         self.addPlaceImageButton.hidden = false
-        self.addPlaceButton.hidden = true
         UIView.animateWithDuration(0.3,delay: 0.0,options: UIViewAnimationOptions.BeginFromCurrentState,animations: {
             self.addPlaceImageButton.transform = CGAffineTransformMakeScale(0.5, 0.5)},
                                    completion: { finish in
                                     UIView.animateWithDuration(0.6){self.addPlaceImageButton.transform = CGAffineTransformIdentity}
         })
         
-    
+        self.addPlaceButton.hidden = true
+        self.addPlaceButton.enabled = false
         self.mode = .Edit
         self.setEditing(true, animated: true)
         self.navigationItem.setHidesBackButton(true, animated: true)
         let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(SinglePlaylistViewController.savePlaylistToParse(_:)))
         self.navigationItem.leftBarButtonItem = backButton
-        self.addPlaceButton.hidden = false
-        self.addPlaceButton.enabled = true
+        self.addPlaceButton.hidden = true
+        self.addPlaceButton.enabled = false
     }
     
     func deactivateEditMode() {
-        self.addPlaceButton.hidden = false
+        self.addPlaceButton.hidden = true
         self.setEditing(false, animated: true)
         self.addPlaceImageButton.hidden = true
         self.addPlaceButton.hidden = true
