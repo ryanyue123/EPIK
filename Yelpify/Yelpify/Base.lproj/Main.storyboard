@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="xiI-OX-0fu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="xiI-OX-0fu">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -77,6 +77,30 @@
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.90000000000000002" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_restaurant" translatesAutoresizingMaskIntoConstraints="NO" id="LhB-EB-UvF">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bucket" translatesAutoresizingMaskIntoConstraints="NO" id="6DZ-tN-79c">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                                <rect key="frame" x="173" y="8" width="40" height="40"/>
+                                            </variation>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2yd-kW-8v8">
+                                            <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                                <rect key="frame" x="145" y="62" width="96" height="21"/>
+                                            </variation>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nz4-Ts-dMo">
+                                            <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                                <rect key="frame" x="136" y="91" width="115" height="29"/>
+                                            </variation>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
@@ -88,6 +112,9 @@
                                     <variation key="default">
                                         <mask key="subviews">
                                             <exclude reference="LhB-EB-UvF"/>
+                                            <exclude reference="6DZ-tN-79c"/>
+                                            <exclude reference="2yd-kW-8v8"/>
+                                            <exclude reference="nz4-Ts-dMo"/>
                                         </mask>
                                         <mask key="constraints">
                                             <exclude reference="Dza-TN-xiD"/>
@@ -99,6 +126,9 @@
                                     <variation key="heightClass=regular-widthClass=compact">
                                         <mask key="subviews">
                                             <include reference="LhB-EB-UvF"/>
+                                            <include reference="6DZ-tN-79c"/>
+                                            <include reference="2yd-kW-8v8"/>
+                                            <include reference="nz4-Ts-dMo"/>
                                         </mask>
                                         <mask key="constraints">
                                             <include reference="Dza-TN-xiD"/>
@@ -429,6 +459,9 @@
                         <outlet property="darkOverlay" destination="9tl-u8-qZ0" id="wE3-bI-a3G"/>
                         <outlet property="headerImageView" destination="LhB-EB-UvF" id="RAQ-1W-j5M"/>
                         <outlet property="headerView" destination="Wbb-dZ-MOs" id="7ia-br-FKQ"/>
+                        <outlet property="tableViewDescrip" destination="nz4-Ts-dMo" id="qgI-6n-U0Z"/>
+                        <outlet property="tableViewImage" destination="6DZ-tN-79c" id="N3H-42-DSU"/>
+                        <outlet property="tableViewTitle" destination="2yd-kW-8v8" id="EpY-Xr-1XF"/>
                         <segue destination="7Om-1w-JrL" kind="custom" identifier="CustomSegue" customClass="CustomSegue" customModule="Yelpify" customModuleProvider="target" id="5FV-hX-NA6"/>
                         <segue destination="7Om-1w-JrL" kind="show" identifier="createPlaylist" id="y7k-Hg-iYt"/>
                     </connections>
@@ -2248,9 +2281,6 @@
                                                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="23" y="-26" width="29" height="20"/>
-                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2417,6 +2447,9 @@
                                         </mask>
                                     </variation>
                                 </view>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="751"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="7pA-8d-Gw7" id="Dao-jk-UPh"/>
                                     <outlet property="delegate" destination="7pA-8d-Gw7" id="xSo-MP-MFj"/>
@@ -3610,9 +3643,9 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Ec9-0b-pIS"/>
-        <segue reference="arz-0e-QTj"/>
         <segue reference="y7k-Hg-iYt"/>
         <segue reference="W5i-Qt-2dL"/>
-        <segue reference="IFd-Gd-HzU"/>
+        <segue reference="LJY-RO-ffD"/>
+        <segue reference="p83-lZ-EZB"/>
     </inferredMetricsTieBreakers>
 </document>
