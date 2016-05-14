@@ -76,7 +76,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var viewDisappearing = false
     
     func sendValue(value: AnyObject){
-        var itemReceived = value as! String
+        itemReceived = value as! String
         
         if value as! String == "Alphabetical"{
             self.playlistArray = self.sortMethods(self.playlistArray, type: "name")

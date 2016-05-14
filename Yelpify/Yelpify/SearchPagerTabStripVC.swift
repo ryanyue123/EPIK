@@ -10,12 +10,15 @@ import XLPagerTabStrip
 import UIKit
 import Parse
 import Foundation
+import XLActionController
 
-class SearchPagerTabStrip: ButtonBarPagerTabStripViewController {
+class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewControllerDelegate {
     
     var isReload = false
     
     var chosenCoordinates: String!
+    
+    var itemReceived: Array<String> = []
     
     @IBOutlet weak var searchTextField: UITextField!
     override func viewDidLoad() {
@@ -55,8 +58,20 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController {
         performSegueWithIdentifier("pickLocation", sender: self)
     }
     
+    func sendValue(value: AnyObject){
+        itemReceived.append(value as! String)
+        print(String(itemReceived))
+    }
+    
     func pressedSearchBy(sender: UIBarButtonItem){
         // Open Now, By Distance
+        let pickerController = CZPickerViewController()
+        pickerController.fruits = ["Open Now","Distance"]
+        pickerController.headerTitle = "Search By"
+        pickerController.showWithMultipleSelections(UIViewController)
+        pickerController.delegate = self
+        
+    
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
