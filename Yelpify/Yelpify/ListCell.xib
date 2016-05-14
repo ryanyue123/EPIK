@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Montserrat-Regular.otf">
+            <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
         </mutableArray>
@@ -48,18 +49,18 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="OC Night Adventures" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qk7-HD-FtC">
                                 <rect key="frame" x="24" y="136" width="133" height="16.5"/>
                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="BY JONATHAN LAM " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJI-Jl-VLk">
                                 <rect key="frame" x="39" y="152" width="104.5" height="13"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="11"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i4D-V9-CyA" userLabel="Seperator">
                                 <rect key="frame" x="18" y="171" width="145" height="1"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="K3m-KB-une"/>
                                     <constraint firstAttribute="width" constant="145" id="tq4-2G-3Ex"/>
@@ -69,25 +70,53 @@
                                 <rect key="frame" x="65" y="37.5" width="50" height="50"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="102K" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="drC-wP-lqP">
-                                <rect key="frame" x="78" y="177" width="24" height="12"/>
+                                <rect key="frame" x="84" y="177" width="24" height="12"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="10"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bucket" translatesAutoresizingMaskIntoConstraints="NO" id="c5v-UC-lsw">
+                                <rect key="frame" x="70" y="175" width="15" height="15"/>
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="15" id="LP4-GF-2IA"/>
+                                    <constraint firstAttribute="height" constant="15" id="e8e-YW-Ndc"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bucket" translatesAutoresizingMaskIntoConstraints="NO" id="C6f-O2-FHi">
+                                <rect key="frame" x="23" y="175" width="15" height="15"/>
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="9ug-Cw-2cu"/>
+                                    <constraint firstAttribute="width" constant="15" id="j84-9u-B69"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$$" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YtF-Jq-xD5">
+                                <rect key="frame" x="144" y="177" width="13" height="12"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="10"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="c5v-UC-lsw" firstAttribute="leading" secondItem="C6f-O2-FHi" secondAttribute="trailing" constant="32" id="3DY-yY-ZC5"/>
                             <constraint firstItem="KJI-Jl-VLk" firstAttribute="top" secondItem="Qk7-HD-FtC" secondAttribute="bottom" id="AF1-k0-krg"/>
+                            <constraint firstItem="c5v-UC-lsw" firstAttribute="centerY" secondItem="drC-wP-lqP" secondAttribute="centerY" id="FM0-J7-0KY"/>
+                            <constraint firstItem="YtF-Jq-xD5" firstAttribute="centerY" secondItem="drC-wP-lqP" secondAttribute="centerY" id="J2w-ys-OKi"/>
                             <constraint firstItem="9u1-Gy-DEi" firstAttribute="top" secondItem="kYe-dg-ZCU" secondAttribute="top" id="K0C-gt-I1G"/>
                             <constraint firstAttribute="bottom" secondItem="drC-wP-lqP" secondAttribute="bottom" constant="7.5" id="K0i-WQ-Wzf"/>
                             <constraint firstItem="KJI-Jl-VLk" firstAttribute="centerX" secondItem="i4D-V9-CyA" secondAttribute="centerX" id="Lbk-zc-1dd"/>
-                            <constraint firstItem="drC-wP-lqP" firstAttribute="centerX" secondItem="kYe-dg-ZCU" secondAttribute="centerX" id="PXS-cH-acf"/>
+                            <constraint firstItem="drC-wP-lqP" firstAttribute="centerX" secondItem="kYe-dg-ZCU" secondAttribute="centerX" constant="6" id="PXS-cH-acf"/>
                             <constraint firstItem="drC-wP-lqP" firstAttribute="top" secondItem="i4D-V9-CyA" secondAttribute="bottom" constant="5" id="Rmg-3F-47L"/>
                             <constraint firstItem="i4D-V9-CyA" firstAttribute="top" secondItem="KJI-Jl-VLk" secondAttribute="bottom" constant="5.5" id="X5L-LP-36V"/>
-                            <constraint firstItem="i4D-V9-CyA" firstAttribute="centerX" secondItem="drC-wP-lqP" secondAttribute="centerX" id="Yr0-Ew-zBP"/>
+                            <constraint firstItem="i4D-V9-CyA" firstAttribute="centerX" secondItem="drC-wP-lqP" secondAttribute="centerX" constant="-5.5" id="Yr0-Ew-zBP"/>
                             <constraint firstItem="Qk7-HD-FtC" firstAttribute="centerX" secondItem="KJI-Jl-VLk" secondAttribute="centerX" id="ZMk-Yl-9lE"/>
                             <constraint firstAttribute="trailing" secondItem="9u1-Gy-DEi" secondAttribute="trailing" id="alv-2S-Nc3"/>
                             <constraint firstItem="Qk7-HD-FtC" firstAttribute="top" secondItem="9u1-Gy-DEi" secondAttribute="bottom" constant="8" id="ek5-fi-Olg"/>
+                            <constraint firstItem="C6f-O2-FHi" firstAttribute="centerY" secondItem="c5v-UC-lsw" secondAttribute="centerY" id="elp-Ul-Nh7"/>
+                            <constraint firstItem="drC-wP-lqP" firstAttribute="leading" secondItem="c5v-UC-lsw" secondAttribute="trailing" constant="-1" id="gOf-o6-2DK"/>
+                            <constraint firstItem="YtF-Jq-xD5" firstAttribute="leading" secondItem="drC-wP-lqP" secondAttribute="trailing" constant="36" id="gVB-DD-2xh"/>
                             <constraint firstItem="9u1-Gy-DEi" firstAttribute="leading" secondItem="kYe-dg-ZCU" secondAttribute="leading" id="kdY-me-7fF"/>
                         </constraints>
                     </view>
@@ -113,6 +142,7 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="bucket" width="48" height="32"/>
         <image name="default_Icon" width="128" height="128"/>
         <image name="default_list_bg" width="1280" height="762"/>
     </resources>
