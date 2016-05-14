@@ -162,6 +162,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 if let sourceVC = segue.sourceViewController as? SearchBusinessViewController
                 {
                     playlistArray.appendContentsOf(sourceVC.businessArray)
+                    placeIDs.appendContentsOf(sourceVC.placeIDs)
                     self.playlistTableView.reloadData()
                 }
             }

@@ -193,6 +193,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         let index = button.tag
         placeIDs.append(businessObjects[index].gPlaceID)
         businessArray.append(businessObjects[index])
+        
+        print(placeIDs)
     }
     
     
@@ -202,6 +204,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         print("Added Business at Index", String(indx))
         placeIDs.append(businessObjects[indx].gPlaceID)
         businessArray.append(businessObjects[indx])
+        print(placeIDs)
         
         
     }
