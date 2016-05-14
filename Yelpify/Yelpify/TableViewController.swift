@@ -217,6 +217,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                                 object["place_id_list"] = []
                                 object["Collaborators"] = []
                                 object["comment"] = []
+                                object["average_price"] = -1
                                 object.saveInBackgroundWithBlock({ (success, error) in
                                     if(error == nil)
                                     {
