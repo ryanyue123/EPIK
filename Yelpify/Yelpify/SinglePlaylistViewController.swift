@@ -76,12 +76,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var viewDisappearing = false
     
     func sendValue(value: AnyObject){
-        itemReceived = value as! String
+        var itemReceived = value as! String
         
         if value as! String == "Alphabetical"{
             self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
             self.playlistTableView.reloadData()
-        }else if self.itemReceived == "Rating"{
+        }else if itemReceived == "Rating"{
             self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
             self.playlistTableView.reloadData()
         }
@@ -588,14 +588,21 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             addButton.centerIconOverText()
             addButton.titleLabel?.font = appDefaults.font
             
-            cell.leftButtons.removeAll()
-            cell.rightButtons = [routeButton, addButton]
+            
+            cell.rightButtons = [addButton]
             cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
             cell.rightExpansion.buttonIndex = 0
-            cell.rightExpansion.fillOnTrigger = true
+            cell.rightExpansion.fillOnTrigger = false
             cell.rightExpansion.threshold = 1
+            
+            cell.leftButtons = [routeButton]
+            cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
+            cell.leftExpansion.buttonIndex = 0
+            cell.leftExpansion.fillOnTrigger = true
+            cell.leftExpansion.threshold = 1
         }else if mode == .Edit{
             cell.rightButtons.removeAll()
+            cell.leftButtons.removeAll()
             let deleteButton = MGSwipeButton(title: "Delete",icon: UIImage(named: "location_icon"),backgroundColor: UIColor.redColor(),padding: 25)
             deleteButton.centerIconOverText()
             cell.leftButtons = [deleteButton]
@@ -631,14 +638,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func swipeTableCell(cell: MGSwipeTableCell!, didChangeSwipeState state: MGSwipeState, gestureIsActive: Bool) {
         if self.mode == .View{
-            let routeButton = cell.rightButtons.first as! MGSwipeButton
-            let addButton = cell.rightButtons[1] as! MGSwipeButton
+            let routeButton = cell.leftButtons.first as! MGSwipeButton
+            let addButton = cell.rightButtons[0] as! MGSwipeButton
             if cell.swipeState.rawValue == 2{
                 routeButton.backgroundColor = appDefaults.color
                 addButton.backgroundColor = UIColor.greenColor()
             }
             else if cell.swipeState.rawValue >= 4{
-                addButton.backgroundColor = appDefaults.color
+                addButton.backgroundColor = UIColor.greenColor()
                 routeButton.backgroundColor = appDefaults.color
                 cell.swipeBackgroundColor = appDefaults.color
                 }

@@ -16,8 +16,19 @@ class ProfileCollectionViewController: UICollectionViewController {
     
     var user: PFUser!
     var user_playlists = [PFObject]()
+    func logOut(){
+        PFUser.logOut()
+        let Login = storyboard!.instantiateViewControllerWithIdentifier("LoginViewController") as! UIViewController
+        self.presentViewController(Login, animated: true, completion: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        let navigationBar = navigationController!.navigationBar
+        navigationBar.tintColor = UIColor.whiteColor()
+        
+        let rightButton = UIBarButtonItem(title: "Logout", style: .Plain , target: self, action: "logOut")
+        
+        navigationItem.rightBarButtonItem = rightButton
         if (user == nil)
         {
             user = PFUser.currentUser()
