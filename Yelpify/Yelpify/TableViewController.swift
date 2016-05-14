@@ -397,6 +397,7 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
             let temparray = all_playlists[row]
             
             let navController: UINavigationController = self.navigationController!
+            print(temparray[col])
             upcoming?.object = temparray[col] as! PFObject
         }
     }

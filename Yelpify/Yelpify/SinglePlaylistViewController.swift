@@ -58,6 +58,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     var collaborators = [PFObject]()
     var playlistArray = [Business]()
+    
+    var placeArray = [GooglePlaceDetail]()
+    var placeIDs = [String]()
+    
     var object: PFObject!
     var editable: Bool = false
     var sortMethod:String!
@@ -69,9 +73,16 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     var viewDisappearing = false
     
-    func sendValue(value:[Business]) {
-        playlistArray = value
-        self.playlistTableView.reloadData()
+    func sendValue(value: AnyObject){
+        itemReceived = value as! String
+        
+        if value as! String == "Alphabetical"{
+            self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
+            self.playlistTableView.reloadData()
+        }else if self.itemReceived == "Rating"{
+            self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
+            self.playlistTableView.reloadData()
+        }
     }
     
     func sortMethods(businesses: Array<Business>, type: String)->Array<Business>{
@@ -101,6 +112,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         let actionController = YoutubeActionController()
         let pickerController = CZPickerViewController()
 
+
         actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
             print("Share")
         }))
@@ -115,17 +127,15 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             self.makeCollaborative()
         }))
         actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "yt-share-icon")!), style: .Cancel, handler: { action in
-            
-            pickerController.delegate = self
-            
-            pickerController.businessArrayToSort = self.playlistArray
+            pickerController.headerTitle = "Sort Options"
+            pickerController.fruits = ["Alphabetical","Rating"]
             pickerController.showWithFooter(UIViewController)
-
+            pickerController.delegate = self
         }))
         actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
         
         presentViewController(actionController, animated: true, completion: nil)
-        
+    
     }
     
     @IBAction func selectContentType(sender: AnyObject) {
@@ -193,14 +203,27 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             configureRecentlyViewed()
         }
         
+        
+        
+        // Get Array of IDs from Parse
+        let placeIDs = object["place_id_list"] as! [String]
+        self.placeIDs = placeIDs
+        
+        print(placeIDs)
+        self.updateBusinessesFromIDs(placeIDs)
+//        self.convertIDsToBusiness(placeIDs) { (businessArray, placeArray) in
+//            self.playlistArray = businessArray
+//            self.placeArray = placeArray
+//            self.playlistTableView.reloadData()
+//            
+//        }
+        
         // Setup Navigation Bar
         let navigationBar = navigationController!.navigationBar
         navigationBar.tintColor = UIColor.whiteColor()
         
-        //let leftButton =  UIBarButtonItem(image: UIImage(named: "sort_icon"), style: .Plain, target: self, action: nil)
         let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "showActionsMenu:")
         
-        //navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton
     }
     func handleTap(img: AnyObject) {
@@ -208,12 +231,16 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(animated: Bool){
+        
         configureSegmentedBar()
-    }
+        
+            }
     
     override func viewWillAppear(animated: Bool) {
         //Configure Functions
+        
+        
         
         ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         self.statusBarView = ConfigureFunctions.configureStatusBar(self.navigationController!)
@@ -303,6 +330,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func activateEditMode() {
         self.addPlaceImageButton.hidden = false
+        UIView.animateWithDuration(0.3,delay: 0.0,options: UIViewAnimationOptions.BeginFromCurrentState,animations: {
+            self.addPlaceImageButton.transform = CGAffineTransformMakeScale(0.5, 0.5)},
+                                   completion: { finish in
+                                    UIView.animateWithDuration(0.6){self.addPlaceImageButton.transform = CGAffineTransformIdentity}
+        })
+        
+    
         self.mode = .Edit
         self.navigationItem.setHidesBackButton(true, animated: true)
         let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(SinglePlaylistViewController.savePlaylistToParse(_:)))
@@ -521,7 +555,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             })
             return businessCell
               
-            // IF SEGMENTED IS ON COMMENTS
+        // IF SEGMENTED IS ON COMMENTS
         }else if self.contentToDisplay == .Comments{
             let reviewCell = tableView.dequeueReusableCellWithIdentifier("reviewCell", forIndexPath: indexPath) as! ReviewTableViewCell
             return reviewCell
@@ -550,10 +584,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             cell.rightExpansion.threshold = 1
         }else if mode == .Edit{
             cell.rightButtons.removeAll()
-            cell.leftButtons = [MGSwipeButton(title: "Delete",backgroundColor: UIColor.redColor(),padding: 25)]
+            let deleteButton = MGSwipeButton(title: "Delete",icon: UIImage(named: "location_icon"),backgroundColor: UIColor.redColor(),padding: 25)
+            deleteButton.centerIconOverText()
+            cell.leftButtons = [deleteButton]
             cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
             cell.leftExpansion.buttonIndex = 0
-            cell.leftExpansion.fillOnTrigger = false
+            cell.leftExpansion.fillOnTrigger = true
             cell.leftExpansion.threshold = 1
         }
     }
@@ -582,19 +618,21 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func swipeTableCell(cell: MGSwipeTableCell!, didChangeSwipeState state: MGSwipeState, gestureIsActive: Bool) {
-        let routeButton = cell.rightButtons.first as! MGSwipeButton
-        let addButton = cell.rightButtons[1] as! MGSwipeButton
-        if cell.swipeState.rawValue == 2{
-            routeButton.backgroundColor = appDefaults.color
-            addButton.backgroundColor = UIColor.greenColor()
-        }
-        else if cell.swipeState.rawValue >= 4{
-            addButton.backgroundColor = appDefaults.color
-            routeButton.backgroundColor = appDefaults.color
-            cell.swipeBackgroundColor = appDefaults.color
+        if self.mode == .View{
+            let routeButton = cell.rightButtons.first as! MGSwipeButton
+            let addButton = cell.rightButtons[1] as! MGSwipeButton
+            if cell.swipeState.rawValue == 2{
+                routeButton.backgroundColor = appDefaults.color
+                addButton.backgroundColor = UIColor.greenColor()
             }
+            else if cell.swipeState.rawValue >= 4{
+                addButton.backgroundColor = appDefaults.color
+                routeButton.backgroundColor = appDefaults.color
+                cell.swipeBackgroundColor = appDefaults.color
+                }
     
-
+        }
+    
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -622,16 +660,20 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func savePlaylistToParse(sender: UIBarButtonItem)
     {
-        if playlistArray.count > 0{
+        if placeIDs.count > 0{
             let saveobject = object
-            if let lat = playlistArray[0].businessLatitude
-            {
-                if let long = playlistArray[0].businessLongitude
-                {
-                    saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
-                }
-            }
-            saveobject["track"] = convertPlacesArrayToDictionary(playlistArray)
+//            if let lat = playlistArray[0].businessLatitude
+//            {
+//                if let long = playlistArray[0].businessLongitude
+//                {
+//                    saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
+//                }
+//            }
+            //saveobject["track"] = convertPlacesArrayToDictionary(playlistArray)
+            
+            // Saves Businesses to Parse as [String] Ids
+            saveobject["place_id_list"] = placeIDs
+            
             saveobject.saveInBackgroundWithBlock { (success, error)  -> Void in
                 if (error == nil){
                     print("saved")
@@ -654,12 +696,21 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         if (segue.identifier == "showBusinessDetail"){
             let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
             
-            let indexPath = playlistTableView.indexPathForSelectedRow
-            let temp = indexPath!.row
-            let object = playlistArray[temp]
-            upcoming.object = object
-            upcoming.index = indexPath!.row
-            self.playlistTableView.deselectRowAtIndexPath(indexPath!, animated: true)
+            let index = playlistTableView.indexPathForSelectedRow!.row
+            
+            // IF NO NEW PLACE IS ADDED
+            if index <= placeArray.count - 1{
+                let gPlaceObject = placeArray[index]
+                upcoming.gPlaceObject = gPlaceObject
+                upcoming.index = index
+            }else{
+            // IF NEW PLACES ARE ADDED
+                let businessObject = playlistArray[index]
+                upcoming.object = businessObject
+                upcoming.index = index
+            }
+            
+            self.playlistTableView.deselectRowAtIndexPath(playlistTableView.indexPathForSelectedRow!, animated: true)
         }
         else if (segue.identifier == "showProfileView") {
             let upcoming = segue.destinationViewController as! ProfileCollectionViewController
