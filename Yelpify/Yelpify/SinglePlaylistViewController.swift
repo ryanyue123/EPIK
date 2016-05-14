@@ -623,10 +623,18 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         let indexPath = playlistTableView.indexPathForCell(cell)
         let business = playlistArray[indexPath!.row] 
         let actions = PlaceActions()
+        let pickerController = CZPickerViewController()
         if self.mode == ListMode.View{
             if index == 0{
-                actions.openInMaps(business)
-        }
+                if direction == MGSwipeDirection.LeftToRight{
+                    actions.openInMaps(business)
+                }
+                else if direction == MGSwipeDirection.RightToLeft{
+                    pickerController.fruits = ["Strip Clubs","Drunk","Gay Clubs"]
+                    pickerController.headerTitle = "Playlists To Add To"
+                    pickerController.showWithMultipleSelections(UIViewController)
+                }
+            }
         }
         else if self.mode == ListMode.Edit{
             playlistArray.removeAtIndex(indexPath!.row)
