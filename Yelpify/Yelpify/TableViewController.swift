@@ -189,39 +189,42 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
         })
         alertController.addAction(deleteAction)
         let okAction = UIAlertAction(title: "Enter", style: UIAlertActionStyle.Default, handler: {(alert :UIAlertAction!) in
-            let query = PFQuery(className: "Playlists")
-            query.whereKey("createdBy", equalTo: PFUser.currentUser()!)
-            query.whereKey("playlistName", equalTo: self.inputTextField.text!)
-            query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
-                if ((error) == nil)
-                {
-                    dispatch_async(dispatch_get_main_queue(), {
-                        if (objects!.count == 0)
-                        {
-                            let object = PFObject(className: "Playlists")
-                            object["playlistName"] = self.inputTextField.text!
-                            object["search_name"] = self.inputTextField.text!.uppercaseString
-                            object["createdBy"] = PFUser.currentUser()!
-                            object["track"] = []
-                            object.saveInBackgroundWithBlock({ (success, error) in
-                                if(error == nil)
-                                {
-                                    let control = self.storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
-                                    control.object = object
-                                    control.newPlaylist = true
-                                    self.navigationController!.pushViewController(control, animated: true)
-                                }
-                            })
-                        }
-                        else
-                        {
-                            print("You have already created this playlist")
-                        }
-                    })
-                }
-                else
-                {
-                    print(error?.description)
+            if (!(self.inputTextField.text?.isEmpty)!) {
+                let query = PFQuery(className: "Playlists")
+                query.whereKey("createdBy", equalTo: PFUser.currentUser()!)
+                query.whereKey("playlistName", equalTo: self.inputTextField.text!)
+                query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
+                    if ((error) == nil)
+                    {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            if (objects!.count == 0)
+                            {
+                                let object = PFObject(className: "Playlists")
+                                object["playlistName"] = self.inputTextField.text!
+                                object["search_name"] = self.inputTextField.text!.uppercaseString
+                                object["createdBy"] = PFUser.currentUser()!
+                                object["track"] = []
+                                object["Collaborators"] = []
+                                object.saveInBackgroundWithBlock({ (success, error) in
+                                    if(error == nil)
+                                    {
+                                        let control = self.storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
+                                        control.object = object
+                                        control.editable = true
+                                        self.navigationController!.pushViewController(control, animated: true)
+                                    }
+                                })
+                            }
+                            else
+                            {
+                                print("You have already created this playlist")
+                            }
+                        })
+                    }
+                    else
+                    {
+                        print(error?.description)
+                    }
                 }
             }
         })

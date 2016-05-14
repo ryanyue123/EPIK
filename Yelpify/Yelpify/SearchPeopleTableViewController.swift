@@ -11,10 +11,14 @@ import Parse
 import XLPagerTabStrip
 
 class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegate, IndicatorInfoProvider {
-
+    
+    @IBOutlet weak var searchField: UITextField!
     var itemInfo: IndicatorInfo = "People"
     var searchTextField: UITextField!
     var user_list = [PFObject]()
+    var collaborative = false
+    var collaboration_list = [PFObject]()
+    var playlist: PFObject!
     
     func indicatorInfoForPagerTabStrip(pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return itemInfo
@@ -22,20 +26,13 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        queryParseForPeople()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     override func viewDidAppear(animated: Bool) {
+        if (searchTextField == nil) {
+            searchTextField = searchField
+            collaborative = true
+        }
         searchTextField.delegate = self
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     func queryParseForPeople()
     {
@@ -56,7 +53,17 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
         textField.resignFirstResponder()
         return true
     }
+
     
+    @IBAction func saveToParse(sender: UIBarButtonItem) {
+        playlist["Collaborators"] = self.collaboration_list
+        playlist.saveInBackgroundWithBlock { (success, error) in
+            if (error == nil) {
+                print("Saved")
+            }
+        }
+        self.dismissViewControllerAnimated(false, completion: nil)
+    }
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -66,7 +73,6 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        print(self.user_list.count)
         return self.user_list.count
     }
 
@@ -83,55 +89,13 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("profileVC") as! ProfileCollectionViewController
-        controller.user = self.user_list[indexPath.row] as! PFUser
-        self.navigationController!.pushViewController(controller, animated: true)
+        if (collaborative) {
+            self.collaboration_list.append(self.user_list[indexPath.row])
+        }
+        else {
+            let controller = storyboard!.instantiateViewControllerWithIdentifier("profileVC") as! ProfileCollectionViewController
+            controller.user = self.user_list[indexPath.row] as! PFUser
+            self.navigationController!.pushViewController(controller, animated: true)
+        }
     }
-    
-    
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
