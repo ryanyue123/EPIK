@@ -45,5 +45,10 @@ struct ConfigureFunctions {
         
         return addShadowToBar()
     }
+    
+//    static func resetNavigationBar(navController: UINavigationController){
+//        navController.navigationBar.alpha = 1
+//        navController.navigationItem.titleView?.alpha = 1
+//    }
 
 }

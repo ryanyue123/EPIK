@@ -209,13 +209,10 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     }
 
     override func viewWillAppear(animated: Bool) {
-        self.loadedNavBar = true
-        self.loadedStatusBar = true
-        self.statusBarView.alpha = 0
     }
     
     override func viewDidAppear(animated: Bool) {
-        //self.statusBarView.alpha = 0
+        handleNavigationBarOnScroll()
     }
     
     override func viewWillDisappear(animated: Bool) {
