@@ -39,7 +39,6 @@ class RandomPlaceController: UIViewController{
         backgroundImage.addSubview(blurEffectView)
         backgroundImage.addSubview(vibrancyEffectView)
     }
-
     
     override func viewDidLoad() {
 //        let randomBusiness = getRandomPlace([business1, business2, business2])
