@@ -370,6 +370,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func activateEditMode() {
         self.addPlaceImageButton.hidden = false
+        self.addPlaceButton.hidden = true
         UIView.animateWithDuration(0.3,delay: 0.0,options: UIViewAnimationOptions.BeginFromCurrentState,animations: {
             self.addPlaceImageButton.transform = CGAffineTransformMakeScale(0.5, 0.5)},
                                    completion: { finish in
@@ -387,7 +388,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func deactivateEditMode() {
-        
+        self.addPlaceButton.hidden = false
         self.setEditing(false, animated: true)
         self.addPlaceImageButton.hidden = true
         self.addPlaceButton.hidden = true
