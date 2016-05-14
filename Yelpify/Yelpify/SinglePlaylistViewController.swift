@@ -441,6 +441,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func handleNavigationBarOnScroll(){
         
         let showWhenScrollDownAlpha = 1 - (-playlistTableView.contentOffset.y / playlistTableHeaderHeight)
+        print(showWhenScrollDownAlpha)
         //let showWhenScrollUpAlpha = (-playlistTableView.contentOffset.y / playlistTableHeaderHeight)
         
         self.navigationController?.navigationBar.titleTextAttributes = [
@@ -466,24 +467,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         playlistTableView.addSubview(playlistInfoView)
         playlistTableView.contentInset = UIEdgeInsets(top: playlistTableHeaderHeight, left: 0, bottom: 0, right: 0)
         playlistTableView.contentOffset = CGPoint(x: 0, y: -playlistTableHeaderHeight)
-    }
-    
-    func configureNavigationBar(){
-        
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
-        //self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        
-        addShadowToBar()
-        
-        for parent in self.navigationController!.navigationBar.subviews {
-            for childView in parent.subviews {
-                if(childView is UIImageView) {
-                    childView.removeFromSuperview()
-                }
-            }
-        }
-        
     }
     
     func configureSegmentedBar(){
@@ -761,7 +744,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         return placeDictArray
     }
     
-    // 
+    func addComment() {
+       
+    }
+    
     func saveComments(comment: NSDictionary) {
         var current_comment = object["comment"] as! [NSDictionary]
         current_comment.insert(comment, atIndex: 0)
