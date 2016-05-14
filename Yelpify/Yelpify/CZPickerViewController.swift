@@ -103,7 +103,7 @@ extension CZPickerViewController: CZPickerViewDelegate, CZPickerViewDataSource {
     }
     
     func czpickerView(pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int) {
-        delegate.sendValue(fruits[row])
+        delegate.sendValue(row)
         didSet = true
     }
     
@@ -111,7 +111,7 @@ extension CZPickerViewController: CZPickerViewDelegate, CZPickerViewDataSource {
         
         for row in rows {
             if let row = row as? Int {
-                delegate.sendValue(fruits[row])
+                delegate.sendValue(row)
             }
         }
     }
