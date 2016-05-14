@@ -117,13 +117,6 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
                 if let price = detailedGPlace.priceRating{
                     self.setPriceRating(price)
                 }
-//                if let price = detailedGPlace.priceRating{
-//                    var priceString = ""
-//                    for _ in 0..<price {
-//                        priceString += "$"
-//                    }
-//                    self.priceRatingLabel.text = priceString
-//                }
                 
                 // Set Hours
                 if detailedGPlace.hours!.count != 0{

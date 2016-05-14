@@ -24,7 +24,9 @@ class ProfileCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let navigationBar = navigationController!.navigationBar
-        navigationBar.tintColor = UIColor.whiteColor()
+        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+        ConfigureFunctions.configureStatusBar(self.navigationController!)
+        //navigationBar.tintColor = UIColor.whiteColor()
         
         let rightButton = UIBarButtonItem(title: "Settings", style: .Plain , target: self, action: "goToSettings")
         
@@ -59,6 +61,10 @@ class ProfileCollectionViewController: UICollectionViewController {
         //collectionView?.reloadData()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        ConfigureFunctions.resetNavigationBar(self.navigationController!)
     }
 
     override func didReceiveMemoryWarning() {

@@ -249,9 +249,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     // MARK: - ViewDidLoad and other View functions
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
@@ -368,6 +366,34 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
+    func setPriceRating(price: Int){
+        var result = ""
+        if price != -1{
+            for _ in 0..<price{
+                result += "$"
+            }
+            self.averagePriceRating.text = result
+        }else{
+            self.averagePriceRating.text = ""
+        }
+    }
+    
+    func getAveragePrice(completion:(avg: Int) -> Void){
+        var averageRating = 0
+        var numOfPlaces = 0
+        for place in self.placeArray{
+            if place.priceRating != -1{
+                averageRating += place.priceRating
+                numOfPlaces += 1
+            }
+        }
+        if numOfPlaces > 0{
+            completion(avg: averageRating/numOfPlaces)
+        }else{
+            completion(avg: -1)
+        }
+    }
+    
     func configureInfo() {
         self.playlistInfoName.text = object["playlistName"] as? String
         let user = object["createdBy"] as! PFUser
@@ -384,7 +410,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         else {
             self.numOfFollowersLabel.text = String(followCount)
         }
-        self.averagePriceRating.text = "$$$" // CHANGE
+        getAveragePrice({ (avg) in
+            self.averagePriceRating.text = String(avg)
+        })
     }
     
     func configureRecentlyViewed() {
@@ -412,6 +440,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func activateEditMode() {
         self.addPlaceImageButton.hidden = false
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "deactivateEditMode")
         UIView.animateWithDuration(0.3,delay: 0.0,options: UIViewAnimationOptions.BeginFromCurrentState,animations: {
             self.addPlaceImageButton.transform = CGAffineTransformMakeScale(0.5, 0.5)},
                                    completion: { finish in
@@ -430,6 +459,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func deactivateEditMode() {
+        let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "showActionsMenu:")
+        navigationItem.rightBarButtonItem = rightButton
+        
+        self.navigationItem.setHidesBackButton(false, animated: true)
+        self.navigationItem.leftBarButtonItem = nil
+        
         self.addPlaceButton.hidden = true
         self.setEditing(false, animated: true)
         self.addPlaceImageButton.hidden = true
@@ -487,7 +522,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func handleNavigationBarOnScroll(){
         
         let showWhenScrollDownAlpha = 1 - (-playlistTableView.contentOffset.y / playlistTableHeaderHeight)
-        print(showWhenScrollDownAlpha)
         //let showWhenScrollUpAlpha = (-playlistTableView.contentOffset.y / playlistTableHeaderHeight)
         
         self.navigationController?.navigationBar.titleTextAttributes = [
@@ -821,7 +855,16 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                     saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
                 }
             }
-            //saveobject["track"] = convertPlacesArrayToDictionary(playlistArray)
+            
+            // Saves Average Price
+            let averagePrice = getAveragePrice({ (avg) in
+                // saveobject["average_price"] = avg // CHANGE // THIS IS AN INT
+            })
+            
+            // Saves Number of Places
+            let numOfPlaces = placeIDs.count
+            // saveobject["num_places"] = numOfPlaces // CHANGE
+            
             
             // Saves Businesses to Parse as [String] Ids
             saveobject["place_id_list"] = placeIDs
@@ -870,6 +913,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }else if (segue.identifier == "randomPlace") {
             let upcoming = segue.destinationViewController as! RandomPlaceController
             upcoming.businessArray = self.playlistArray
+        }else if (segue.identifier == "tapImageButton"){
+            let nav = segue.destinationViewController as! UINavigationController
+            let upcoming = nav.childViewControllers[0] as! SearchBusinessViewController
+            upcoming.searchTextField = upcoming.addPlaceSearchTextField
         }
     }
 }

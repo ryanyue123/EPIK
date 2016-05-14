@@ -45,6 +45,8 @@
             <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
+            <string>Montserrat-Regular</string>
+            <string>Montserrat-Regular</string>
         </mutableArray>
         <mutableArray key="Montserrat-SemiBold.otf">
             <string>Montserrat-SemiBold</string>
@@ -133,7 +135,7 @@
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                        <rect key="frame" x="109" y="115" width="183" height="31"/>
+                                        <rect key="frame" x="108.5" y="115" width="183" height="30.5"/>
                                         <mask key="constraints">
                                             <include reference="gzs-Rc-RoL"/>
                                         </mask>
@@ -277,7 +279,7 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="80" y="22" width="80" height="12"/>
+                                                <rect key="frame" x="79.5" y="22" width="80" height="12"/>
                                             </variation>
                                         </label>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="black" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RO8-s4-ggK">
@@ -325,9 +327,6 @@
                                                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <nil key="highlightedColor"/>
-                                                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                    <rect key="frame" x="76" y="175" width="29" height="14"/>
-                                                                </variation>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="OC Night Adventure" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kvx-5J-dVB">
                                                                 <rect key="frame" x="8" y="64" width="134" height="21"/>
@@ -349,7 +348,7 @@
                                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <nil key="highlightedColor"/>
                                                                 <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                    <rect key="frame" x="39" y="150" width="102" height="13"/>
+                                                                    <rect key="frame" x="39.5" y="149.5" width="101.5" height="13"/>
                                                                 </variation>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ny6-YZ-jgd">
@@ -365,8 +364,7 @@
                                                                         <exclude reference="eHt-gy-nJR"/>
                                                                     </mask>
                                                                 </variation>
-                                                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                    <rect key="frame" x="20" y="169" width="140" height="1"/>
+                                                                <variation key="heightClass=regular-widthClass=compact">
                                                                     <mask key="constraints">
                                                                         <include reference="8N1-3X-ERg"/>
                                                                         <include reference="eHt-gy-nJR"/>
@@ -753,7 +751,7 @@
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="88" y="210" width="43" height="23"/>
+                                                <rect key="frame" x="87.5" y="209.5" width="42.5" height="22.5"/>
                                                 <mask key="constraints">
                                                     <exclude reference="5R0-ZU-rZS"/>
                                                 </mask>
@@ -778,7 +776,7 @@
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="274" y="210" width="43" height="23"/>
+                                                <rect key="frame" x="273.5" y="209.5" width="42.5" height="22.5"/>
                                                 <mask key="constraints">
                                                     <exclude reference="9dS-bl-hXT"/>
                                                 </mask>
@@ -847,7 +845,7 @@
                                                 <rect key="frame" x="194" y="73" width="212" height="40"/>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="28" y="101" width="345" height="37"/>
+                                                <rect key="frame" x="27" y="101" width="345" height="36.5"/>
                                                 <mask key="constraints">
                                                     <include reference="2IR-Bi-7zF"/>
                                                 </mask>
@@ -1302,7 +1300,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8DH-cU-31C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4953" y="1851"/>
+            <point key="canvasLocation" x="5091" y="1860"/>
         </scene>
         <!--Search Playlist Collection View Controller-->
         <scene sceneID="Nwl-4x-31T">
@@ -1487,22 +1485,22 @@
                                 <rect key="frame" x="0.0" y="92" width="600" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yRG-Va-4Kj" id="am1-I0-KDV">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="89"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="89.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="51D-O3-WgJ">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="51D-O3-WgJ">
                                             <rect key="frame" x="91" y="8" width="501" height="29"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zXV-2H-7W9">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zXV-2H-7W9">
                                             <rect key="frame" x="91" y="38" width="501" height="16"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="0.48824118589743593" green="0.48824118589743593" blue="0.48824118589743593" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="temp_profile" translatesAutoresizingMaskIntoConstraints="NO" id="sxE-rI-P3f">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="temp_profile" translatesAutoresizingMaskIntoConstraints="NO" id="sxE-rI-P3f">
                                             <rect key="frame" x="8" y="8" width="75" height="75"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="75" id="acQ-G7-Oq4"/>
@@ -1593,10 +1591,11 @@
                                 <segue destination="MaZ-WG-NVz" kind="unwind" unwindAction="unwindToSearchBusinessVC:" id="gWO-Gz-rns"/>
                             </connections>
                         </barButtonItem>
-                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search for places, food, etc" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" id="Xx0-8q-ghg">
+                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search for city or address" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" id="Xx0-8q-ghg">
                             <rect key="frame" x="133" y="7" width="334" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="search"/>
                             <connections>
                                 <action selector="mainSearchEditingDidChange:" destination="yju-Dj-JQn" eventType="editingChanged" id="hCJ-2E-xLK"/>
@@ -1756,7 +1755,7 @@
             </objects>
             <point key="canvasLocation" x="5712" y="-389.25"/>
         </scene>
-        <!--Around You-->
+        <!--Search Business View Controller-->
         <scene sceneID="vdw-Ia-rLx">
             <objects>
                 <viewController storyboardIdentifier="searchBusinessVC" id="hzi-hz-39z" customClass="SearchBusinessViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
@@ -1778,7 +1777,7 @@
                                         <rect key="frame" x="0.0" y="92" width="600" height="105"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="smM-uC-fE6" id="c1O-qw-e98">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="104"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="104.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V4o-jX-vO4">
@@ -2049,12 +2048,20 @@
                             <constraint firstItem="0eM-Bd-byN" firstAttribute="leading" secondItem="gxa-fR-orC" secondAttribute="leadingMargin" constant="-20" id="fDn-CU-SH7"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Around You" id="3s0-7b-ONU">
+                    <navigationItem key="navigationItem" id="3s0-7b-ONU">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" systemItem="done" id="emJ-kc-uDV">
                             <connections>
                                 <segue destination="nyU-rd-931" kind="unwind" identifier="unwindToPlaylist" unwindAction="unwindToSinglePlaylist:" id="mF8-ab-rcQ"/>
                             </connections>
                         </barButtonItem>
+                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search Places" textAlignment="center" minimumFontSize="17" id="6te-NQ-ZzS">
+                            <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="13"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="search" id="V02-Ig-bsD">
                             <connections>
                                 <segue destination="tvs-Kb-9f9" kind="presentation" identifier="presentGPlacesVC" modalTransitionStyle="crossDissolve" id="LJY-RO-ffD"/>
@@ -2062,6 +2069,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addPlaceSearchTextField" destination="6te-NQ-ZzS" id="tLL-XY-MUb"/>
                         <outlet property="navBarTitleLabel" destination="3s0-7b-ONU" id="k3n-eW-7AC"/>
                         <outlet property="tableView" destination="0eM-Bd-byN" id="SCj-CQ-u99"/>
                         <segue destination="7pA-8d-Gw7" kind="show" identifier="showBusinessDetail" id="p83-lZ-EZB"/>
@@ -2070,7 +2078,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wJO-Js-5jv" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="nyU-rd-931" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4083" y="355.5"/>
+            <point key="canvasLocation" x="4104" y="363"/>
         </scene>
         <!--Business Detail View Controller-->
         <scene sceneID="9Yv-IZ-Ip6">
@@ -2374,6 +2382,9 @@
                                                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="23" y="-26" width="28.5" height="20"/>
+                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2792,7 +2803,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="121" y="96" width="158" height="84"/>
+                                    <rect key="frame" x="121.5" y="96" width="157.5" height="84"/>
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Just Go." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ys-Pl-o7H">
@@ -2801,7 +2812,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="168" y="167" width="65" height="20"/>
+                                    <rect key="frame" x="168" y="167" width="64.5" height="20"/>
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OpM-cm-jV3">
@@ -2810,7 +2821,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="178" y="518" width="43" height="20"/>
+                                    <rect key="frame" x="178.5" y="517.5" width="42" height="20"/>
                                 </variation>
                             </label>
                         </subviews>
@@ -3180,9 +3191,6 @@
                                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="67" y="157" width="29" height="14"/>
-                                            </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="OC Night Adventure" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jiM-XH-Ae6">
                                             <rect key="frame" x="8" y="64" width="134" height="21"/>
@@ -3204,7 +3212,7 @@
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="30" y="150" width="102" height="13"/>
+                                                <rect key="frame" x="30.5" y="149.5" width="101.5" height="13"/>
                                             </variation>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fqr-Fh-ceK">
@@ -3220,8 +3228,7 @@
                                                     <exclude reference="uPQ-mb-3GG"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="11" y="169" width="141" height="2"/>
+                                            <variation key="heightClass=regular-widthClass=compact">
                                                 <mask key="constraints">
                                                     <include reference="7qo-Z2-pfF"/>
                                                     <include reference="uPQ-mb-3GG"/>
@@ -3343,9 +3350,6 @@
                                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="67" y="157" width="29" height="14"/>
-                                            </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="OC Night Adventure" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BGQ-hn-vGC">
                                             <rect key="frame" x="8" y="64" width="134" height="21"/>
@@ -3367,7 +3371,7 @@
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="30" y="150" width="102" height="13"/>
+                                                <rect key="frame" x="30.5" y="149.5" width="101.5" height="13"/>
                                             </variation>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kfw-id-zHQ">
@@ -3383,8 +3387,7 @@
                                                     <exclude reference="UN4-f4-pbd"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="11" y="169" width="141" height="2"/>
+                                            <variation key="heightClass=regular-widthClass=compact">
                                                 <mask key="constraints">
                                                     <include reference="8dG-7Z-gHW"/>
                                                     <include reference="UN4-f4-pbd"/>
@@ -3511,7 +3514,7 @@
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4pW-W2-hdS" id="3tm-Vh-cbH">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zlG-9B-Mpf" colorLabel="IBBuiltInLabel-Yellow">
@@ -3955,9 +3958,10 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Ec9-0b-pIS"/>
+        <segue reference="arz-0e-QTj"/>
         <segue reference="y7k-Hg-iYt"/>
         <segue reference="IFd-Gd-HzU"/>
         <segue reference="W5i-Qt-2dL"/>
-        <segue reference="LJY-RO-ffD"/>
+        <segue reference="p83-lZ-EZB"/>
     </inferredMetricsTieBreakers>
 </document>

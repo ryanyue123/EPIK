@@ -24,6 +24,7 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
     
     var currentLocation: String! = "Current Location"
     var currentLocationCoordinates: String! = "-33.0,180.0"
+    var currentCity: String! = ""
     
     var searchQuery: String! = ""
     
@@ -185,10 +186,11 @@ extension GPlacesSearchViewController: GMSAutocompleteTableDataSourceDelegate {
         
         // Do something with the selected place.
         if searchType == .Address{
-            currentLocation = place.formattedAddress!
-            customSearchController.customSearchBar.resignFirstResponder()
-            customSearchController.customSearchBar.text = ""
-            customSearchController.customSearchBar.placeholder = place.formattedAddress!
+            mainSearchTextField.resignFirstResponder()
+            mainSearchTextField.text = place.formattedAddress
+//            customSearchController.customSearchBar.resignFirstResponder()
+//            customSearchController.customSearchBar.text = ""
+//            customSearchController.customSearchBar.placeholder = place.formattedAddress!
         }else if searchType == .Place{
             mainSearchTextField.resignFirstResponder()
             mainSearchTextField.text = place.name
@@ -200,6 +202,13 @@ extension GPlacesSearchViewController: GMSAutocompleteTableDataSourceDelegate {
         
         let placeCoordinate = place.coordinate
         currentLocationCoordinates = "\(placeCoordinate.latitude),\(placeCoordinate.longitude)"
+        
+        for component in place.addressComponents!{
+            if component.type == "locality"{
+                currentCity = component.name
+                break
+            }
+        }
         performSegueWithIdentifier("unwindToSearch", sender: self)
     }
     
