@@ -57,6 +57,7 @@ class CZPickerViewController: UIViewController {
         let picker = CZPickerView(headerTitle: headerTitle, cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
         picker.headerBackgroundColor = appDefaults.color
         picker.confirmButtonBackgroundColor = appDefaults.color
+        picker.animationDuration = 1.0
         picker.delegate = self
         picker.dataSource = self
         picker.needFooterView = false
