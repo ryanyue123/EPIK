@@ -68,10 +68,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var editable: Bool = false
     var sortMethod:String!
     
-    var itemReceived: String!
-    
-    var itemToSend: String!
-    
+    var itemReceived: [Int]!
     var playlist_name: String!
     
     // The apps default color
@@ -657,17 +654,20 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                     query.findObjectsInBackgroundWithBlock({ (object, error) in
                         if (error == nil) {
                             var user_array = [String]()
-                            for playlist in object! {
-                                user_array.append(playlist["playlistName"] as! String)
-                            }
-                            pickerController.fruits = user_array
+                            dispatch_async(dispatch_get_main_queue(), {
+                               
+                                for playlist in object! {
+                                    user_array.append(playlist["playlistName"] as! String)
+                                }
+                                print(pickerController.fruits)
+                                pickerController.fruits = user_array
+                                pickerController.headerTitle = "Playlists To Add To"
+                                pickerController.showWithMultipleSelections(UIViewController)
+                                pickerController.delegate = self
+                            })
                         }
                     })
-                    pickerController.headerTitle = "Playlists To Add To"
-                    pickerController.showWithMultipleSelections(UIViewController)
-                    pickerController.delegate = self
                 }
-            
             }
         }
         else if self.mode == ListMode.Edit{
