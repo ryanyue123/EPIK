@@ -649,7 +649,17 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                     actions.openInMaps(business)
                 }
                 else if direction == MGSwipeDirection.RightToLeft {
-                    pickerController.fruits = ["Gay","Sexy","Hot"]
+                    let query = PFQuery(className: "Playlists")
+                    query.whereKey("createdBy", equalTo: PFUser.currentUser()!)
+                    query.findObjectsInBackgroundWithBlock({ (object, error) in
+                        if (error == nil) {
+                            var user_array = [String]()
+                            for playlist in object! {
+                                user_array.append(playlist["playlistName"] as! String)
+                            }
+                            pickerController.fruits = user_array
+                        }
+                    })
                     pickerController.headerTitle = "Playlists To Add To"
                     pickerController.showWithMultipleSelections(UIViewController)
                     pickerController.delegate = self
