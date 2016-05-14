@@ -99,7 +99,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
     
     // MARK: - Configure Methods
     
-    private let headerHeight: CGFloat = 200.0
+    private let headerHeight: CGFloat = 150.0
     
     func configureHeaderView(){
         tableView.tableHeaderView = nil
