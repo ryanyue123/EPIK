@@ -306,11 +306,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     override func viewDidAppear(animated: Bool) {
+        
         configureSegmentedBar()
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         //Configure Functions
+        super.viewWillAppear(animated)
+        UIView.animateWithDuration(0.3,delay: 0.0,options: UIViewAnimationOptions.BeginFromCurrentState,animations: {
+            self.addPlaceImageButton.transform = CGAffineTransformMakeScale(0.5, 0.5)},
+                                   completion: { finish in
+                                    UIView.animateWithDuration(0.6){self.addPlaceImageButton.transform = CGAffineTransformIdentity}
+        })
         
         ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         self.statusBarView = ConfigureFunctions.configureStatusBar(self.navigationController!)
