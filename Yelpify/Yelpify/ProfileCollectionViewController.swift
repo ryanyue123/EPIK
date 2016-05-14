@@ -26,7 +26,7 @@ class ProfileCollectionViewController: UICollectionViewController {
         let navigationBar = navigationController!.navigationBar
         navigationBar.tintColor = UIColor.whiteColor()
         
-        let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "logOut")
+        let rightButton = UIBarButtonItem(title: "Logout", style: .Plain , target: self, action: "logOut")
         
         navigationItem.rightBarButtonItem = rightButton
         if (user == nil)
