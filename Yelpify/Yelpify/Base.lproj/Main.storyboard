@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="xiI-OX-0fu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="xiI-OX-0fu">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -1152,15 +1152,14 @@
                         <outlet property="playlistInfoView" destination="iab-IN-lFB" id="gU2-Cv-evF"/>
                         <outlet property="playlistTableView" destination="n6r-Ge-7w9" id="5fF-p3-emf"/>
                         <outlet property="segmentedBarView" destination="xU3-9P-ToB" id="h5L-Hb-CvQ"/>
-                        <segue destination="4gw-Mw-ac6" kind="show" id="zYA-Hc-nft"/>
                         <segue destination="7pA-8d-Gw7" kind="show" identifier="showBusinessDetail" id="IFd-Gd-HzU"/>
                         <segue destination="TIl-fd-tes" kind="show" identifier="showProfileView" id="W5i-Qt-2dL"/>
-                        <segue destination="bgq-zu-6ZT" kind="push" identifier="collaborate" id="oDa-FR-dL0"/>
+                        <segue destination="4gw-Mw-ac6" kind="show" identifier="randomPlace" id="6Rj-zl-Sku"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bt3-DI-9NP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4956" y="-389.25"/>
+            <point key="canvasLocation" x="4896" y="-432.75"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pbW-sH-FoZ">
@@ -3037,7 +3036,7 @@
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="11" y="169" width="140" height="2"/>
+                                                <rect key="frame" x="11" y="169" width="140" height="1"/>
                                                 <mask key="constraints">
                                                     <include reference="7qo-Z2-pfF"/>
                                                     <include reference="uPQ-mb-3GG"/>
@@ -3200,7 +3199,7 @@
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="11" y="169" width="140" height="2"/>
+                                                <rect key="frame" x="11" y="169" width="140" height="1"/>
                                                 <mask key="constraints">
                                                     <include reference="8dG-7Z-gHW"/>
                                                     <include reference="UN4-f4-pbd"/>

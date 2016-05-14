@@ -36,6 +36,7 @@ class BusinessTableViewCell: MGSwipeTableCell {
     let googlePlacesClient = GooglePlacesAPIClient()
         
     func configureCellWith(business: Business, mode: BusinessCellMode, completion:() -> Void){
+        print(business)
         
         switch mode {
         case .Add:

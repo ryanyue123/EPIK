@@ -103,18 +103,25 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.presentViewController(searchVC!, animated: true, completion: nil)
     }
     
-    func saveCollaborators() {
-        print(self.collaborators)
-    }
-
+    
+    
     func showActionsMenu(sender: AnyObject) {
         
         let actionController = YoutubeActionController()
         let pickerController = CZPickerViewController()
+        let randomController = RandomPlaceController()
 
-
-        actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
-            print("Share")
+        actionController.addAction(Action(ActionData(title: "Get Random Place", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
+            
+         
+            
+            performSegueWithIdentifier(randomPlace, sender: <#T##AnyObject?#>)
+//            
+//            let randomPlace = randomController.getRandomPlace(self.playlistArray)
+//            print(String(randomPlace.businessName))
+//            randomController.RestaurantName.text = randomPlace.businessName
+//            randomController.RestaurantAddress.text = randomPlace.businessAddress
+            
         }))
         if (editable) {
             actionController.addAction(Action(ActionData(title: "Edit Playlist", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
@@ -167,6 +174,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 
     // MARK: - ViewDidLoad and other View functions
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.addPlaceImageButton.hidden = true
@@ -208,15 +217,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         // Get Array of IDs from Parse
         let placeIDs = object["place_id_list"] as! [String]
         self.placeIDs = placeIDs
-        
-        print(placeIDs)
         self.updateBusinessesFromIDs(placeIDs)
-//        self.convertIDsToBusiness(placeIDs) { (businessArray, placeArray) in
-//            self.playlistArray = businessArray
-//            self.placeArray = placeArray
-//            self.playlistTableView.reloadData()
-//            
-//        }
         
         // Setup Navigation Bar
         let navigationBar = navigationController!.navigationBar
@@ -226,7 +227,26 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         navigationItem.rightBarButtonItem = rightButton
     }
-    func handleTap(img: AnyObject) {
+    
+    func updateBusinessesFromIDs(ids: [String]){
+        for id in ids{
+            apiClient.performDetailedSearch(id, completion: { (detailedGPlace) in
+                self.placeArray.append(detailedGPlace)
+                self.playlistArray.append(detailedGPlace.convertToBusiness())
+                self.playlistTableView.reloadData()
+            })
+        }
+    }
+    
+    func convertBusinessesToIDs(businesses: [Business], completion: (ids: [String]) -> Void) {
+        var ids: [String] = []
+        for business in businesses{
+            ids.append(business.gPlaceID)
+        }
+        completion(ids: ids)
+    }
+
+    func handleTap(img: AnyObject){
        performSegueWithIdentifier("tapImageButton", sender: self)
         
     }
