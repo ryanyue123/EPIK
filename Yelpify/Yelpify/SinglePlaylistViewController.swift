@@ -72,6 +72,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var itemReceived: Array<AnyObject> = []
     var playlist_name: String!
     
+    var comments = [NSDictionary]()
+    
     // The apps default color
     let defaultAppColor = UIColor(netHex: 0xFFFFFF)
     
@@ -241,12 +243,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             self.placeIDs = placeIDs
             self.updateBusinessesFromIDs(placeIDs)
         }
+        if let comments = object["comment"] as? [NSDictionary] {
+            self.comments = comments
+        }
         
         // Setup HeaderView with information
         self.configureInfo()
-        
         let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "showActionsMenu:")
-        
         navigationItem.rightBarButtonItem = rightButton
     }
     
@@ -317,31 +320,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         super.viewDidLayoutSubviews()
         updateHeaderView()
     }
-
-    
-    func updateBusinessesFromIDs(ids: [String]){
-        for id in ids{
-            apiClient.performDetailedSearch(id, completion: { (detailedGPlace) in
-                self.placeArray.append(detailedGPlace)
-                self.playlistArray.append(detailedGPlace.convertToBusiness())
-                self.playlistTableView.reloadData()
-            })
-        }
-    }
-    
-    func convertBusinessesToIDs(businesses: [Business], completion: (ids: [String]) -> Void) {
-        var ids: [String] = []
-        for business in businesses{
-            ids.append(business.gPlaceID)
-        }
-        completion(ids: ids)
-    }
-
-    func handleTap(img: AnyObject){
-       performSegueWithIdentifier("tapImageButton", sender: self)
-        
-    }
-    
     
     func unwindView(sender: UIBarButtonItem) {
         self.navigationController?.popToRootViewControllerAnimated(true)
@@ -753,8 +731,21 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         return placeDictArray
     }
     
+    // 
+    func saveComments(comment: NSDictionary) {
+        var current_comment = object["comment"] as! [NSDictionary]
+        current_comment.insert(comment, atIndex: 0)
+        object["comment"] = current_comment
+        object.saveInBackgroundWithBlock { (success, error) in
+            if (error == nil) {
+                print("Saved comments")
+            }
+        }
+    }
+    
     func savePlaylistToParse(sender: UIBarButtonItem)
     {
+        deactivateEditMode()
         if placeIDs.count > 0{
             let saveobject = object
             if let lat = playlistArray[0].businessLatitude
