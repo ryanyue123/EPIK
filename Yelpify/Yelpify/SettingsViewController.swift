@@ -10,18 +10,31 @@ import UIKit
 import Foundation
 import Parse
 
-class SettingsViewController: UITableViewController {
+class SettingsViewController: UITableViewController,ModalViewControllerDelegate {
+    
+    var itemReceived: String!
     
     @IBAction func logoutButton(sender: AnyObject) {
         logoutUser(PFUser.currentUser()!)
+        
+    }
+    
+    func sendValue(value: AnyObject) {
+        itemReceived = value as! String
+        if itemReceived == "Yes"{
+            PFUser.logOut()
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let Login = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as! UIViewController
+            self.presentViewController(Login, animated: true, completion: nil)
+        }
     }
     
     func logoutUser(user: PFUser){
-        PFUser.logOut()
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let Login = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as! UIViewController
-        self.presentViewController(Login, animated: true, completion: nil)
-        
+        let pickerController = CZPickerViewController()
+        pickerController.fruits = ["Yes","No"]
+        pickerController.headerTitle = "Are you sure you want to log out?"
+        pickerController.showWithoutFooter(UIViewController)
+        pickerController.delegate = self
     }
 
     
