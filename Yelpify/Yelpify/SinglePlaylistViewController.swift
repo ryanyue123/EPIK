@@ -453,14 +453,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         })
         
         self.setEditing(true, animated: true)
-        self.addPlaceButton.hidden = true
-        self.addPlaceButton.enabled = false
         self.mode = .Edit
         self.navigationItem.setHidesBackButton(true, animated: true)
         let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(SinglePlaylistViewController.savePlaylistToParse(_:)))
         self.navigationItem.leftBarButtonItem = backButton
-        self.addPlaceButton.hidden = true
-        self.addPlaceButton.enabled = false
     }
     
     func deactivateEditMode() {
@@ -470,7 +466,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.navigationItem.setHidesBackButton(false, animated: true)
         self.navigationItem.leftBarButtonItem = nil
         
-        self.addPlaceButton.hidden = true
         self.setEditing(false, animated: true)
         self.addPlaceImageButton.hidden = true
         self.addPlaceButton.hidden = true

@@ -1285,6 +1285,7 @@
                         <viewControllerLayoutGuide type="bottom" id="v0K-lX-fRa"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="czx-Se-CH0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bht-7k-sqi">
@@ -1384,14 +1385,14 @@
                                     <mask key="constraints">
                                         <exclude reference="CsD-qf-zse"/>
                                         <exclude reference="yhk-dm-Dci"/>
+                                        <exclude reference="Kst-Ov-Our"/>
+                                        <exclude reference="p6Z-ls-lWe"/>
+                                        <exclude reference="VgN-HX-kXK"/>
+                                        <exclude reference="fDj-id-dvs"/>
                                         <exclude reference="Z34-AD-pdc"/>
                                         <exclude reference="ect-Cp-ypK"/>
                                         <exclude reference="ou0-1Z-nlB"/>
                                         <exclude reference="x6K-DI-J84"/>
-                                        <exclude reference="VgN-HX-kXK"/>
-                                        <exclude reference="fDj-id-dvs"/>
-                                        <exclude reference="Kst-Ov-Our"/>
-                                        <exclude reference="p6Z-ls-lWe"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
@@ -1404,14 +1405,14 @@
                                     <mask key="constraints">
                                         <include reference="CsD-qf-zse"/>
                                         <include reference="yhk-dm-Dci"/>
+                                        <include reference="Kst-Ov-Our"/>
+                                        <include reference="p6Z-ls-lWe"/>
+                                        <include reference="VgN-HX-kXK"/>
+                                        <include reference="fDj-id-dvs"/>
                                         <include reference="Z34-AD-pdc"/>
                                         <include reference="ect-Cp-ypK"/>
                                         <include reference="ou0-1Z-nlB"/>
                                         <include reference="x6K-DI-J84"/>
-                                        <include reference="VgN-HX-kXK"/>
-                                        <include reference="fDj-id-dvs"/>
-                                        <include reference="Kst-Ov-Our"/>
-                                        <include reference="p6Z-ls-lWe"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -1642,7 +1643,7 @@
         <scene sceneID="ccq-U8-NhR">
             <objects>
                 <tableViewController storyboardIdentifier="searchPeopleVC" id="cxu-y4-QGq" customClass="SearchPeopleTableViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" id="cDJ-to-l2p">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" id="cDJ-to-l2p">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1650,7 +1651,7 @@
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchPeople" rowHeight="90" id="yRG-Va-4Kj" customClass="SearchPeopleCell" customModule="Yelpify" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yRG-Va-4Kj" id="am1-I0-KDV">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" tableViewCell="yRG-Va-4Kj" id="am1-I0-KDV">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="89.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -2255,7 +2256,7 @@
                         <viewControllerLayoutGuide type="bottom" id="i1O-7s-DQJ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Di4-zW-zmG">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="140" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4z7-0h-kSn">
