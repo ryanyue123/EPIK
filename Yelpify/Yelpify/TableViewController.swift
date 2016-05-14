@@ -212,8 +212,9 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                                 object["playlistName"] = self.inputTextField.text!
                                 object["search_name"] = self.inputTextField.text!.uppercaseString
                                 object["createdBy"] = PFUser.currentUser()!
-                                object["track"] = []
+                                object["place_id_list"] = []
                                 object["Collaborators"] = []
+                                object["comment"] = []
                                 object.saveInBackgroundWithBlock({ (success, error) in
                                     if(error == nil)
                                     {
@@ -373,11 +374,10 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
             }
         }
         let followCount = cellobject["followerCount"]
-        if (followCount == nil)
-        {
+        if (followCount == nil) {
             cell.followerCount.text = "0"
         }
-        else{
+        else {
             cell.followerCount.text = String(followCount)
         }
         //cell.listIcon.image = UIImage(named: "cafe_icon") // CHANGE
