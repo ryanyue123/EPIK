@@ -212,9 +212,11 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 self.playlistTableView.reloadData()
             }))
         }
-        actionController.addAction(Action(ActionData(title: "Make Collaborative...", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
-            self.makeCollaborative()
-        }))
+        if (self.editable) {
+            actionController.addAction(Action(ActionData(title: "Make Collaborative...", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
+                self.makeCollaborative()
+            }))
+        }
         actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "yt-share-icon")!), style: .Cancel, handler: { action in
             pickerController.headerTitle = "Sort Options"
             pickerController.fruits = ["Alphabetical","Rating"]
@@ -318,10 +320,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         configurePlaylistInfoView()
     }
-    
+    let dimLevel: CGFloat = 0.8
+    let dimSpeed: Double = 0.5
     
     override func viewDidAppear(animated: Bool){
         configureSegmentedBar()
+        
+        //self.performSegueWithIdentifier("addComment", sender: self)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -425,8 +430,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
         
         // CHANGE - NEED TO MAKE AVERAGEPRICE IN PARSE
-        // let avgPrice = object["average_price"] as! Int
-        // self.setPriceRating(avgPrice)
+        let avgPrice = object["average_price"] as! Int
+        self.setPriceRating(avgPrice)
     }
     
     func configureRecentlyViewed() {
@@ -617,6 +622,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func switchContentType(){
         if self.contentToDisplay == .Places{
             self.contentToDisplay = .Comments
+            self.playlistTableView.allowsSelection = false
             self.playlistTableView.reloadData()
         }else{
             self.contentToDisplay = .Places
@@ -749,6 +755,20 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }else{
             return UITableViewCell()
         }
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if (self.contentToDisplay == .Comments) {
+            return UITableViewAutomaticDimension
+        }
+        return 110.0
+    }
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if (self.contentToDisplay == .Comments) {
+            return UITableViewAutomaticDimension
+        }
+        return 110.0
     }
     
     func configureSwipeButtons(cell: MGSwipeTableCell, mode: ListMode){
@@ -912,7 +932,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             
             // Saves Average Price
             let averagePrice = getAveragePrice({ (avg) in
-                // saveobject["average_price"] = avg // CHANGE // MAKE AVERAGE_PRICE IN PARSE
+                saveobject["average_price"] = avg
             })
             
             
@@ -967,6 +987,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             let nav = segue.destinationViewController as! UINavigationController
             let upcoming = nav.childViewControllers[0] as! SearchBusinessViewController
             upcoming.searchTextField = upcoming.addPlaceSearchTextField
+        }
+        else if (segue.identifier == "addComment") {
+            dim(.In, alpha: dimLevel, speed: dimSpeed)
         }
     }
 }

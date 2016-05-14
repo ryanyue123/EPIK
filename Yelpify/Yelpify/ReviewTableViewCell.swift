@@ -34,6 +34,7 @@ class ReviewTableViewCell: UITableViewCell {
     
     func configureCell(review: NSDictionary){
         
+        self.contentView.autoresizingMask = [.FlexibleHeight]
         // Set Review Text
         self.reviewTextView.text = review["text"] as? String
         

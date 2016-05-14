@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3C2F1C7B1CD468020081CEFA /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2F1C7A1CD468020081CEFA /* InitialViewController.swift */; };
 		3C7C56451CD479EF009D8B34 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7C56441CD479EF009D8B34 /* SignUpViewController.swift */; };
+		3CA5CB3A1CE7D32B00D1F278 /* ViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA5CB391CE7D32B00D1F278 /* ViewController+Extensions.swift */; };
+		3CA5CB3E1CE7D63800D1F278 /* AddCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA5CB3D1CE7D63800D1F278 /* AddCommentViewController.swift */; };
 		3CB8D45C1CBB575F00870F38 /* ListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB8D45B1CBB575F00870F38 /* ListCollectionViewCell.swift */; };
 		3CBFD89D1CD4355900290F25 /* SearchPlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBFD89C1CD4355900290F25 /* SearchPlaylistCell.swift */; };
 		3CD0344F1CBA121300675F88 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD0344E1CBA121300675F88 /* TableViewCell.swift */; };
@@ -116,6 +118,8 @@
 /* Begin PBXFileReference section */
 		3C2F1C7A1CD468020081CEFA /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InitialViewController.swift; path = ../InitialViewController.swift; sourceTree = "<group>"; };
 		3C7C56441CD479EF009D8B34 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		3CA5CB391CE7D32B00D1F278 /* ViewController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Extensions.swift"; sourceTree = "<group>"; };
+		3CA5CB3D1CE7D63800D1F278 /* AddCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCommentViewController.swift; sourceTree = "<group>"; };
 		3CB8D45B1CBB575F00870F38 /* ListCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListCollectionViewCell.swift; path = Yelpify/ListCollectionViewCell.swift; sourceTree = "<group>"; };
 		3CBFD89C1CD4355900290F25 /* SearchPlaylistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchPlaylistCell.swift; path = Yelpify/SearchPlaylistCell.swift; sourceTree = "<group>"; };
 		3CD0344E1CBA121300675F88 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewCell.swift; path = Yelpify/TableViewCell.swift; sourceTree = "<group>"; };
@@ -243,6 +247,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3CA5CB3B1CE7D4D100D1F278 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				90B6D69D1CD49888006928E8 /* SearchPagerTabStripVC.swift */,
+				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
+				905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */,
+				3CE1DEF71CDC831A007B08C2 /* SearchPeopleTableViewController.swift */,
+				90E505DE1C8E375200F47285 /* GPlacesSearchViewController.swift */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
+		3CA5CB3C1CE7D4F800D1F278 /* Login/Signup */ = {
+			isa = PBXGroup;
+			children = (
+				3C2F1C7A1CD468020081CEFA /* InitialViewController.swift */,
+				3C7C56441CD479EF009D8B34 /* SignUpViewController.swift */,
+				ED405A0F1CC1D03C0017A9AB /* LoginViewController.swift */,
+			);
+			name = Login/Signup;
+			sourceTree = "<group>";
+		};
 		3CA6CFFB1CC05A880004B989 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -338,20 +364,15 @@
 		9025184F1C88276C00BB3E05 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				90B6D69D1CD49888006928E8 /* SearchPagerTabStripVC.swift */,
+				3CA5CB3C1CE7D4F800D1F278 /* Login/Signup */,
+				3CA5CB3B1CE7D4D100D1F278 /* Search */,
 				ED55870D1CE6EA590049CF93 /* SettingsViewController.swift */,
-				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
-				905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */,
-				90E505DE1C8E375200F47285 /* GPlacesSearchViewController.swift */,
-				3CE1DEF71CDC831A007B08C2 /* SearchPeopleTableViewController.swift */,
 				905F879C1CD99E3C004046CD /* ProfileCollectionViewController.swift */,
 				3CD034501CBA122A00675F88 /* TableViewController.swift */,
 				90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */,
+				3CA5CB3D1CE7D63800D1F278 /* AddCommentViewController.swift */,
 				90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */,
 				EDD44DAC1CB4BA31008DC4AB /* RandomPlaceController.swift */,
-				ED405A0F1CC1D03C0017A9AB /* LoginViewController.swift */,
-				3C7C56441CD479EF009D8B34 /* SignUpViewController.swift */,
-				3C2F1C7A1CD468020081CEFA /* InitialViewController.swift */,
 				9038B75D1CBCD041004B220B /* ActionsViewController.swift */,
 				905F879B1CD99A03004046CD /* Yelpify-Bridging-Header.h */,
 				EDD4DCCC1CDD666C00376DF8 /* CZPickerViewController.swift */,
@@ -428,6 +449,7 @@
 				90E505E31C8E946700F47285 /* CustomSearchBar.swift */,
 				90B6D69B1CD35BBE006928E8 /* CustomSegue.swift */,
 				90C96AAD1CCAF72B00E9EC28 /* ConfigureFunctions.swift */,
+				3CA5CB391CE7D32B00D1F278 /* ViewController+Extensions.swift */,
 				908851951CDEE43700F63A40 /* DataFunctions.swift */,
 			);
 			name = "Helper Modules";
@@ -561,7 +583,7 @@
 				TargetAttributes = {
 					3CE2EE7A1C6C5EC8000C9088 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = CQD8Z7UVJ4;
+						DevelopmentTeam = G6YM58LRJE;
 					};
 					3CE2EE8E1C6C5EC8000C9088 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -727,6 +749,7 @@
 				90C96AAE1CCAF72B00E9EC28 /* ConfigureFunctions.swift in Sources */,
 				905F879D1CD99E3C004046CD /* ProfileCollectionViewController.swift in Sources */,
 				9038B75E1CBCD041004B220B /* ActionsViewController.swift in Sources */,
+				3CA5CB3E1CE7D63800D1F278 /* AddCommentViewController.swift in Sources */,
 				90B6D69E1CD49888006928E8 /* SearchPagerTabStripVC.swift in Sources */,
 				3CBFD89D1CD4355900290F25 /* SearchPlaylistCell.swift in Sources */,
 				9081EF811CE44A8600E571E2 /* CellConfigurator.swift in Sources */,
@@ -734,6 +757,7 @@
 				905F87941CD741BB004046CD /* SearchPlaylistCollectionViewController.swift in Sources */,
 				3CD916CE1CDC085200CB5AEA /* CollectionViewLayout.swift in Sources */,
 				EDD4DCCD1CDD666C00376DF8 /* CZPickerViewController.swift in Sources */,
+				3CA5CB3A1CE7D32B00D1F278 /* ViewController+Extensions.swift in Sources */,
 				907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */,
 				907E0CE71C77F34100872135 /* GooglePlacesAPIClient.swift in Sources */,
 				90E505E21C8E944100F47285 /* CustomSearchController.swift in Sources */,
