@@ -26,8 +26,11 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+        
     }
     override func viewDidAppear(animated: Bool) {
+        ConfigureFunctions.resetNavigationBar(self.navigationController!)
         if (searchTextField == nil) {
             searchTextField = searchField
             collaborative = true

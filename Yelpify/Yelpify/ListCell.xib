@@ -8,6 +8,7 @@
             <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
+            <string>Montserrat-Regular</string>
         </mutableArray>
         <mutableArray key="Montserrat-SemiBold.otf">
             <string>Montserrat-SemiBold</string>
@@ -100,6 +101,12 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pPh-ff-9ko">
+                                <rect key="frame" x="36" y="177" width="6" height="12"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="10"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -112,6 +119,7 @@
                             <constraint firstItem="KJI-Jl-VLk" firstAttribute="centerX" secondItem="i4D-V9-CyA" secondAttribute="centerX" id="Lbk-zc-1dd"/>
                             <constraint firstItem="drC-wP-lqP" firstAttribute="centerX" secondItem="kYe-dg-ZCU" secondAttribute="centerX" constant="6" id="PXS-cH-acf"/>
                             <constraint firstItem="drC-wP-lqP" firstAttribute="top" secondItem="i4D-V9-CyA" secondAttribute="bottom" constant="5" id="Rmg-3F-47L"/>
+                            <constraint firstItem="pPh-ff-9ko" firstAttribute="centerY" secondItem="C6f-O2-FHi" secondAttribute="centerY" id="VVq-UA-fWB"/>
                             <constraint firstItem="i4D-V9-CyA" firstAttribute="top" secondItem="KJI-Jl-VLk" secondAttribute="bottom" constant="5.5" id="X5L-LP-36V"/>
                             <constraint firstItem="i4D-V9-CyA" firstAttribute="centerX" secondItem="drC-wP-lqP" secondAttribute="centerX" constant="-5.5" id="Yr0-Ew-zBP"/>
                             <constraint firstItem="Qk7-HD-FtC" firstAttribute="centerX" secondItem="KJI-Jl-VLk" secondAttribute="centerX" id="ZMk-Yl-9lE"/>
@@ -121,6 +129,7 @@
                             <constraint firstItem="drC-wP-lqP" firstAttribute="leading" secondItem="c5v-UC-lsw" secondAttribute="trailing" constant="-1" id="gOf-o6-2DK"/>
                             <constraint firstItem="YtF-Jq-xD5" firstAttribute="leading" secondItem="drC-wP-lqP" secondAttribute="trailing" constant="36" id="gVB-DD-2xh"/>
                             <constraint firstItem="9u1-Gy-DEi" firstAttribute="leading" secondItem="kYe-dg-ZCU" secondAttribute="leading" id="kdY-me-7fF"/>
+                            <constraint firstItem="pPh-ff-9ko" firstAttribute="leading" secondItem="C6f-O2-FHi" secondAttribute="trailing" constant="-2" id="o3k-Ej-yhU"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -135,10 +144,12 @@
             </constraints>
             <size key="customSize" width="180" height="196.5"/>
             <connections>
+                <outlet property="avgPrice" destination="YtF-Jq-xD5" id="rDk-Ex-vib"/>
                 <outlet property="creatorName" destination="KJI-Jl-VLk" id="TCN-3O-7p7"/>
                 <outlet property="followerCount" destination="drC-wP-lqP" id="mDz-rW-6EF"/>
                 <outlet property="listIcon" destination="eJh-R0-Uci" id="A0P-tw-MV0"/>
                 <outlet property="listName" destination="Qk7-HD-FtC" id="hgr-tH-csz"/>
+                <outlet property="numOfPlaces" destination="pPh-ff-9ko" id="FJh-D8-j0I"/>
                 <outlet property="playlistImage" destination="tvr-fv-rIy" id="KFN-9r-G2N"/>
             </connections>
             <point key="canvasLocation" x="266" y="503.25"/>

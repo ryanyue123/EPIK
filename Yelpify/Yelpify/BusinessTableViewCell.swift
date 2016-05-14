@@ -42,6 +42,7 @@ class BusinessTableViewCell: MGSwipeTableCell {
             self.configureButton(UIImage(named: "checkMark")!)
         case .More:
             self.configureButton(UIImage(named: "more_icon")!)
+            self.moreButton.hidden = true
         default:
             self.configureButton(UIImage(named: "more_icon")!)
         }

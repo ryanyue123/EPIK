@@ -18,6 +18,8 @@ class ListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var listName: UILabel!
     @IBOutlet weak var creatorName: UILabel!
     @IBOutlet weak var followerCount: UILabel!
+    @IBOutlet weak var avgPrice: UILabel!
+    @IBOutlet weak var numOfPlaces: UILabel!
     
     var gpAPIClient = GooglePlacesAPIClient()
     
@@ -37,6 +39,7 @@ class ListCollectionViewCell: UICollectionViewCell {
     
     func configureCell(imageref: String)
     {
+        
         gpAPIClient.getImageFromPhotoReference(imageref) { (key) -> Void in
             
             self.cache.fetch(key: key).onSuccess { image in

@@ -13,6 +13,7 @@ class InitialViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBarHidden = true
         // Do any additional setup after loading the view.
 //        if (PFUser.currentUser() == nil) {
 //            self.performSegueWithIdentifier("loginscreen", sender: self)
