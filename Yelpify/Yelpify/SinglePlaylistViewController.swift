@@ -222,6 +222,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.placeIDs = placeIDs
         self.updateBusinessesFromIDs(placeIDs)
         
+        // Setup HeaderView with information
+        self.configureInfo()
+        
         // Setup Navigation Bar
         let navigationBar = navigationController!.navigationBar
         navigationBar.tintColor = UIColor.whiteColor()
@@ -262,8 +265,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewWillAppear(animated: Bool) {
         //Configure Functions
-        
-        
         
         ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         self.statusBarView = ConfigureFunctions.configureStatusBar(self.navigationController!)
@@ -309,7 +310,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.playlistInfoIcon.image = UIImage(named: "default_icon")
         self.playlistInfoBG.image = UIImage(named: "default_list_bg")
         
-        self.numOfPlacesLabel.text = String(playlistArray.count)
+        self.numOfPlacesLabel.text = String(self.placeIDs.count)
         let followCount = object["followerCount"]
         if followCount == nil {
             self.numOfFollowersLabel.text = "0"
@@ -343,12 +344,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 })
                 
             }
-            self.configureInfo()
-//            dispatch_async(dispatch_get_main_queue(), {
-//                self.playlistArray = resultArray
-//                self.playlistTableView.reloadData()
-//                self.configureInfo()
-//            })
         }
     }
     
