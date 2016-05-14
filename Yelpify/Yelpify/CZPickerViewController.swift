@@ -54,8 +54,9 @@ class CZPickerViewController: UIViewController {
     }
     
     @IBAction func showWithoutFooter(sender: AnyObject) {
-        let picker = CZPickerView(headerTitle: "Fruits", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
-      
+        let picker = CZPickerView(headerTitle: headerTitle, cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
+        picker.headerBackgroundColor = appDefaults.color
+        picker.confirmButtonBackgroundColor = appDefaults.color
         picker.delegate = self
         picker.dataSource = self
         picker.needFooterView = false
