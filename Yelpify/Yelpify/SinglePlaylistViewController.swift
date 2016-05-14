@@ -23,7 +23,7 @@ enum ListMode{
 
 
 
-class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate, MGSwipeTableCellDelegate, ModalViewControllerDelegate{
+class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate, MGSwipeTableCellDelegate, ModalViewControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
     
     //@IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
     
@@ -34,6 +34,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var playlistTableView: UITableView!
     
     @IBOutlet weak var playlistInfoBG: UIImageView!
+    
+    @IBAction func loadImageButton(sender: AnyObject) {
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .PhotoLibrary
+        
+        presentViewController(imagePicker, animated: true, completion: nil)
+    }
+    let imagePicker = UIImagePickerController()
     @IBOutlet weak var playlistInfoIcon: UIImageView!
     @IBOutlet weak var playlistInfoName: UILabel!
     @IBOutlet weak var playlistInfoUser: UIButton!
@@ -78,6 +86,20 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     let defaultAppColor = UIColor(netHex: 0xFFFFFF)
     
     var viewDisappearing = false
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            playlistInfoBG.contentMode = .ScaleAspectFill
+            playlistInfoBG.clipsToBounds = true
+            playlistInfoBG.image = pickedImage
+        }
+        
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
     
     func sendValue(value: AnyObject){
         itemReceived.append(value as! NSObject)
@@ -222,7 +244,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        imagePicker.delegate = self
         ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         self.statusBarView = ConfigureFunctions.configureStatusBar(self.navigationController!)
         
