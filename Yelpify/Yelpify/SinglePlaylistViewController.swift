@@ -76,7 +76,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var viewDisappearing = false
     
     func sendValue(value: AnyObject){
-        var itemReceived = value as! String
+        itemReceived = value as! String
         
         if value as! String == "Alphabetical"{
             self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
@@ -628,13 +628,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             if index == 0{
                 if direction == MGSwipeDirection.LeftToRight{
                     actions.openInMaps(business)
-                }
-                else if direction == MGSwipeDirection.RightToLeft{
-                    pickerController.fruits = ["Strip Clubs","Drunk","Gay Clubs"]
-                    pickerController.headerTitle = "Playlists To Add To"
-                    pickerController.showWithMultipleSelections(UIViewController)
-                }
-            }
+                }}
         }
         else if self.mode == ListMode.Edit{
             playlistArray.removeAtIndex(indexPath!.row)
