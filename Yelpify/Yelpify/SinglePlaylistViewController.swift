@@ -114,13 +114,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         let randomController = RandomPlaceController()
 
         actionController.addAction(Action(ActionData(title: "Get Random Place", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
-            
-            self.performSegueWithIdentifier("randomPlace", sender: self)
-//            
-//            let randomPlace = randomController.getRandomPlace(self.playlistArray)
-//            print(String(randomPlace.businessName))
-//            randomController.RestaurantName.text = randomPlace.businessName
-//            randomController.RestaurantAddress.text = randomPlace.businessAddress
+            if self.playlistArray.count != 0{
+                self.performSegueWithIdentifier("randomPlace", sender: self)
+            }
             
         }))
         if (editable) {
@@ -165,7 +161,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             if(segue.identifier == "unwindToPlaylist") {
                 if let sourceVC = segue.sourceViewController as? SearchBusinessViewController
                 {
-                    playlistArray.appendContentsOf(sourceVC.playlistArray)
+                    playlistArray.appendContentsOf(sourceVC.businessArray)
                     self.playlistTableView.reloadData()
                 }
             }
