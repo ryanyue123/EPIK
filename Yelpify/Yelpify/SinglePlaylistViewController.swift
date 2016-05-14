@@ -275,8 +275,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.playlistTableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
         self.playlistTableView.registerNib(UINib(nibName: "ReviewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "reviewCell")
         
-        self.addPlaceButton.hidden = true
-        self.addPlaceButton.enabled = false
         
         self.playlistTableView.backgroundColor = appDefaults.color_bg
         if (self.editable == true) {
@@ -576,6 +574,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func switchContentType(){
         if self.contentToDisplay == .Places{
             self.contentToDisplay = .Comments
+            self.playlistTableView.allowsSelection = false
             self.playlistTableView.reloadData()
         }else{
             self.contentToDisplay = .Places
@@ -708,6 +707,20 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }else{
             return UITableViewCell()
         }
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if (self.contentToDisplay == .Comments) {
+            return UITableViewAutomaticDimension
+        }
+        return 110.0
+    }
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if (self.contentToDisplay == .Comments) {
+            return UITableViewAutomaticDimension
+        }
+        return 110.0
     }
     
     func configureSwipeButtons(cell: MGSwipeTableCell, mode: ListMode){

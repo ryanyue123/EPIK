@@ -6,9 +6,6 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="Montserrat-Bold.otf">
-            <string>Montserrat-Bold</string>
-        </mutableArray>
         <mutableArray key="Montserrat-Light.otf">
             <string>Montserrat-Light</string>
             <string>Montserrat-Light</string>
@@ -571,6 +568,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add_button" translatesAutoresizingMaskIntoConstraints="NO" id="aHp-YR-q7e">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="A87-w7-54J"/>
+                                    <constraint firstAttribute="height" constant="50" id="AVU-0V-Q6q"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="A87-w7-54J"/>
+                                        <exclude reference="AVU-0V-Q6q"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="A87-w7-54J"/>
+                                        <include reference="AVU-0V-Q6q"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" rowHeight="112" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="n6r-Ge-7w9">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" red="0.89411764709999997" green="0.89411764709999997" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -1154,54 +1170,11 @@
                                         </mask>
                                     </variation>
                                 </view>
-                                <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mrg-gd-QNF">
-                                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="400" id="qYK-TW-FUI"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="15"/>
-                                    <state key="normal" title="Add Place +">
-                                        <color key="titleColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
-                                    </state>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="qYK-TW-FUI"/>
-                                        </mask>
-                                    </variation>
-                                    <variation key="heightClass=regular-widthClass=compact">
-                                        <mask key="constraints">
-                                            <include reference="qYK-TW-FUI"/>
-                                        </mask>
-                                    </variation>
-                                    <connections>
-                                        <segue destination="UL9-SW-wCG" kind="presentation" identifier="tapImageButton" id="ggw-N4-5Ir"/>
-                                    </connections>
-                                </button>
                                 <connections>
                                     <outlet property="dataSource" destination="7Om-1w-JrL" id="S1t-pJ-mE8"/>
                                     <outlet property="delegate" destination="7Om-1w-JrL" id="042-vq-gNq"/>
                                 </connections>
                             </tableView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add_button" translatesAutoresizingMaskIntoConstraints="NO" id="aHp-YR-q7e">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="A87-w7-54J"/>
-                                    <constraint firstAttribute="height" constant="50" id="AVU-0V-Q6q"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="A87-w7-54J"/>
-                                        <exclude reference="AVU-0V-Q6q"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="A87-w7-54J"/>
-                                        <include reference="AVU-0V-Q6q"/>
-                                    </mask>
-                                </variation>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -1229,8 +1202,8 @@
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="n6r-Ge-7w9"/>
                                 <exclude reference="aHp-YR-q7e"/>
+                                <exclude reference="n6r-Ge-7w9"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="KQe-uk-iJy"/>
@@ -1255,8 +1228,8 @@
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
-                                <include reference="n6r-Ge-7w9"/>
                                 <include reference="aHp-YR-q7e"/>
+                                <include reference="n6r-Ge-7w9"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="KQe-uk-iJy"/>
@@ -1278,7 +1251,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="addPlaceButton" destination="mrg-gd-QNF" id="D2B-Rh-Bk5"/>
                         <outlet property="addPlaceImageButton" destination="aHp-YR-q7e" id="pvV-nn-45l"/>
                         <outlet property="averagePriceRating" destination="jmE-FE-vZB" id="WS5-Uz-DvI"/>
                         <outlet property="collaboratorsView" destination="Oqf-Af-7td" id="Z38-YY-TWP"/>
