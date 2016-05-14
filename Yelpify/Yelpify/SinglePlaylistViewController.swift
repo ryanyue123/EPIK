@@ -56,6 +56,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     let offset_HeaderStop:CGFloat = 40.0
     var contentToDisplay: ContentTypes = .Places
     
+    var apiClient = APIDataHandler()
+    
     var collaborators = [PFObject]()
     var playlistArray = [Business]()
     
@@ -65,6 +67,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var object: PFObject!
     var editable: Bool = false
     var sortMethod:String!
+    
+    var itemReceived: String!
+    
+    var itemToSend: String!
     
     var playlist_name: String!
     
@@ -153,14 +159,17 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     @IBAction func unwindToSinglePlaylist(segue: UIStoryboardSegue)
     {
-        print(segue.identifier)
-        if(segue.identifier != nil) {
-            if(segue.identifier == "unwindToPlaylist") {
-                if let sourceVC = segue.sourceViewController as? SearchBusinessViewController
-                {
-                    playlistArray.appendContentsOf(sourceVC.playlistArray)
-                    self.playlistTableView.reloadData()
-                }
+        if(segue.identifier != nil)
+        {
+            if(segue.identifier == "unwindToPlaylist")
+            {
+                let sourceVC = segue.sourceViewController as! SearchBusinessViewController
+                placeIDs.appendContentsOf(sourceVC.placeIDs)
+                playlistArray.appendContentsOf(sourceVC.businessArray)
+                
+                //placeArray.appendContentsOf(sourceVC.newPlacesArray)
+                
+                self.playlistTableView.reloadData()
             }
         }
     }
@@ -226,7 +235,40 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         navigationItem.rightBarButtonItem = rightButton
     }
-    func handleTap(img: AnyObject) {
+    
+    func updateBusinessesFromIDs(ids: [String]){
+        for id in ids{
+            apiClient.performDetailedSearch(id, completion: { (detailedGPlace) in
+                self.placeArray.append(detailedGPlace)
+                self.playlistArray.append(detailedGPlace.convertToBusiness())
+                self.playlistTableView.reloadData()
+            })
+        }
+    }
+//    func convertIDsToBusiness(ids: [String], completion: (businessArray: [Business], placeArray: [GooglePlaceDetail]) -> Void){
+//        var businessArray:[Business] = []
+//        var placeArray: [GooglePlaceDetail] = []
+//        
+//        for id in ids{
+//            apiClient.performDetailedSearch(id, completion: { (detailedGPlace) in
+//                //placeArray.append(detailedGPlace)
+//                self.playlistArray.append(detailedGPlace.convertToBusiness())
+//                self.placeIDs.append(id)
+//                //businessArray.append(detailedGPlace.convertToBusiness())
+//            })
+//        }
+//        completion(businessArray: businessArray, placeArray: placeArray)
+//    }
+    
+    func convertBusinessesToIDs(businesses: [Business], completion: (ids: [String]) -> Void) {
+        var ids: [String] = []
+        for business in businesses{
+            ids.append(business.gPlaceID)
+        }
+        completion(ids: ids)
+    }
+
+    func handleTap(img: AnyObject){
        performSegueWithIdentifier("tapImageButton", sender: self)
         
     }
