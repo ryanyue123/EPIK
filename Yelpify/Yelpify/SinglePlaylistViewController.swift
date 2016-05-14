@@ -65,7 +65,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var object: PFObject!
     var editable: Bool = false
     var sortMethod:String!
-    var itemReceived: String!
+    var itemReceived: Array<Int> = []
     var playlist_name: String!
     
     var apiClient = APIDataHandler()
@@ -76,14 +76,17 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var viewDisappearing = false
     
     func sendValue(value: AnyObject){
-        itemReceived = value as! String
+        itemReceived.append(value as! Int)
         
-        if value as! String == "Alphabetical"{
-            self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
-            self.playlistTableView.reloadData()
-        }else if itemReceived == "Rating"{
-            self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
-            self.playlistTableView.reloadData()
+        for item in itemReceived{
+            if item == 0{
+                self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
+                self.playlistTableView.reloadData()
+            }else if item == 1{
+                self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
+                self.playlistTableView.reloadData()
+            }
+            itemReceived = []
         }
     }
     
