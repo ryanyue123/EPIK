@@ -41,17 +41,6 @@ class CZPickerViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-//    func sortMethods(businesses: Array<Business>, type: String){
-//        var sortedBusinesses: Array<Business> = []
-//        if type == "name"{
-//            sortedBusinesses = businesses.sort{$0.businessName < $1.businessName}
-//        } else if type == "rating"{
-//            sortedBusinesses = businesses.sort{$0.businessRating > $1.businessRating}
-//        }
-//        delegate.sendValue(sortedBusinesses as Array<Business>)
-//        
-//    }
-    
 
     func showWithFooter(sender: AnyObject) {
         let picker = CZPickerView(headerTitle: headerTitle, cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
@@ -119,9 +108,10 @@ extension CZPickerViewController: CZPickerViewDelegate, CZPickerViewDataSource {
     }
     
     func czpickerView(pickerView: CZPickerView!, didConfirmWithItemsAtRows rows: [AnyObject]!) {
+        
         for row in rows {
             if let row = row as? Int {
-                print(fruits[row])
+                delegate.sendValue(fruits[row])
             }
         }
     }
