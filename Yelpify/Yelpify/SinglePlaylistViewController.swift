@@ -68,6 +68,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var itemReceived: String!
     var playlist_name: String!
     
+    var apiClient = APIDataHandler()
+    
     // The apps default color
     let defaultAppColor = UIColor(netHex: 0xFFFFFF)
     
@@ -215,15 +217,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         // Get Array of IDs from Parse
         let placeIDs = object["place_id_list"] as! [String]
         self.placeIDs = placeIDs
-        
-        print(placeIDs)
         self.updateBusinessesFromIDs(placeIDs)
-//        self.convertIDsToBusiness(placeIDs) { (businessArray, placeArray) in
-//            self.playlistArray = businessArray
-//            self.placeArray = placeArray
-//            self.playlistTableView.reloadData()
-//            
-//        }
         
         // Setup Navigation Bar
         let navigationBar = navigationController!.navigationBar
@@ -233,7 +227,26 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         navigationItem.rightBarButtonItem = rightButton
     }
-    func handleTap(img: AnyObject) {
+    
+    func updateBusinessesFromIDs(ids: [String]){
+        for id in ids{
+            apiClient.performDetailedSearch(id, completion: { (detailedGPlace) in
+                self.placeArray.append(detailedGPlace)
+                self.playlistArray.append(detailedGPlace.convertToBusiness())
+                self.playlistTableView.reloadData()
+            })
+        }
+    }
+    
+    func convertBusinessesToIDs(businesses: [Business], completion: (ids: [String]) -> Void) {
+        var ids: [String] = []
+        for business in businesses{
+            ids.append(business.gPlaceID)
+        }
+        completion(ids: ids)
+    }
+
+    func handleTap(img: AnyObject){
        performSegueWithIdentifier("tapImageButton", sender: self)
         
     }
@@ -327,11 +340,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 })
                 
             }
-            dispatch_async(dispatch_get_main_queue(), {
-                self.playlistArray = resultArray
-                self.playlistTableView.reloadData()
-                self.configureInfo()
-            })
+            self.configureInfo()
+//            dispatch_async(dispatch_get_main_queue(), {
+//                self.playlistArray = resultArray
+//                self.playlistTableView.reloadData()
+//                self.configureInfo()
+//            })
         }
     }
     

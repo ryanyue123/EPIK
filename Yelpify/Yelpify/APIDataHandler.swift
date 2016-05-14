@@ -56,8 +56,28 @@ class APIDataHandler {
                     
                     var DetailedObject = GooglePlaceDetail()
                     
+                    if let name = place["name"]?.string{
+                        DetailedObject.name = name
+                    }
+                    
+                    
+                
+                    if let open_now = place["opening_hours"]?["open_now"].bool{
+                        DetailedObject.status = open_now
+                    }
+                    
+                    if let coordinates = place["geometry"]?["location"].dictionary{
+                        if let lat = coordinates["lat"]?.double{
+                            DetailedObject.latitude = lat
+                        }
+                        if let lng = coordinates["lng"]?.double{
+                            DetailedObject.longitude  = lng
+                        }
+                    }
+                    
                     if let address = place["address_components"]?.array{
                     }
+                    
                     if let formattedAddress = place["formatted_address"]?.string{
                         DetailedObject.address = formattedAddress
                     }
