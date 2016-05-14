@@ -46,9 +46,12 @@ struct ConfigureFunctions {
         return addShadowToBar()
     }
     
-//    static func resetNavigationBar(navController: UINavigationController){
+    static func resetNavigationBar(navController: UINavigationController){
+        navController.navigationBar.titleTextAttributes = [
+            NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(1) ]
+        navController.navigationBar.backgroundColor = appDefaults.color.colorWithAlphaComponent(1)
 //        navController.navigationBar.alpha = 1
 //        navController.navigationItem.titleView?.alpha = 1
-//    }
+    }
 
 }

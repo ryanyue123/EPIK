@@ -26,8 +26,10 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var googleParameters = ["key": "AIzaSyDkxzICx5QqztP8ARvq9z0DxNOF_1Em8Qc", "location":"", "rankby":"distance", "keyword": "food"]
     var searchDidChange = false
     var searchQuery = ""
+    var currentCity = ""
     
     var searchTextField: UITextField!
+    @IBOutlet weak var addPlaceSearchTextField: UITextField!
     
     // MARK: - OUTLETS
     
@@ -53,13 +55,21 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             if segue.identifier == "unwindToSearch" {
                 
                 let gPlacesVC = segue.sourceViewController as! GPlacesSearchViewController
-                let searchVC = self.parentViewController as! SearchPagerTabStrip
+                if let searchVC = self.parentViewController as? SearchPagerTabStrip{
                 
-                searchVC.chosenCoordinates = gPlacesVC.currentLocationCoordinates
+                    searchVC.chosenCoordinates = gPlacesVC.currentLocationCoordinates
+                    
+                    self.googleParameters["location"] = searchVC.chosenCoordinates
+                    
+                    self.searchWithKeyword(searchQuery)
+                    
+                    // CHANGE
+                }else{
+                    self.googleParameters["location"] = gPlacesVC.currentLocationCoordinates
+                    self.currentCity = gPlacesVC.currentCity
+                    self.searchWithKeyword(searchQuery)
                 
-                self.googleParameters["location"] = searchVC.chosenCoordinates
-                
-                self.searchWithKeyword(searchQuery)
+                }
             }
         }
     }
@@ -223,14 +233,11 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     func textFieldDidChange(textField: UITextField){
         print("hi")
     }
-    
-    
-    
-
 
     // MARK: - VIEWDIDLOAD
     
     override func viewDidAppear(animated: Bool) {
+        ConfigureFunctions.resetNavigationBar(self.navigationController!)
         if searchTextField != nil{
             searchTextField.delegate = self
             self.tableView.reloadData()
@@ -239,9 +246,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
 
     
     override func viewDidLoad(){
-        print("hellooo")
-        self.tableView.reloadData()
         
+        self.tableView.reloadData()
         
         // Get Location and Perform Search
         DataFunctions.getLocation { (coordinates) in
@@ -251,18 +257,14 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         }
         
         // Configure Functions
+        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         ConfigureFunctions.configureStatusBar(self.navigationController!)
-        //ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         
         // Register Nibs
         self.tableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
     }
     
     override func viewWillAppear(animated: Bool) {
-        
-        self.navigationController?.navigationBar.alpha = 1
-        self.navigationController?.navigationBar.backgroundColor = appDefaults.color
-        self.navigationItem.titleView?.alpha = 1
     }
     
     func configureCustomSearchController() {
@@ -285,6 +287,21 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     func textFieldShouldReturn(textField:UITextField) -> Bool {
         searchQuery = textField.text!
         searchWithKeyword(searchQuery)
+        if currentCity != ""{
+            let longString = textField.text! + " NEAR " + currentCity.uppercaseString
+            let longestWord = " NEAR " + currentCity.uppercaseString
+            
+            let longestWordRange = (longString as NSString).rangeOfString(longestWord)
+            
+            let attributedString = NSMutableAttributedString(string: longString, attributes: [NSFontAttributeName : appDefaults.font.fontWithSize(14)])
+            
+            attributedString.setAttributes([NSFontAttributeName : appDefaults.font.fontWithSize(9), NSForegroundColorAttributeName : appDefaults.color_darker
+                ], range: longestWordRange)
+            
+            
+            textField.attributedText = attributedString
+            //textField.text! += " NEAR " + currentCity.uppercaseString
+        }
         textField.resignFirstResponder() //close keyboard
         return true
         // Will allow user to press "return" button to close keyboard

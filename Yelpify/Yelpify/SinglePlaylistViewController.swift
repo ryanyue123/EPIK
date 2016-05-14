@@ -455,7 +455,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func handleNavigationBarOnScroll(){
         
         let showWhenScrollDownAlpha = 1 - (-playlistTableView.contentOffset.y / playlistTableHeaderHeight)
-        print(showWhenScrollDownAlpha)
         //let showWhenScrollUpAlpha = (-playlistTableView.contentOffset.y / playlistTableHeaderHeight)
         
         self.navigationController?.navigationBar.titleTextAttributes = [
@@ -827,6 +826,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }else if (segue.identifier == "randomPlace") {
             let upcoming = segue.destinationViewController as! RandomPlaceController
             upcoming.businessArray = self.playlistArray
+        }else if (segue.identifier == "tapImageButton"){
+            let nav = segue.destinationViewController as! UINavigationController
+            let upcoming = nav.childViewControllers[0] as! SearchBusinessViewController
+            upcoming.searchTextField = upcoming.addPlaceSearchTextField
         }
     }
 }
