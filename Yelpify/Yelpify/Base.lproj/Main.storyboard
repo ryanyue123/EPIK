@@ -1139,6 +1139,7 @@
                         <segue destination="4gw-Mw-ac6" kind="show" id="zYA-Hc-nft"/>
                         <segue destination="7pA-8d-Gw7" kind="show" identifier="showBusinessDetail" id="IFd-Gd-HzU"/>
                         <segue destination="TIl-fd-tes" kind="show" identifier="showProfileView" id="W5i-Qt-2dL"/>
+                        <segue destination="bgq-zu-6ZT" kind="push" identifier="collaborate" id="oDa-FR-dL0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bt3-DI-9NP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1160,7 +1161,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8DH-cU-31C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5151" y="1630.5"/>
+            <point key="canvasLocation" x="4953" y="1851"/>
         </scene>
         <!--Search Playlist Collection View Controller-->
         <scene sceneID="Nwl-4x-31T">
@@ -1330,11 +1331,12 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZBO-Hm-LYA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5388" y="2385.75"/>
+            <point key="canvasLocation" x="4416" y="2535.75"/>
         </scene>
         <!--Search People Table View Controller-->
         <scene sceneID="ccq-U8-NhR">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gll-O8-7Wr" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController storyboardIdentifier="searchPeopleVC" id="cxu-y4-QGq" customClass="SearchPeopleTableViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" id="cDJ-to-l2p">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -1391,11 +1393,26 @@
                             <outlet property="delegate" destination="cxu-y4-QGq" id="r3m-9j-Dds"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Eov-O9-fkj"/>
+                    <navigationItem key="navigationItem" id="zdr-mr-bpS">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="U3R-Lc-qbs">
+                            <connections>
+                                <action selector="saveToParse:" destination="cxu-y4-QGq" id="Qdv-gJ-smF"/>
+                            </connections>
+                        </barButtonItem>
+                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" id="6eo-RF-UjG">
+                            <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="searchField" destination="6eo-RF-UjG" id="OWI-eX-eQF"/>
+                    </connections>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gll-O8-7Wr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6933" y="2475"/>
+            <point key="canvasLocation" x="6733.5" y="2535.75"/>
         </scene>
         <!--Places Search View Controller-->
         <scene sceneID="DpG-32-Qpg">
@@ -1460,7 +1477,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rFe-V7-JC5" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="MaZ-WG-NVz" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5887.5" y="1624.5"/>
+            <point key="canvasLocation" x="5815.5" y="1855.5"/>
         </scene>
         <!--Random Place Controller-->
         <scene sceneID="jUW-qe-1S9">
@@ -1912,7 +1929,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wJO-Js-5jv" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="nyU-rd-931" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4302" y="345"/>
+            <point key="canvasLocation" x="4083" y="355.5"/>
         </scene>
         <!--Business Detail View Controller-->
         <scene sceneID="9Yv-IZ-Ip6">
@@ -2216,9 +2233,6 @@
                                                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="23" y="-26" width="28.5" height="20"/>
-                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2474,7 +2488,7 @@
                     </variation>
                 </view>
             </objects>
-            <point key="canvasLocation" x="5223" y="444"/>
+            <point key="canvasLocation" x="4875" y="355.5"/>
         </scene>
         <!--Login-->
         <scene sceneID="dNT-ql-eCM">
@@ -2785,7 +2799,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sma-fD-tWU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-12" y="-18.75"/>
+            <point key="canvasLocation" x="396" y="96.75"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="1Fm-eu-HZw">
@@ -2872,7 +2886,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qi1-GZ-36m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1098" y="-315.75"/>
+            <point key="canvasLocation" x="1194" y="101.25"/>
         </scene>
         <!--Initial View Controller-->
         <scene sceneID="2QV-5Z-yaI">
@@ -2895,7 +2909,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Pf-nX-Tue" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="690" y="807.75"/>
+            <point key="canvasLocation" x="396" y="797.25"/>
         </scene>
         <!--Animated Tab Bar Controller-->
         <scene sceneID="N93-0p-u6f">
@@ -2915,7 +2929,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cy4-wy-XfY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1620" y="282"/>
+            <point key="canvasLocation" x="1224" y="797.25"/>
         </scene>
         <!--profileVC-->
         <scene sceneID="P1t-iH-qLG">
@@ -3272,7 +3286,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X8r-gu-aBn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4134" y="1053.75"/>
+            <point key="canvasLocation" x="4104" y="1053.75"/>
         </scene>
         <!--Search-->
         <scene sceneID="Tf1-7N-Rpw">
@@ -3318,7 +3332,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g5y-ZW-WqI" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="0yi-rr-RK0" customClass="RAMBounceAnimation" customModule="RAMAnimatedTabBarController"/>
             </objects>
-            <point key="canvasLocation" x="3267" y="1113.75"/>
+            <point key="canvasLocation" x="3363" y="1053.75"/>
         </scene>
         <!--Favorites-->
         <scene sceneID="GYL-PM-mR8">
@@ -3360,7 +3374,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x9L-sf-EaC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-72" y="798.75"/>
+            <point key="canvasLocation" x="-369" y="797.25"/>
         </scene>
         <!--Search-->
         <scene sceneID="e19-2u-DjQ">
@@ -3394,7 +3408,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I8k-vJ-6bk" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="79Z-Tl-cbn" customClass="RAMBounceAnimation" customModule="RAMAnimatedTabBarController"/>
             </objects>
-            <point key="canvasLocation" x="3207" y="1968"/>
+            <point key="canvasLocation" x="3363" y="1851"/>
         </scene>
         <!--Search Pager Tab Strip-->
         <scene sceneID="He3-jj-jKK">
@@ -3507,7 +3521,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yog-hb-FST" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4056" y="1968"/>
+            <point key="canvasLocation" x="4128" y="1851"/>
         </scene>
         <!--Search Play-->
         <scene sceneID="oBj-fk-OQl">
@@ -3525,25 +3539,27 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p7V-3U-Gkb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4644" y="2427"/>
+            <point key="canvasLocation" x="3639" y="2532"/>
         </scene>
-        <!--Search People-->
-        <scene sceneID="cfg-kS-Xf3">
+        <!--Item-->
+        <scene sceneID="1xq-pQ-mBd">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dO8-cX-ndv" customClass="SearchPeople" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="searchpeople" automaticallyAdjustsScrollViewInsets="NO" id="bgq-zu-6ZT" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="9tj-zJ-sFv"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fqO-L4-4RF">
+                    <navigationItem key="navigationItem" id="XJZ-D3-eGh"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8xX-v2-11m">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="cxu-y4-QGq" kind="relationship" relationship="rootViewController" id="VTL-zj-pXB"/>
+                        <segue destination="cxu-y4-QGq" kind="relationship" relationship="rootViewController" id="y45-Hu-5da"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FaW-nl-msa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pha-xd-cs5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6195" y="2457"/>
+            <point key="canvasLocation" x="5815.5" y="2535.75"/>
         </scene>
     </scenes>
     <resources>
@@ -3568,10 +3584,10 @@
         <image name="text_field_white" width="545" height="88"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="LJY-RO-ffD"/>
+        <segue reference="C9p-Sr-17z"/>
+        <segue reference="arz-0e-QTj"/>
         <segue reference="y7k-Hg-iYt"/>
-        <segue reference="Ec9-0b-pIS"/>
-        <segue reference="W5i-Qt-2dL"/>
         <segue reference="IFd-Gd-HzU"/>
+        <segue reference="W5i-Qt-2dL"/>
     </inferredMetricsTieBreakers>
 </document>

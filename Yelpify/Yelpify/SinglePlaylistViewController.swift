@@ -56,6 +56,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     let offset_HeaderStop:CGFloat = 40.0
     var contentToDisplay: ContentTypes = .Places
     
+    var collaborators = [PFObject]()
     var playlistArray = [Business]()
     var object: PFObject!
     var editable: Bool = false
@@ -83,9 +84,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         return sortedBusinesses
         
     }
+    func makeCollaborative() {
+        let searchVC = self.storyboard?.instantiateViewControllerWithIdentifier("searchpeople")
+        let searchPeopleVC = searchVC?.childViewControllers[0] as! SearchPeopleTableViewController
+        searchPeopleVC.playlist = self.object
+        self.dismissViewControllerAnimated(false, completion: nil)
+        self.presentViewController(searchVC!, animated: true, completion: nil)
+    }
     
+    func saveCollaborators() {
+        print(self.collaborators)
+    }
 
-   func showActionsMenu(sender: AnyObject) {
+    func showActionsMenu(sender: AnyObject) {
         
         let actionController = YoutubeActionController()
         let pickerController = CZPickerViewController()
@@ -93,10 +104,15 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
             print("Share")
         }))
-        actionController.addAction(Action(ActionData(title: "Edit Playlist", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
-            print("Edit pressed")
-            self.activateEditMode()
-            self.playlistTableView.reloadData()
+        if (editable) {
+            actionController.addAction(Action(ActionData(title: "Edit Playlist", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
+                print("Edit pressed")
+                self.activateEditMode()
+                self.playlistTableView.reloadData()
+            }))
+        }
+        actionController.addAction(Action(ActionData(title: "Make Collaborative...", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
+            self.makeCollaborative()
         }))
         actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "yt-share-icon")!), style: .Cancel, handler: { action in
             
@@ -127,68 +143,17 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     @IBAction func unwindToSinglePlaylist(segue: UIStoryboardSegue)
     {
-        if(segue.identifier != nil)
-        {
-            if(segue.identifier == "unwindToPlaylist")
-            {
-                let sourceVC = segue.sourceViewController as! SearchBusinessViewController
-                playlistArray.appendContentsOf(sourceVC.playlistArray)
-                self.playlistTableView.reloadData()
+        print(segue.identifier)
+        if(segue.identifier != nil) {
+            if(segue.identifier == "unwindToPlaylist") {
+                if let sourceVC = segue.sourceViewController as? SearchBusinessViewController
+                {
+                    playlistArray.appendContentsOf(sourceVC.playlistArray)
+                    self.playlistTableView.reloadData()
+                }
             }
         }
     }
-    
-    func showActionMenu(longPressGestureRecognizer: UILongPressGestureRecognizer) {
-        print("Holding")
-        if longPressGestureRecognizer.state == UIGestureRecognizerState.Began {
-            print("Holding")
-            
-            let touchPoint = longPressGestureRecognizer.locationInView(self.view)
-            
-            if let indexPath = playlistTableView.indexPathForRowAtPoint(touchPoint) {
-                
-                let actionController = YoutubeActionController()
-                
-                actionController.addAction(Action(ActionData(title: "Add to Watch Later", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
-                }))
-                actionController.addAction(Action(ActionData(title: "Edit Playlist", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
-                    print("Edit pressed")
-                    self.activateEditMode()
-                }))
-                actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-share-icon")!), style: .Default, handler: { action in
-                }))
-                actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
-                
-                presentViewController(actionController, animated: true, completion: nil)
-            }
-        }
-        
-    }
-    
-    //Called, when long press occurred
-    func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
-        
-        if longPressGestureRecognizer.state == UIGestureRecognizerState.Began {
-            
-            let touchPoint = longPressGestureRecognizer.locationInView(self.view)
-            if let indexPath = playlistTableView.indexPathForRowAtPoint(touchPoint) {
-                let actionController = YoutubeActionController()
-                
-                actionController.addAction(Action(ActionData(title: "Add to Watch Later", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
-                }))
-                actionController.addAction(Action(ActionData(title: "Add to Playlist...", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
-                }))
-                actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-share-icon")!), style: .Default, handler: { action in
-                }))
-                actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
-                
-                presentViewController(actionController, animated: true, completion: nil)
-
-                // your code here, get the row for the indexPath or do whatever you want
-            }
-        }
-    }
-    
 
     // MARK: - ViewDidLoad and other View functions
     
@@ -215,13 +180,11 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.addPlaceButton.enabled = false
 
         self.playlistTableView.backgroundColor = appDefaults.color
-        if (self.editable == true)
-        {
-            print("This is a new playlist")
-            // Automatic edit mode
+        if (self.editable == true) {
             self.activateEditMode()
         }
-        else if(object["createdBy"] as! PFUser == PFUser.currentUser()!) {
+        else if(object["createdBy"] as! PFUser == PFUser.currentUser()! || (object["Collaborators"] as! NSArray).containsObject(PFUser.currentUser()!)) {
+            self.editable = true
             configureRecentlyViewed()
         }
         else {
@@ -259,12 +222,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         playlistTableHeaderHeight = playlistInfoView.frame.size.height
         configurePlaylistInfoView()
         
-        if (object == nil)
-        {
+        if (object == nil) {
             playlist_name = playlist.playlistname
         }
-        else
-        {
+        else {
             playlist_name = object["playlistName"] as! String
         }
         configurePlaylistInfoView()
@@ -344,7 +305,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.addPlaceImageButton.hidden = false
         self.mode = .Edit
         self.navigationItem.setHidesBackButton(true, animated: true)
-        let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "savePlaylistToParse:")
+        let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(SinglePlaylistViewController.savePlaylistToParse(_:)))
         self.navigationItem.leftBarButtonItem = backButton
         self.addPlaceButton.hidden = false
         self.addPlaceButton.enabled = true
@@ -528,11 +489,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.collaboratorsView.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func tappedCollaborators(){
-        
-    }
-
-    
     // MARK: - Table View Functions
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -652,29 +608,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         return true
     }
     
-//    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
-//    {
-    
-    //}
-    
-//    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]?
-//    {
-//        var shareAction = UITableViewRowAction(style: .Normal, title: "Share") {(action:
-//            UITableViewRowAction!, indexPath: NSIndexPath!) -> Void in
-//            print("sharing")
-//        }
-//        
-//        shareAction.backgroundColor = appDefaults.color
-//        
-//        var routeAction = UITableViewRowAction(style: .Normal, title: "Route") { (action: UITableViewRowAction!, indexPath: NSIndexPath) in
-//            print("routing")
-//        }
-//        
-//        routeAction.backgroundColor = appDefaults.color_darker
-//        
-//        return [shareAction, routeAction]
-//    }
-    
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
     }
@@ -683,7 +616,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         var placeDictArray = [NSDictionary]()
         for business in placesArray{
             placeDictArray.append(business.getDictionary())
-            print(business)
         }
         return placeDictArray
     }
@@ -729,11 +661,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             upcoming.index = indexPath!.row
             self.playlistTableView.deselectRowAtIndexPath(indexPath!, animated: true)
         }
-        else if (segue.identifier == "showProfileView")
-        {
+        else if (segue.identifier == "showProfileView") {
             let upcoming = segue.destinationViewController as! ProfileCollectionViewController
             upcoming.user = object["createdBy"] as! PFUser
         }
     }
-    
 }
