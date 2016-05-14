@@ -85,10 +85,18 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         for item in itemReceived{
             if item as! NSObject == "Alphabetical"{
                 self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
-                self.playlistTableView.reloadData()
+                getIDsFromArrayOfBusiness(self.playlistArray, completion: { (result) in
+                    self.placeIDs = result
+                    self.placeArray = self.sortGooglePlaces(self.placeArray, type: "name")
+                    print("sorting")
+                    self.playlistTableView.reloadData()
+                })
             }else if item as! NSObject == "Rating"{
-                self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
-                self.playlistTableView.reloadData()
+                getIDsFromArrayOfBusiness(self.playlistArray, completion: { (result) in
+                    self.placeArray = self.sortGooglePlaces(self.placeArray, type: "rating")
+                    self.playlistTableView.reloadData()
+                })
+                
             }
             else {
                 let index = item as! Int
@@ -109,7 +117,15 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
     }
     
-    func sortMethods(businesses: Array<Business>, type: String)->Array<Business>{
+    func getIDsFromArrayOfBusiness(business: [Business], completion: (result:[String])->Void){
+        var result:[String] = []
+        for b in business{
+            result.append(b.gPlaceID)
+        }
+        completion(result: result)
+    }
+    
+    func sortMethods(businesses: Array<Business>, type: String)->[Business]{
         var sortedBusinesses: Array<Business> = []
         if type == "name"{
             sortedBusinesses = businesses.sort{$0.businessName < $1.businessName}
@@ -117,8 +133,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             sortedBusinesses = businesses.sort{$0.businessRating > $1.businessRating}
         }
         return sortedBusinesses
-        
     }
+    
+    func sortGooglePlaces(gPlaces: [GooglePlaceDetail],type:String) -> [GooglePlaceDetail]{
+        var sortedBusinesses: Array<GooglePlaceDetail> = []
+        if type == "name"{
+            sortedBusinesses = gPlaces.sort{$0.name < $1.name}
+        } else if type == "rating"{
+            sortedBusinesses = gPlaces.sort{$0.rating > $1.rating}
+        }
+        return sortedBusinesses
+
+    }
+    
     func makeCollaborative() {
         let searchVC = self.storyboard?.instantiateViewControllerWithIdentifier("searchpeople")
         let searchPeopleVC = searchVC?.childViewControllers[0] as! SearchPeopleTableViewController
