@@ -29,7 +29,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     @IBOutlet weak var addPlaceImageButton: UIImageView!
     @IBOutlet weak var editPlaylistButton: UIBarButtonItem!
-
+    
     @IBOutlet weak var playlistInfoView: UIView!
     @IBOutlet weak var playlistTableView: UITableView!
     
@@ -56,8 +56,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     let offset_HeaderStop:CGFloat = 40.0
     var contentToDisplay: ContentTypes = .Places
     
-    var apiClient = APIDataHandler()
-    
     var collaborators = [PFObject]()
     var playlistArray = [Business]()
     
@@ -67,12 +65,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var object: PFObject!
     var editable: Bool = false
     var sortMethod:String!
-    var addToOwnPlaylists: [PFObject]!
-    var playlist_swiped: String!
     var itemReceived: Array<AnyObject> = []
     var playlist_name: String!
     
-    var comments = [NSDictionary]()
+    var apiClient = APIDataHandler()
     
     // The apps default color
     let defaultAppColor = UIColor(netHex: 0xFFFFFF)
@@ -82,27 +78,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func sendValue(value: AnyObject){
         itemReceived.append(value as! NSObject)
         
-        for item in itemReceived {
-            if item as! NSObject == "Alphabetical" {
+        for item in itemReceived{
+            if item as! NSObject == "Alphabetical"{
                 self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
                 self.playlistTableView.reloadData()
-            }
-            else if item as! NSObject == "Rating" {
+            }else if item as! NSObject == "Rating"{
                 self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
                 self.playlistTableView.reloadData()
-            }
-            else {
-                let index = item as! Int
-                var playlist = addToOwnPlaylists[index]["place_id_list"] as! [String]
-                print(playlist)
-                playlist.append(self.playlist_swiped)
-                print(playlist)
-                addToOwnPlaylists[index]["place_id_list"] = playlist
-                addToOwnPlaylists[index].saveInBackgroundWithBlock({ (success, error) in
-                    if (error == nil) {
-                        print("Saved")
-                    }
-                })
             }
             itemReceived = []
         }
@@ -135,7 +117,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         let actionController = YoutubeActionController()
         let pickerController = CZPickerViewController()
         let randomController = RandomPlaceController()
-
+        
         actionController.addAction(Action(ActionData(title: "Get Random Place", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
             if self.playlistArray.count != 0{
                 self.performSegueWithIdentifier("randomPlace", sender: self)
@@ -161,7 +143,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
         
         presentViewController(actionController, animated: true, completion: nil)
-    
+        
     }
     
     @IBAction func selectContentType(sender: AnyObject) {
@@ -191,9 +173,11 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             }
         }
     }
-
+    
     // MARK: - ViewDidLoad and other View functions
-
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -209,17 +193,17 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.playlistTableView.reloadData()
         
         
-//        // tapRecognizer, placed in viewDidLoad
-//        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPress:")
-//        self.view.addGestureRecognizer(longPressRecognizer)
+        //        // tapRecognizer, placed in viewDidLoad
+        //        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPress:")
+        //        self.view.addGestureRecognizer(longPressRecognizer)
         
-        // Register Nibs 
+        // Register Nibs
         self.playlistTableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
         self.playlistTableView.registerNib(UINib(nibName: "ReviewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "reviewCell")
-
+        
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
-
+        
         self.playlistTableView.backgroundColor = appDefaults.color_bg
         if (self.editable == true) {
             self.activateEditMode()
@@ -237,54 +221,16 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         
         // Get Array of IDs from Parse
-        if let placeIDs = object["place_id_list"] as? [String] {
-            self.placeIDs = placeIDs
-            self.updateBusinessesFromIDs(placeIDs)
-        }
-        if let comments = object["comment"] as? [NSDictionary] {
-            self.comments = comments
-        }
+        let placeIDs = object["place_id_list"] as! [String]
+        self.placeIDs = placeIDs
+        self.updateBusinessesFromIDs(placeIDs)
         
         // Setup HeaderView with information
         self.configureInfo()
+        
         let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "showActionsMenu:")
+        
         navigationItem.rightBarButtonItem = rightButton
-    }
-    
-    func updateBusinessesFromIDs(ids: [String]){
-        for id in ids{
-            apiClient.performDetailedSearch(id, completion: { (detailedGPlace) in
-                self.placeArray.append(detailedGPlace)
-                self.playlistArray.append(detailedGPlace.convertToBusiness())
-                self.playlistTableView.reloadData()
-            })
-        }
-    }
-//    func convertIDsToBusiness(ids: [String], completion: (businessArray: [Business], placeArray: [GooglePlaceDetail]) -> Void){
-//        var businessArray:[Business] = []
-//        var placeArray: [GooglePlaceDetail] = []
-//        
-//        for id in ids{
-//            apiClient.performDetailedSearch(id, completion: { (detailedGPlace) in
-//                //placeArray.append(detailedGPlace)
-//                self.playlistArray.append(detailedGPlace.convertToBusiness())
-//                self.placeIDs.append(id)
-//                //businessArray.append(detailedGPlace.convertToBusiness())
-//            })
-//        }
-//        completion(businessArray: businessArray, placeArray: placeArray)
-//    }
-    
-    func convertBusinessesToIDs(businesses: [Business], completion: (ids: [String]) -> Void) {
-        var ids: [String] = []
-        for business in businesses{
-            ids.append(business.gPlaceID)
-        }
-        completion(ids: ids)
-    }
-
-    func handleTap(img: AnyObject){
-       performSegueWithIdentifier("tapImageButton", sender: self)
         
         configurePlaylistInfoView()
     }
@@ -318,6 +264,31 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         super.viewDidLayoutSubviews()
         updateHeaderView()
     }
+    
+    
+    func updateBusinessesFromIDs(ids: [String]){
+        for id in ids{
+            apiClient.performDetailedSearch(id, completion: { (detailedGPlace) in
+                self.placeArray.append(detailedGPlace)
+                self.playlistArray.append(detailedGPlace.convertToBusiness())
+                self.playlistTableView.reloadData()
+            })
+        }
+    }
+    
+    func convertBusinessesToIDs(businesses: [Business], completion: (ids: [String]) -> Void) {
+        var ids: [String] = []
+        for business in businesses{
+            ids.append(business.gPlaceID)
+        }
+        completion(ids: ids)
+    }
+    
+    func handleTap(img: AnyObject){
+        performSegueWithIdentifier("tapImageButton", sender: self)
+        
+    }
+    
     
     func unwindView(sender: UIBarButtonItem) {
         self.navigationController?.popToRootViewControllerAnimated(true)
@@ -373,9 +344,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                                     UIView.animateWithDuration(0.6){self.addPlaceImageButton.transform = CGAffineTransformIdentity}
         })
         
-    
+        
         self.mode = .Edit
-        self.setEditing(true, animated: true)
         self.navigationItem.setHidesBackButton(true, animated: true)
         let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(SinglePlaylistViewController.savePlaylistToParse(_:)))
         self.navigationItem.leftBarButtonItem = backButton
@@ -384,8 +354,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func deactivateEditMode() {
-        
-        self.setEditing(false, animated: true)
         self.addPlaceImageButton.hidden = true
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
@@ -397,7 +365,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         var businessArray: [Business] = []
         for dict in parseArray{
             var business = Business()
-
+            
             business.businessName = dict["name"] as! String
             business.businessAddress = dict["address"] as! String
             if let photoRef = dict["photoRef"] as? String{
@@ -420,16 +388,16 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         handleNavigationBarOnScroll()
         
         let offset = scrollView.contentOffset.y + playlistInfoView.bounds.height
-
         
-//        if offset > 323{
-//            var segmentTransform = CATransform3DIdentity
-//            segmentTransform = CATransform3DTranslate(segmentTransform, 0, (offset-315), 0)
-//            
-//            segmentedBarView.layer.transform = segmentTransform
-//        }else{
-//            
-//        }
+        
+        //        if offset > 323{
+        //            var segmentTransform = CATransform3DIdentity
+        //            segmentTransform = CATransform3DTranslate(segmentTransform, 0, (offset-315), 0)
+        //
+        //            segmentedBarView.layer.transform = segmentTransform
+        //        }else{
+        //
+        //        }
         
         
     }
@@ -441,6 +409,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func handleNavigationBarOnScroll(){
         
         let showWhenScrollDownAlpha = 1 - (-playlistTableView.contentOffset.y / playlistTableHeaderHeight)
+        print(showWhenScrollDownAlpha)
         //let showWhenScrollUpAlpha = (-playlistTableView.contentOffset.y / playlistTableHeaderHeight)
         
         self.navigationController?.navigationBar.titleTextAttributes = [
@@ -576,16 +545,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         case .Comments:
             return 20
         }
-        
     }
-    
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         // IF SEGMENTED IS ON PLACES
         if self.contentToDisplay == .Places{
             let businessCell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-
+            
             businessCell.delegate = self
             configureSwipeButtons(businessCell, mode: self.mode)
             
@@ -595,8 +562,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 }
             })
             return businessCell
-              
-        // IF SEGMENTED IS ON COMMENTS
+            
+            // IF SEGMENTED IS ON COMMENTS
         }else if self.contentToDisplay == .Comments{
             let reviewCell = tableView.dequeueReusableCellWithIdentifier("reviewCell", forIndexPath: indexPath) as! ReviewTableViewCell
             return reviewCell
@@ -643,43 +610,27 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     // MGSwipeTableCell Delegate Methods
-
+    
     func swipeTableCell(cell: MGSwipeTableCell!, canSwipe direction: MGSwipeDirection) -> Bool {
         return true
     }
     
     func swipeTableCell(cell: MGSwipeTableCell!, tappedButtonAtIndex index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
         let indexPath = playlistTableView.indexPathForCell(cell)
-        self.playlist_swiped = self.placeIDs[(indexPath?.row)!]
-        let business = playlistArray[indexPath!.row] 
+        let business = playlistArray[indexPath!.row]
         let actions = PlaceActions()
         let pickerController = CZPickerViewController()
-        if self.mode == ListMode.View {
+        if self.mode == ListMode.View{
             if index == 0{
-                if direction == MGSwipeDirection.LeftToRight {
+                if direction == MGSwipeDirection.LeftToRight{
                     actions.openInMaps(business)
+                }else if direction == MGSwipeDirection.RightToLeft{
+                    pickerController.fruits = ["Gay","Sexy","Hot"]
+                    pickerController.headerTitle = "Playlists To Add To"
+                    pickerController.showWithMultipleSelections(UIViewController)
+                    pickerController.delegate = self
                 }
-                else if direction == MGSwipeDirection.RightToLeft {
-                    let query = PFQuery(className: "Playlists")
-                    query.whereKey("createdBy", equalTo: PFUser.currentUser()!)
-                    query.findObjectsInBackgroundWithBlock({ (object, error) in
-                        if (error == nil) {
-                            self.addToOwnPlaylists = object!
-                            var user_array = [String]()
-                            dispatch_async(dispatch_get_main_queue(), {
-                               
-                                for playlist in object! {
-                                    user_array.append(playlist["playlistName"] as! String)
-                                }
-                                print(pickerController.fruits)
-                                pickerController.fruits = user_array
-                                pickerController.headerTitle = "Playlists To Add To"
-                                pickerController.showWithMultipleSelections(UIViewController)
-                                pickerController.delegate = self
-                            })
-                        }
-                    })
-                }
+                
             }
         }
         else if self.mode == ListMode.Edit{
@@ -702,12 +653,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 addButton.backgroundColor = UIColor.greenColor()
                 routeButton.backgroundColor = appDefaults.color
                 cell.swipeBackgroundColor = appDefaults.color
-                }
-    
+            }
+            
         }
-    
+        
     }
-
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //print(indexPath.row)
         performSegueWithIdentifier("showBusinessDetail", sender: self)
@@ -719,38 +670,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         return true
     }
     
-    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        if self.mode == .Edit{
-            return true
-        }
-        else{
-            return false
-        }
-    }
-    
-    func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-        var itemToMove = playlistArray[fromIndexPath.row]
-        var idOfItemToMove = placeIDs[fromIndexPath.row]
-        playlistArray.removeAtIndex(fromIndexPath.row)
-        placeIDs.removeAtIndex(fromIndexPath.row)
-        playlistArray.insert(itemToMove, atIndex: toIndexPath.row)
-        placeIDs.insert(idOfItemToMove, atIndex: toIndexPath.row)
-    }
-    
-    func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
-    }
-    
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return .None
-    }
-    
-    
-
-    
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
-        self.playlistTableView.setEditing(editing, animated: animated)
     }
     
     func convertPlacesArrayToDictionary(placesArray: [Business])-> [NSDictionary]{
@@ -761,22 +682,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         return placeDictArray
     }
     
-    // 
-    func saveComments(comment: NSDictionary) {
-        var current_comment = object["comment"] as! [NSDictionary]
-        current_comment.insert(comment, atIndex: 0)
-        object["comment"] = current_comment
-        object.saveInBackgroundWithBlock { (success, error) in
-            if (error == nil) {
-                print("Saved comments")
-            }
-        }
-    }
-    
     func savePlaylistToParse(sender: UIBarButtonItem)
     {
-        
-        self.deactivateEditMode()
         if placeIDs.count > 0{
             let saveobject = object
             if let lat = playlistArray[0].businessLatitude
@@ -821,7 +728,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 upcoming.gPlaceObject = gPlaceObject
                 upcoming.index = index
             }else{
-            // IF NEW PLACES ARE ADDED
+                // IF NEW PLACES ARE ADDED
                 let businessObject = playlistArray[index]
                 upcoming.object = businessObject
                 upcoming.index = index
