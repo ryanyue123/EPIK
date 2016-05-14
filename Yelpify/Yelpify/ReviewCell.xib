@@ -26,7 +26,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pp5-sH-2oq">
                         <rect key="frame" x="0.0" y="0.0" width="400" height="135"/>
                         <subviews>
-                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hxE-b1-NkR" customClass="CosmosView" customModule="Cosmos">
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hxE-b1-NkR" customClass="CosmosView" customModule="Cosmos">
                                 <rect key="frame" x="264" y="30" width="101" height="17"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
@@ -67,7 +67,7 @@
                                     <constraint firstAttribute="height" constant="30" id="zn9-nS-yz1"/>
                                 </constraints>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="This steak tastes like horrible compared to Trump's steak. I will never come back to here again." translatesAutoresizingMaskIntoConstraints="NO" id="qgF-x5-VGX">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" editable="NO" text="This steak tastes like horrible compared to Trump's steak. I will never come back to here again." translatesAutoresizingMaskIntoConstraints="NO" id="qgF-x5-VGX">
                                 <rect key="frame" x="31" y="73" width="339" height="47.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>

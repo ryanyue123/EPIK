@@ -44,19 +44,19 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController {
         let navigationBar = navigationController!.navigationBar
         navigationBar.tintColor = UIColor.whiteColor()
         
-        let leftButton =  UIBarButtonItem(image: UIImage(named: "sort_icon"), style: .Plain, target: self, action: nil)
+        let leftButton =  UIBarButtonItem(image: UIImage(named: "sort_icon"), style: .Plain, target: self, action: "pressedSearchBy:")
         let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")
         
         navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton
-
-//        buttonBarView.selectedBar.backgroundColor = .orangeColor()
-//        buttonBarView.backgroundColor = UIColor(red: 7/255, green: 185/255, blue: 155/255, alpha: 1)
-        
     }
     
     func pressedLocation(sender: UIBarButtonItem){
         performSegueWithIdentifier("pickLocation", sender: self)
+    }
+    
+    func pressedSearchBy(sender: UIBarButtonItem){
+        // Open Now, By Distance
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
