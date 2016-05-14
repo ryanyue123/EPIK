@@ -3304,6 +3304,7 @@
                         <barButtonItem key="rightBarButtonItem" image="more_icon" id="SaF-c3-Mva">
                             <connections>
                                 <action selector="showSettings:" destination="TIl-fd-tes" id="pOR-fZ-Y9c"/>
+                                <segue destination="Bur-WX-iH1" kind="show" identifier="SettingsView" id="CjG-Hn-dkn"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -3311,6 +3312,85 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X8r-gu-aBn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4104" y="1053.75"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="yhs-83-lPA">
+            <objects>
+                <tableViewController storyboardIdentifier="SettingsViewController" title="Settings View Controller" id="Bur-WX-iH1" customClass="SettingsViewController" customModule="Yelpify" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ifc-A6-UxD">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsTableViewCell" id="4pW-W2-hdS" customClass="SettingsTableViewCell" customModule="Yelpify" customModuleProvider="target">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4pW-W2-hdS" id="3tm-Vh-cbH">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zlG-9B-Mpf" colorLabel="IBBuiltInLabel-Yellow">
+                                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                            <accessibility key="accessibilityConfiguration" label="Logout">
+                                                <accessibilityTraits key="traits" button="YES"/>
+                                            </accessibility>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="72" id="6sx-2N-xgu"/>
+                                                <constraint firstAttribute="height" constant="30" id="cc6-2N-K6a"/>
+                                            </constraints>
+                                            <state key="normal" title="Logout">
+                                                <color key="titleColor" red="1" green="0.0028257764269915553" blue="0.036364346411167703" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="6sx-2N-xgu"/>
+                                                    <exclude reference="cc6-2N-K6a"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="6sx-2N-xgu"/>
+                                                    <include reference="cc6-2N-K6a"/>
+                                                </mask>
+                                            </variation>
+                                            <connections>
+                                                <action selector="logoutButton:" destination="Bur-WX-iH1" eventType="touchUpInside" id="tfX-qM-r1s"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="zlG-9B-Mpf" firstAttribute="centerY" secondItem="3tm-Vh-cbH" secondAttribute="centerY" id="4G9-3f-vq7">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="-2"/>
+                                        </constraint>
+                                        <constraint firstItem="zlG-9B-Mpf" firstAttribute="centerX" secondItem="3tm-Vh-cbH" secondAttribute="centerX" id="wiZ-DY-zI5"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="zlG-9B-Mpf"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <exclude reference="4G9-3f-vq7"/>
+                                            <exclude reference="wiZ-DY-zI5"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="heightClass=regular-widthClass=compact">
+                                        <mask key="subviews">
+                                            <include reference="zlG-9B-Mpf"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <include reference="4G9-3f-vq7"/>
+                                            <include reference="wiZ-DY-zI5"/>
+                                        </mask>
+                                    </variation>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Bur-WX-iH1" id="fcw-ak-aqb"/>
+                            <outlet property="delegate" destination="Bur-WX-iH1" id="Ykl-CH-4sk"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0N4-w6-GCY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4917" y="1053.75"/>
         </scene>
         <!--Search-->
         <scene sceneID="Tf1-7N-Rpw">

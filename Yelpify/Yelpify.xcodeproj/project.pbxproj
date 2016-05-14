@@ -88,6 +88,8 @@
 		ED52E64D1CCB2E0300CEBAE2 /* YoutubeActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED52E64A1CCB2E0300CEBAE2 /* YoutubeActionController.swift */; };
 		ED52E64E1CCB2E0300CEBAE2 /* YoutubeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED52E64B1CCB2E0300CEBAE2 /* YoutubeCell.xib */; };
 		ED52E64F1CCB2E0300CEBAE2 /* YoutubeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED52E64C1CCB2E0300CEBAE2 /* YoutubeViewController.swift */; };
+		ED55870E1CE6EA590049CF93 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED55870D1CE6EA590049CF93 /* SettingsViewController.swift */; };
+		ED5587101CE6ED560049CF93 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED55870F1CE6ED560049CF93 /* SettingsTableViewCell.swift */; };
 		ED99B82B1CDC4C1900C7E43F /* PlaceActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED99B82A1CDC4C1900C7E43F /* PlaceActions.swift */; };
 		EDA8CEF51CAF506400A5C2ED /* SortMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA8CEF41CAF506400A5C2ED /* SortMethods.swift */; };
 		EDD44DAD1CB4BA31008DC4AB /* RandomPlaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD44DAC1CB4BA31008DC4AB /* RandomPlaceController.swift */; };
@@ -204,6 +206,8 @@
 		ED52E64B1CCB2E0300CEBAE2 /* YoutubeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YoutubeCell.xib; sourceTree = "<group>"; };
 		ED52E64C1CCB2E0300CEBAE2 /* YoutubeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeViewController.swift; sourceTree = "<group>"; };
 		ED52E6511CCB2E8A00CEBAE2 /* ActionData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionData.swift; sourceTree = "<group>"; };
+		ED55870D1CE6EA590049CF93 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		ED55870F1CE6ED560049CF93 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsTableViewCell.swift; path = Yelpify/SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		ED99B82A1CDC4C1900C7E43F /* PlaceActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceActions.swift; sourceTree = "<group>"; };
 		EDA8CEF41CAF506400A5C2ED /* SortMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortMethods.swift; sourceTree = "<group>"; };
 		EDBAE5BF1C8E472100278A33 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
@@ -242,6 +246,7 @@
 		3CA6CFFB1CC05A880004B989 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				ED55870F1CE6ED560049CF93 /* SettingsTableViewCell.swift */,
 				3CBFD89C1CD4355900290F25 /* SearchPlaylistCell.swift */,
 				3CD814DD1CDD659F00D2BEC6 /* SearchPeopleCell.swift */,
 				9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */,
@@ -334,6 +339,7 @@
 			isa = PBXGroup;
 			children = (
 				90B6D69D1CD49888006928E8 /* SearchPagerTabStripVC.swift */,
+				ED55870D1CE6EA590049CF93 /* SettingsViewController.swift */,
 				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
 				905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */,
 				90E505DE1C8E375200F47285 /* GPlacesSearchViewController.swift */,
@@ -736,6 +742,7 @@
 				90C177DA1CCB5B4A007344CE /* ChildExampleViewController.swift in Sources */,
 				908851961CDEE43700F63A40 /* DataFunctions.swift in Sources */,
 				90C177D41CCB50A6007344CE /* YoutubeExampleViewController.swift in Sources */,
+				ED5587101CE6ED560049CF93 /* SettingsTableViewCell.swift in Sources */,
 				3C7C56451CD479EF009D8B34 /* SignUpViewController.swift in Sources */,
 				EDA8CEF51CAF506400A5C2ED /* SortMethods.swift in Sources */,
 				90DC57B91C72843A001F1891 /* YelpAPIClient.swift in Sources */,
@@ -761,6 +768,7 @@
 				9081EF841CE44A8600E571E2 /* Updatable.swift in Sources */,
 				3C2F1C7B1CD468020081CEFA /* InitialViewController.swift in Sources */,
 				90A9437A1CD2CDE8004ACE78 /* ReviewTableViewCell.swift in Sources */,
+				ED55870E1CE6EA590049CF93 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -625,8 +625,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         let actions = PlaceActions()
         if self.mode == ListMode.View{
             if index == 0{
-                actions.openInMaps(business)
-        }
+                if direction == MGSwipeDirection.LeftToRight{
+                    actions.openInMaps(business)
+                }}
         }
         else if self.mode == ListMode.Edit{
             playlistArray.removeAtIndex(indexPath!.row)
