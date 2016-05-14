@@ -65,7 +65,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var object: PFObject!
     var editable: Bool = false
     var sortMethod:String!
-    
     var itemReceived: String!
     var playlist_name: String!
     
@@ -115,15 +114,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         let randomController = RandomPlaceController()
 
         actionController.addAction(Action(ActionData(title: "Get Random Place", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
-            
-         
-            
-            self.performSegueWithIdentifier("randomPlace", sender: self)
-//            
-//            let randomPlace = randomController.getRandomPlace(self.playlistArray)
-//            print(String(randomPlace.businessName))
-//            randomController.RestaurantName.text = randomPlace.businessName
-//            randomController.RestaurantAddress.text = randomPlace.businessAddress
+            if self.playlistArray.count != 0{
+                self.performSegueWithIdentifier("randomPlace", sender: self)
+            }
             
         }))
         if (editable) {
@@ -222,6 +215,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.placeIDs = placeIDs
         self.updateBusinessesFromIDs(placeIDs)
         
+        // Setup HeaderView with information
+        self.configureInfo()
+        
         // Setup Navigation Bar
         let navigationBar = navigationController!.navigationBar
         navigationBar.tintColor = UIColor.whiteColor()
@@ -262,8 +258,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewWillAppear(animated: Bool) {
         //Configure Functions
-        
-        
         
         ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         self.statusBarView = ConfigureFunctions.configureStatusBar(self.navigationController!)
@@ -309,7 +303,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.playlistInfoIcon.image = UIImage(named: "default_icon")
         self.playlistInfoBG.image = UIImage(named: "default_list_bg")
         
-        self.numOfPlacesLabel.text = String(playlistArray.count)
+        self.numOfPlacesLabel.text = String(self.placeIDs.count)
         let followCount = object["followerCount"]
         if followCount == nil {
             self.numOfFollowersLabel.text = "0"
@@ -343,12 +337,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 })
                 
             }
-            self.configureInfo()
-//            dispatch_async(dispatch_get_main_queue(), {
-//                self.playlistArray = resultArray
-//                self.playlistTableView.reloadData()
-//                self.configureInfo()
-//            })
         }
     }
     
@@ -746,6 +734,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         else if (segue.identifier == "showProfileView") {
             let upcoming = segue.destinationViewController as! ProfileCollectionViewController
             upcoming.user = object["createdBy"] as! PFUser
+        }else if (segue.identifier == "randomPlace") {
+            let upcoming = segue.destinationViewController as! RandomPlaceController
+            upcoming.businessArray = self.playlistArray
         }
     }
 }
