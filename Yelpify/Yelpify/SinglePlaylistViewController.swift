@@ -74,8 +74,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     var playlist_name: String!
     
-    var apiClient = APIDataHandler()
-    
     // The apps default color
     let defaultAppColor = UIColor(netHex: 0xFFFFFF)
     
@@ -162,17 +160,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     @IBAction func unwindToSinglePlaylist(segue: UIStoryboardSegue)
     {
-        if(segue.identifier != nil)
-        {
-            if(segue.identifier == "unwindToPlaylist")
-            {
-                let sourceVC = segue.sourceViewController as! SearchBusinessViewController
-                placeIDs.appendContentsOf(sourceVC.placeIDs)
-                playlistArray.appendContentsOf(sourceVC.businessArray)
-                
-                //placeArray.appendContentsOf(sourceVC.newPlacesArray)
-                
-                self.playlistTableView.reloadData()
+        print(segue.identifier)
+        if(segue.identifier != nil) {
+            if(segue.identifier == "unwindToPlaylist") {
+                if let sourceVC = segue.sourceViewController as? SearchBusinessViewController
+                {
+                    playlistArray.appendContentsOf(sourceVC.businessArray)
+                    self.playlistTableView.reloadData()
+                }
             }
         }
     }
