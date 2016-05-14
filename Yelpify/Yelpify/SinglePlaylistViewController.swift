@@ -109,10 +109,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 
         actionController.addAction(Action(ActionData(title: "Get Random Place", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
             
-//            let randomPlace = randomController.getRandomPlace(self.playlistArray)
-//            print(String(randomPlace.businessName))
-//            randomController.RestaurantName.text = randomPlace.businessName
-//            randomController.RestaurantAddress.text = randomPlace.businessAddress
+            let randomPlace = randomController.getRandomPlace(self.playlistArray)
+            print(String(randomPlace.businessName))
+            randomController.RestaurantName.text = randomPlace.businessName
+            randomController.RestaurantAddress.text = randomPlace.businessAddress
             
         }))
         actionController.addAction(Action(ActionData(title: "Edit Playlist", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
