@@ -65,7 +65,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     var object: PFObject!
     var newPlaylist: Bool = false
-    var sortMethod:String!
+    
+    var itemReceived: String!
+    
+    var itemToSend: String!
     
     var playlist_name: String!
     
@@ -74,9 +77,16 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     var viewDisappearing = false
     
-    func sendValue(value:[Business]) {
-        playlistArray = value
-        self.playlistTableView.reloadData()
+    func sendValue(value: AnyObject){
+        itemReceived = value as! String
+        
+        if value as! String == "Alphabetical"{
+            self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
+            self.playlistTableView.reloadData()
+        }else if self.itemReceived == "Rating"{
+            self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
+            self.playlistTableView.reloadData()
+        }
     }
     
     func sortMethods(businesses: Array<Business>, type: String)->Array<Business>{
@@ -96,6 +106,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         let actionController = YoutubeActionController()
         let pickerController = CZPickerViewController()
 
+
         actionController.addAction(Action(ActionData(title: "Share...", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
             print("Share")
         }))
@@ -105,17 +116,15 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             self.playlistTableView.reloadData()
         }))
         actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "yt-share-icon")!), style: .Cancel, handler: { action in
-            
-            pickerController.delegate = self
-            
-            pickerController.businessArrayToSort = self.playlistArray
+            pickerController.headerTitle = "Sort Options"
+            pickerController.fruits = ["Alphabetical","Rating"]
             pickerController.showWithFooter(UIViewController)
-
+            pickerController.delegate = self
         }))
         actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
         
         presentViewController(actionController, animated: true, completion: nil)
-        
+    
     }
     
     @IBAction func selectContentType(sender: AnyObject) {
@@ -363,11 +372,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     override func viewDidAppear(animated: Bool) {
+        
         configureSegmentedBar()
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         //Configure Functions
+        super.viewWillAppear(animated)
+        UIView.animateWithDuration(0.3,delay: 0.0,options: UIViewAnimationOptions.BeginFromCurrentState,animations: {
+            self.addPlaceImageButton.transform = CGAffineTransformMakeScale(0.5, 0.5)},
+                                   completion: { finish in
+                                    UIView.animateWithDuration(0.6){self.addPlaceImageButton.transform = CGAffineTransformIdentity}
+        })
         
         ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         self.statusBarView = ConfigureFunctions.configureStatusBar(self.navigationController!)
@@ -687,10 +704,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             cell.rightExpansion.threshold = 1
         }else if mode == .Edit{
             cell.rightButtons.removeAll()
-            cell.leftButtons = [MGSwipeButton(title: "Delete",backgroundColor: UIColor.redColor(),padding: 25)]
+            let deleteButton = MGSwipeButton(title: "Delete",icon: UIImage(named: "location_icon"),backgroundColor: UIColor.redColor(),padding: 25)
+            deleteButton.centerIconOverText()
+            cell.leftButtons = [deleteButton]
             cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
             cell.leftExpansion.buttonIndex = 0
-            cell.leftExpansion.fillOnTrigger = false
+            cell.leftExpansion.fillOnTrigger = true
             cell.leftExpansion.threshold = 1
         }
     }
@@ -719,19 +738,21 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func swipeTableCell(cell: MGSwipeTableCell!, didChangeSwipeState state: MGSwipeState, gestureIsActive: Bool) {
-        let routeButton = cell.rightButtons.first as! MGSwipeButton
-        let addButton = cell.rightButtons[1] as! MGSwipeButton
-        if cell.swipeState.rawValue == 2{
-            routeButton.backgroundColor = appDefaults.color
-            addButton.backgroundColor = UIColor.greenColor()
-        }
-        else if cell.swipeState.rawValue >= 4{
-            addButton.backgroundColor = appDefaults.color
-            routeButton.backgroundColor = appDefaults.color
-            cell.swipeBackgroundColor = appDefaults.color
+        if self.mode == .View{
+            let routeButton = cell.rightButtons.first as! MGSwipeButton
+            let addButton = cell.rightButtons[1] as! MGSwipeButton
+            if cell.swipeState.rawValue == 2{
+                routeButton.backgroundColor = appDefaults.color
+                addButton.backgroundColor = UIColor.greenColor()
             }
+            else if cell.swipeState.rawValue >= 4{
+                addButton.backgroundColor = appDefaults.color
+                routeButton.backgroundColor = appDefaults.color
+                cell.swipeBackgroundColor = appDefaults.color
+                }
     
-
+        }
+    
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
