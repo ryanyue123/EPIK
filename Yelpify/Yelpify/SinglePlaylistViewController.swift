@@ -165,7 +165,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             if(segue.identifier == "unwindToPlaylist") {
                 if let sourceVC = segue.sourceViewController as? SearchBusinessViewController
                 {
-                    self.playlistArray.appendContentsOf(sourceVC.playlistArray)
+                    playlistArray.appendContentsOf(sourceVC.playlistArray)
                     self.playlistTableView.reloadData()
                 }
             }
