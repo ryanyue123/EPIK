@@ -89,17 +89,8 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             APIClient.performDetailedSearch(object.gPlaceID!) { (detailedGPlace) in
         
                 // Set Icon
-                let businessList = ["restaurant","food","amusement","bakery","bar","beauty_salon","bowling_alley","cafe","car_rental","car_repair","clothing_store","department_store","grocery_or_supermarket","gym","hospital","liquor_store","lodging","meal_takeaway","movie_theater","night_club","police","shopping_mall"]
+                self.setTypeIcon(self.object.businessTypes)
                 
-                func setIcon(){
-                    if self.object.businessTypes.count != 0 && businessList.contains(String(self.object.businessTypes[0])){
-                        self.typeIconImageView.image = UIImage(named: String(self.object.businessTypes[0]) + "_Icon")!
-                    }else{
-                        self.typeIconImageView.image = UIImage(named: "default_Icon")!
-                    }
-                }
-                
-                setIcon()
                 // Set Name
                 self.nameLabel.text = self.object.businessName
                 
@@ -124,12 +115,15 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
                 
                 // Set Price
                 if let price = detailedGPlace.priceRating{
-                    var priceString = ""
-                    for _ in 0..<price {
-                        priceString += "$"
-                    }
-                    self.priceRatingLabel.text = priceString
+                    self.setPriceRating(price)
                 }
+//                if let price = detailedGPlace.priceRating{
+//                    var priceString = ""
+//                    for _ in 0..<price {
+//                        priceString += "$"
+//                    }
+//                    self.priceRatingLabel.text = priceString
+//                }
                 
                 // Set Hours
                 if detailedGPlace.hours!.count != 0{
@@ -163,11 +157,33 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             }
         }else{
         // IF SEGUEING FROM SINGLEPLAYLISTCONTROLLER
+            // Set Types
+            self.setTypeIcon(gPlaceObject.types)
+            
             // Set Name
             self.nameLabel.text = gPlaceObject.name
+            
+            // Set Rating
             self.cosmosRating.rating = gPlaceObject.rating
+            
+            // Set Price Rating
             self.priceRatingLabel.text = String(gPlaceObject.priceRating)
+            
+            // Set Hours
             self.hoursLabel.text = getHours(gPlaceObject.hours)
+            
+            // Set Background Image
+            if gPlaceObject.photos.count > 0{
+                self.setCoverPhoto(gPlaceObject.photos[0] as! String)
+            }
+            
+            // Set Reviews
+            self.reviewArray = gPlaceObject.reviews
+            self.tableView.reloadData()
+            
+            // Set Price Rating
+            self.setPriceRating(gPlaceObject.priceRating)
+            
         }
     
     
@@ -225,7 +241,31 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         return result
     }
     
-    // MARK: - Scroll View 
+    func setPriceRating(price: Int){
+        var result = ""
+        if price != -1{
+            for _ in 0..<price{
+                result += "$"
+            }
+            self.priceRatingLabel.text = result
+        }else{
+            self.priceRatingLabel.text = ""
+        }
+    }
+    
+    func setTypeIcon(businessTypes: NSArray){
+        // Set Icon
+        let businessList = ["restaurant","food","amusement","bakery","bar","beauty_salon","bowling_alley","cafe","car_rental","car_repair","clothing_store","department_store","grocery_or_supermarket","gym","hospital","liquor_store","lodging","meal_takeaway","movie_theater","night_club","police","shopping_mall"]
+        
+        if businessTypes.count != 0 && businessList.contains(String(businessTypes[0])){
+            self.typeIconImageView.image = UIImage(named: String(businessTypes[0]) + "_Icon")!
+        }else{
+            self.typeIconImageView.image = UIImage(named: "default_Icon")!
+        }
+
+    }
+    
+    // MARK: - Scroll View
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         self.fadeBG()

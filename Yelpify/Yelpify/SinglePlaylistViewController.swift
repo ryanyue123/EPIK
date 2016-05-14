@@ -183,9 +183,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.playlistTableView.reloadData()
         
         
-        // tapRecognizer, placed in viewDidLoad
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPress:")
-        self.view.addGestureRecognizer(longPressRecognizer)
+//        // tapRecognizer, placed in viewDidLoad
+//        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPress:")
+//        self.view.addGestureRecognizer(longPressRecognizer)
         
         // Register Nibs 
         self.playlistTableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
@@ -194,7 +194,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
 
-        self.playlistTableView.backgroundColor = appDefaults.color
+        self.playlistTableView.backgroundColor = appDefaults.color_bg
         if (self.editable == true) {
             self.activateEditMode()
         }
