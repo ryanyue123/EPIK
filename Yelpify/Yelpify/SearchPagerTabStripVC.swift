@@ -49,10 +49,6 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController {
         
         navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton
-
-//        buttonBarView.selectedBar.backgroundColor = .orangeColor()
-//        buttonBarView.backgroundColor = UIColor(red: 7/255, green: 185/255, blue: 155/255, alpha: 1)
-        
     }
     
     func pressedLocation(sender: UIBarButtonItem){
