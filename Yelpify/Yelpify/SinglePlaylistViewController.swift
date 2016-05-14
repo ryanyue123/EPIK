@@ -85,10 +85,18 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         for item in itemReceived{
             if item as! NSObject == "Alphabetical"{
                 self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
-                self.playlistTableView.reloadData()
+                getIDsFromArrayOfBusiness(self.playlistArray, completion: { (result) in
+                    self.placeIDs = result
+                    self.placeArray = self.sortGooglePlaces(self.placeArray, type: "name")
+                    print("sorting")
+                    self.playlistTableView.reloadData()
+                })
             }else if item as! NSObject == "Rating"{
-                self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
-                self.playlistTableView.reloadData()
+                getIDsFromArrayOfBusiness(self.playlistArray, completion: { (result) in
+                    self.placeArray = self.sortGooglePlaces(self.placeArray, type: "rating")
+                    self.playlistTableView.reloadData()
+                })
+                
             }
             else {
                 let index = item as! Int
@@ -109,7 +117,15 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
     }
     
-    func sortMethods(businesses: Array<Business>, type: String)->Array<Business>{
+    func getIDsFromArrayOfBusiness(business: [Business], completion: (result:[String])->Void){
+        var result:[String] = []
+        for b in business{
+            result.append(b.gPlaceID)
+        }
+        completion(result: result)
+    }
+    
+    func sortMethods(businesses: Array<Business>, type: String)->[Business]{
         var sortedBusinesses: Array<Business> = []
         if type == "name"{
             sortedBusinesses = businesses.sort{$0.businessName < $1.businessName}
@@ -117,8 +133,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             sortedBusinesses = businesses.sort{$0.businessRating > $1.businessRating}
         }
         return sortedBusinesses
-        
     }
+    
+    func sortGooglePlaces(gPlaces: [GooglePlaceDetail],type:String) -> [GooglePlaceDetail]{
+        var sortedBusinesses: Array<GooglePlaceDetail> = []
+        if type == "name"{
+            sortedBusinesses = gPlaces.sort{$0.name < $1.name}
+        } else if type == "rating"{
+            sortedBusinesses = gPlaces.sort{$0.rating > $1.rating}
+        }
+        return sortedBusinesses
+
+    }
+    
     func makeCollaborative() {
         let searchVC = self.storyboard?.instantiateViewControllerWithIdentifier("searchpeople")
         let searchPeopleVC = searchVC?.childViewControllers[0] as! SearchPeopleTableViewController
@@ -359,16 +386,20 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                                     UIView.animateWithDuration(0.6){self.addPlaceImageButton.transform = CGAffineTransformIdentity}
         })
         
-        
+        self.setEditing(true, animated: true)
+        self.addPlaceButton.hidden = true
+        self.addPlaceButton.enabled = false
         self.mode = .Edit
         self.navigationItem.setHidesBackButton(true, animated: true)
         let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(SinglePlaylistViewController.savePlaylistToParse(_:)))
         self.navigationItem.leftBarButtonItem = backButton
-        self.addPlaceButton.hidden = false
-        self.addPlaceButton.enabled = true
+        self.addPlaceButton.hidden = true
+        self.addPlaceButton.enabled = false
     }
     
     func deactivateEditMode() {
+        self.addPlaceButton.hidden = true
+        self.setEditing(false, animated: true)
         self.addPlaceImageButton.hidden = true
         self.addPlaceButton.hidden = true
         self.addPlaceButton.enabled = false
@@ -544,6 +575,32 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+    
+    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if self.mode == .Edit{
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+        var itemToMove = playlistArray[fromIndexPath.row]
+        var idOfItemToMove = placeIDs[fromIndexPath.row]
+        playlistArray.removeAtIndex(fromIndexPath.row)
+        placeIDs.removeAtIndex(fromIndexPath.row)
+        playlistArray.insert(itemToMove, atIndex: toIndexPath.row)
+        placeIDs.insert(idOfItemToMove, atIndex: toIndexPath.row)
+    }
+    
+    func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+            return false
+    }
+
+    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+            return .None
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         // IF SEGMENTED IS ON PLACES
@@ -683,6 +740,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
+        self.playlistTableView.setEditing(editing, animated: animated)
     }
     
     func convertPlacesArrayToDictionary(placesArray: [Business])-> [NSDictionary]{

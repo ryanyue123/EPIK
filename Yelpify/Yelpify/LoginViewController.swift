@@ -31,6 +31,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.usernameField.delegate = self
         self.passwordField.delegate = self
         
+        
+        
         // Add Login Button - CHANGE
         
 //        view.addSubview(loginButton)
@@ -148,6 +150,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         if (!username.isEmpty && !password.isEmpty)
         {
+            
             print("hello")
             
             PFUser.logInWithUsernameInBackground(username, password: password, block: { (user, error) in
@@ -158,11 +161,27 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         print("success")
                         self.performSegueWithIdentifier("loginSuccessSegue", sender: self)
                     }
+                    else if (user == nil){
+                        self.AnimationShakeTextField(self.usernameField)
+                        self.AnimationShakeTextField(self.passwordField)
+                    }
                 }
             })
         }
+                else{
+                    AnimationShakeTextField(usernameField)
+                    AnimationShakeTextField(passwordField)
+        }
     }
-    
+    func AnimationShakeTextField(textField:UITextField){
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.07
+        animation.repeatCount = 4
+        animation.autoreverses = true
+        animation.fromValue = NSValue(CGPoint: CGPointMake(textField.center.x - 5, textField.center.y))
+        animation.toValue = NSValue(CGPoint: CGPointMake(textField.center.x + 5, textField.center.y))
+        textField.layer.addAnimation(animation, forKey: "position")
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

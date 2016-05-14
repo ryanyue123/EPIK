@@ -149,6 +149,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
                 self.tableView.reloadData()
             }
         }else{
+            print(gPlaceObject)
         // IF SEGUEING FROM SINGLEPLAYLISTCONTROLLER
             // Set Types
             self.setTypeIcon(gPlaceObject.types)
