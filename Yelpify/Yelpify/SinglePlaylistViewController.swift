@@ -68,6 +68,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var itemReceived: Array<AnyObject> = []
     var playlist_name: String!
     
+    var addToOwnPlaylists: [PFObject]!
+    var playlist_swiped: String!
+    var comments = [NSDictionary]()
+    
     var apiClient = APIDataHandler()
     
     // The apps default color
@@ -85,6 +89,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             }else if item as! NSObject == "Rating"{
                 self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
                 self.playlistTableView.reloadData()
+            }
+            else {
+                let index = item as! Int
+                var playlist = addToOwnPlaylists[index]["place_id_list"] as! [String]
+                print(playlist)
+                playlist.append(self.playlist_swiped)
+                print(playlist)
+                addToOwnPlaylists[index]["place_id_list"] = playlist
+                addToOwnPlaylists[index].saveInBackgroundWithBlock({ (success, error) in
+                    if (error == nil) {
+                        print("Saved")
+                    }
+                })
             }
             itemReceived = []
         }
@@ -599,6 +616,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func swipeTableCell(cell: MGSwipeTableCell!, tappedButtonAtIndex index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
         let indexPath = playlistTableView.indexPathForCell(cell)
+        self.playlist_swiped = self.placeIDs[(indexPath?.row)!]
         let business = playlistArray[indexPath!.row]
         let actions = PlaceActions()
         let pickerController = CZPickerViewController()
@@ -607,10 +625,23 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 if direction == MGSwipeDirection.LeftToRight{
                     actions.openInMaps(business)
                 }else if direction == MGSwipeDirection.RightToLeft{
-                    pickerController.fruits = ["Gay","Sexy","Hot"]
-                    pickerController.headerTitle = "Playlists To Add To"
-                    pickerController.showWithMultipleSelections(UIViewController)
-                    pickerController.delegate = self
+                    let query = PFQuery(className: "Playlists")
+                    query.whereKey("createdBy", equalTo: PFUser.currentUser()!)
+                    query.findObjectsInBackgroundWithBlock({ (object, error) in
+                        if (error == nil) {
+                            self.addToOwnPlaylists = object!
+                            var user_array = [String]()
+                            dispatch_async(dispatch_get_main_queue(), {
+                                for playlist in object! {
+                                    user_array.append(playlist["playlistName"] as! String)
+                                }
+                                pickerController.fruits = user_array
+                                pickerController.headerTitle = "Playlists To Add To"
+                                pickerController.showWithMultipleSelections(UIViewController)
+                                pickerController.delegate = self
+                            })
+                        }
+                    })
                 }
                 
             }
@@ -681,6 +712,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func savePlaylistToParse(sender: UIBarButtonItem)
     {
+        self.deactivateEditMode()
         if placeIDs.count > 0{
             let saveobject = object
             if let lat = playlistArray[0].businessLatitude
