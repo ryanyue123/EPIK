@@ -65,7 +65,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var object: PFObject!
     var editable: Bool = false
     var sortMethod:String!
-    var itemReceived: String!
+    var itemReceived: Array<AnyObject> = []
     var playlist_name: String!
     
     var apiClient = APIDataHandler()
@@ -76,15 +76,20 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var viewDisappearing = false
     
     func sendValue(value: AnyObject){
-        itemReceived = value as! String
+        itemReceived.append(value as! NSObject)
         
-        if value as! String == "Alphabetical"{
-            self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
-            self.playlistTableView.reloadData()
-        }else if itemReceived == "Rating"{
-            self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
-            self.playlistTableView.reloadData()
+        for item in itemReceived{
+            if item as! NSObject == "Alphabetical"{
+                self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
+                self.playlistTableView.reloadData()
+            }else if item as! NSObject == "Rating"{
+                self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
+                self.playlistTableView.reloadData()
+            }
+            itemReceived = []
         }
+        
+        
     }
     
     func sortMethods(businesses: Array<Business>, type: String)->Array<Business>{
@@ -173,6 +178,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+        self.statusBarView = ConfigureFunctions.configureStatusBar(self.navigationController!)
+        
         self.addPlaceImageButton.hidden = true
         let tap = UITapGestureRecognizer(target: self, action: "handleTap:")
         self.addPlaceImageButton.userInteractionEnabled = true
@@ -217,14 +226,43 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         // Setup HeaderView with information
         self.configureInfo()
         
-        // Setup Navigation Bar
-        let navigationBar = navigationController!.navigationBar
-        navigationBar.tintColor = UIColor.whiteColor()
-        
         let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "showActionsMenu:")
         
         navigationItem.rightBarButtonItem = rightButton
+        
+        configurePlaylistInfoView()
     }
+    
+    
+    override func viewDidAppear(animated: Bool){
+        configureSegmentedBar()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        handleNavigationBarOnScroll()
+        
+        if (object == nil) {
+            playlist_name = playlist.playlistname
+        }
+        else {
+            playlist_name = object["playlistName"] as! String
+        }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.viewDisappearing = true
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        updateHeaderView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateHeaderView()
+    }
+
     
     func updateBusinessesFromIDs(ids: [String]){
         for id in ids{
@@ -249,46 +287,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
     }
     
-    override func viewDidAppear(animated: Bool){
-        
-        configureSegmentedBar()
-        
-            }
-    
-    override func viewWillAppear(animated: Bool) {
-        //Configure Functions
-        
-        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
-        self.statusBarView = ConfigureFunctions.configureStatusBar(self.navigationController!)
-        
-        playlistInfoView.frame.size.height = 350.0
-        playlistTableHeaderHeight = playlistInfoView.frame.size.height
-        configurePlaylistInfoView()
-        
-        if (object == nil) {
-            playlist_name = playlist.playlistname
-        }
-        else {
-            playlist_name = object["playlistName"] as! String
-        }
-        configurePlaylistInfoView()
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        print("viewWillDisappear")
-        self.viewDisappearing = true
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        updateHeaderView()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        updateHeaderView()
-    }
-
     
     func unwindView(sender: UIBarButtonItem) {
         self.navigationController?.popToRootViewControllerAnimated(true)
@@ -299,7 +297,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         let user = object["createdBy"] as! PFUser
         self.playlistInfoUser.titleLabel?.text = "BY " + user.username!.uppercaseString
         
-        self.playlistInfoIcon.image = UIImage(named: "default_icon")
+        self.playlistInfoIcon.image = UIImage(named: "default_Icon")
         self.playlistInfoBG.image = UIImage(named: "default_list_bg")
         
         self.numOfPlacesLabel.text = String(self.placeIDs.count)
@@ -556,7 +554,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        
         // IF SEGMENTED IS ON PLACES
         if self.contentToDisplay == .Places{
             let businessCell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
@@ -726,13 +723,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.deactivateEditMode()
         if placeIDs.count > 0{
             let saveobject = object
-//            if let lat = playlistArray[0].businessLatitude
-//            {
-//                if let long = playlistArray[0].businessLongitude
-//                {
-//                    saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
-//                }
-//            }
+            if let lat = playlistArray[0].businessLatitude
+            {
+                if let long = playlistArray[0].businessLongitude
+                {
+                    saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
+                }
+            }
             //saveobject["track"] = convertPlacesArrayToDictionary(playlistArray)
             
             // Saves Businesses to Parse as [String] Ids
