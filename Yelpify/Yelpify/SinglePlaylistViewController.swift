@@ -343,28 +343,25 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func configureRecentlyViewed() {
-        self.convertParseArrayToBusinessArray(object["track"] as! [NSDictionary]) { (resultArray) in
-            
-            let viewedlist: NSMutableArray = []
-            let recentlyviewed = PFUser.query()!
-            recentlyviewed.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
-            recentlyviewed.findObjectsInBackgroundWithBlock {(objects1: [PFObject]?, error: NSError?) -> Void in
-                let recent = objects1![0]
-                if let recentarray = recent["recentlyViewed"] as? [String]
-                {
-                    viewedlist.addObjectsFromArray(recentarray)
-                }
-                viewedlist.insertObject(self.object.objectId!, atIndex: 0)
-                
-                recent["recentlyViewed"] = viewedlist
-                recent.saveInBackgroundWithBlock({ (success, error) in
-                    if (error == nil)
-                    {
-                        print("Success")
-                    }
-                })
-                
+        let viewedlist: NSMutableArray = []
+        let recentlyviewed = PFUser.query()!
+        recentlyviewed.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
+        recentlyviewed.findObjectsInBackgroundWithBlock {(objects1: [PFObject]?, error: NSError?) -> Void in
+            let recent = objects1![0]
+            if let recentarray = recent["recentlyViewed"] as? [String]
+            {
+                viewedlist.addObjectsFromArray(recentarray)
             }
+            viewedlist.insertObject(self.object.objectId!, atIndex: 0)
+            
+            recent["recentlyViewed"] = viewedlist
+            recent.saveInBackgroundWithBlock({ (success, error) in
+                if (error == nil)
+                {
+                    print("Success")
+                }
+            })
+            
         }
     }
     
@@ -779,7 +776,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func savePlaylistToParse(sender: UIBarButtonItem)
     {
-        deactivateEditMode()
+        
+        self.deactivateEditMode()
         if placeIDs.count > 0{
             let saveobject = object
             if let lat = playlistArray[0].businessLatitude
