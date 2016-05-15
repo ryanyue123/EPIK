@@ -375,7 +375,7 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
             if (error == nil)
             {
                 dispatch_async(dispatch_get_main_queue(), {
-                    cell.creatorName.text = object!["username"] as! String
+                    cell.creatorName.text = object!["username"] as? String
                 })
             }
         }
@@ -394,6 +394,9 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
                     cell.playlistImage.image = image
                 }
             })
+        }
+        else {
+           cell.playlistImage.image = UIImage(named: "default_list_bg")
         }
         //cell.listIcon.image = UIImage(named: "cafe_icon") // CHANGE
         //cell.playlistImage.image = UIImage()
