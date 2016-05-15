@@ -12,6 +12,7 @@ import XLActionController
 import MGSwipeTableCell
 import BetterSegmentedControl
 import CZPicker
+import Async
 
 enum ContentTypes {
     case Places, Comments
@@ -21,7 +22,7 @@ enum ListMode{
     case View, Edit
 }
 
-class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate, MGSwipeTableCellDelegate, ModalViewControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate, UITextFieldDelegate{
+class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate, MGSwipeTableCellDelegate, ModalViewControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate, UITextFieldDelegate, Dimmable{
     
     //@IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
     
@@ -290,6 +291,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.playlistTableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
         self.playlistTableView.registerNib(UINib(nibName: "ReviewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "reviewCell")
         
+        
         self.playlistTableView.backgroundColor = appDefaults.color_bg
         if (self.editable == true) {
             self.activateEditMode()
@@ -411,13 +413,26 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+    // MARK: - Set Up Header View With Info
     func configureInfo() {
         self.playlistInfoName.text = object["playlistName"] as? String
         let user = object["createdBy"] as! PFUser
         self.playlistInfoUser.titleLabel?.text = "BY " + user.username!.uppercaseString
         
         self.playlistInfoIcon.image = UIImage(named: "default_Icon")
-        self.playlistInfoBG.image = UIImage(named: "default_list_bg")
+        
+        // Set BG if custom BG exists in Parse
+        if let bg = object["custom_bg"] as? PFFile{
+            bg.getDataInBackgroundWithBlock({ (data, error) in
+                if error == nil{
+                    let image = UIImage(data: data!)
+                    self.playlistInfoBG.image = image
+                    self.playlistInfoBG.clipsToBounds = true
+                }
+            })
+        }else{
+            self.playlistInfoBG.image = UIImage(named: "default_list_bg")
+        }
         
         self.numOfPlacesLabel.text = String(self.placeIDs.count)
         
@@ -915,30 +930,48 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func savePlaylistToParse(sender: UIBarButtonItem)
     {
         self.deactivateEditMode()
-        if placeIDs.count > 0{
-            let saveobject = object
-            
-            // Save Location of First Object
-            if let lat = playlistArray[0].businessLatitude
-            {
-                if let long = playlistArray[0].businessLongitude
-                {
-                    saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
-                }
+        
+        let saveobject = object
+        
+        Async.utility{
+            // Save Background Image
+            if self.customImage != nil{
+                let imageData: NSData! = UIImageJPEGRepresentation(self.customImage, 1.0)
+                
+                let fileName = self.playlistInfoName.text
+                
+                let imageFile: PFFile! = PFFile(name: fileName, data: imageData)
+                do{ try imageFile.save() }catch{}
+                
+                saveobject["custom_bg"] = imageFile
             }
             
             // Saves List Name
-            saveobject["playlistName"] = playlistInfoName.text
+            saveobject["playlistName"] = self.playlistInfoName.text
             
-            // Saves Average Price
-            let averagePrice = getAveragePrice({ (avg) in
-                saveobject["average_price"] = avg
-            })
-            
-            
-            // Saves Businesses to Parse as [String] Ids
-            saveobject["place_id_list"] = placeIDs
-            
+            if self.placeIDs.count > 0{
+                
+                // Save Location of First Object
+                if let lat = self.playlistArray[0].businessLatitude
+                {
+                    if let long = self.playlistArray[0].businessLongitude
+                    {
+                        saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
+                    }
+                }
+                
+                
+                // Saves Average Price
+                let averagePrice = self.getAveragePrice({ (avg) in
+                    saveobject["average_price"] = avg
+                })
+                
+                
+                // Saves Businesses to Parse as [String] Ids
+                saveobject["place_id_list"] = self.placeIDs
+            }
+        
+        }.background{
             saveobject.saveInBackgroundWithBlock { (success, error)  -> Void in
                 if (error == nil){
                     print("saved")
@@ -948,6 +981,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 }
             }
         }
+
         
         self.navigationItem.setHidesBackButton(false, animated: true)
         self.navigationItem.leftBarButtonItem = nil
