@@ -217,7 +217,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                                 object["place_id_list"] = []
                                 object["Collaborators"] = []
                                 object["comment"] = []
-                                object["average_price"] = -1
+                                object["average_price"] = 0
                                 object["num_places"] = 0
                                 object.saveInBackgroundWithBlock({ (success, error) in
                                     if(error == nil)
@@ -269,14 +269,16 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                     query2.findObjectsInBackgroundWithBlock {(user: [PFObject]?, error: NSError?) -> Void in
                         if ((error) == nil)
                         {
+                            self.label_array.append("My playlists")
                             dispatch_async(dispatch_get_main_queue(), {
-                                if (user!.count != 0)
-                                {
+                                if (user!.count != 0) {
                                     self.playlists_user = user!
                                     self.all_playlists.append(self.playlists_user)
                                     self.tableView.reloadData()
                                 }
-                                self.label_array.append("My playlists")
+                                else {
+                                    self.all_playlists.append([])
+                                }
                                 let query3 = PFUser.query()!
                                 query3.whereKeyExists("username")
                                 query3.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
@@ -335,6 +337,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! TableViewCell
         cell.reloadCollectionView()
+        print(label_array)
         cell.titleLabel.text = label_array[indexPath.row] 
         cell.titleLabel.textColor = appDefaults.color
         cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -375,7 +378,7 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
             if (error == nil)
             {
                 dispatch_async(dispatch_get_main_queue(), {
-                    cell.creatorName.text = object!["username"] as! String
+                    cell.creatorName.text = object!["username"] as? String
                 })
             }
         }
@@ -395,6 +398,14 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
                 }
             })
         }
+        else {
+           cell.playlistImage.image = UIImage(named: "default_list_bg")
+        }
+        var avg_price = ""
+        for _ in 0..<(cellobject["average_price"] as! Int) {
+            avg_price += "$"
+        }
+        cell.avgPrice.text = avg_price
         //cell.listIcon.image = UIImage(named: "cafe_icon") // CHANGE
         //cell.playlistImage.image = UIImage()
         

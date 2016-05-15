@@ -568,25 +568,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add_button" translatesAutoresizingMaskIntoConstraints="NO" id="aHp-YR-q7e">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="A87-w7-54J"/>
-                                    <constraint firstAttribute="height" constant="50" id="AVU-0V-Q6q"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="A87-w7-54J"/>
-                                        <exclude reference="AVU-0V-Q6q"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="A87-w7-54J"/>
-                                        <include reference="AVU-0V-Q6q"/>
-                                    </mask>
-                                </variation>
-                            </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" rowHeight="112" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="n6r-Ge-7w9">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" red="0.89411764709999997" green="0.89411764709999997" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -1157,6 +1138,25 @@
                                     <outlet property="delegate" destination="7Om-1w-JrL" id="042-vq-gNq"/>
                                 </connections>
                             </tableView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add_button" translatesAutoresizingMaskIntoConstraints="NO" id="aHp-YR-q7e">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="A87-w7-54J"/>
+                                    <constraint firstAttribute="height" constant="50" id="AVU-0V-Q6q"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="A87-w7-54J"/>
+                                        <exclude reference="AVU-0V-Q6q"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="A87-w7-54J"/>
+                                        <include reference="AVU-0V-Q6q"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -1184,8 +1184,8 @@
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="aHp-YR-q7e"/>
                                 <exclude reference="n6r-Ge-7w9"/>
+                                <exclude reference="aHp-YR-q7e"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="KQe-uk-iJy"/>
@@ -1210,8 +1210,8 @@
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
-                                <include reference="aHp-YR-q7e"/>
                                 <include reference="n6r-Ge-7w9"/>
+                                <include reference="aHp-YR-q7e"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="KQe-uk-iJy"/>
@@ -1253,6 +1253,7 @@
                         <segue destination="TIl-fd-tes" kind="show" identifier="showProfileView" id="W5i-Qt-2dL"/>
                         <segue destination="4gw-Mw-ac6" kind="show" identifier="randomPlace" id="6Rj-zl-Sku"/>
                         <segue destination="CMO-Id-Swo" kind="presentation" identifier="addComment" modalPresentationStyle="overCurrentContext" id="bGl-bQ-LOL"/>
+                        <segue destination="UL9-SW-wCG" kind="show" identifier="tapImageButton" id="3CI-Y7-kbr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bt3-DI-9NP" userLabel="First Responder" sceneMemberID="firstResponder"/>
