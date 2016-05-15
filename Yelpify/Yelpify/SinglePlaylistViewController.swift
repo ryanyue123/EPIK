@@ -52,9 +52,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var averagePriceRating: UILabel!
     
     @IBOutlet weak var followListButton: UIButton!
-    
-    @IBOutlet weak var addPlaceButton: UIButton!
-    
+        
     @IBOutlet weak var segmentedBarView: UIView!
     
     var mode: ListMode! = .View
@@ -468,8 +466,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         self.setEditing(false, animated: true)
         self.addPlaceImageButton.hidden = true
-        self.addPlaceButton.hidden = true
-        self.addPlaceButton.enabled = false
+
         self.mode = .View
     }
     // MARK: - Reload Data After Pass
