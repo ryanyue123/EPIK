@@ -62,12 +62,14 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
                     self.googleParameters["location"] = searchVC.chosenCoordinates
                     
                     self.searchWithKeyword(searchQuery)
+                    self.tableView.reloadData()
                     
                     // CHANGE
                 }else{
                     self.googleParameters["location"] = gPlacesVC.currentLocationCoordinates
                     self.currentCity = gPlacesVC.currentCity
                     self.searchWithKeyword(searchQuery)
+                    self.tableView.reloadData()
                 
                 }
             }
@@ -214,6 +216,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             let index = button.tag
             placeIDs.append(businessObjects[index].gPlaceID)
             businessArray.append(businessObjects[index])
+            print(businessArray)
+            
         }
         
     }
@@ -256,14 +260,22 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             self.placeIDs.removeAll()
         }
         
-//        // Configure Functions
-//        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
-//        ConfigureFunctions.configureStatusBar(self.navigationController!)
-//        
+        // Configure Functions
+        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+        ConfigureFunctions.configureStatusBar(self.navigationController!)
         
+        let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")
+    
+        navigationItem.rightBarButtonItem = rightButton
+
         // Register Nibs
         self.tableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
     }
+    
+    func pressedLocation(sender: UIBarButtonItem){
+        performSegueWithIdentifier("pickLocation", sender: self)
+    }
+    
     
     func configureCustomSearchController() {
         customSearchController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, self.tableView.frame.size.width, 50.0), searchBarFont: UIFont(name: "Futura", size: 16.0)!, searchBarTextColor: UIColor.orangeColor(), searchBarTintColor: UIColor.blackColor())

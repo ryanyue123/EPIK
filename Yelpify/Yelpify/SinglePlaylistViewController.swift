@@ -305,13 +305,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             self.view.reloadInputViews()
             configureRecentlyViewed()
         }
-        
-        
-        
-        // Get Array of IDs from Parse
-        let placeIDs = object["place_id_list"] as! [String]
-        self.placeIDs = placeIDs
-        self.updateBusinessesFromIDs(placeIDs)
+    
+        Async.userInitiated{
+            // Get Array of IDs from Parse
+            let placeIDs = self.object["place_id_list"] as! [String]
+            self.placeIDs = placeIDs
+            self.updateBusinessesFromIDs(placeIDs)
+        }
         
         // Setup HeaderView with information
         self.configureInfo()
@@ -362,6 +362,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 self.placeArray.append(detailedGPlace)
                 self.playlistArray.append(detailedGPlace.convertToBusiness())
                 self.playlistTableView.reloadData()
+                print(self.placeArray.count, self.playlistArray.count, self.placeIDs.count)
             })
         }
     }
@@ -886,8 +887,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //print(indexPath.row)
+        print(indexPath.row)
+        print(playlistArray.count, placeIDs.count, placeArray.count)
         performSegueWithIdentifier("showBusinessDetail", sender: self)
+        
     }
     
     // Override to support conditional editing of the table view.
@@ -997,6 +1000,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
             
             let index = playlistTableView.indexPathForSelectedRow!.row
+            print(index)
             
             // IF NO NEW PLACE IS ADDED
             if placeArray[index].name != ""{
