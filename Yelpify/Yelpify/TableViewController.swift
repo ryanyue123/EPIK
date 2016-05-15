@@ -218,6 +218,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                                 object["Collaborators"] = []
                                 object["comment"] = []
                                 object["average_price"] = -1
+                                object["num_places"] = 0
                                 object.saveInBackgroundWithBlock({ (success, error) in
                                     if(error == nil)
                                     {
@@ -384,6 +385,15 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         }
         else {
             cell.followerCount.text = String(followCount)
+        }
+        cell.numOfPlaces.text = String(cellobject["num_places"] as! Int)
+        if let icon = cellobject["custom_bg"] as? PFFile{
+            icon.getDataInBackgroundWithBlock({ (data, error) in
+                if error == nil{
+                    let image = UIImage(data: data!)
+                    cell.playlistImage.image = image
+                }
+            })
         }
         //cell.listIcon.image = UIImage(named: "cafe_icon") // CHANGE
         //cell.playlistImage.image = UIImage()

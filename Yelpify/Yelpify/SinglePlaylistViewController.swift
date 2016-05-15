@@ -66,7 +66,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var averagePriceRating: UILabel!
     
     @IBOutlet weak var followListButton: UIButton!
-        
+    
     @IBOutlet weak var segmentedBarView: UIView!
     
     var customImage: UIImage! = nil
@@ -496,6 +496,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         // Set Editing to True
         self.setEditing(true, animated: true)
+        
+        // Set Edit Mode
         self.mode = .Edit
         
         // Replace Back Button with Done
@@ -521,11 +523,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.navigationItem.setHidesBackButton(false, animated: true)
         self.navigationItem.leftBarButtonItem = nil
         
+        // Set Editing to False
         self.setEditing(false, animated: true)
         
         // Hide Add Place Button
         self.addPlaceImageButton.hidden = true
-
+        
+        // Change to View Mode
         self.mode = .View
     }
     
