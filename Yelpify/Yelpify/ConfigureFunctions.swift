@@ -42,6 +42,9 @@ struct ConfigureFunctions {
         
         navController.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
         navController.navigationBar.backgroundColor = appDefaults.color
+        navController.navigationBar.titleTextAttributes = [
+            NSFontAttributeName: UIFont(name: "Montserrat-Regular", size: 12)!,
+            NSForegroundColorAttributeName: UIColor.whiteColor()     ]
         
         return addShadowToBar()
     }
@@ -53,5 +56,4 @@ struct ConfigureFunctions {
 //        navController.navigationBar.alpha = 1
 //        navController.navigationItem.titleView?.alpha = 1
     }
-
 }

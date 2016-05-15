@@ -35,12 +35,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().titleTextAttributes = [
             NSFontAttributeName: UIFont(name: "Montserrat-Regular", size: 16)!,
             NSForegroundColorAttributeName: UIColor.whiteColor()     ]
-        
+    
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         
+        UIBarButtonItem.appearance().setTitleTextAttributes([
+            NSFontAttributeName: UIFont(name: "Montserrat-Regular", size: 14)!,
+            NSForegroundColorAttributeName: UIColor.whiteColor()   ], forState: UIControlState.Normal)
         
+    
         // UITabBar Configuration
 //        UITabBar.appearance().translucent = false
 //        //UITabBar.appearance().tintColor = appDefaults.color

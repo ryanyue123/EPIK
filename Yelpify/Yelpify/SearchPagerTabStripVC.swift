@@ -44,8 +44,11 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
         super.viewDidLoad()
         
         // Setup Navigation Bar
-        let navigationBar = navigationController!.navigationBar
-        navigationBar.tintColor = UIColor.whiteColor()
+        //let navigationBar = navigationController!.navigationBar
+        
+        // Configure Functions
+        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+        ConfigureFunctions.configureStatusBar(self.navigationController!)
         
         let leftButton =  UIBarButtonItem(image: UIImage(named: "sort_icon"), style: .Plain, target: self, action: "pressedSearchBy:")
         let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")

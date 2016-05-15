@@ -317,7 +317,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.configureInfo()
         
         let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "showActionsMenu:")
-        
         navigationItem.rightBarButtonItem = rightButton
         
         configurePlaylistInfoView()

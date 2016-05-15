@@ -256,15 +256,13 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             self.placeIDs.removeAll()
         }
         
-        // Configure Functions
-        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
-        ConfigureFunctions.configureStatusBar(self.navigationController!)
+//        // Configure Functions
+//        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+//        ConfigureFunctions.configureStatusBar(self.navigationController!)
+//        
         
         // Register Nibs
         self.tableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
-    }
-    
-    override func viewWillAppear(animated: Bool) {
     }
     
     func configureCustomSearchController() {
