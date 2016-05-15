@@ -960,6 +960,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                     }
                 }
                 
+                // Saves Number of Places
+                saveobject["num_places"] = self.placeIDs.count
+                
                 
                 // Saves Average Price
                 let averagePrice = self.getAveragePrice({ (avg) in
