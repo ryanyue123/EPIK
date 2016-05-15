@@ -12,6 +12,7 @@ import XLActionController
 import MGSwipeTableCell
 import BetterSegmentedControl
 import CZPicker
+import Async
 
 enum ContentTypes {
     case Places, Comments
@@ -21,9 +22,7 @@ enum ListMode{
     case View, Edit
 }
 
-
-
-class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate, MGSwipeTableCellDelegate, ModalViewControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate, Dimmable{
+class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate, MGSwipeTableCellDelegate, ModalViewControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate, UITextFieldDelegate, Dimmable{
     
     //@IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
     
@@ -35,15 +34,30 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     @IBOutlet weak var playlistInfoBG: UIImageView!
     
+    
+    let imagePicker = UIImagePickerController()
+    
     @IBAction func loadImageButton(sender: AnyObject) {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .PhotoLibrary
         
+        // Configure Status Bar
+        let statusBarRect = CGRect(x: 0, y: 0, width: imagePicker.navigationBar.frame.size.width, height: 20.0)
+        let statusBarView = UIView(frame: statusBarRect)
+        statusBarView.backgroundColor = appDefaults.color
+        imagePicker.view.addSubview(statusBarView)
+        
+        // Configure Navigation Bar
+        imagePicker.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Top, barMetrics: .Default)
+        imagePicker.navigationBar.backgroundColor = appDefaults.color
+        
         presentViewController(imagePicker, animated: true, completion: nil)
     }
-    let imagePicker = UIImagePickerController()
+    
+    @IBOutlet weak var changePlaylistImageButton: UIButton!
+    
     @IBOutlet weak var playlistInfoIcon: UIImageView!
-    @IBOutlet weak var playlistInfoName: UILabel!
+    @IBOutlet weak var playlistInfoName: UITextField!
     @IBOutlet weak var playlistInfoUser: UIButton!
     @IBOutlet weak var collaboratorsView: UIView!
     @IBOutlet weak var creatorImageView: UIImageView!
@@ -54,6 +68,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var followListButton: UIButton!
         
     @IBOutlet weak var segmentedBarView: UIView!
+    
+    var customImage: UIImage! = nil
     
     var mode: ListMode! = .View
     
@@ -90,10 +106,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             playlistInfoBG.contentMode = .ScaleAspectFill
             playlistInfoBG.clipsToBounds = true
             playlistInfoBG.image = pickedImage
+            self.customImage = pickedImage
         }
         
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
@@ -395,13 +413,26 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+    // MARK: - Set Up Header View With Info
     func configureInfo() {
         self.playlistInfoName.text = object["playlistName"] as? String
         let user = object["createdBy"] as! PFUser
         self.playlistInfoUser.titleLabel?.text = "BY " + user.username!.uppercaseString
         
         self.playlistInfoIcon.image = UIImage(named: "default_Icon")
-        self.playlistInfoBG.image = UIImage(named: "default_list_bg")
+        
+        // Set BG if custom BG exists in Parse
+        if let bg = object["custom_bg"] as? PFFile{
+            bg.getDataInBackgroundWithBlock({ (data, error) in
+                if error == nil{
+                    let image = UIImage(data: data!)
+                    self.playlistInfoBG.image = image
+                    self.playlistInfoBG.clipsToBounds = true
+                }
+            })
+        }else{
+            self.playlistInfoBG.image = UIImage(named: "default_list_bg")
+        }
         
         self.numOfPlacesLabel.text = String(self.placeIDs.count)
         
@@ -441,34 +472,70 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+    
+    // MARK: Activate and Deactivate Edit Modes
     func activateEditMode() {
-        self.addPlaceImageButton.hidden = false
+        
+        // Make Title Text Editable
+        self.playlistInfoName.userInteractionEnabled = true
+        self.playlistInfoName.delegate = self
+        
+        // Show Change BG Image Button
+        self.changePlaylistImageButton.hidden = false
+    
+        // Replace More Button With Cancel Button
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "deactivateEditMode")
+        
+        // Animate and Show Add Place Button
+        self.addPlaceImageButton.hidden = false
         UIView.animateWithDuration(0.3,delay: 0.0,options: UIViewAnimationOptions.BeginFromCurrentState,animations: {
             self.addPlaceImageButton.transform = CGAffineTransformMakeScale(0.5, 0.5)},
                                    completion: { finish in
                                     UIView.animateWithDuration(0.6){self.addPlaceImageButton.transform = CGAffineTransformIdentity}
         })
         
+        // Set Editing to True
         self.setEditing(true, animated: true)
         self.mode = .Edit
+        
+        // Replace Back Button with Done
         self.navigationItem.setHidesBackButton(true, animated: true)
         let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(SinglePlaylistViewController.savePlaylistToParse(_:)))
         self.navigationItem.leftBarButtonItem = backButton
     }
     
     func deactivateEditMode() {
+        
+        // Make Title Text Editable
+        self.playlistInfoName.userInteractionEnabled = false
+        self.playlistInfoName.delegate = nil
+        
+        // Hide Change BG Image Button
+        self.changePlaylistImageButton.hidden = true
+        
+        // Restore More Icon to Right Side of Nav Bar
         let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "showActionsMenu:")
         navigationItem.rightBarButtonItem = rightButton
         
+        // Restore Back Button
         self.navigationItem.setHidesBackButton(false, animated: true)
         self.navigationItem.leftBarButtonItem = nil
         
         self.setEditing(false, animated: true)
+        
+        // Hide Add Place Button
         self.addPlaceImageButton.hidden = true
 
         self.mode = .View
     }
+    
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        return true
+    }
+    
     // MARK: - Reload Data After Pass
     
     func convertParseArrayToBusinessArray(parseArray: [NSDictionary], completion: (resultArray: [Business])->Void){
@@ -855,28 +922,52 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+    // MARK: - SAVE PLAYLIST
     func savePlaylistToParse(sender: UIBarButtonItem)
     {
         self.deactivateEditMode()
-        if placeIDs.count > 0{
-            let saveobject = object
-            if let lat = playlistArray[0].businessLatitude
-            {
-                if let long = playlistArray[0].businessLongitude
-                {
-                    saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
-                }
+        
+        let saveobject = object
+        
+        Async.utility{
+            // Save Background Image
+            if self.customImage != nil{
+                let imageData: NSData! = UIImageJPEGRepresentation(self.customImage, 1.0)
+                
+                let fileName = self.playlistInfoName.text
+                
+                let imageFile: PFFile! = PFFile(name: fileName, data: imageData)
+                do{ try imageFile.save() }catch{}
+                
+                saveobject["custom_bg"] = imageFile
             }
             
-            // Saves Average Price
-            let averagePrice = getAveragePrice({ (avg) in
-                saveobject["average_price"] = avg
-            })
+            // Saves List Name
+            saveobject["playlistName"] = self.playlistInfoName.text
             
-            
-            // Saves Businesses to Parse as [String] Ids
-            saveobject["place_id_list"] = placeIDs
-            
+            if self.placeIDs.count > 0{
+                
+                // Save Location of First Object
+                if let lat = self.playlistArray[0].businessLatitude
+                {
+                    if let long = self.playlistArray[0].businessLongitude
+                    {
+                        saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
+                    }
+                }
+                
+                
+                // Saves Average Price
+                let averagePrice = self.getAveragePrice({ (avg) in
+                    saveobject["average_price"] = avg
+                })
+                
+                
+                // Saves Businesses to Parse as [String] Ids
+                saveobject["place_id_list"] = self.placeIDs
+            }
+        
+        }.background{
             saveobject.saveInBackgroundWithBlock { (success, error)  -> Void in
                 if (error == nil){
                     print("saved")
@@ -886,6 +977,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 }
             }
         }
+
         
         self.navigationItem.setHidesBackButton(false, animated: true)
         self.navigationItem.leftBarButtonItem = nil
