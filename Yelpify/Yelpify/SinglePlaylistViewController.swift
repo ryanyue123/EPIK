@@ -528,7 +528,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         // Hide Add Place Button
         self.addPlaceImageButton.hidden = true
-        
         // Change to View Mode
         self.mode = .View
     }
