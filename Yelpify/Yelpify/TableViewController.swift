@@ -389,7 +389,10 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         else {
             cell.followerCount.text = String(followCount)
         }
-        cell.numOfPlaces.text = String(cellobject["num_places"] as! Int)
+        
+        if let numPlaces = cellobject["num_places"] as? Int{
+            cell.numOfPlaces.text = String(numPlaces)
+        }
         if let icon = cellobject["custom_bg"] as? PFFile{
             icon.getDataInBackgroundWithBlock({ (data, error) in
                 if error == nil{
@@ -401,11 +404,13 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         else {
            cell.playlistImage.image = UIImage(named: "default_list_bg")
         }
-        var avg_price = ""
-        for _ in 0..<(cellobject["average_price"] as! Int) {
-            avg_price += "$"
+        if let avgPrice = cellobject["average_price"] as? Int{
+            var avg_price = ""
+            for _ in 0..<(avgPrice) {
+                avg_price += "$"
+            }
+            cell.avgPrice.text = avg_price
         }
-        cell.avgPrice.text = avg_price
         //cell.listIcon.image = UIImage(named: "cafe_icon") // CHANGE
         //cell.playlistImage.image = UIImage()
         

@@ -164,7 +164,11 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             self.priceRatingLabel.text = String(gPlaceObject.priceRating)
             
             // Set Hours
-            self.hoursLabel.text = getHours(gPlaceObject.hours)
+            if gPlaceObject.hours.count == 7{
+                self.hoursLabel.text = getHours(gPlaceObject.hours)
+            }else{
+                self.hoursLabel.text = "No Hours Availible"
+            }
             
             // Set Background Image
             if gPlaceObject.photos.count > 0{
@@ -187,6 +191,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         let dayDict = [0: "Sunday", 1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday"]
         
         let hoursArr = hoursArray
+        print(hoursArr)
         hoursArr.insertObject(hoursArr[6], atIndex: 0)
         hoursArr.removeLastObject()
         
