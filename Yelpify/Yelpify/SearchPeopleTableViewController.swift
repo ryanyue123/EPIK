@@ -26,6 +26,7 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.allowsSelection = true
         ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         
     }
@@ -37,8 +38,7 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
         }
         searchTextField.delegate = self
     }
-    func queryParseForPeople()
-    {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
         let query = PFUser.query()!
         query.whereKey("search_name", containsString: self.searchTextField.text!.uppercaseString)
         query.findObjectsInBackgroundWithBlock { (objects, error) in
@@ -46,14 +46,11 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
             {
                 dispatch_async(dispatch_get_main_queue(), {
                     self.user_list = objects!
+                    textField.resignFirstResponder()
                     self.tableView.reloadData()
                 })
             }
         }
-    }
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        queryParseForPeople()
-        textField.resignFirstResponder()
         return true
     }
 
@@ -99,6 +96,7 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
             let controller = storyboard!.instantiateViewControllerWithIdentifier("profileVC") as! ProfileCollectionViewController
             controller.user = self.user_list[indexPath.row] as! PFUser
             self.navigationController!.pushViewController(controller, animated: true)
+            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
     }
 }
