@@ -80,7 +80,7 @@ class BusinessTableViewCell: MGSwipeTableCell {
                 businessOpenLabel.text = "Closed"
             }
         }else{
-            businessOpenLabel.text = ""
+            businessOpenLabel.text = "No Hours Availible"
         }
         
         // Set Background Image

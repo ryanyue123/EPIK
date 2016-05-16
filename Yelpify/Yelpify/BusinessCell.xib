@@ -97,7 +97,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="restaurant_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="PFR-j6-cgi">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="restaurant_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="PFR-j6-cgi">
                                 <rect key="frame" x="30" y="30" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="KS0-hH-Poa"/>
@@ -135,7 +135,9 @@
                             <constraint firstItem="qPl-BP-Rgz" firstAttribute="leading" secondItem="U1O-y0-Y8S" secondAttribute="trailing" constant="14" id="eUh-53-Csh"/>
                             <constraint firstItem="qPl-BP-Rgz" firstAttribute="top" secondItem="roP-Ec-1in" secondAttribute="bottom" constant="0.5" id="jEx-4f-TLH"/>
                             <constraint firstAttribute="bottom" secondItem="U1O-y0-Y8S" secondAttribute="bottom" id="rtD-j3-bUm"/>
+                            <constraint firstItem="PFR-j6-cgi" firstAttribute="centerY" secondItem="6tb-VY-uEj" secondAttribute="centerY" id="tWX-nf-EUz"/>
                             <constraint firstAttribute="bottom" secondItem="6tb-VY-uEj" secondAttribute="bottom" id="vxL-9x-vl4"/>
+                            <constraint firstItem="PFR-j6-cgi" firstAttribute="centerX" secondItem="6tb-VY-uEj" secondAttribute="centerX" id="wzj-3B-wKL"/>
                         </constraints>
                     </view>
                 </subviews>

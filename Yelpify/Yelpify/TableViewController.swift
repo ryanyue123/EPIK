@@ -374,15 +374,29 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         
         let cellobject = all_playlists[collectionView.tag][indexPath.row] as! PFObject
         
-        
         // CONFIGURE CELL
+        //cell.alpha = 0
+        
+        Async.main{
+            self.configureCell(cell, cellobject: cellobject) {
+    //            UIView.animateWithDuration(1.0, animations: {
+    //                cell.alpha = 1
+    //            })
+            }
+        }
+        
+        return cell
+    }
+    
+    
+    func configureCell(cell: ListCollectionViewCell, cellobject: PFObject, completion: () -> Void){
         cell.listName.text = cellobject["playlistName"] as? String
         let createdByUser = cellobject["createdBy"] as! PFUser
         createdByUser.fetchIfNeededInBackgroundWithBlock { (object, error) in
             if (error == nil)
             {
                 dispatch_async(dispatch_get_main_queue(), {
-                    cell.creatorName.text = object!["username"] as? String
+                    cell.creatorName.text = "BY " + (object!["username"]?.uppercaseString)!
                 })
             }
         }
@@ -406,22 +420,28 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
             })
         }
         else {
-           cell.playlistImage.image = UIImage(named: "default_list_bg")
+            cell.playlistImage.image = UIImage(named: "default_list_bg")
         }
         if let avgPrice = cellobject["average_price"] as? Int{
             var avg_price = ""
             for _ in 0..<(avgPrice) {
                 avg_price += "$"
             }
-            cell.avgPrice.text = avg_price
+            if avg_price != ""{
+                cell.avgPrice.text = avg_price
+            }else{
+                let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: "-$-")
+                attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length))
+                cell.avgPrice.attributedText = attributeString
+            }
+        }else{
+            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: "-$-")
+            attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length))
+            cell.avgPrice.attributedText = attributeString
         }
-        //cell.listIcon.image = UIImage(named: "cafe_icon") // CHANGE
-        //cell.playlistImage.image = UIImage()
-        
-    
-        //takes image of first business and uses it as icon for playlist
-        return cell
+        completion()
     }
+    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         self.row = collectionView.tag
         self.col = indexPath.row

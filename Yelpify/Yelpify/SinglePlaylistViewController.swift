@@ -96,6 +96,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     var apiClient = APIDataHandler()
     
+    var loadedSegmented = false
+    
     // The apps default color
     let defaultAppColor = UIColor(netHex: 0xFFFFFF)
     
@@ -266,6 +268,18 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+    @IBAction func unwindToSinglePlaylistWithComment(segue: UIStoryboardSegue){
+        dim(.Out, alpha: dimLevel, speed: dimSpeed)
+            if (segue.identifier == "withComment"){
+            let sourceVC = segue.sourceViewController as? AddCommentViewController
+            if sourceVC?.comment_content.text != ""{
+                print(sourceVC?.comment_content.text)
+                // ADD COMMENT TO PARSE AND RELOAD DATA HERE CHANGE
+            }
+        }
+        
+    }
+    
     // MARK: - ViewDidLoad and other View functions
 
     override func viewDidLoad() {
@@ -307,30 +321,35 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             self.view.reloadInputViews()
             configureRecentlyViewed()
         }
+        
     
-        Async.userInitiated{
-            // Get Array of IDs from Parse
+        Async.main{
             let placeIDs = self.object["place_id_list"] as! [String]
             self.placeIDs = placeIDs
-            self.updateBusinessesFromIDs(placeIDs)
+            // Setup HeaderView with information
+            self.configureInfo()
+        }.main{
+            // Get Array of IDs from Parse
+            self.updateBusinessesFromIDs(self.placeIDs)
         }
-        
-        // Setup HeaderView with information
-        self.configureInfo()
         
         let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "showActionsMenu:")
         navigationItem.rightBarButtonItem = rightButton
+        
     }
     let dimLevel: CGFloat = 0.8
     let dimSpeed: Double = 0.5
     
     override func viewDidAppear(animated: Bool){
-        self.configureSegmentedBar()
+        handleNavigationBarOnScroll()
+        if self.loadedSegmented == false{
+            self.configureSegmentedBar()
+            self.loadedSegmented = true
+        }
         //self.performSegueWithIdentifier("addComment", sender: self)
     }
     
     override func viewWillAppear(animated: Bool) {
-        handleNavigationBarOnScroll()
         
         if (object == nil) {
             playlist_name = playlist.playlistname
@@ -354,14 +373,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         updateHeaderView()
     }
     
-    func updateBusinessesFromIDs(ids:[String], startIndex: Int = 0){
-        if ids.count > 0 && startIndex < ids.count{
-            apiClient.performDetailedSearch(ids[startIndex]) { (detailedGPlace) in
+    func updateBusinessesFromIDs(ids:[String]){
+        if ids.count > 0{
+            apiClient.performDetailedSearch(ids[0]) { (detailedGPlace) in
                 self.placeArray.append(detailedGPlace)
                 self.playlistArray.append(detailedGPlace.convertToBusiness())
                 let idsSlice = Array(ids[1..<ids.count])
-                let newIndex = startIndex + 1
-                self.updateBusinessesFromIDs(idsSlice, startIndex: newIndex)
+                self.updateBusinessesFromIDs(idsSlice)
             }
         }else{
             self.playlistTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
@@ -402,27 +420,29 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func setPriceRating(price: Int){
         var result = ""
-        if price != -1{
+        if price != -1 && price != 0{
             for _ in 0..<price{
                 result += "$"
             }
             self.averagePriceRating.text = result
         }else{
-            self.averagePriceRating.text = ""
+            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: "-$-")
+            attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length))
+            self.averagePriceRating.attributedText = attributeString
         }
     }
     
     func getAveragePrice(completion:(avg: Int) -> Void){
-        var averageRating = 0
-        var numOfPlaces = 0
+        var total = 0.0
+        var numOfPlaces = 0.0
         for place in self.placeArray{
             if place.priceRating != -1{
-                averageRating += place.priceRating
+                total += Double(place.priceRating)
                 numOfPlaces += 1
             }
         }
         if numOfPlaces > 0{
-            completion(avg: averageRating/numOfPlaces)
+            completion(avg: Int(round(total/numOfPlaces)))
         }else{
             completion(avg: -1)
         }
@@ -733,14 +753,27 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     
     func switchContentType(){
-        if self.contentToDisplay == .Places{
+        switch self.contentToDisplay{
+        case .Places:
             self.contentToDisplay = .Comments
             self.playlistTableView.allowsSelection = false
             self.playlistTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
-        }else{
+            
+            self.addPlaceImageButton.hidden = false
+            //self.fadeInImageView(self.addPlaceImageButton, imageToAdd: UIImage(named: "add_icon")!, duration: 0.2, beginScale: 0.5)
+            
+//            UIView.animateWithDuration(0.2, animations: {
+//                self.addPlaceImageButton.transform = CGAffineTransformMakeScale(0.5, 0.5)},
+//                                       completion: { finish in
+//                UIView.animateWithDuration(0.6){self.addPlaceImageButton.transform = CGAffineTransformIdentity}
+//            })
+
+        case .Comments:
             self.contentToDisplay = .Places
             self.playlistTableView.allowsSelection = true
             self.playlistTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+            self.addPlaceImageButton.hidden = true
+
         }
     }
     
@@ -820,10 +853,15 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
         var itemToMove = playlistArray[fromIndexPath.row]
+        var placeItemToMove = placeArray[fromIndexPath.row]
         var idOfItemToMove = placeIDs[fromIndexPath.row]
+        
         playlistArray.removeAtIndex(fromIndexPath.row)
+        placeArray.removeAtIndex(fromIndexPath.row)
         placeIDs.removeAtIndex(fromIndexPath.row)
+        
         playlistArray.insert(itemToMove, atIndex: toIndexPath.row)
+        placeArray.insert(placeItemToMove, atIndex: toIndexPath.row)
         placeIDs.insert(idOfItemToMove, atIndex: toIndexPath.row)
     }
     
@@ -987,8 +1025,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
-        print(playlistArray.count, placeIDs.count, placeArray.count)
         performSegueWithIdentifier("showBusinessDetail", sender: self)
         
     }
@@ -1034,7 +1070,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         let saveobject = object
         
-        Async.utility{
+        Async.main{
             // Save Background Image
             if self.customImage != nil{
                 let imageData: NSData! = UIImageJPEGRepresentation(self.customImage, 1.0)
@@ -1075,7 +1111,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 saveobject["place_id_list"] = self.placeIDs
             }
         
-        }.background{
+        }.userInitiated{
             saveobject.saveInBackgroundWithBlock { (success, error)  -> Void in
                 if (error == nil){
                     print("saved")

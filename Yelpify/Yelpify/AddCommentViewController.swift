@@ -13,29 +13,34 @@ class AddCommentViewController: UIViewController {
     @IBOutlet var popUpView: UIView!
     
     @IBOutlet weak var comment_content: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //roundCorners(popUpView)
+        //roundCorners(comment_content)
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+    }
+    
+    func roundCorners(view: UIView){
+        // Round the banner's corners
+        let maskPath: UIBezierPath = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: ([.TopLeft, .TopRight, .BottomLeft, .BottomRight]), cornerRadii: CGSizeMake(20, 20))
+        let maskLayer: CAShapeLayer = CAShapeLayer()
+        maskLayer.frame = view.layer.bounds
+        maskLayer.path = maskPath.CGPath
+        view.layer.mask = maskLayer
+        
+        // Round cell corners
+        view.layer.cornerRadius = 20
+        // Add shadow
+        view.layer.masksToBounds = false
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    @IBAction func cancelComment(sender: UIButton) {
-        self.comment_content.text = ""
-    }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

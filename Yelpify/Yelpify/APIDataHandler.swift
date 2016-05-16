@@ -108,7 +108,6 @@ class APIDataHandler {
                         DetailedObject.priceRating = placePrice
                     }
                     
-                    
                     if let rating = place["rating"]?.double{
                         DetailedObject.rating = rating
                     }
