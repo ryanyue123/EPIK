@@ -51,10 +51,24 @@ class BusinessTableViewCell: MGSwipeTableCell {
         let businessList = ["restaurant","food","amusement","bakery","bar","beauty_salon","bowling_alley","cafe","car_rental","car_repair","clothing_store","department_store","grocery_or_supermarket","gym","hospital","liquor_store","lodging","meal_takeaway","movie_theater","night_club","police","shopping_mall"]
         
         if business.businessTypes.count != 0 && businessList.contains(String(business.businessTypes[0])){
-            categoryIcon.image = UIImage(named: String(business.businessTypes[0]) + "_Icon")!
+            //categoryIcon.image = UIImage(named: String(business.businessTypes[0]) + "_Icon")!
+            if String(business.businessTypes[0]) != "restaurant"{
+                categoryIcon.transform = CGAffineTransformMakeScale(1.6, 1.6)
+            }
+            let origImage = UIImage(named: String(business.businessTypes[0]) + "_Icon")!
+            let tintedImage = origImage.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+            categoryIcon.image = tintedImage
+            categoryIcon.tintColor = appDefaults.color_darker
+            
         }else{
-            categoryIcon.image = UIImage(named: "default_Icon")!
+            categoryIcon.transform = CGAffineTransformMakeScale(1.6, 1.6)
+            let origImage = UIImage(named: "default_Icon")!
+            let tintedImage = origImage.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+            categoryIcon.image = tintedImage
+            categoryIcon.tintColor = appDefaults.color_darker
+            //categoryIcon.image = UIImage(named: "default_Icon")!
         }
+        
         // Set Name
         businessTitleLabel.text = business.businessName
         
@@ -84,7 +98,6 @@ class BusinessTableViewCell: MGSwipeTableCell {
         }
         
         // Set Background Image
-        
         func buildPlacePhotoURLString(photoReference: String) -> String{
             let photoParameters = [
                 "key" : "AIzaSyDkxzICx5QqztP8ARvq9z0DxNOF_1Em8Qc",
@@ -107,24 +120,7 @@ class BusinessTableViewCell: MGSwipeTableCell {
         else{
             businessBackgroundImage.image =  UIImage(named: "default_restaurant")
                 
-            }
-        
-//        self.businessBackgroundImage.image = UIImage(named:"default_restaurant")
-//        
-//        if let photoReference = business.businessPhotoReference{
-//            googlePlacesClient.getImageFromPhotoReference(photoReference) { (key) -> Void in
-//                
-//                self.cache.fetch(key: key).onSuccess { image in
-//                    self.businessBackgroundImage.hnk_setImage(image, key: photoReference)
-//                    self.businessBackgroundImage.setNeedsDisplay()
-//                    self.businessBackgroundImage.setNeedsLayout()
-//                    
-//                    completion()
-//                    
-//                }
-//            }
-//
-//        }
+        }
     }
     
     func configureButton(image: UIImage){
@@ -133,6 +129,10 @@ class BusinessTableViewCell: MGSwipeTableCell {
             //self.actionButton.setImage(tintedImage, forState: .Normal)
             self.actionButton.tintColor = appDefaults.color_darker
         }
+    }
+    
+    func changeImageViewColor(imageView: UIImageView, color: UIColor) {
+        
     }
     
     @IBAction func actionButtonPressed(sender: AnyObject) {

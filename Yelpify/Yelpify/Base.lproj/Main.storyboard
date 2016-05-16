@@ -46,9 +46,9 @@
             <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
+            <string>Montserrat-Regular</string>
         </mutableArray>
         <mutableArray key="Montserrat-SemiBold.otf">
-            <string>Montserrat-SemiBold</string>
             <string>Montserrat-SemiBold</string>
             <string>Montserrat-SemiBold</string>
             <string>Montserrat-SemiBold</string>
@@ -625,9 +625,6 @@
                                             <variation key="widthClass=compact" misplaced="YES">
                                                 <rect key="frame" x="194.5" y="105" width="212" height="29"/>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="101" y="137" width="197" height="28"/>
-                                            </variation>
                                             <connections>
                                                 <action selector="showProfileView:" destination="7Om-1w-JrL" eventType="touchUpInside" id="I9f-Cb-v9W"/>
                                             </connections>
@@ -852,7 +849,7 @@
                                                 <constraint firstAttribute="width" constant="50" id="Bmk-R3-a0T"/>
                                                 <constraint firstAttribute="height" constant="50" id="rn3-5Q-q2v"/>
                                             </constraints>
-                                            <state key="normal" image="cafe_Icon"/>
+                                            <state key="normal" image="photo_picker_icon"/>
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="Bmk-R3-a0T"/>
@@ -872,7 +869,7 @@
                                         <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Explore Irvine" textAlignment="center" minimumFontSize="31" translatesAutoresizingMaskIntoConstraints="NO" id="ccQ-YC-BmB">
                                             <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="32"/>
+                                            <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="32"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                                 <rect key="frame" x="101" y="101" width="198" height="38"/>
@@ -4097,7 +4094,6 @@
         <image name="Favorite Icon" width="500" height="500"/>
         <image name="add_button" width="83" height="83"/>
         <image name="bucket" width="48" height="32"/>
-        <image name="cafe_Icon" width="128" height="128"/>
         <image name="checkMark" width="24" height="24"/>
         <image name="default_Icon" width="128" height="128"/>
         <image name="default_list_bg" width="1280" height="762"/>
@@ -4109,6 +4105,7 @@
         <image name="login_bg" width="2063" height="1373"/>
         <image name="login_button" width="545" height="88"/>
         <image name="more_icon" width="33" height="33"/>
+        <image name="photo_picker_icon" width="120" height="120"/>
         <image name="restaurantImage - InNOut" width="1702" height="900"/>
         <image name="restaurant_Icon" width="300" height="300"/>
         <image name="search_icon" width="44" height="42"/>

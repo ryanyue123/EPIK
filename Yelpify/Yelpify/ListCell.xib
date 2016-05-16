@@ -38,12 +38,21 @@
                                             <constraint firstAttribute="height" constant="130" id="wrl-2Y-CS0"/>
                                         </constraints>
                                     </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Favorite Icon" translatesAutoresizingMaskIntoConstraints="NO" id="eJh-R0-Uci">
+                                        <rect key="frame" x="71" y="46" width="38" height="38"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="38" id="E1h-9i-CtR"/>
+                                            <constraint firstAttribute="width" constant="38" id="O3j-hd-yzy"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="tvr-fv-rIy" firstAttribute="leading" secondItem="9u1-Gy-DEi" secondAttribute="leading" id="7uh-bV-xpM"/>
+                                    <constraint firstItem="eJh-R0-Uci" firstAttribute="centerX" secondItem="tvr-fv-rIy" secondAttribute="centerX" id="9Jc-JT-fhp"/>
                                     <constraint firstAttribute="trailing" secondItem="tvr-fv-rIy" secondAttribute="trailing" id="I7a-ZE-H5X"/>
                                     <constraint firstItem="tvr-fv-rIy" firstAttribute="top" secondItem="9u1-Gy-DEi" secondAttribute="top" id="MTg-Ts-Co6"/>
+                                    <constraint firstItem="eJh-R0-Uci" firstAttribute="centerY" secondItem="tvr-fv-rIy" secondAttribute="centerY" id="TqI-4t-WSN"/>
                                     <constraint firstAttribute="width" constant="180" id="aVf-ti-fyb"/>
                                 </constraints>
                             </view>
@@ -55,9 +64,6 @@
                                     <constraint firstAttribute="width" constant="145" id="tq4-2G-3Ex"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="eJh-R0-Uci">
-                                <rect key="frame" x="65" y="37.5" width="50" height="50"/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="drC-wP-lqP">
                                 <rect key="frame" x="97" y="177" width="7" height="12"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="10"/>
@@ -156,7 +162,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="default_Icon" width="128" height="128"/>
+        <image name="Favorite Icon" width="500" height="500"/>
         <image name="default_list_bg" width="1280" height="762"/>
         <image name="location_icon_small" width="7" height="11"/>
         <image name="star_icon" width="12" height="12"/>

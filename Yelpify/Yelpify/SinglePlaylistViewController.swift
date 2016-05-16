@@ -330,6 +330,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             self.configureInfo()
         }.main{
             // Get Array of IDs from Parse
+            for _ in 0..<self.placeIDs.count{
+                self.placeArray.append(GooglePlaceDetail())
+                self.playlistArray.append(Business())
+            }
+            self.playlistTableView.reloadData()
+        }.main{
             self.updateBusinessesFromIDs(self.placeIDs)
         }
         
@@ -373,16 +379,22 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         updateHeaderView()
     }
     
-    func updateBusinessesFromIDs(ids:[String]){
+    func updateBusinessesFromIDs(ids:[String], reloadIndex: Int = 0){
         if ids.count > 0{
             apiClient.performDetailedSearch(ids[0]) { (detailedGPlace) in
-                self.placeArray.append(detailedGPlace)
-                self.playlistArray.append(detailedGPlace.convertToBusiness())
+                self.placeArray[reloadIndex] = detailedGPlace
+                self.playlistArray[reloadIndex] = detailedGPlace.convertToBusiness()
+                
+                // self.placeArray.append(detailedGPlace)
+                // self.playlistArray.append(detailedGPlace.convertToBusiness())
                 let idsSlice = Array(ids[1..<ids.count])
-                self.updateBusinessesFromIDs(idsSlice)
+                let index = NSIndexPath(forRow: reloadIndex, inSection: 0)
+                self.playlistTableView.reloadRowsAtIndexPaths([index], withRowAnimation: .Fade)
+                let newIndex = reloadIndex + 1
+                self.updateBusinessesFromIDs(idsSlice, reloadIndex: newIndex)
             }
         }else{
-            self.playlistTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+            //self.playlistTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
         }
     }
     
