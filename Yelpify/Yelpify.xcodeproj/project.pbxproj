@@ -31,6 +31,8 @@
 		905F879D1CD99E3C004046CD /* ProfileCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905F879C1CD99E3C004046CD /* ProfileCollectionViewController.swift */; };
 		905F879F1CD9A453004046CD /* ProfileHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 905F879E1CD9A453004046CD /* ProfileHeader.xib */; };
 		905F87A11CD9D536004046CD /* ProfileHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905F87A01CD9D536004046CD /* ProfileHeaderCollectionReusableView.swift */; };
+		906059C91CE9482200071D19 /* ZoomSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906059C81CE9482200071D19 /* ZoomSegue.swift */; };
+		906059CC1CE95B7A00071D19 /* InfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 906059CB1CE95B7A00071D19 /* InfoCell.xib */; };
 		9069D7681CD6B15E005650F4 /* BusinessCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9069D7671CD6B15E005650F4 /* BusinessCell.xib */; };
 		9069D76A1CD6B7F2005650F4 /* ReviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9069D7691CD6B7F2005650F4 /* ReviewCell.xib */; };
 		906CAA311C8977B700AF3515 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906CAA301C8977B700AF3515 /* TestViewController.swift */; };
@@ -79,6 +81,7 @@
 		90DA32941C93616700D5EBDF /* Montserrat-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 90DA32761C93613600D5EBDF /* Montserrat-Black.otf */; };
 		90DA32951C93616700D5EBDF /* Montserrat-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 90DA32771C93613600D5EBDF /* Montserrat-Light.otf */; };
 		90DA32961C93616700D5EBDF /* Montserrat-Hairline.otf in Resources */ = {isa = PBXBuildFile; fileRef = 90DA32781C93613600D5EBDF /* Montserrat-Hairline.otf */; };
+		90DC43221CE95D3B007F312B /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DC43211CE95D3B007F312B /* InfoTableViewCell.swift */; };
 		90DC57B91C72843A001F1891 /* YelpAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DC57B81C72843A001F1891 /* YelpAPIClient.swift */; };
 		90DC57BC1C72A1D0001F1891 /* SearchBusinessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */; };
 		90E505DF1C8E375200F47285 /* GPlacesSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E505DE1C8E375200F47285 /* GPlacesSearchViewController.swift */; };
@@ -148,6 +151,8 @@
 		905F879C1CD99E3C004046CD /* ProfileCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewController.swift; sourceTree = "<group>"; };
 		905F879E1CD9A453004046CD /* ProfileHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileHeader.xib; sourceTree = "<group>"; };
 		905F87A01CD9D536004046CD /* ProfileHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		906059C81CE9482200071D19 /* ZoomSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomSegue.swift; sourceTree = "<group>"; };
+		906059CB1CE95B7A00071D19 /* InfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoCell.xib; sourceTree = "<group>"; };
 		9069D7671CD6B15E005650F4 /* BusinessCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BusinessCell.xib; path = Yelpify/BusinessCell.xib; sourceTree = "<group>"; };
 		9069D7691CD6B7F2005650F4 /* ReviewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviewCell.xib; path = Yelpify/ReviewCell.xib; sourceTree = "<group>"; };
 		906CAA301C8977B700AF3515 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
@@ -197,6 +202,7 @@
 		90DA32821C93615100D5EBDF /* OpenSans-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-LightItalic.ttf"; sourceTree = "<group>"; };
 		90DA32831C93615100D5EBDF /* OpenSans-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Italic.ttf"; sourceTree = "<group>"; };
 		90DA32841C93615100D5EBDF /* OpenSans-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiboldItalic.ttf"; sourceTree = "<group>"; };
+		90DC43211CE95D3B007F312B /* InfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
 		90DC57B81C72843A001F1891 /* YelpAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpAPIClient.swift; sourceTree = "<group>"; };
 		90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBusinessViewController.swift; sourceTree = "<group>"; };
 		90E505DE1C8E375200F47285 /* GPlacesSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPlacesSearchViewController.swift; sourceTree = "<group>"; };
@@ -272,6 +278,7 @@
 		3CA6CFFB1CC05A880004B989 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				90DC43211CE95D3B007F312B /* InfoTableViewCell.swift */,
 				ED55870F1CE6ED560049CF93 /* SettingsTableViewCell.swift */,
 				3CBFD89C1CD4355900290F25 /* SearchPlaylistCell.swift */,
 				3CD814DD1CDD659F00D2BEC6 /* SearchPeopleCell.swift */,
@@ -319,13 +326,14 @@
 				ED99B82A1CDC4C1900C7E43F /* PlaceActions.swift */,
 				9025184F1C88276C00BB3E05 /* View Controllers */,
 				3CA6CFFB1CC05A880004B989 /* Cells */,
+				906059CA1CE9482700071D19 /* Segues */,
 				ED52E6501CCB2E0B00CEBAE2 /* ActionView */,
 				90DA327A1C93614700D5EBDF /* Fonts */,
 				90DC57BA1C72844B001F1891 /* API */,
 				9081EF7B1CE44A8600E571E2 /* Framework */,
 				90C96AAF1CCAFA9D00E9EC28 /* Helper Modules */,
 				905F87A21CD9D5A2004046CD /* Header Views */,
-				9069D7651CD6B143005650F4 /* Xib */,
+				9069D7651CD6B143005650F4 /* XIB */,
 				902518501C88277B00BB3E05 /* Testing VCs */,
 				3CE2EE851C6C5EC8000C9088 /* Assets.xcassets */,
 				3CE2EE871C6C5EC8000C9088 /* LaunchScreen.storyboard */,
@@ -402,15 +410,24 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		9069D7651CD6B143005650F4 /* Xib */ = {
+		906059CA1CE9482700071D19 /* Segues */ = {
 			isa = PBXGroup;
 			children = (
+				906059C81CE9482200071D19 /* ZoomSegue.swift */,
+			);
+			name = Segues;
+			sourceTree = "<group>";
+		};
+		9069D7651CD6B143005650F4 /* XIB */ = {
+			isa = PBXGroup;
+			children = (
+				906059CB1CE95B7A00071D19 /* InfoCell.xib */,
 				905F879E1CD9A453004046CD /* ProfileHeader.xib */,
 				905F87951CD742C7004046CD /* ListCell.xib */,
 				9069D7671CD6B15E005650F4 /* BusinessCell.xib */,
 				9069D7691CD6B7F2005650F4 /* ReviewCell.xib */,
 			);
-			name = Xib;
+			name = XIB;
 			path = ..;
 			sourceTree = "<group>";
 		};
@@ -623,6 +640,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				90C177D61CCB50A6007344CE /* YoutubeIconCell.xib in Resources */,
+				906059CC1CE95B7A00071D19 /* InfoCell.xib in Resources */,
 				901DFAEC1CBF481800AFD002 /* Main.storyboard in Resources */,
 				90DA32921C93616700D5EBDF /* Montserrat-Bold.otf in Resources */,
 				90DA32941C93616700D5EBDF /* Montserrat-Black.otf in Resources */,
@@ -766,6 +784,7 @@
 				90C177DA1CCB5B4A007344CE /* ChildExampleViewController.swift in Sources */,
 				908851961CDEE43700F63A40 /* DataFunctions.swift in Sources */,
 				90C177D41CCB50A6007344CE /* YoutubeExampleViewController.swift in Sources */,
+				906059C91CE9482200071D19 /* ZoomSegue.swift in Sources */,
 				ED5587101CE6ED560049CF93 /* SettingsTableViewCell.swift in Sources */,
 				3C7C56451CD479EF009D8B34 /* SignUpViewController.swift in Sources */,
 				EDA8CEF51CAF506400A5C2ED /* SortMethods.swift in Sources */,
@@ -789,6 +808,7 @@
 				ED405A101CC1D03C0017A9AB /* LoginViewController.swift in Sources */,
 				90BAD1C11C8662ED0047277E /* TestTableViewController.swift in Sources */,
 				ED52E64D1CCB2E0300CEBAE2 /* YoutubeActionController.swift in Sources */,
+				90DC43221CE95D3B007F312B /* InfoTableViewCell.swift in Sources */,
 				9081EF841CE44A8600E571E2 /* Updatable.swift in Sources */,
 				3C2F1C7B1CD468020081CEFA /* InitialViewController.swift in Sources */,
 				90A9437A1CD2CDE8004ACE78 /* ReviewTableViewCell.swift in Sources */,

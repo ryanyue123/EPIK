@@ -52,18 +52,18 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cup of Fruit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uu2-eA-gBO">
-                                <rect key="frame" x="119" y="12" width="266" height="20"/>
+                                <rect key="frame" x="119" y="12" width="229" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="266" id="FZr-7u-d7M"/>
+                                    <constraint firstAttribute="width" constant="229" id="FZr-7u-d7M"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="16"/>
                                 <color key="textColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123 Health Street, Irvine CA 92134" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="roP-Ec-1in">
-                                <rect key="frame" x="119" y="57" width="266" height="15"/>
+                                <rect key="frame" x="119" y="57" width="229" height="15"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="266" id="ajX-nC-c77"/>
+                                    <constraint firstAttribute="width" constant="229" id="ajX-nC-c77"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Montserrat-Light" family="Montserrat" pointSize="12"/>
                                 <color key="textColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -97,13 +97,6 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vVT-hq-Qlq">
-                                <rect key="frame" x="361" y="38" width="24" height="24"/>
-                                <color key="tintColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" image="checkMark">
-                                    <color key="titleColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="restaurant_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="PFR-j6-cgi">
                                 <rect key="frame" x="30" y="30" width="40" height="40"/>
                                 <constraints>
@@ -111,6 +104,17 @@
                                     <constraint firstAttribute="height" constant="40" id="nTa-BT-Pg8"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vVT-hq-Qlq">
+                                <rect key="frame" x="361" y="38" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="VH4-0S-SFh"/>
+                                    <constraint firstAttribute="height" constant="24" id="dTn-gr-VDu"/>
+                                </constraints>
+                                <color key="tintColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="checkMark">
+                                    <color key="titleColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -119,10 +123,12 @@
                             <constraint firstItem="Fgm-SL-aq5" firstAttribute="leading" secondItem="U1O-y0-Y8S" secondAttribute="trailing" constant="14" id="BNM-OR-P7S"/>
                             <constraint firstItem="U1O-y0-Y8S" firstAttribute="leading" secondItem="6tb-VY-uEj" secondAttribute="trailing" id="C1L-pd-rvn"/>
                             <constraint firstAttribute="bottom" secondItem="qPl-BP-Rgz" secondAttribute="bottom" constant="13.5" id="HRq-az-Ch9"/>
+                            <constraint firstItem="vVT-hq-Qlq" firstAttribute="leading" secondItem="uu2-eA-gBO" secondAttribute="trailing" constant="13" id="Jih-lZ-O60"/>
                             <constraint firstItem="uu2-eA-gBO" firstAttribute="leading" secondItem="U1O-y0-Y8S" secondAttribute="trailing" constant="14" id="M6u-04-7Up"/>
                             <constraint firstItem="6tb-VY-uEj" firstAttribute="top" secondItem="XaJ-6M-PlA" secondAttribute="top" id="Mul-6i-Axo"/>
                             <constraint firstItem="6tb-VY-uEj" firstAttribute="leading" secondItem="XaJ-6M-PlA" secondAttribute="leading" id="NDY-mm-BgD"/>
                             <constraint firstItem="roP-Ec-1in" firstAttribute="leading" secondItem="U1O-y0-Y8S" secondAttribute="trailing" constant="14" id="Riy-0X-Qfk"/>
+                            <constraint firstItem="vVT-hq-Qlq" firstAttribute="leading" secondItem="roP-Ec-1in" secondAttribute="trailing" constant="13" id="WbM-r7-HoS"/>
                             <constraint firstItem="uu2-eA-gBO" firstAttribute="top" secondItem="XaJ-6M-PlA" secondAttribute="top" constant="12" id="XE6-pZ-MXw"/>
                             <constraint firstAttribute="trailing" secondItem="vVT-hq-Qlq" secondAttribute="trailing" constant="15" id="XlL-zl-tlh"/>
                             <constraint firstItem="vVT-hq-Qlq" firstAttribute="centerY" secondItem="XaJ-6M-PlA" secondAttribute="centerY" id="ZGK-Wd-ra4"/>

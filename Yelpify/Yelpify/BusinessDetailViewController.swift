@@ -11,6 +11,7 @@ import Parse
 import Haneke
 import Cosmos
 import BetterSegmentedControl
+import Async
 
 class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -35,6 +36,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     var loadedStatusBar = false
     var loadedNavBar = false
     
+    var contentToDisplay: ContentTypes = .Places
     
     //var placePhoto: UIImage? = UIImage(named: "default_restaurant")
     let cache = Shared.dataCache
@@ -45,6 +47,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     
     var photoRefs = [String]()
     var reviewArray = NSArray()
+    var infoArray = [(UIImage, String)]()
     
     var APIClient = APIDataHandler()
     let gpClient = GooglePlacesAPIClient()
@@ -65,8 +68,9 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         
         // Register Nibs
         self.tableView.registerNib(UINib(nibName: "ReviewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "reviewCell")
+        self.tableView.registerNib(UINib(nibName: "InfoCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "infoCell")
         
-        configureTableView()
+        //configureTableView()
         
         self.navBarShadowView = ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         
@@ -76,7 +80,6 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         self.loadedNavBar = true
         
         configureHeaderView()
-        
         configureSegmentedBar()
 
         self.directionsButton.enabled = false
@@ -88,6 +91,9 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         if object != nil{
             APIClient.performDetailedSearch(object.gPlaceID!) { (detailedGPlace) in
         
+                // Set up Info Array
+                self.setInfo(detailedGPlace)
+                
                 // Set Icon
                 self.setTypeIcon(self.object.businessTypes)
                 
@@ -149,8 +155,10 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
                 self.tableView.reloadData()
             }
         }else{
-            print(gPlaceObject)
         // IF SEGUEING FROM SINGLEPLAYLISTCONTROLLER
+            
+            self.setInfo(gPlaceObject)
+            
             // Set Types
             self.setTypeIcon(gPlaceObject.types)
             
@@ -185,6 +193,17 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         }
     
     
+    }
+    
+    
+    func setInfo(place: GooglePlaceDetail){
+        for (image, label) in [UIImage(): place.address, UIImage(): place.phone, UIImage(): place.website]{
+            if label != ""{
+                self.infoArray.append((image, label))
+            }else{
+                self.infoArray.append((image, "Not Availible"))
+            }
+        }
     }
     
     func getHours(hoursArray: NSMutableArray) -> String{
@@ -370,8 +389,12 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         control.autoresizingMask = [.FlexibleWidth]
         control.panningDisabled = true
         control.titleFont = UIFont(name: "Montserrat", size: 12.0)!
-        control.addTarget(self, action: nil, forControlEvents: .ValueChanged)
+        control.addTarget(self, action: "switchContentType", forControlEvents: .ValueChanged)
+        control.alpha = 0
         self.segmentedView.addSubview(control)
+        UIView.animateWithDuration(0.3) {
+            control.alpha = 1
+        }
     }
 
     
@@ -456,19 +479,61 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+    func switchContentType(){
+        if self.contentToDisplay == .Places{
+            self.contentToDisplay = .Comments
+            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+        }else{
+            self.contentToDisplay = .Places
+            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+        }
+    }
     
     // MARK: - Table View Functions
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.reviewArray.count
+        switch contentToDisplay {
+        case .Places:
+            return self.infoArray.count
+        case .Comments:
+            return self.reviewArray.count
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reviewCell", forIndexPath: indexPath) as! ReviewTableViewCell
-        let review = self.reviewArray[indexPath.row]
-        cell.configureCell(review as! NSDictionary)
         
-        cell.layoutMargins = UIEdgeInsetsMake(10, 0, 10, 0)
-        return cell
+        // IF SEGMENTED IS ON PLACES (INFO)
+        if self.contentToDisplay == .Places{
+            let infoCell = tableView.dequeueReusableCellWithIdentifier("infoCell", forIndexPath: indexPath) as! InfoTableViewCell
+            
+            self.tableView.rowHeight = 67.5
+            
+            Async.userInteractive{
+                infoCell.configureCell(self.infoArray[indexPath.row].0, label: self.infoArray[indexPath.row].1) {
+                    return infoCell
+                }
+            }
+            return infoCell
+            
+            // IF SEGMENTED IS ON COMMENTS (REVIEWS)
+        }else if self.contentToDisplay == .Comments{
+            let reviewCell = tableView.dequeueReusableCellWithIdentifier("reviewCell", forIndexPath: indexPath) as! ReviewTableViewCell
+
+            self.tableView.rowHeight = 140.0
+            
+            //reviewCell.configureCell()
+            
+            return reviewCell
+        }else{
+            return UITableViewCell()
+        }
+
+        
+//        let cell = tableView.dequeueReusableCellWithIdentifier("reviewCell", forIndexPath: indexPath) as! ReviewTableViewCell
+//        let review = self.reviewArray[indexPath.row]
+//        cell.configureCell(review as! NSDictionary)
+//        
+//        cell.layoutMargins = UIEdgeInsetsMake(10, 0, 10, 0)
+//        return cell
 
     }
     

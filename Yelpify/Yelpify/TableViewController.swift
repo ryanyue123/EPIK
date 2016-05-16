@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import DGElasticPullToRefresh
+import Async
 
 struct playlist
 {
@@ -207,7 +208,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                 query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
                     if ((error) == nil)
                     {
-                        dispatch_async(dispatch_get_main_queue(), {
+                        Async.main{
                             if (objects!.count == 0)
                             {
                                 let object = PFObject(className: "Playlists")
@@ -233,7 +234,8 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                             {
                                 print("You have already created this playlist")
                             }
-                        })
+
+                        } // End Async.main
                     }
                     else
                     {
@@ -257,11 +259,13 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
         query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
             if ((error) == nil)
             {
+                
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlists_location = objects!
                     self.all_playlists.append(self.playlists_location)
                     self.label_array.append("Playlists near me")
-                    self.tableView.reloadData()
+                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+                    //self.tableView.reloadData()
                     
                     let query2: PFQuery = PFQuery(className: "Playlists")
                     query2.whereKey("createdBy", equalTo: PFUser.currentUser()!)
@@ -274,7 +278,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                                 if (user!.count != 0) {
                                     self.playlists_user = user!
                                     self.all_playlists.append(self.playlists_user)
-                                    self.tableView.reloadData()
+                                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
                                 }
                                 else {
                                     self.all_playlists.append([])
@@ -297,7 +301,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                                                             self.recent_playlists = objects2!
                                                             self.all_playlists.append(self.recent_playlists)
                                                             self.label_array.append("Recently viewed")
-                                                            self.tableView.reloadData()
+                                                            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
                                                         })
                                                     }
                                                 }
@@ -423,10 +427,15 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         self.col = indexPath.row
 
         // Perform Segue and Pass List Data
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
+        let listVC = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
         let temparray = all_playlists[collectionView.tag]
-        controller.object = temparray[indexPath.row] as! PFObject
-        self.navigationController!.pushViewController( controller, animated: true)
+        listVC.object = temparray[indexPath.row] as! PFObject
+        self.navigationController!.pushViewController(listVC, animated: true)
+        
+//        let segue = ZoomSegue(identifier: "showList", source: self, destination: listVC)
+//        segue.objectToSet = temparray[indexPath.row] as! PFObject
+        
+        //self.performSegueWithIdentifier("showPlaylist", sender: self)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -434,17 +443,16 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         if (segue.identifier == "showPlaylist")
         {
             let upcoming = segue.destinationViewController as? SinglePlaylistViewController
-            let temparray = all_playlists[row]
             
-            let navController: UINavigationController = self.navigationController!
-            print(temparray[col])
+            let temparray = all_playlists[row]
+            //let navController: UINavigationController = self.navigationController!
             upcoming?.object = temparray[col] as! PFObject
         }
     }
     
-    override func segueForUnwindingToViewController(toViewController: UIViewController, fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
-        let segue = CustomUnwindSegue(identifier: identifier, source: fromViewController, destination: toViewController)
-        segue.animationType = .Push
-        return segue
-    }
+//    override func segueForUnwindingToViewController(toViewController: UIViewController, fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
+//        let segue = CustomUnwindSegue(identifier: identifier, source: fromViewController, destination: toViewController)
+//        segue.animationType = .Push
+//        return segue
+//    }
 }

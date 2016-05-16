@@ -8,47 +8,38 @@
 
 import UIKit
 import Parse
+import Async
 
 class InitialViewController: UIViewController {
 
+    @IBOutlet weak var logo: UIImageView!
+    @IBOutlet weak var background: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBarHidden = true
-        // Do any additional setup after loading the view.
-//        if (PFUser.currentUser() == nil) {
-//            self.performSegueWithIdentifier("loginscreen", sender: self)
-//            
-//        }else{
-//             self.performSegueWithIdentifier("showHome", sender: self)
-//        }
-
     }
     
     override func viewDidAppear(animated: Bool) {
         print(PFUser.currentUser())
         if (PFUser.currentUser() == nil) {
-            self.performSegueWithIdentifier("loginscreen", sender: self)
-            
+            self.animate()
+            Async.main(after: 2){
+                self.performSegueWithIdentifier("loginscreen", sender: self)
+            }
         }else{
-            self.performSegueWithIdentifier("showHome", sender: self)
+            self.animate()
+            Async.main(after: 2){
+                self.performSegueWithIdentifier("showHome", sender: self)
+            }
         }
-
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func animate(){
+        UIView.animateWithDuration(3, animations: {
+            self.background.transform = CGAffineTransformMakeScale(1.2, 1.2)
+            self.logo.transform = CGAffineTransformMakeScale(0.9, 0.9)
+        })
     }
-    */
 
 }

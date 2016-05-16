@@ -270,18 +270,20 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         imagePicker.delegate = self
+        
         ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         self.statusBarView = ConfigureFunctions.configureStatusBar(self.navigationController!)
         
+        self.configurePlaylistInfoView()
+        
         self.addPlaceImageButton.hidden = true
-        let tap = UITapGestureRecognizer(target: self, action: "handleTap:")
+        let tap = UITapGestureRecognizer(target: self, action: "pressedOnAddPlace:")
         self.addPlaceImageButton.userInteractionEnabled = true
         self.addPlaceImageButton.addGestureRecognizer(tap)
         
         setupProfilePicture()
-        self.playlistTableView.reloadData()
-        
         
         //        // tapRecognizer, placed in viewDidLoad
         //        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPress:")
@@ -318,15 +320,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "showActionsMenu:")
         navigationItem.rightBarButtonItem = rightButton
-        
-        configurePlaylistInfoView()
     }
     let dimLevel: CGFloat = 0.8
     let dimSpeed: Double = 0.5
     
     override func viewDidAppear(animated: Bool){
-        configureSegmentedBar()
-        
+        self.configureSegmentedBar()
         //self.performSegueWithIdentifier("addComment", sender: self)
     }
     
@@ -355,17 +354,30 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         updateHeaderView()
     }
     
-    
-    func updateBusinessesFromIDs(ids: [String]){
-        for id in ids{
-            apiClient.performDetailedSearch(id, completion: { (detailedGPlace) in
+    func updateBusinessesFromIDs(ids:[String], startIndex: Int = 0){
+        if ids.count > 0 && startIndex < ids.count{
+            apiClient.performDetailedSearch(ids[startIndex]) { (detailedGPlace) in
                 self.placeArray.append(detailedGPlace)
                 self.playlistArray.append(detailedGPlace.convertToBusiness())
-                self.playlistTableView.reloadData()
-                print(self.placeArray.count, self.playlistArray.count, self.placeIDs.count)
-            })
+                let idsSlice = Array(ids[1..<ids.count])
+                let newIndex = startIndex + 1
+                self.updateBusinessesFromIDs(idsSlice, startIndex: newIndex)
+            }
+        }else{
+            self.playlistTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
         }
     }
+    
+//    func updateBusinessesFromIDs(ids: [String]){
+//        for id in ids{
+//            apiClient.performDetailedSearch(id, completion: { (detailedGPlace) in
+//                self.placeArray.append(detailedGPlace)
+//                self.playlistArray.append(detailedGPlace.convertToBusiness())
+//                self.playlistTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+//                //self.playlistTableView.reloadData()
+//            })
+//        }
+//    }
     
     func convertBusinessesToIDs(businesses: [Business], completion: (ids: [String]) -> Void) {
         var ids: [String] = []
@@ -375,9 +387,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         completion(ids: ids)
     }
     
-    func handleTap(img: AnyObject){
-        performSegueWithIdentifier("tapImageButton", sender: self)
-        
+    func pressedOnAddPlace(img: AnyObject){
+        if self.contentToDisplay == .Places{
+            performSegueWithIdentifier("tapImageButton", sender: self)
+        }else if self.contentToDisplay == .Comments{
+            performSegueWithIdentifier("addComment", sender: self)
+        }
     }
     
     
@@ -415,25 +430,47 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     // MARK: - Set Up Header View With Info
     func configureInfo() {
-        self.playlistInfoName.text = object["playlistName"] as? String
-        let user = object["createdBy"] as! PFUser
-        self.playlistInfoUser.titleLabel?.text = "BY " + user.username!.uppercaseString
         
-        self.playlistInfoIcon.image = UIImage(named: "default_Icon")
+        let pushAlpha: Double = 1.0
+        let pushDuration: Double = 0.7
+        let pushBeginScale: CGFloat = 1.0
+        let pushAllScale: CGFloat = 1.1
+        
+        //fadeInView(self.playlistInfoView, duration: pushDuration, beginScale: pushAllScale)
+        
+        // Set List Name
+        if let name = object["playlistName"] as? String{
+            fadeInTextField(self.playlistInfoName, textToSet: name, duration: pushDuration, beginScale: pushBeginScale)
+        }
+        
+        // Set User Name
+        let user = object["createdBy"] as! PFUser
+        self.playlistInfoUser.alpha = 0
+        self.playlistInfoUser.setTitle("BY " + user.username!.uppercaseString, forState: .Normal)
+        fadeInView(self.playlistInfoUser, duration: pushDuration, beginScale: pushBeginScale)
+        
+        // Set Icon // CHANGE
+        fadeInImageView(self.playlistInfoIcon, imageToAdd: UIImage(named: "default_Icon")!, duration: pushDuration, beginScale: pushBeginScale)
+        //self.playlistInfoIcon.image = UIImage(named: "default_Icon")
+        
+        // Set Collaborators/ Authors Image
+        // self.creatorImageView.image =
+        self.fadeInView(self.collaboratorsView, duration: pushDuration, beginScale: pushBeginScale)
+        self.fadeInImageView(self.creatorImageView, imageToAdd: UIImage(named: "face")!,  duration: pushDuration, beginScale: 0.8)
         
         // Set BG if custom BG exists in Parse
         if let bg = object["custom_bg"] as? PFFile{
             bg.getDataInBackgroundWithBlock({ (data, error) in
                 if error == nil{
                     let image = UIImage(data: data!)
-                    self.playlistInfoBG.image = image
-                    self.playlistInfoBG.clipsToBounds = true
+                    self.fadeInImageView(self.playlistInfoBG, imageToAdd: image!, endAlpha: 0.5, beginScale: 1.2)
                 }
             })
         }else{
-            self.playlistInfoBG.image = UIImage(named: "default_list_bg")
+            self.fadeInImageView(self.playlistInfoBG, imageToAdd: UIImage(named: "default_list_bg")!, endAlpha: 0.5, beginScale: 1.2)
         }
         
+        // Set Number of Places
         self.numOfPlacesLabel.text = String(self.placeIDs.count)
         
         let followCount = object["followerCount"]
@@ -444,10 +481,62 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             self.numOfFollowersLabel.text = String(followCount)
         }
         
-        // CHANGE - NEED TO MAKE AVERAGEPRICE IN PARSE
-        let avgPrice = object["average_price"] as! Int
-        self.setPriceRating(avgPrice)
+        if let avgPrice = object["average_price"] as? Int{
+            self.setPriceRating(avgPrice)
+        }
     }
+    
+    // MARK: - Animation Functions
+    func fadeInImageView(imageView: UIImageView, imageToAdd: UIImage, duration: Double = 1,  endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1){
+        
+        imageView.alpha = 0
+        imageView.image = imageToAdd
+        imageView.transform = CGAffineTransformMakeScale(beginScale, beginScale)
+        imageView.clipsToBounds = true
+        UIView.animateWithDuration(duration, animations: {
+            imageView.alpha = endAlpha
+            imageView.transform = CGAffineTransformMakeScale(endScale, endScale)
+        })
+    }
+    
+    func fadeInView(view: UIView, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
+        view.alpha = 0
+        view.layer.frame.origin.y += beginOffsetY
+        view.transform = CGAffineTransformMakeScale(beginScale, beginScale)
+        view.clipsToBounds = true
+        UIView.animateWithDuration(duration, animations: {
+            view.layer.frame.origin.y -= endOffsetY
+            view.alpha = endAlpha
+            view.transform = CGAffineTransformMakeScale(endScale, endScale)
+        })
+    }
+    
+    func fadeInLabel(label: UILabel, textToSet: String, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
+        label.alpha = 0
+        label.layer.frame.origin.y += beginOffsetY
+        label.text = textToSet
+        label.transform = CGAffineTransformMakeScale(beginScale, beginScale)
+        label.clipsToBounds = true
+        UIView.animateWithDuration(duration, animations: {
+            label.layer.frame.origin.y -= endOffsetY
+            label.alpha = endAlpha
+            label.transform = CGAffineTransformMakeScale(endScale, endScale)
+        })
+    }
+    
+    func fadeInTextField(textField: UITextField, textToSet: String, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
+        textField.alpha = 0
+        textField.layer.frame.origin.y += beginOffsetY
+        textField.text = textToSet
+        textField.transform = CGAffineTransformMakeScale(beginScale, beginScale)
+        textField.clipsToBounds = true
+        UIView.animateWithDuration(duration, animations: {
+            textField.layer.frame.origin.y -= endOffsetY
+            textField.alpha = endAlpha
+            textField.transform = CGAffineTransformMakeScale(endScale, endScale)
+        })
+    }
+
     
     func configureRecentlyViewed() {
         let viewedlist: NSMutableArray = []
@@ -583,7 +672,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func fadePlaylistBG(){
-        self.playlistInfoBG.alpha = (-playlistTableView.contentOffset.y / playlistTableHeaderHeight) * 0.5
+        let fadeAlpha = (-playlistTableView.contentOffset.y / playlistTableHeaderHeight) * 0.5
+        //let scale = (-playlistTableView.contentOffset.y / playlistTableHeaderHeight) + 0.5
+        
+        self.playlistInfoBG.alpha = fadeAlpha
+        //self.playlistInfoName.alpha = fadeAlpha
+        
+        //self.playlistInfoBG.transform = CGAffineTransformMakeScale(scale, scale)
     }
     
     func handleNavigationBarOnScroll(){
@@ -626,21 +721,26 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             indicatorViewBackgroundColor: appDefaults.color_darker,
             selectedTitleColor: .whiteColor())
         control.autoresizingMask = [.FlexibleWidth]
-        //control.cornerRadius = 10.0
         control.panningDisabled = true
         control.titleFont = UIFont(name: "Montserrat", size: 12.0)!
         control.addTarget(self, action: "switchContentType", forControlEvents: .ValueChanged)
+        control.alpha = 0
         self.segmentedBarView.addSubview(control)
+        UIView.animateWithDuration(0.3) {
+            control.alpha = 1
+        }
     }
+    
     
     func switchContentType(){
         if self.contentToDisplay == .Places{
             self.contentToDisplay = .Comments
             self.playlistTableView.allowsSelection = false
-            self.playlistTableView.reloadData()
+            self.playlistTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
         }else{
             self.contentToDisplay = .Places
-            self.playlistTableView.reloadData()
+            self.playlistTableView.allowsSelection = true
+            self.playlistTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
         }
     }
     
@@ -663,19 +763,19 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         playlistInfoView.frame = headerRect
     }
     
-    func addShadowToBar() {
-        let shadowView = UIView(frame: self.navigationController!.navigationBar.frame)
-        //shadowView.backgroundColor = appDefaults.color
-        shadowView.layer.masksToBounds = false
-        shadowView.layer.shadowOpacity = 0.7 // your opacity
-        shadowView.layer.shadowOffset = CGSize(width: 0, height: 3) // your offset
-        shadowView.layer.shadowRadius =  10 //your radius
-        self.view.addSubview(shadowView)
-        self.view.bringSubviewToFront(statusBarView)
-        
-        shadowView.tag = 100
-    }
-    
+//    func addShadowToBar() {
+//        let shadowView = UIView(frame: self.navigationController!.navigationBar.frame)
+//        //shadowView.backgroundColor = appDefaults.color
+//        shadowView.layer.masksToBounds = false
+//        shadowView.layer.shadowOpacity = 0.7 // your opacity
+//        shadowView.layer.shadowOffset = CGSize(width: 0, height: 3) // your offset
+//        shadowView.layer.shadowRadius =  10 //your radius
+//        self.view.addSubview(shadowView)
+//        self.view.bringSubviewToFront(statusBarView)
+//        
+//        shadowView.tag = 100
+//    }
+//    
     func setupProfilePicture(){
         self.roundingUIView(self.creatorImageView, cornerRadiusParam: 15)
         self.roundingUIView(self.collaboratorsView, cornerRadiusParam: 15)
@@ -1025,6 +1125,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }else if (segue.identifier == "tapImageButton"){
             let nav = segue.destinationViewController as! UINavigationController
             let upcoming = nav.childViewControllers[0] as! SearchBusinessViewController
+            upcoming.currentView = .AddPlace
             upcoming.searchTextField = upcoming.addPlaceSearchTextField
         }
         else if (segue.identifier == "addComment") {

@@ -13,6 +13,11 @@ import Parse
 import DGElasticPullToRefresh
 import XLPagerTabStrip
 
+enum CurrentView {
+    case AddPlace
+    case SearchPlace
+}
+
 class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, IndicatorInfoProvider, UITextFieldDelegate  {
     
     var itemInfo: IndicatorInfo = "Places"
@@ -27,6 +32,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var searchDidChange = false
     var searchQuery = ""
     var currentCity = ""
+    
+    var currentView: CurrentView = .SearchPlace
     
     var searchTextField: UITextField!
     @IBOutlet weak var addPlaceSearchTextField: UITextField!
@@ -155,6 +162,12 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
 
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
         cell.tag = indexPath.row
+        
+        if self.currentView == .SearchPlace{
+            cell.actionButton.hidden = true
+        }else{
+            cell.actionButton.hidden = false
+        }
         
         let business = self.businessObjects[indexPath.row]
         
