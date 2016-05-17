@@ -113,7 +113,8 @@ class ProfileCollectionViewController: UICollectionViewController {
 
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("listCell", forIndexPath: indexPath) as! ListCollectionViewCell
         
-        cell.configureCellLayout()
+        cell.configureCell(user_playlists[indexPath.row])
+       //cell.configureCellLayout()
     
         return cell
     }
