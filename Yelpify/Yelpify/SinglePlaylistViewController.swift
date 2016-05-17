@@ -398,17 +398,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
-//    func updateBusinessesFromIDs(ids: [String]){
-//        for id in ids{
-//            apiClient.performDetailedSearch(id, completion: { (detailedGPlace) in
-//                self.placeArray.append(detailedGPlace)
-//                self.playlistArray.append(detailedGPlace.convertToBusiness())
-//                self.playlistTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
-//                //self.playlistTableView.reloadData()
-//            })
-//        }
-//    }
-    
     func convertBusinessesToIDs(businesses: [Business], completion: (ids: [String]) -> Void) {
         var ids: [String] = []
         for business in businesses{
