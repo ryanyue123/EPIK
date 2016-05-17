@@ -95,26 +95,9 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
         collectionView.registerNib(UINib(nibName: "ListCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "listCell")
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("listCell", forIndexPath: indexPath) as! ListCollectionViewCell
         let cellobject = self.playlist_query[indexPath.row]
-        cell.configureCellLayout()
         
-        cell.listName.text = cellobject["playlistName"] as? String
-        let createdByUser = cellobject["createdBy"] as! PFUser
-        createdByUser.fetchIfNeededInBackgroundWithBlock { (object, error) in
-            if (error == nil)
-            {
-                dispatch_async(dispatch_get_main_queue(), {
-                    cell.creatorName.text = object!["username"] as? String
-                })
-            }
-        }
-        let followCount = cellobject["followerCount"]
-        if (followCount == nil)
-        {
-            cell.followerCount.text = "0"
-        }
-        else{
-            cell.followerCount.text = String(followCount)
-        }
+        cell.configureCell(cellobject)
+        
         return cell
     }
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -123,35 +106,4 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
         self.navigationController!.pushViewController(controller, animated: true)
         
     }
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
-    
-    }
-    */
 }

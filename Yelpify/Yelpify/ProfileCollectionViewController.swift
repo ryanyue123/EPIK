@@ -23,9 +23,16 @@ class ProfileCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let navigationBar = navigationController!.navigationBar
+        //let navigationBar = navigationController!.navigationBar
         ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         ConfigureFunctions.configureStatusBar(self.navigationController!)
+        
+        
+        let width = CGRectGetWidth(collectionView!.bounds)
+        let layout = collectionViewLayout as! UICollectionViewFlowLayout
+        layout.headerReferenceSize = CGSize(width: width, height: 180)
+        layout.itemSize = CGSize(width: width, height: 62)
+        
         //navigationBar.tintColor = UIColor.whiteColor()
         
         let rightButton = UIBarButtonItem(title: "Settings", style: .Plain , target: self, action: "goToSettings")
@@ -67,13 +74,7 @@ class ProfileCollectionViewController: UICollectionViewController {
         ConfigureFunctions.resetNavigationBar(self.navigationController!)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     // MARK: UICollectionViewDataSource
-
     
     override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         
@@ -89,13 +90,6 @@ class ProfileCollectionViewController: UICollectionViewController {
             headerView.configureView()
             
             return headerView
-            
-//        case UICollectionElementKindSectionFooter:
-//            let footerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Footer", forIndexPath: indexPath) as! UICollectionReusableView
-//            
-//            footerView.backgroundColor = UIColor.greenColor();
-//            return footerView
-//            
         default:
             
             assert(false, "Unexpected element kind")
@@ -105,13 +99,11 @@ class ProfileCollectionViewController: UICollectionViewController {
     
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return user_playlists.count
     }
 
@@ -121,10 +113,12 @@ class ProfileCollectionViewController: UICollectionViewController {
 
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("listCell", forIndexPath: indexPath) as! ListCollectionViewCell
         
-        cell.configureCellLayout()
+        cell.configureCell(user_playlists[indexPath.row])
+       //cell.configureCellLayout()
     
         return cell
     }
+    
     
     @IBAction func showSettings(sender: UIBarButtonItem) {
         let actionController = YoutubeActionController()

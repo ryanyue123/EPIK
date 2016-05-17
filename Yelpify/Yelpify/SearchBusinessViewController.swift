@@ -44,7 +44,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         return itemInfo
     }
     
-    
     @IBAction func unwindToSearchBusinessVC(segue: UIStoryboardSegue) {
         if (segue.identifier != nil)
         {
@@ -273,9 +272,11 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             self.placeIDs.removeAll()
         }
         
-        // Configure Functions
-        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
-        ConfigureFunctions.configureStatusBar(self.navigationController!)
+        if self.navigationController?.navigationBar.backgroundColor != appDefaults.color{
+            // Configure Functions
+            ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+            ConfigureFunctions.configureStatusBar(self.navigationController!)
+        }
         
         let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")
     
@@ -287,6 +288,10 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     func pressedLocation(sender: UIBarButtonItem){
         performSegueWithIdentifier("pickLocation", sender: self)
+    }
+    
+    func pressedCancel(sender:UIBarButtonItem){
+        resignFirstResponder()
     }
     
     
@@ -304,6 +309,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
+        resignFirstResponder()
         // This will close the keyboard when touched outside.
     }
     
@@ -328,6 +334,18 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         textField.resignFirstResponder() //close keyboard
         return true
         // Will allow user to press "return" button to close keyboard
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain , target: self, action: "pressedCancel:")
+        
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")
+        
+        navigationItem.rightBarButtonItem = rightButton
+
     }
 
 

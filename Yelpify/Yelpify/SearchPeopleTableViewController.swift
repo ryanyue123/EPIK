@@ -26,6 +26,7 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.searchFor("")
         self.tableView.allowsSelection = true
         ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         
@@ -47,11 +48,25 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
                 dispatch_async(dispatch_get_main_queue(), {
                     self.user_list = objects!
                     textField.resignFirstResponder()
-                    self.tableView.reloadData()
+                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
                 })
             }
         }
         return true
+    }
+    
+    func searchFor(search: String){
+        let query = PFUser.query()!
+        query.whereKey("search_name", containsString: search)
+        query.findObjectsInBackgroundWithBlock { (objects, error) in
+            if (error == nil)
+            {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.user_list = objects!
+                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+                })
+            }
+        }
     }
 
     
@@ -78,12 +93,19 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("searchPeople", forIndexPath: indexPath) as! SearchPeopleCell
+        
         let user = self.user_list[indexPath.row]
         let first_name = (user["first_name"] as! String).capitalizedString
         let last_name = (user["last_name"] as! String).capitalizedString
-        cell.nameLabel.text = first_name + " " + last_name
-        cell.handleLabel.text = "@" + (user["username"] as! String)
-        // Configure the cell...
+        let fullName = first_name + " " + last_name
+        let handle = "@" + (user["username"] as! String)
+        
+        //let profPic = user["profile_pic"] // CHANGE
+        
+        cell.configureCell(fullName, handle: handle)
+//        
+//        cell.nameLabel.text = first_name + " " + last_name
+//        cell.handleLabel.text = "@" + (user["username"] as! String)
 
         return cell
     }

@@ -29,7 +29,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6tb-VY-uEj">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="temp_profile" translatesAutoresizingMaskIntoConstraints="NO" id="mT1-mC-8Pn">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mT1-mC-8Pn">
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -51,15 +51,6 @@
                                     <constraint firstAttribute="width" constant="5" id="BZc-3h-bnC"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cup of Fruit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uu2-eA-gBO">
-                                <rect key="frame" x="119" y="12" width="229" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="229" id="FZr-7u-d7M"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="16"/>
-                                <color key="textColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123 Health Street, Irvine CA 92134" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="roP-Ec-1in">
                                 <rect key="frame" x="119" y="57" width="229" height="15"/>
                                 <constraints>
@@ -75,7 +66,7 @@
                                 <color key="textColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fgm-SL-aq5" customClass="CosmosView" customModule="Cosmos">
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fgm-SL-aq5" customClass="CosmosView" customModule="Cosmos">
                                 <rect key="frame" x="119" y="34" width="90" height="18"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -97,11 +88,11 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="restaurant_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="PFR-j6-cgi">
-                                <rect key="frame" x="30" y="30" width="40" height="40"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PFR-j6-cgi">
+                                <rect key="frame" x="119" y="14" width="17" height="17"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="KS0-hH-Poa"/>
-                                    <constraint firstAttribute="height" constant="40" id="nTa-BT-Pg8"/>
+                                    <constraint firstAttribute="height" constant="17" id="nl6-0D-vmq"/>
+                                    <constraint firstAttribute="width" constant="17" id="r1V-PJ-Gg0"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vVT-hq-Qlq">
@@ -115,29 +106,34 @@
                                     <color key="titleColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cup of Fruit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uu2-eA-gBO">
+                                <rect key="frame" x="141" y="11" width="207" height="20"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="16"/>
+                                <color key="textColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="U1O-y0-Y8S" firstAttribute="top" secondItem="XaJ-6M-PlA" secondAttribute="top" id="03H-0S-bzv"/>
-                            <constraint firstItem="Fgm-SL-aq5" firstAttribute="top" secondItem="uu2-eA-gBO" secondAttribute="bottom" constant="2.5" id="0md-Pv-Uol"/>
                             <constraint firstItem="Fgm-SL-aq5" firstAttribute="leading" secondItem="U1O-y0-Y8S" secondAttribute="trailing" constant="14" id="BNM-OR-P7S"/>
                             <constraint firstItem="U1O-y0-Y8S" firstAttribute="leading" secondItem="6tb-VY-uEj" secondAttribute="trailing" id="C1L-pd-rvn"/>
                             <constraint firstAttribute="bottom" secondItem="qPl-BP-Rgz" secondAttribute="bottom" constant="13.5" id="HRq-az-Ch9"/>
-                            <constraint firstItem="vVT-hq-Qlq" firstAttribute="leading" secondItem="uu2-eA-gBO" secondAttribute="trailing" constant="13" id="Jih-lZ-O60"/>
-                            <constraint firstItem="uu2-eA-gBO" firstAttribute="leading" secondItem="U1O-y0-Y8S" secondAttribute="trailing" constant="14" id="M6u-04-7Up"/>
                             <constraint firstItem="6tb-VY-uEj" firstAttribute="top" secondItem="XaJ-6M-PlA" secondAttribute="top" id="Mul-6i-Axo"/>
                             <constraint firstItem="6tb-VY-uEj" firstAttribute="leading" secondItem="XaJ-6M-PlA" secondAttribute="leading" id="NDY-mm-BgD"/>
+                            <constraint firstItem="PFR-j6-cgi" firstAttribute="top" secondItem="XaJ-6M-PlA" secondAttribute="top" constant="14" id="NFn-0T-40Q"/>
+                            <constraint firstItem="vVT-hq-Qlq" firstAttribute="leading" secondItem="uu2-eA-gBO" secondAttribute="trailing" constant="13" id="RYk-W3-nzP"/>
                             <constraint firstItem="roP-Ec-1in" firstAttribute="leading" secondItem="U1O-y0-Y8S" secondAttribute="trailing" constant="14" id="Riy-0X-Qfk"/>
                             <constraint firstItem="vVT-hq-Qlq" firstAttribute="leading" secondItem="roP-Ec-1in" secondAttribute="trailing" constant="13" id="WbM-r7-HoS"/>
-                            <constraint firstItem="uu2-eA-gBO" firstAttribute="top" secondItem="XaJ-6M-PlA" secondAttribute="top" constant="12" id="XE6-pZ-MXw"/>
                             <constraint firstAttribute="trailing" secondItem="vVT-hq-Qlq" secondAttribute="trailing" constant="15" id="XlL-zl-tlh"/>
                             <constraint firstItem="vVT-hq-Qlq" firstAttribute="centerY" secondItem="XaJ-6M-PlA" secondAttribute="centerY" id="ZGK-Wd-ra4"/>
+                            <constraint firstItem="uu2-eA-gBO" firstAttribute="top" secondItem="XaJ-6M-PlA" secondAttribute="top" constant="11" id="cZh-9T-sHC"/>
                             <constraint firstItem="qPl-BP-Rgz" firstAttribute="leading" secondItem="U1O-y0-Y8S" secondAttribute="trailing" constant="14" id="eUh-53-Csh"/>
                             <constraint firstItem="qPl-BP-Rgz" firstAttribute="top" secondItem="roP-Ec-1in" secondAttribute="bottom" constant="0.5" id="jEx-4f-TLH"/>
                             <constraint firstAttribute="bottom" secondItem="U1O-y0-Y8S" secondAttribute="bottom" id="rtD-j3-bUm"/>
-                            <constraint firstItem="PFR-j6-cgi" firstAttribute="centerY" secondItem="6tb-VY-uEj" secondAttribute="centerY" id="tWX-nf-EUz"/>
+                            <constraint firstItem="PFR-j6-cgi" firstAttribute="leading" secondItem="mT1-mC-8Pn" secondAttribute="trailing" constant="19" id="uDc-Yy-H7k"/>
                             <constraint firstAttribute="bottom" secondItem="6tb-VY-uEj" secondAttribute="bottom" id="vxL-9x-vl4"/>
-                            <constraint firstItem="PFR-j6-cgi" firstAttribute="centerX" secondItem="6tb-VY-uEj" secondAttribute="centerX" id="wzj-3B-wKL"/>
+                            <constraint firstItem="uu2-eA-gBO" firstAttribute="leading" secondItem="PFR-j6-cgi" secondAttribute="trailing" constant="5" id="x4y-f8-ddw"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -168,7 +164,5 @@
     </objects>
     <resources>
         <image name="checkMark" width="24" height="24"/>
-        <image name="restaurant_Icon" width="300" height="300"/>
-        <image name="temp_profile" width="640" height="426"/>
     </resources>
 </document>

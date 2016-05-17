@@ -8,6 +8,7 @@
 
 import UIKit
 import Haneke
+import Parse
 
 class ListCollectionViewCell: UICollectionViewCell {
     
@@ -41,19 +42,60 @@ class ListCollectionViewCell: UICollectionViewCell {
         
     }
     
-    func configureCell(imageref: String)
-    {
-        
-        gpAPIClient.getImageFromPhotoReference(imageref) { (key) -> Void in
-            
-            self.cache.fetch(key: key).onSuccess { image in
-                self.playlistImage.hnk_setImage(image, key: imageref)
-                self.playlistImage.setNeedsDisplay()
-                self.playlistImage.setNeedsLayout()
+    
+    func configureCell(cellobject: PFObject){
+        self.listName.text = cellobject["playlistName"] as? String
+        let createdByUser = cellobject["createdBy"] as! PFUser
+        createdByUser.fetchIfNeededInBackgroundWithBlock { (object, error) in
+            if (error == nil)
+            {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.creatorName.text = "BY " + (object!["username"]?.uppercaseString)!
+                })
             }
         }
+        let followCount = cellobject["followerCount"]
+        if (followCount == nil) {
+            self.followerCount.text = "0"
+        }
+        else {
+            self.followerCount.text = String(followCount)
+        }
+        
+        if let numPlaces = cellobject["num_places"] as? Int{
+            self.numOfPlaces.text = String(numPlaces)
+        }
+        if let icon = cellobject["custom_bg"] as? PFFile{
+            icon.getDataInBackgroundWithBlock({ (data, error) in
+                if error == nil{
+                    let image = UIImage(data: data!)
+                    self.playlistImage.image = image
+                }
+            })
+        }
+        else {
+            self.playlistImage.image = UIImage(named: "default_list_bg")
+        }
+        if let avgPrice = cellobject["average_price"] as? Int{
+            var avg_price = ""
+            for _ in 0..<(avgPrice) {
+                avg_price += "$"
+            }
+            if avg_price != ""{
+                self.avgPrice.text = avg_price
+            }else{
+                let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: "-$-")
+                attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length))
+                self.avgPrice.attributedText = attributeString
+            }
+        }else{
+            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: "-$-")
+            attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length))
+            self.avgPrice.attributedText = attributeString
+        }
+        
     }
-    
+
     func addShadowToCell(){
         //self.backgroundColor = UIColor.whiteColor()
         self.layer.masksToBounds = false
