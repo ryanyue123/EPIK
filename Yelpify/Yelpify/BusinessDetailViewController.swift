@@ -12,8 +12,9 @@ import Haneke
 import Cosmos
 import BetterSegmentedControl
 import Async
+import SwiftPhotoGallery
 
-class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SwiftPhotoGalleryDelegate, SwiftPhotoGalleryDataSource {
 
     @IBOutlet weak var cosmosRating: CosmosView!
     @IBOutlet weak var headerView: UIView!
@@ -28,7 +29,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var hoursLabel: UILabel!
     @IBOutlet weak var ratingImageView: UIImageView!
     @IBOutlet weak var typeIconImageView: UIImageView!
-
+    
     @IBOutlet weak var segmentedView: UIView!
     
     var statusBarView: UIView!
@@ -47,7 +48,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     
     var photoRefs = [String]()
     var reviewArray = NSArray()
-    var infoArray = [(UIImage, String)]()
+    var infoArray = [("detail_location", ""), ("detail_phone", ""), ("detail_hours", "")]//, ("detail_web", "")] //[(UIImage, String)]()
     
     var APIClient = APIDataHandler()
     let gpClient = GooglePlacesAPIClient()
@@ -69,10 +70,11 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         // Register Nibs
         self.tableView.registerNib(UINib(nibName: "ReviewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "reviewCell")
         self.tableView.registerNib(UINib(nibName: "InfoCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "infoCell")
-        
-        //configureTableView()
+        self.tableView.registerNib(UINib(nibName: "ImageCarousel", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "imageCarousel")
         
         self.navBarShadowView = ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+        
+        self.tableView.separatorStyle = .None
         
         // Configure status bar and set alpha to 0
         self.statusBarView = ConfigureFunctions.configureStatusBar(self.navigationController!)
@@ -90,6 +92,8 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         // IF SEGUEING FROM SEARCHBUSINESSCONTROLLER
         if object != nil{
             APIClient.performDetailedSearch(object.gPlaceID!) { (detailedGPlace) in
+                
+                self.gPlaceObject = detailedGPlace
         
                 // Set up Info Array
                 self.setInfo(detailedGPlace)
@@ -151,7 +155,6 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
                 // Set Action Buttons
                 self.directionsButton.enabled = true
                 self.callButton.enabled = true
-             
                 self.tableView.reloadData()
             }
         }else{
@@ -169,7 +172,8 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             self.cosmosRating.rating = gPlaceObject.rating
             
             // Set Price Rating
-            self.priceRatingLabel.text = String(gPlaceObject.priceRating)
+            setPriceRating(gPlaceObject.priceRating)
+            //self.priceRatingLabel.text = String(gPlaceObject.priceRating)
             
             // Set Hours
             if gPlaceObject.hours.count == 7{
@@ -190,20 +194,23 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             // Set Price Rating
             self.setPriceRating(gPlaceObject.priceRating)
             
+            
         }
     
+        self.tableView.reloadData()
     
     }
     
-    
     func setInfo(place: GooglePlaceDetail){
-        for (image, label) in [UIImage(): place.address, UIImage(): place.phone, UIImage(): place.website]{
-            if label != ""{
-                self.infoArray.append((image, label))
-            }else{
-                self.infoArray.append((image, "Not Availible"))
-            }
-        }
+        self.infoArray[0] = ("detail_location", place.address as String)
+        self.infoArray[1] = ("detail_phone", place.phone as String)
+        if gPlaceObject.hours.count == 7{
+            self.infoArray[2] = ("detail_hours", getHours(place.hours))
+        }else{
+            self.infoArray[2] = ("detail_hours", "No Hours Availible")
+        } // CHANGE
+        
+        self.tableView.reloadData()
     }
     
     func getHours(hoursArray: NSMutableArray) -> String{
@@ -262,9 +269,17 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             for _ in 0..<price{
                 result += "$"
             }
-            self.priceRatingLabel.text = result
+            if result != ""{
+                self.priceRatingLabel.text = result
+            }else{
+                let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: "-$-")
+                attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length))
+                self.priceRatingLabel.attributedText = attributeString
+            }
         }else{
-            self.priceRatingLabel.text = ""
+            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: "-$-")
+            attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length))
+            self.priceRatingLabel.attributedText = attributeString
         }
     }
     
@@ -405,6 +420,30 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         //tableView.rowHeight = UITableViewAutomaticDimension
     }
     
+    // MARK: - SwiftPhotoGallery Delegate Methods
+    
+    func configureCarouselGallery(){
+        let gallery = SwiftPhotoGallery(delegate: self, dataSource: self)
+        gallery.backgroundColor = appDefaults.color_bg
+        gallery.pageIndicatorTintColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
+        gallery.currentPageIndicatorTintColor = appDefaults.color_darker
+    }
+    
+    let imageNames = ["face", "temp_profile", "default_restaurant"]
+    
+    func numberOfImagesInGallery(gallery: SwiftPhotoGallery) -> Int {
+        return imageNames.count
+    }
+    
+    func imageInGallery(gallery: SwiftPhotoGallery, forIndex: Int) -> UIImage? {
+        return UIImage(named: imageNames[forIndex])
+    }
+    
+    func galleryDidTapToClose(gallery: SwiftPhotoGallery) {
+        // do something cool like:
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     @IBAction func addItemToPlaylist(sender: UIBarButtonItem) {
         performSegueWithIdentifier("unwindFromDetail", sender: self)
     }
@@ -493,9 +532,21 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch contentToDisplay {
         case .Places:
-            return self.infoArray.count
+            return 4
         case .Comments:
             return self.reviewArray.count
+        }
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if contentToDisplay == .Places{
+            if indexPath.row != 3{
+                return 60.0
+            }else{
+                return 223.0
+            }
+        }else{
+            return 140.0
         }
     }
     
@@ -503,16 +554,28 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         
         // IF SEGMENTED IS ON PLACES (INFO)
         if self.contentToDisplay == .Places{
-            let infoCell = tableView.dequeueReusableCellWithIdentifier("infoCell", forIndexPath: indexPath) as! InfoTableViewCell
-            
-            self.tableView.rowHeight = 67.5
-            
-            Async.userInteractive{
-                infoCell.configureCell(self.infoArray[indexPath.row].0, label: self.infoArray[indexPath.row].1) {
-                    return infoCell
+            if indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 2{
+                let infoCell = tableView.dequeueReusableCellWithIdentifier("infoCell", forIndexPath: indexPath) as! InfoTableViewCell
+                
+                infoCell.configureCell(UIImage(named: self.infoArray[indexPath.row].0)!, label: self.infoArray[indexPath.row].1)
+                
+                return infoCell
+            }else{
+                // IMAGE CAROUSEL
+                let imageCarouselCell = tableView.dequeueReusableCellWithIdentifier("imageCarousel", forIndexPath: indexPath) as! ImageCarouselTableViewCell
+                
+                if gPlaceObject != nil{
+                    if gPlaceObject.photos.count > 0{
+                        imageCarouselCell.setImages(gPlaceObject)
+                    }else{
+                        return UITableViewCell()
+                    }
+                }else{
+                    return UITableViewCell()
                 }
+                
+                return imageCarouselCell
             }
-            return infoCell
             
             // IF SEGMENTED IS ON COMMENTS (REVIEWS)
         }else if self.contentToDisplay == .Comments{
@@ -520,21 +583,12 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
 
             self.tableView.rowHeight = 140.0
             
-            //reviewCell.configureCell()
+            reviewCell.configureCell(self.reviewArray[indexPath.row] as! NSDictionary)
             
             return reviewCell
         }else{
             return UITableViewCell()
         }
-
-        
-//        let cell = tableView.dequeueReusableCellWithIdentifier("reviewCell", forIndexPath: indexPath) as! ReviewTableViewCell
-//        let review = self.reviewArray[indexPath.row]
-//        cell.configureCell(review as! NSDictionary)
-//        
-//        cell.layoutMargins = UIEdgeInsetsMake(10, 0, 10, 0)
-//        return cell
-
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

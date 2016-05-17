@@ -21,10 +21,10 @@ class SearchPeopleCell: UITableViewCell {
     }
     
     func roundProf(){
-            self.roundingUIView(self.profilePicture, cornerRadiusParam: 30)
-            self.roundingUIView(self.profilePicture, cornerRadiusParam: 30)
-            self.profilePicture.layer.borderWidth = 1.0
-            self.profilePicture.layer.borderColor = UIColor.whiteColor().CGColor
+        self.roundingUIView(self.profilePicture, cornerRadiusParam: 30)
+        self.roundingUIView(self.profilePicture, cornerRadiusParam: 30)
+        self.profilePicture.layer.borderWidth = 1.0
+        self.profilePicture.layer.borderColor = UIColor.whiteColor().CGColor
     }
     
     private func roundingUIView(let aView: UIView!, let cornerRadiusParam: CGFloat!) {

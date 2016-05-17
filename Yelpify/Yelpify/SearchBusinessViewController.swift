@@ -68,14 +68,14 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
                     self.googleParameters["location"] = searchVC.chosenCoordinates
                     
                     self.searchWithKeyword(searchQuery)
-                    self.tableView.reloadData()
+                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
                     
                     // CHANGE
                 }else{
                     self.googleParameters["location"] = gPlacesVC.currentLocationCoordinates
                     self.currentCity = gPlacesVC.currentCity
                     self.searchWithKeyword(searchQuery)
-                    self.tableView.reloadData()
+                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
                 
                 }
             }
@@ -94,7 +94,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         self.businessObjects.removeAll()
         cache.removeAll()
         dispatch_async(dispatch_get_main_queue()) {
-            self.tableView.reloadData()
+            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
         }
         
         print("grabbing new data")
@@ -103,7 +103,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
                 self.businessShown.append(false)
             }
             self.businessObjects = businessObjectArray
-            self.tableView.reloadData()
+            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
         }
 
     }
@@ -126,7 +126,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             for _ in businessObjectArray{
                 self.businessShown.append(false)
             }
-            self.tableView.reloadData()
+            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
         }
     }
     
@@ -263,7 +263,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     override func viewDidLoad(){
         
-        self.tableView.reloadData()
+        //self.tableView.reloadData()
         
         // Get Location and Perform Search
         DataFunctions.getLocation { (coordinates) in

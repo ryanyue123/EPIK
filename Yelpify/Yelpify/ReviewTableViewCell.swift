@@ -34,6 +34,8 @@ class ReviewTableViewCell: UITableViewCell {
     
     func configureCell(review: NSDictionary){
         
+        roundProf()
+        
         self.contentView.autoresizingMask = [.FlexibleHeight]
         // Set Review Text
         self.reviewTextView.text = review["text"] as? String
@@ -48,13 +50,13 @@ class ReviewTableViewCell: UITableViewCell {
                 }
             }
         // Set Review Author Profile Picture
-//        if let profilePhotoURL = review["profile_photo_url"] as? String{
-//            
-//            //let fetcher = NetworkFetcher<UIImage>(URL: NSURL(string: profilePhotoURL)!)
-//            cache.fetch(URL: NSURL(string: profilePhotoURL)!).onSuccess({ (data) in
-//                self.reviewProfileImage.image = UIImage(data: data)
-//            })
-//        }
+        if let profilePhotoURL = review["profile_photo_url"] as? String{
+            
+            print(profilePhotoURL)
+            cache.fetch(URL: NSURL(string: profilePhotoURL)!).onSuccess({ (data) in
+                self.reviewProfileImage.image = UIImage(data: data)
+            })
+        }
         
         if let unixTime = review["time"] as? Double{
             let date = NSDate(timeIntervalSince1970: unixTime)
@@ -66,6 +68,18 @@ class ReviewTableViewCell: UITableViewCell {
             self.reviewDate.text = localDate
         }
         
+    }
+    
+    func roundProf(){
+        self.roundingUIView(self.reviewProfileImage, cornerRadiusParam: 15)
+        self.roundingUIView(self.reviewProfileImage, cornerRadiusParam: 15)
+        self.reviewProfileImage.layer.borderWidth = 1.0
+        self.reviewProfileImage.layer.borderColor = appDefaults.color_darker.CGColor //UIColor.whiteColor().CGColor
+    }
+    
+    private func roundingUIView(let aView: UIView!, let cornerRadiusParam: CGFloat!) {
+        aView.clipsToBounds = true
+        aView.layer.cornerRadius = cornerRadiusParam
     }
 
 }

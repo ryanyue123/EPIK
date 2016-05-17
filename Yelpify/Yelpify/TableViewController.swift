@@ -263,7 +263,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlists_location = objects!
                     self.all_playlists.append(self.playlists_location)
-                    self.label_array.append("Playlists near me")
+                    self.label_array.append("Playlists Near Me")
                     self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
                     //self.tableView.reloadData()
                     
@@ -273,7 +273,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                     query2.findObjectsInBackgroundWithBlock {(user: [PFObject]?, error: NSError?) -> Void in
                         if ((error) == nil)
                         {
-                            self.label_array.append("My playlists")
+                            self.label_array.append("My Playlists")
                             dispatch_async(dispatch_get_main_queue(), {
                                 if (user!.count != 0) {
                                     self.playlists_user = user!
@@ -300,7 +300,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                                                         dispatch_async(dispatch_get_main_queue(), {
                                                             self.recent_playlists = objects2!
                                                             self.all_playlists.append(self.recent_playlists)
-                                                            self.label_array.append("Recently viewed")
+                                                            self.label_array.append("Recently Viewed")
                                                             self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
                                                         })
                                                     }
@@ -470,9 +470,4 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         }
     }
     
-//    override func segueForUnwindingToViewController(toViewController: UIViewController, fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
-//        let segue = CustomUnwindSegue(identifier: identifier, source: fromViewController, destination: toViewController)
-//        segue.animationType = .Push
-//        return segue
-//    }
 }

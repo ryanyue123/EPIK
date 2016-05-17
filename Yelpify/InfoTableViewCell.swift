@@ -13,7 +13,8 @@ class InfoTableViewCell: UITableViewCell {
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var label: UILabel!
     
-    func configureCell(icon: UIImage, label: String, completion:() -> Void){
+    func configureCell(icon: UIImage, label: String){
+        self.separatorInset = UIEdgeInsetsMake(0, CGRectGetWidth(self.bounds), 0, 0)
         self.icon.image = icon
         self.label.text = label
     }

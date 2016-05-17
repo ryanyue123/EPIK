@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Montserrat-Regular.otf">
+            <string>Montserrat-Regular</string>
+        </mutableArray>
+        <mutableArray key="Montserrat-SemiBold.otf">
+            <string>Montserrat-SemiBold</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="imageCarousel" rowHeight="223" id="Om1-At-z6U" customClass="ImageCarouselTableViewCell" customModule="Yelpify" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="400" height="218"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Om1-At-z6U" id="pY2-aa-jZv">
+                <rect key="frame" x="0.0" y="0.0" width="400" height="217.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ME7-3u-pG2">
+                        <rect key="frame" x="139" y="50" width="121" height="121"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="121" id="ecY-f3-Fvr"/>
+                            <constraint firstAttribute="height" constant="121" id="og9-6F-xdu"/>
+                        </constraints>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FEf-5I-l2R">
+                        <rect key="frame" x="268" y="50" width="121" height="121"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="121" id="FTy-Ba-DkM"/>
+                            <constraint firstAttribute="height" constant="121" id="hcm-7S-obI"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mRZ-f6-HGO">
+                        <rect key="frame" x="10" y="19" width="60.5" height="21"/>
+                        <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="17"/>
+                        <color key="textColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZCr-ek-JTz">
+                        <rect key="frame" x="156" y="176" width="88" height="29"/>
+                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="14"/>
+                        <state key="normal" title="More Photos">
+                            <color key="titleColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                    </button>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e9U-7Y-zt0">
+                        <rect key="frame" x="10" y="50" width="121" height="121"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="121" id="Bll-O2-7nd"/>
+                            <constraint firstAttribute="height" constant="121" id="Zxs-p8-kmN"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ME7-3u-pG2" firstAttribute="centerY" secondItem="pY2-aa-jZv" secondAttribute="centerY" constant="1.75" id="2oA-Zi-FsY"/>
+                    <constraint firstItem="FEf-5I-l2R" firstAttribute="centerY" secondItem="pY2-aa-jZv" secondAttribute="centerY" constant="1.75" id="4NK-C9-eKv"/>
+                    <constraint firstItem="ZCr-ek-JTz" firstAttribute="centerX" secondItem="pY2-aa-jZv" secondAttribute="centerX" id="8GV-fH-9mT"/>
+                    <constraint firstItem="e9U-7Y-zt0" firstAttribute="leading" secondItem="pY2-aa-jZv" secondAttribute="leadingMargin" constant="2" id="Esk-PS-Cuq"/>
+                    <constraint firstItem="FEf-5I-l2R" firstAttribute="leading" secondItem="ME7-3u-pG2" secondAttribute="trailing" constant="8" id="Igy-Zf-GhJ"/>
+                    <constraint firstItem="ME7-3u-pG2" firstAttribute="leading" secondItem="e9U-7Y-zt0" secondAttribute="trailing" constant="8" id="K9z-H3-Auo"/>
+                    <constraint firstItem="mRZ-f6-HGO" firstAttribute="leading" secondItem="pY2-aa-jZv" secondAttribute="leadingMargin" constant="2" id="Wj6-tf-b6R"/>
+                    <constraint firstItem="e9U-7Y-zt0" firstAttribute="top" secondItem="mRZ-f6-HGO" secondAttribute="bottom" constant="10" id="dGK-TM-YSg"/>
+                    <constraint firstItem="e9U-7Y-zt0" firstAttribute="centerY" secondItem="pY2-aa-jZv" secondAttribute="centerY" constant="1.75" id="pcI-B2-deq"/>
+                    <constraint firstItem="ZCr-ek-JTz" firstAttribute="top" secondItem="ME7-3u-pG2" secondAttribute="bottom" constant="5" id="w9w-5T-qWo"/>
+                    <constraint firstItem="mRZ-f6-HGO" firstAttribute="top" secondItem="pY2-aa-jZv" secondAttribute="topMargin" constant="11" id="wpC-gb-PyR"/>
+                </constraints>
+                <variation key="widthClass=compact" ambiguous="YES">
+                    <rect key="frame" x="0.0" y="0.0" width="400" height="111.5"/>
+                </variation>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="imageOne" destination="e9U-7Y-zt0" id="NKH-OU-Cbo"/>
+                <outlet property="imageThree" destination="FEf-5I-l2R" id="gdI-l9-fCd"/>
+                <outlet property="imageTwo" destination="ME7-3u-pG2" id="l3a-9S-YcI"/>
+                <outlet property="morePhotosButton" destination="ZCr-ek-JTz" id="lPb-7I-ivO"/>
+            </connections>
+            <point key="canvasLocation" x="238" y="-14"/>
+        </tableViewCell>
+    </objects>
+</document>

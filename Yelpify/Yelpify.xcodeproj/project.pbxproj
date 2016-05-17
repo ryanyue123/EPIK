@@ -25,6 +25,9 @@
 		3CE2EE9F1C6C5EC8000C9088 /* YelpifyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE2EE9E1C6C5EC8000C9088 /* YelpifyUITests.swift */; };
 		523E599553F6100C5348857C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68ACAEFF88A59BB74B411CE0 /* Pods.framework */; };
 		9001FEE71CEAB7B000A863C1 /* ProfileLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9001FEE61CEAB7B000A863C1 /* ProfileLayout.swift */; };
+		9001FEE91CEAEADC00A863C1 /* ImageCarousel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9001FEE81CEAEADC00A863C1 /* ImageCarousel.xib */; };
+		9001FEEB1CEAEBC500A863C1 /* ImageCarouselTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9001FEEA1CEAEBC500A863C1 /* ImageCarouselTableViewCell.swift */; };
+		9001FEED1CEB0A2600A863C1 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9001FEEC1CEB0A2600A863C1 /* Animations.swift */; };
 		901DFAEC1CBF481800AFD002 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CE2EE821C6C5EC8000C9088 /* Main.storyboard */; };
 		9038B75E1CBCD041004B220B /* ActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9038B75D1CBCD041004B220B /* ActionsViewController.swift */; };
 		905F87941CD741BB004046CD /* SearchPlaylistCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */; };
@@ -145,6 +148,9 @@
 		3CE2EEA01C6C5EC8000C9088 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68ACAEFF88A59BB74B411CE0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9001FEE61CEAB7B000A863C1 /* ProfileLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileLayout.swift; sourceTree = "<group>"; };
+		9001FEE81CEAEADC00A863C1 /* ImageCarousel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageCarousel.xib; sourceTree = "<group>"; };
+		9001FEEA1CEAEBC500A863C1 /* ImageCarouselTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCarouselTableViewCell.swift; sourceTree = "<group>"; };
+		9001FEEC1CEB0A2600A863C1 /* Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		9025184D1C8825E700BB3E05 /* Haneke.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Haneke.framework; path = "Pods/../build/Debug-iphoneos/Haneke.framework"; sourceTree = "<group>"; };
 		9038B75D1CBCD041004B220B /* ActionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionsViewController.swift; sourceTree = "<group>"; };
 		905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlaylistCollectionViewController.swift; sourceTree = "<group>"; };
@@ -280,6 +286,7 @@
 		3CA6CFFB1CC05A880004B989 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				9001FEEA1CEAEBC500A863C1 /* ImageCarouselTableViewCell.swift */,
 				90DC43211CE95D3B007F312B /* InfoTableViewCell.swift */,
 				ED55870F1CE6ED560049CF93 /* SettingsTableViewCell.swift */,
 				3CBFD89C1CD4355900290F25 /* SearchPlaylistCell.swift */,
@@ -427,6 +434,7 @@
 				906059CB1CE95B7A00071D19 /* InfoCell.xib */,
 				905F879E1CD9A453004046CD /* ProfileHeader.xib */,
 				905F87951CD742C7004046CD /* ListCell.xib */,
+				9001FEE81CEAEADC00A863C1 /* ImageCarousel.xib */,
 				9069D7671CD6B15E005650F4 /* BusinessCell.xib */,
 				9069D7691CD6B7F2005650F4 /* ReviewCell.xib */,
 			);
@@ -465,6 +473,7 @@
 			isa = PBXGroup;
 			children = (
 				90C177D71CCB50AE007344CE /* TabSwipe */,
+				9001FEEC1CEB0A2600A863C1 /* Animations.swift */,
 				90E505E11C8E944100F47285 /* CustomSearchController.swift */,
 				90E505E31C8E946700F47285 /* CustomSearchBar.swift */,
 				90B6D69B1CD35BBE006928E8 /* CustomSegue.swift */,
@@ -651,6 +660,7 @@
 				90DA328F1C93616700D5EBDF /* Montserrat-ExtraBold.otf in Resources */,
 				90DA32871C93616700D5EBDF /* OpenSans-Light.ttf in Resources */,
 				90DA328E1C93616700D5EBDF /* OpenSans-SemiboldItalic.ttf in Resources */,
+				9001FEE91CEAEADC00A863C1 /* ImageCarousel.xib in Resources */,
 				90DA328A1C93616700D5EBDF /* OpenSans-ExtraBoldItalic.ttf in Resources */,
 				3CE2EE891C6C5EC8000C9088 /* LaunchScreen.storyboard in Resources */,
 				3CE2EE861C6C5EC8000C9088 /* Assets.xcassets in Resources */,
@@ -761,6 +771,7 @@
 				90C177DB1CCB5B4A007344CE /* TableChildExampleViewController.swift in Sources */,
 				3CE1DEF81CDC831A007B08C2 /* SearchPeopleTableViewController.swift in Sources */,
 				3CD034511CBA122A00675F88 /* TableViewController.swift in Sources */,
+				9001FEEB1CEAEBC500A863C1 /* ImageCarouselTableViewCell.swift in Sources */,
 				90F34CDF1CB0893300CC0870 /* SinglePlaylistViewController.swift in Sources */,
 				90C177D51CCB50A6007344CE /* YoutubeIconCell.swift in Sources */,
 				90E505DF1C8E375200F47285 /* GPlacesSearchViewController.swift in Sources */,
@@ -772,6 +783,7 @@
 				9038B75E1CBCD041004B220B /* ActionsViewController.swift in Sources */,
 				3CA5CB3E1CE7D63800D1F278 /* AddCommentViewController.swift in Sources */,
 				90B6D69E1CD49888006928E8 /* SearchPagerTabStripVC.swift in Sources */,
+				9001FEED1CEB0A2600A863C1 /* Animations.swift in Sources */,
 				3CBFD89D1CD4355900290F25 /* SearchPlaylistCell.swift in Sources */,
 				9081EF811CE44A8600E571E2 /* CellConfigurator.swift in Sources */,
 				3CD0344F1CBA121300675F88 /* TableViewCell.swift in Sources */,
