@@ -763,6 +763,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     private var playlistTableHeaderHeight: CGFloat = 350.0
     
     func configurePlaylistInfoView(){
+        self.playlistInfoName.font = UIFont(name: "Montserrat-Regular", size: 32.0)
         playlistTableView.tableHeaderView = nil
         playlistTableView.addSubview(playlistInfoView)
         playlistTableView.contentInset = UIEdgeInsets(top: playlistTableHeaderHeight, left: 0, bottom: 0, right: 0)
@@ -1143,7 +1144,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 
                 
                 // Saves Average Price
-                let averagePrice = self.getAveragePrice({ (avg) in
+                self.getAveragePrice({ (avg) in
                     saveobject["average_price"] = avg
                 })
                 
@@ -1152,7 +1153,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 saveobject["place_id_list"] = self.placeIDs
             }
         
-        }.userInitiated{
+        }.utility{
             saveobject.saveInBackgroundWithBlock { (success, error)  -> Void in
                 if (error == nil){
                     print("saved")

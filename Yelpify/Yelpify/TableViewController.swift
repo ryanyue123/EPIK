@@ -80,7 +80,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
     override func viewDidAppear(animated: Bool) {
         self.navigationController?.navigationBar.titleTextAttributes = [
             NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(1) ]
-        self.tableView.reloadData()
+        //self.tableView.reloadData()
         self.navigationController?.navigationBar.backgroundColor = appDefaults.color.colorWithAlphaComponent(1)
     }
     
@@ -218,6 +218,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                                 object["place_id_list"] = []
                                 object["Collaborators"] = []
                                 object["comment"] = []
+                                object["comments"] = []
                                 object["average_price"] = 0
                                 object["num_places"] = 0
                                 object.saveInBackgroundWithBlock({ (success, error) in
