@@ -32,9 +32,9 @@ class ReviewTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureCell(review: NSDictionary){
+    func configureCell(review: NSDictionary, ratingHidden: Bool = false){
         
-        roundProf()
+        self.roundProf()
         
         self.contentView.autoresizingMask = [.FlexibleHeight]
         // Set Review Text
@@ -43,16 +43,23 @@ class ReviewTableViewCell: UITableViewCell {
         // Set Review Author Name
         self.reviewName.text = review["author_name"] as? String
         
-        // Set Review Rating
-        if let ratingValue3 = review["rating"] as? Double{
-            if ratingValue3 != -1{
+        if ratingHidden == false{
+            // Set Review Rating
+            if let ratingValue3 = review["rating"] as? Double{
+                if ratingValue3 != -1{
                     self.CommentRating.rating = ratingValue3
                 }
             }
+        }else{
+            self.CommentRating.hidden = true
+        }
+        
+        if let profilePhoto = review["profile_photo"] as? UIImage{
+            Animations.fadeInImageView(reviewProfileImage, imageToAdd: profilePhoto, beginScale: 1.0)
+        }
+        
         // Set Review Author Profile Picture
         if let profilePhotoURL = review["profile_photo_url"] as? String{
-            
-            print(profilePhotoURL)
             cache.fetch(URL: NSURL(string: profilePhotoURL)!).onSuccess({ (data) in
                 self.reviewProfileImage.image = UIImage(data: data)
             })
@@ -66,6 +73,16 @@ class ReviewTableViewCell: UITableViewCell {
             dateFormatter.timeZone = NSTimeZone()
             let localDate = dateFormatter.stringFromDate(date)
             self.reviewDate.text = localDate
+        }else if let unixTimeString = review["time"] as? String{
+            let unixTime = Double(unixTimeString)!
+            let date = NSDate(timeIntervalSince1970: unixTime)
+            let dateFormatter = NSDateFormatter()
+            //dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
+            dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
+            dateFormatter.timeZone = NSTimeZone()
+            let localDate = dateFormatter.stringFromDate(date)
+            self.reviewDate.text = localDate
+
         }
         
     }

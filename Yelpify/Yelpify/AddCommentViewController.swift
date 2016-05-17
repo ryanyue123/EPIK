@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddCommentViewController: UIViewController {
+class AddCommentViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet var popUpView: UIView!
     
@@ -16,6 +16,8 @@ class AddCommentViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.comment_content.delegate = self
+        comment_content.becomeFirstResponder()
         //roundCorners(popUpView)
         //roundCorners(comment_content)
         // Do any additional setup after loading the view.
@@ -38,6 +40,16 @@ class AddCommentViewController: UIViewController {
         view.layer.masksToBounds = false
     }
 
+    // MARK: - TextField Delegate Functions
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        self.popUpView.transform = CGAffineTransformMakeTranslation(0, -100)
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        self.popUpView.transform = CGAffineTransformMakeTranslation(0, 100)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

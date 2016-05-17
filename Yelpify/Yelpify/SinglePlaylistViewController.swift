@@ -84,6 +84,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     var placeArray = [GooglePlaceDetail]()
     var placeIDs = [String]()
     
+    var commentsArray = [[String: String]]()
+    
     var object: PFObject!
     var editable: Bool = false
     var sortMethod:String!
@@ -260,21 +262,47 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                         placeArray.append(GooglePlaceDetail())
                     }
                     
-                    
-                    
+                    // Update Info
+                    self.numOfPlacesLabel.text = "\(placeIDs.count)"
+                    self.getAveragePrice({ (avg) in
+                        self.setPriceRating(avg)
+                    })
                     self.playlistTableView.reloadData()
                 }
             }
         }
     }
     
+
     @IBAction func unwindToSinglePlaylistWithComment(segue: UIStoryboardSegue){
         dim(.Out, alpha: dimLevel, speed: dimSpeed)
             if (segue.identifier == "withComment"){
             let sourceVC = segue.sourceViewController as? AddCommentViewController
+                
+            let username = "@ " + (PFUser.currentUser()?.username)!
+            let newComment = sourceVC?.comment_content.text!
+            let date = NSDate().timeIntervalSince1970.description
+                
             if sourceVC?.comment_content.text != ""{
-                print(sourceVC?.comment_content.text)
-                // ADD COMMENT TO PARSE AND RELOAD DATA HERE CHANGE
+            // SAVE COMMENT TO PARSE
+                Async.main{
+                    let saveobject = self.object
+                    var commentsArray = saveobject["comments"] as! [[String: String]]
+                    commentsArray.insert(["text": newComment!,"author_name": username, "time": date], atIndex: 0)
+                    
+                    saveobject["comments"] = commentsArray
+                    
+                    saveobject.saveInBackgroundWithBlock { (success, error)  -> Void in
+                        if (error == nil){
+                            print("saved comment")
+                        }else{
+                            print(error?.description)
+                        }
+                    }
+                }.main{
+                    self.commentsArray.insert(["text": newComment!,"author_name": username, "time": date], atIndex: 0)
+                    self.playlistTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+                }
             }
         }
         
@@ -322,8 +350,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             configureRecentlyViewed()
         }
         
+        Async.userInteractive{
+            self.updateComments()
+        }
     
         Async.main{
+            self.segmentedBarView.userInteractionEnabled = false
             let placeIDs = self.object["place_id_list"] as! [String]
             self.placeIDs = placeIDs
             // Setup HeaderView with information
@@ -379,6 +411,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         updateHeaderView()
     }
     
+    func updateComments(){
+        commentsArray = object["comments"] as! [[String : String]]
+    }
+    
     func updateBusinessesFromIDs(ids:[String], reloadIndex: Int = 0){
         if ids.count > 0{
             apiClient.performDetailedSearch(ids[0]) { (detailedGPlace) in
@@ -389,11 +425,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 // self.playlistArray.append(detailedGPlace.convertToBusiness())
                 let idsSlice = Array(ids[1..<ids.count])
                 let index = NSIndexPath(forRow: reloadIndex, inSection: 0)
-                self.playlistTableView.reloadRowsAtIndexPaths([index], withRowAnimation: .Fade)
+                self.playlistTableView.reloadRowsAtIndexPaths([index], withRowAnimation: .Fade) // CHANGE
                 let newIndex = reloadIndex + 1
                 self.updateBusinessesFromIDs(idsSlice, reloadIndex: newIndex)
             }
         }else{
+            self.segmentedBarView.userInteractionEnabled = true
             //self.playlistTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
         }
     }
@@ -839,7 +876,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             return playlistArray.count
             
         case .Comments:
-            return 20
+            return commentsArray.count
         }
     }
     
@@ -904,6 +941,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             // IF SEGMENTED IS ON COMMENTS
         }else if self.contentToDisplay == .Comments{
             let reviewCell = tableView.dequeueReusableCellWithIdentifier("reviewCell", forIndexPath: indexPath) as! ReviewTableViewCell
+            
+            reviewCell.configureCell(self.commentsArray[indexPath.row], ratingHidden: true)
+            
             return reviewCell
         }else{
             return UITableViewCell()

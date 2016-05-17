@@ -568,10 +568,10 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
                     if gPlaceObject.photos.count > 0{
                         imageCarouselCell.setImages(gPlaceObject)
                     }else{
-                        return UITableViewCell()
+                        //return UITableViewCell()
                     }
                 }else{
-                    return UITableViewCell()
+                    //return UITableViewCell()
                 }
                 
                 return imageCarouselCell
