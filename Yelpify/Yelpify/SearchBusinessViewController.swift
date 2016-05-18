@@ -194,6 +194,12 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         
         cell.moreButton.tag = indexPath.row
         cell.moreButton.addTarget(self, action: "addTrackToPlaylist:", forControlEvents: .TouchUpInside)
+        
+        let tappedGestureRec = UITapGestureRecognizer(target: self, action: "addTrackToPlaylistFromTap:")
+        cell.actionButtonView.tag = indexPath.row
+        cell.actionButtonView.addGestureRecognizer(tappedGestureRec)
+        
+        
         return cell
     }
     
@@ -249,7 +255,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             print(businessArray)
             
         }
-        
     }
     func sendValue(value: AnyObject){
         itemReceived.append(value as! NSObject)
