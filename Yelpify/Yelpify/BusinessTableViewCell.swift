@@ -35,11 +35,18 @@ class BusinessTableViewCell: MGSwipeTableCell {
     
     let googlePlacesClient = GooglePlacesAPIClient()
         
+    
+    @IBOutlet weak var actionButtonView: UIView!
+    
     func configureCellWith(business: Business, mode: BusinessCellMode, completion:() -> Void){
         
+               
         switch mode {
         case .Add:
             self.configureButton(UIImage(named: "checkMark")!)
+            let tapRec = UITapGestureRecognizer(target: self, action: "actionButtonPressed:")
+            actionButtonView.addGestureRecognizer(tapRec)
+
         case .More:
             self.configureButton(UIImage(named: "more_icon")!)
             self.moreButton.hidden = true
@@ -134,6 +141,7 @@ class BusinessTableViewCell: MGSwipeTableCell {
     func changeImageViewColor(imageView: UIImageView, color: UIColor) {
         
     }
+    
     
     @IBAction func actionButtonPressed(sender: AnyObject) {
         self.actionButton.tintColor = UIColor.greenColor()

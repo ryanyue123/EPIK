@@ -12,6 +12,9 @@ import Haneke
 import Parse
 import DGElasticPullToRefresh
 import XLPagerTabStrip
+import MGSwipeTableCell
+import CZPicker
+
 
 enum CurrentView {
     case AddPlace
@@ -21,7 +24,8 @@ enum CurrentView {
 class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, IndicatorInfoProvider, UITextFieldDelegate, Dimmable  {
     
     var itemInfo: IndicatorInfo = "Places"
-    
+    var playlist_swiped: String!
+    var itemReceived: Array<AnyObject> = []
     // MARK: - GLOBAL VARIABLES
     var googlePlacesClient = GooglePlacesAPIClient()
     var customSearchController: CustomSearchController!
@@ -163,11 +167,25 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return businessObjects.count
     }
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+
+    
+    // MGSwipeTableCell Delegate Methods
+    
+    func swipeTableCell(cell: MGSwipeTableCell!, canSwipe direction: MGSwipeDirection) -> Bool {
+        return true
+    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
+        cell.delegate = self
         cell.tag = indexPath.row
+        
+        configureSwipeButtons(cell)
         
         if self.currentView == .SearchPlace{
             cell.actionButton.hidden = true
@@ -183,6 +201,12 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         
         cell.moreButton.tag = indexPath.row
         cell.moreButton.addTarget(self, action: "addTrackToPlaylist:", forControlEvents: .TouchUpInside)
+        
+        let tappedGestureRec = UITapGestureRecognizer(target: self, action: "addTrackToPlaylistFromTap:")
+        cell.actionButtonView.tag = indexPath.row
+        cell.actionButtonView.addGestureRecognizer(tappedGestureRec)
+        
+        
         return cell
     }
     
@@ -238,9 +262,30 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             print(businessArray)
             
         }
+    }
+    func sendValue(value: AnyObject){
+        itemReceived.append(value as! NSObject)
+        
+        for item in itemReceived{
+            
+            
+            let index = item as! Int
+            var playlist = addToOwnPlaylists[index]["place_id_list"] as! [String]
+            print(playlist)
+            playlist.append(self.playlist_swiped)
+            print(playlist)
+            addToOwnPlaylists[index]["place_id_list"] = playlist
+            addToOwnPlaylists[index].saveInBackgroundWithBlock({ (success, error) in
+                if (error == nil) {
+                    print("Saved")
+                    }
+                })
+            
+            itemReceived = []
+        }
+        
         
     }
-    
     
     // This one is added through DetailedVC
     
@@ -316,6 +361,85 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         customSearchController.customSearchBar.placeholder = "Search in this awesome bar..."
         self.tableView.tableHeaderView = customSearchController.customSearchBar
     }
+    func configureSwipeButtons(cell: MGSwipeTableCell){
+        
+        let routeButton = MGSwipeButton(title: "Route", icon: UIImage(named: "location_icon"),backgroundColor: appDefaults.color, padding: 25)
+        routeButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
+        routeButton.centerIconOverText()
+        routeButton.titleLabel?.font = appDefaults.font
+        
+        let addButton = MGSwipeButton(title: "Add", icon: UIImage(named: "location_icon"),backgroundColor: UIColor.greenColor(), padding: 25)
+        addButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
+        addButton.centerIconOverText()
+        addButton.titleLabel?.font = appDefaults.font
+        
+        
+        cell.rightButtons = [addButton]
+        cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
+        cell.rightExpansion.buttonIndex = 0
+        cell.rightExpansion.fillOnTrigger = false
+        cell.rightExpansion.threshold = 1
+        
+        cell.leftButtons = [routeButton]
+        cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
+        cell.leftExpansion.buttonIndex = 0
+        cell.leftExpansion.fillOnTrigger = true
+        cell.leftExpansion.threshold = 1
+    }
+    
+    func swipeTableCell(cell: MGSwipeTableCell!, tappedButtonAtIndex index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
+        let indexPath = tableView.indexPathForCell(cell)
+        
+        //self.playlist_swiped = self.businessObjects[indexPath!.row].gPlaceID
+        //self.playlist_swiped = self.placeIDs[(indexPath?.row)!]
+        let business = businessObjects[indexPath!.row]
+        self.playlist_swiped = business.gPlaceID
+        let actions = PlaceActions()
+        let pickerController = CZPickerViewController()
+        
+        
+        if direction == MGSwipeDirection.LeftToRight{
+            print("swipelefttoright")
+            actions.openInMaps(business)
+        }else if direction == MGSwipeDirection.RightToLeft{
+            let query = PFQuery(className: "Playlists")
+            query.whereKey("createdBy", equalTo: PFUser.currentUser()!)
+            query.findObjectsInBackgroundWithBlock({ (object, error) in
+                if (error == nil) {
+                    self.addToOwnPlaylists = object!
+                    var user_array = [String]()
+                    dispatch_async(dispatch_get_main_queue(), {
+                        for playlist in object! {
+                            user_array.append(playlist["playlistName"] as! String)
+                        }
+                        pickerController.fruits = user_array
+                        pickerController.headerTitle = "Playlists To Add To"
+                        pickerController.showWithMultipleSelections(UIViewController)
+                        pickerController.delegate = self
+                        })
+                    }
+                })
+            }
+        return true
+        }
+    func swipeTableCell(cell: MGSwipeTableCell!, didChangeSwipeState state: MGSwipeState, gestureIsActive: Bool) {
+        print(gestureIsActive)
+        let routeButton = cell.leftButtons.first as! MGSwipeButton
+        let addButton = cell.rightButtons[0] as! MGSwipeButton
+        if cell.swipeState.rawValue == 2{
+            routeButton.backgroundColor = appDefaults.color
+            addButton.backgroundColor = UIColor.greenColor()
+        }
+        else if cell.swipeState.rawValue >= 4{
+            addButton.backgroundColor = UIColor.greenColor()
+            routeButton.backgroundColor = appDefaults.color
+            //cell.swipeBackgroundColor = appDefaults.color
+            }
+            
+        }
+        
+    
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
