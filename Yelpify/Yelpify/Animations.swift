@@ -48,7 +48,7 @@ struct Animations{
         })
     }
     
-    func fadeInTextField(textField: UITextField, textToSet: String, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
+    static func fadeInTextField(textField: UITextField, textToSet: String, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
         textField.alpha = 0
         textField.layer.frame.origin.y += beginOffsetY
         textField.text = textToSet
@@ -59,6 +59,41 @@ struct Animations{
             textField.alpha = endAlpha
             textField.transform = CGAffineTransformMakeScale(endScale, endScale)
         })
+    }
+    
+    static func roundCorners(view: UIView, radius: CGFloat = 20.0, corners: UIRectCorner = [.TopLeft, .TopRight, .BottomLeft, .BottomRight]){
+        
+        let roundedRect = CGRect(x: view.frame.origin.x, y: view.frame.origin.y, width: view.frame.width, height: view.frame.height)
+        
+        // Round the banner's corners
+        let maskPath: UIBezierPath = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: (corners), cornerRadii: CGSizeMake(radius, radius))
+        
+        let maskLayer: CAShapeLayer = CAShapeLayer()
+        
+        maskLayer.frame = view.bounds
+        maskLayer.path = maskPath.CGPath
+        view.layer.mask = maskLayer
+        
+        // Round cell corners
+        //view.layer.cornerRadius = radius
+        view.clipsToBounds = true
+//        view.layer.masksToBounds = false
+    }
+    
+    static func roundSquareImageView(imageView: UIImageView, outerView: UIView?, borderWidth: CGFloat?, borderColor: UIColor? = UIColor.whiteColor()){
+        func roundingUIView(let aView: UIView!, let cornerRadiusParam: CGFloat!) {
+            aView.clipsToBounds = true
+            aView.layer.cornerRadius = cornerRadiusParam
+        }
+        roundingUIView(imageView, cornerRadiusParam: imageView.frame.width / 2)
+        if outerView != nil{
+            roundingUIView(outerView, cornerRadiusParam: imageView.frame.width / 2)
+        }
+        
+        if borderWidth != nil{
+            imageView.layer.borderWidth = borderWidth!
+            imageView.layer.borderColor = borderColor!.CGColor
+        }
     }
 
 }

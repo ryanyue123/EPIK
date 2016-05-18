@@ -11,12 +11,14 @@ import UIKit
 import Parse
 import Foundation
 import XLActionController
+import Async
 
 class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewControllerDelegate, Dimmable {
     
     var isReload = false
     
     var chosenCoordinates: String!
+    var currentCity: String!
     
     var itemReceived: Array<AnyObject> = []
     
@@ -26,7 +28,10 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
         dim(.Out, alpha: dimLevel, speed: dimSpeed)
         if (segue.identifier != nil){
             if segue.identifier == "unwindFromLocation"{
-                //dim(.Out, alpha: dimLevel, speed: dimSpeed)
+                dim(.Out, alpha: dimLevel, speed: dimSpeed)
+                UIView.animateWithDuration(0.2, animations: {
+                    self.navigationController?.navigationBar.alpha = 1
+                })
             }
         }
     }
@@ -35,62 +40,58 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
         if (segue.identifier != nil){
             if segue.identifier == "unwindFromNewLocation"{
                 dim(.Out, alpha: dimLevel, speed: dimSpeed)
-                
-                print("unwinded from locationSearchVC")
+                UIView.animateWithDuration(0.2, animations: {
+                    self.navigationController?.navigationBar.alpha = 1
+                })
                 
                 let locationVC = segue.sourceViewController as! LocationSearchViewController
                 self.chosenCoordinates = locationVC.currentLocationCoordinates
+                self.currentCity = locationVC.currentCity
                 
-                let searchBusinessVC = self.childViewControllers[0] as! SearchBusinessViewController
-                let searchPlaylistVC = self.childViewControllers[1] as! SearchPlaylistCollectionViewController
-                //et searchPeopleVC = self.childViewControllers[2] as! SearchPeopleTableViewController
+                print(currentCity)
+                print(chosenCoordinates)
                 
-                searchBusinessVC.locationUpdated = true
-                searchPlaylistVC.locationUpdated = true
+                if let searchBusinessVC = self.childViewControllers[0] as? SearchBusinessViewController{
+                    searchBusinessVC.googleParameters["location"] = chosenCoordinates
+                    if searchBusinessVC.searchQuery != ""{
+                        searchBusinessVC.searchWithKeyword(searchBusinessVC.searchQuery)
+                    }else{
+                        searchBusinessVC.searchQuery = "food"
+                        searchBusinessVC.searchWithKeyword("food")
+                    }
+                }
             }
         }
     }
     
     override func viewDidLoad() {
         
-        self.containerView.scrollEnabled = false
+        if sharedVariables.currentCoordinates == ""{
+            Async.background{
+                DataFunctions.getLocation({ (coordinates) in
+                    self.chosenCoordinates = "\(coordinates.latitude),\(coordinates.longitude)"
+                })
+            }
+        }else{
+            self.chosenCoordinates = sharedVariables.currentCoordinates
+        }
         
         // change selected bar color
-        settings.style.buttonBarBackgroundColor = UIColor.whiteColor()
-        settings.style.buttonBarItemBackgroundColor = UIColor.clearColor()
-        settings.style.selectedBarBackgroundColor = UIColor.whiteColor()
+        settings.style.buttonBarBackgroundColor = appDefaults.color
+        settings.style.buttonBarItemBackgroundColor = .whiteColor()
+        settings.style.selectedBarBackgroundColor = appDefaults.color
         settings.style.buttonBarItemFont = .boldSystemFontOfSize(14)
         settings.style.selectedBarHeight = 2.0
         settings.style.buttonBarMinimumLineSpacing = 0
         settings.style.buttonBarItemTitleColor = UIColor.grayColor()
         settings.style.buttonBarItemsShouldFillAvailiableWidth = true
-        
         //settings.style.buttonBarLeftContentInset = 0
         settings.style.buttonBarRightContentInset = -1
-        
-//        changeCurrentIndexProgressive = { [weak self] (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
-//            guard changeCurrentIndex == true else { return }
-//            oldCell?.label.tintColor = .grayColor()
-//            newCell?.label.tintColor = .whiteColor()
-//            
-//        }
-        
-        changeCurrentIndexProgressive = { (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
+
+        changeCurrentIndexProgressive = { [weak self] (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             guard changeCurrentIndex == true else { return }
-            
-            oldCell?.label.textColor = UIColor.darkGrayColor()
-            newCell?.label.textColor = appDefaults.color_darker
-            
-            if animated {
-                UIView.animateWithDuration(0.1, animations: { () -> Void in
-                    newCell?.transform = CGAffineTransformMakeScale(1.0, 1.0)
-                    oldCell?.transform = CGAffineTransformMakeScale(0.8, 0.8)
-                })
-            }
-            else {
-                newCell?.transform = CGAffineTransformMakeScale(1.0, 1.0)
-                oldCell?.transform = CGAffineTransformMakeScale(0.8, 0.8)
-            }
+            oldCell?.label.textColor = UIColor.grayColor()
+            newCell?.label.textColor = appDefaults.color
         }
         
         super.viewDidLoad()
@@ -118,6 +119,7 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
     private let dimSpeed: Double = 0.5
     
     func pressedLocation(sender: UIBarButtonItem){
+        self.navigationController?.navigationBar.alpha = 0.5
         dim(.In, alpha: dimLevel, speed: dimSpeed)
         performSegueWithIdentifier("pickLocation", sender: self)
     }
@@ -141,11 +143,14 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
             let navVC = segue.destinationViewController as! UINavigationController
             let destVC = navVC.childViewControllers[0] as! LocationSearchViewController
             
-            DataFunctions.getLocation({ (coordinates) in
-                destVC.currentLocationCoordinates = "\(coordinates.latitude),\(coordinates.longitude)"
-                print("Sending location \(coordinates.latitude),\(coordinates.longitude)")
-                
-            })
+            destVC.currentCity = self.currentCity
+            destVC.currentLocationCoordinates = self.chosenCoordinates
+            
+//            DataFunctions.getLocation({ (coordinates) in
+//                //destVC.currentLocationCoordinates = "\(coordinates.latitude),\(coordinates.longitude)"
+//                print("Sending location \(coordinates.latitude),\(coordinates.longitude)")
+//                
+//            })
         }
     }
     
@@ -158,10 +163,13 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
     override func viewControllersForPagerTabStrip(pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
         let searchPlaylistVC = storyboard.instantiateViewControllerWithIdentifier("searchPlaylistVC") as! SearchPlaylistCollectionViewController
         searchPlaylistVC.searchTextField = self.searchTextField
+        
         let searchBusinessVC = storyboard.instantiateViewControllerWithIdentifier("searchBusinessVC") as! SearchBusinessViewController
         searchBusinessVC.searchTextField = self.searchTextField
+        
         let searchPeopleVC = storyboard.instantiateViewControllerWithIdentifier("searchPeopleVC") as! SearchPeopleTableViewController
         searchPeopleVC.searchTextField = self.searchTextField
         
@@ -185,6 +193,7 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
         let nItems = 1 + (rand() % 8)
         return Array(childViewControllers.prefix(Int(nItems)))
     }
+    
     
     override func reloadPagerTabStripView() {
         isReload = true

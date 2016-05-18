@@ -16,6 +16,10 @@ struct playlist
     static var playlistname: String!
 }
 
+struct sharedVariables{
+    static var currentCoordinates = ""
+}
+
 struct appDefaults {
     static let font: UIFont! = UIFont(name: "Montserrat-Regular", size: 14)
     static let color: UIColor! = UIColor.init(netHex: 0x52abc0)
@@ -41,6 +45,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
         
         // Get Location and Fetch
         DataFunctions.getLocation { (coordinates) in
+            sharedVariables.currentCoordinates = String(coordinates.latitude) + "," + String(coordinates.longitude)
             self.parameters["ll"] = String(coordinates.latitude) + "," + String(coordinates.longitude)
             self.userlatitude = coordinates.latitude
             self.userlongitude = coordinates.longitude

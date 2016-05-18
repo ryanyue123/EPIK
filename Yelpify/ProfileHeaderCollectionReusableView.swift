@@ -19,9 +19,18 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var handleLabel : UILabel!
     @IBOutlet weak var followerCount: UILabel!
     @IBOutlet weak var followingCount: UILabel!
     @IBOutlet weak var listCount: UILabel!
+    
+    @IBOutlet weak var followButton : UIButton!
+    
+    @IBOutlet weak var segmentedBarView: UIView!
+    
+    
+    @IBAction func pressedFollowButton(sender: AnyObject) {
+    }
     
     
     func configureView(){

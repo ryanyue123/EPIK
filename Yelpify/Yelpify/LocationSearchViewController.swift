@@ -8,10 +8,12 @@ enum SearchType {
     case Place
 }
 
-class LocationSearchViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate, UITableViewDelegate, CustomSearchControllerDelegate, UITextFieldDelegate{
+class LocationSearchViewController: UIViewController, UITableViewDelegate, UITextFieldDelegate{
     
     @IBOutlet weak var resultsTableView: UITableView!
     
+    @IBOutlet weak var outterView: UIView!
+    @IBOutlet var modalView: UIView!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var mainSearchTextField: UITextField!
     
@@ -28,10 +30,7 @@ class LocationSearchViewController: UIViewController, UISearchBarDelegate, UISea
     
     
     var shouldShowSearchResults = false
-    var customSearchBar: CustomSearchBar!
     var tableDataSource: GMSAutocompleteTableDataSource?
-    
-    var customSearchController: CustomSearchController!
     
     var searchType: SearchType = .Address
     
@@ -40,7 +39,7 @@ class LocationSearchViewController: UIViewController, UISearchBarDelegate, UISea
     var currentCity: String! = ""
     
     var searchQuery: String! = ""
-    
+
     @IBAction func mainSearchEditingDidChange(sender: AnyObject) {
         let searchText = mainSearchTextField.text
         
@@ -61,51 +60,26 @@ class LocationSearchViewController: UIViewController, UISearchBarDelegate, UISea
         tableDataSource?.sourceTextHasChanged(searchText)
         resultsTableView.reloadData()
     }
-    @IBAction func mainSearchEditingEnded(sender: AnyObject) {
-        performSegueWithIdentifier("unwindFromNewLocation", sender: self)
+    
+    @IBAction func mainSearchEditingDidEnd(sender: AnyObject) {
+        //performSegueWithIdentifier("unwindFromNewLocation", sender: self)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mainSearchTextField.delegate = self
+        self.mainSearchTextField.text = currentCity
         
-        Async.main{
-            self.configureHeaderView()
-        }
+        self.outterView.layer.cornerRadius = 20.0
+        self.outterView.clipsToBounds = true
+        
+        mainSearchTextField.delegate = self
         
         configureTableDataSource()
         configureFilterType()
-        //configureCustomSearchController()
 
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        updateHeaderView()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        updateHeaderView()
-    }
-    
-    func updateHeaderView(){
-        let headerRect = CGRect(x: 0, y: 0, width: resultsTableView.frame.size.width, height: resultsTableView.frame.size.height)
-        //resultsTableView.tableHeaderView?.frame = headerRect
-        resultsTableView.frame = headerRect
-    }
-//
-    private var headerHeight: CGFloat = 50.0
-    
-    func configureHeaderView(){
-        //self.playlistInfoName.font = UIFont(name: "Montserrat-Regular", size: 32.0)
-        resultsTableView.tableHeaderView = nil
-        resultsTableView.addSubview(headerView)
-        resultsTableView.contentInset = UIEdgeInsets(top: headerHeight, left: 0, bottom: 0, right: 0)
-        resultsTableView.contentOffset = CGPoint(x: 0, y: 0)
-    }
-
     override func viewDidAppear(animated: Bool) {
         print(currentLocationCoordinates)
     }
@@ -113,8 +87,6 @@ class LocationSearchViewController: UIViewController, UISearchBarDelegate, UISea
     override func viewWillAppear(animated: Bool) {
         self.mainSearchTextField.text = searchQuery
         self.mainSearchTextField.becomeFirstResponder()
-        
-        //self.customSearchController.customSearchBar.placeholder = currentLocationCoordinates
     }
     
     func configureFilterType(){
@@ -155,55 +127,6 @@ class LocationSearchViewController: UIViewController, UISearchBarDelegate, UISea
 
     }
     
-//    
-//    func configureCustomSearchController() {
-//        customSearchController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, resultsTableView.frame.size.width, 35.0), searchBarFont: UIFont(name: "Futura", size: 12.0)!, searchBarTextColor: UIColor.orangeColor(), searchBarTintColor: UIColor.blackColor())
-//        
-////        customSearchController.customSearchBar.showsCancelButton = false
-////        customSearchController.customSearchBar.showsScopeBar = false
-////        customSearchController.customSearchBar.placeholder = "Current Location"
-//        
-//        // CHANGE MAGNIFYING GLASS IMAGE HERE
-//        //customSearchController.customSearchBar.setImage(UIImage(), forSearchBarIcon: UISearchBarIcon.Search, state: UIControlState.Normal)
-//        
-//        resultsTableView.tableHeaderView = customSearchController.customSearchBar
-//        
-//        customSearchController.customDelegate = self
-//        
-//    }
-//    
-    func didStartSearching() {
-        searchType = .Address
-        configureFilterType()
-        customSearchController.customSearchBar.placeholder = "Search Location"
-        
-        shouldShowSearchResults = true
-        resultsTableView.reloadData()
-    }
-    
-    func didTapOnSearchButton() {
-        if !shouldShowSearchResults {
-            shouldShowSearchResults = true
-            resultsTableView.reloadData()
-        }
-    }
-    
-    func didTapOnCancelButton() {
-        shouldShowSearchResults = false
-        resultsTableView.reloadData()
-    }
-    
-    func didChangeSearchText(searchText: String) {
-        tableDataSource?.sourceTextHasChanged(searchText)
-        // Reload the tableview.
-        resultsTableView.reloadData()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     func didUpdateAutocompletePredictionsForTableDataSource(tableDataSource: GMSAutocompleteTableDataSource) {
         // Turn the network activity indicator off.
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -218,25 +141,21 @@ class LocationSearchViewController: UIViewController, UISearchBarDelegate, UISea
         resultsTableView.reloadData()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.destinationViewController.isKindOfClass(SearchBusinessViewController){
-            let searchBusinessVC: SearchBusinessViewController! = segue.destinationViewController as! SearchBusinessViewController
-        }
-    }
-    
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if segue.destinationViewController.isKindOfClass(SearchBusinessViewController){
+//            let searchBusinessVC: SearchBusinessViewController! = segue.destinationViewController as! SearchBusinessViewController
+//        }
+//    }
+//    
 }
 
 extension LocationSearchViewController: GMSAutocompleteTableDataSourceDelegate {
     func tableDataSource(tableDataSource: GMSAutocompleteTableDataSource, didAutocompleteWithPlace place: GMSPlace) {
-        customSearchController?.active = false
         
         // Do something with the selected place.
         if searchType == .Address{
             mainSearchTextField.resignFirstResponder()
             mainSearchTextField.text = place.formattedAddress
-//            customSearchController.customSearchBar.resignFirstResponder()
-//            customSearchController.customSearchBar.text = ""
-//            customSearchController.customSearchBar.placeholder = place.formattedAddress!
         }else if searchType == .Place{
             mainSearchTextField.resignFirstResponder()
             mainSearchTextField.text = place.name
@@ -256,11 +175,6 @@ extension LocationSearchViewController: GMSAutocompleteTableDataSourceDelegate {
             }
         }
         performSegueWithIdentifier("unwindFromNewLocation", sender: self)
-    }
-    
-    func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String?) -> Bool {
-        tableDataSource?.sourceTextHasChanged(searchString)
-        return false
     }
     
     func tableDataSource(tableDataSource: GMSAutocompleteTableDataSource, didFailAutocompleteWithError error: NSError) {

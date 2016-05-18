@@ -226,17 +226,20 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             upcoming.object = object
             upcoming.index = indexPath!.row
             self.tableView.deselectRowAtIndexPath(indexPath!, animated: true)
-        }else if (segue.identifier == "presentGPlacesVC"){
+        }else if (segue.identifier == "pickLocation"){
             
+            // CHANGE
             let navController = segue.destinationViewController as! UINavigationController
             let upcoming = navController.topViewController as! LocationSearchViewController
             
-            if self.navigationItem.title != "Around You"{
-                upcoming.searchQuery = self.navigationItem.title
-            }
-            
             // Pass the location
             upcoming.currentLocationCoordinates = googleParameters["location"]
+            upcoming.currentCity = self.currentCity
+            
+            print(currentCity)
+            if self.currentCity != ""{
+                upcoming.mainSearchTextField.text = self.currentCity
+            }
         }
     }
     
@@ -306,15 +309,20 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     override func viewDidAppear(animated: Bool) {
         
-        if locationUpdated == true{
-            if let searchPager = self.parentViewController as? SearchPagerTabStrip{
-                self.googleParameters["location"] = searchPager.chosenCoordinates
-                
-                self.searchWithKeyword(searchQuery)
-                self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
-            }
-            self.locationUpdated = false
-        }
+//        if locationUpdated == true{
+//            self.searchWithKeyword(searchQuery)
+////            if let searchPager = self.parentViewController as? SearchPagerTabStrip{
+////                //self.googleParameters["location"] = searchPager.chosenCoordinates
+////                if searchQuery != ""{
+////                    self.searchWithKeyword(searchQuery)
+////                }else{
+////                    self.searchWithKeyword("food")
+////                }
+////                
+////                self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+////            }
+//            self.locationUpdated = false
+//        }
         
         ConfigureFunctions.resetNavigationBar(self.navigationController!)
         
@@ -428,10 +436,10 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         let addButton = cell.rightButtons[0] as! MGSwipeButton
         if cell.swipeState.rawValue == 2{
             routeButton.backgroundColor = appDefaults.color
-            addButton.backgroundColor = UIColor.greenColor()
+            addButton.backgroundColor = UIColor(netHex: 0x27a915)
         }
         else if cell.swipeState.rawValue >= 4{
-            addButton.backgroundColor = UIColor.greenColor()
+            addButton.backgroundColor = UIColor(netHex: 0x27a915)
             routeButton.backgroundColor = appDefaults.color
             //cell.swipeBackgroundColor = appDefaults.color
             }

@@ -39,8 +39,7 @@ class BusinessTableViewCell: MGSwipeTableCell {
     @IBOutlet weak var actionButtonView: UIView!
     
     func configureCellWith(business: Business, mode: BusinessCellMode, completion:() -> Void){
-        
-               
+
         switch mode {
         case .Add:
             self.configureButton(UIImage(named: "checkMark")!)
@@ -105,6 +104,9 @@ class BusinessTableViewCell: MGSwipeTableCell {
         }
         
         // Set Background Image
+        self.businessBackgroundImage.backgroundColor = appDefaults.color
+        self.businessBackgroundImage.image = nil
+        
         func buildPlacePhotoURLString(photoReference: String) -> String{
             let photoParameters = [
                 "key" : "AIzaSyDkxzICx5QqztP8ARvq9z0DxNOF_1Em8Qc",
