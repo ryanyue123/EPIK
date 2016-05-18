@@ -176,6 +176,12 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         
         cell.moreButton.tag = indexPath.row
         cell.moreButton.addTarget(self, action: "addTrackToPlaylist:", forControlEvents: .TouchUpInside)
+        
+        let tappedGestureRec = UITapGestureRecognizer(target: self, action: "addTrackToPlaylistFromTap:")
+        cell.actionButtonView.tag = indexPath.row
+        cell.actionButtonView.addGestureRecognizer(tappedGestureRec)
+        
+        
         return cell
     }
     
@@ -231,9 +237,16 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             print(businessArray)
             
         }
-        
     }
     
+    func addTrackToPlaylistFromTap(gestRec: UITapGestureRecognizer){
+        if let buttonActionView = gestRec.view{
+            let index = buttonActionView.tag
+            let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as! BusinessTableViewCell
+            addTrackToPlaylist(cell.actionButton)
+        }
+        
+    }
     
     // This one is added through DetailedVC
     

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -20,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="400" height="105"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6ro-66-9Xw" id="xp5-Wz-efQ">
-                <rect key="frame" x="0.0" y="0.0" width="400" height="104.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="400" height="104"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XaJ-6M-PlA">
@@ -88,6 +88,13 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9FX-Rz-nD1">
+                                <rect key="frame" x="349" y="0.0" width="51" height="100"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="51" id="gB9-qM-R01"/>
+                                </constraints>
+                            </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PFR-j6-cgi">
                                 <rect key="frame" x="119" y="14" width="17" height="17"/>
                                 <constraints>
@@ -122,6 +129,7 @@
                             <constraint firstItem="6tb-VY-uEj" firstAttribute="top" secondItem="XaJ-6M-PlA" secondAttribute="top" id="Mul-6i-Axo"/>
                             <constraint firstItem="6tb-VY-uEj" firstAttribute="leading" secondItem="XaJ-6M-PlA" secondAttribute="leading" id="NDY-mm-BgD"/>
                             <constraint firstItem="PFR-j6-cgi" firstAttribute="top" secondItem="XaJ-6M-PlA" secondAttribute="top" constant="14" id="NFn-0T-40Q"/>
+                            <constraint firstAttribute="bottom" secondItem="9FX-Rz-nD1" secondAttribute="bottom" id="Ngc-80-Vit"/>
                             <constraint firstItem="vVT-hq-Qlq" firstAttribute="leading" secondItem="uu2-eA-gBO" secondAttribute="trailing" constant="13" id="RYk-W3-nzP"/>
                             <constraint firstItem="roP-Ec-1in" firstAttribute="leading" secondItem="U1O-y0-Y8S" secondAttribute="trailing" constant="14" id="Riy-0X-Qfk"/>
                             <constraint firstItem="vVT-hq-Qlq" firstAttribute="leading" secondItem="roP-Ec-1in" secondAttribute="trailing" constant="13" id="WbM-r7-HoS"/>
@@ -129,7 +137,9 @@
                             <constraint firstItem="vVT-hq-Qlq" firstAttribute="centerY" secondItem="XaJ-6M-PlA" secondAttribute="centerY" id="ZGK-Wd-ra4"/>
                             <constraint firstItem="uu2-eA-gBO" firstAttribute="top" secondItem="XaJ-6M-PlA" secondAttribute="top" constant="11" id="cZh-9T-sHC"/>
                             <constraint firstItem="qPl-BP-Rgz" firstAttribute="leading" secondItem="U1O-y0-Y8S" secondAttribute="trailing" constant="14" id="eUh-53-Csh"/>
+                            <constraint firstAttribute="trailing" secondItem="9FX-Rz-nD1" secondAttribute="trailing" id="iLI-zS-83j"/>
                             <constraint firstItem="qPl-BP-Rgz" firstAttribute="top" secondItem="roP-Ec-1in" secondAttribute="bottom" constant="0.5" id="jEx-4f-TLH"/>
+                            <constraint firstItem="9FX-Rz-nD1" firstAttribute="top" secondItem="XaJ-6M-PlA" secondAttribute="top" id="qU6-5Z-bYi"/>
                             <constraint firstAttribute="bottom" secondItem="U1O-y0-Y8S" secondAttribute="bottom" id="rtD-j3-bUm"/>
                             <constraint firstItem="PFR-j6-cgi" firstAttribute="leading" secondItem="mT1-mC-8Pn" secondAttribute="trailing" constant="19" id="uDc-Yy-H7k"/>
                             <constraint firstAttribute="bottom" secondItem="6tb-VY-uEj" secondAttribute="bottom" id="vxL-9x-vl4"/>
@@ -152,6 +162,7 @@
             <connections>
                 <outlet property="BusinessRating" destination="Fgm-SL-aq5" id="h2T-Gd-vrq"/>
                 <outlet property="actionButton" destination="vVT-hq-Qlq" id="yCl-tp-DJD"/>
+                <outlet property="actionButtonView" destination="9FX-Rz-nD1" id="QoK-MO-f79"/>
                 <outlet property="businessAddressLabel" destination="roP-Ec-1in" id="kk5-1Z-bBH"/>
                 <outlet property="businessBackgroundImage" destination="mT1-mC-8Pn" id="GQr-aE-Ud2"/>
                 <outlet property="businessOpenLabel" destination="qPl-BP-Rgz" id="Zwj-zx-xAI"/>
