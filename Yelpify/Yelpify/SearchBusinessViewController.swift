@@ -18,7 +18,7 @@ enum CurrentView {
     case SearchPlace
 }
 
-class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, IndicatorInfoProvider, UITextFieldDelegate  {
+class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, IndicatorInfoProvider, UITextFieldDelegate, Dimmable  {
     
     var itemInfo: IndicatorInfo = "Places"
     
@@ -33,6 +33,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var searchQuery = ""
     var currentCity = ""
     
+    var locationUpdated = false
+    
     var currentView: CurrentView = .SearchPlace
     
     var searchTextField: UITextField!
@@ -44,13 +46,16 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         return itemInfo
     }
     
+    private let dimLevel: CGFloat = 0.8
+    private let dimSpeed: Double = 0.5
+    
     @IBAction func unwindToSearchBusinessVC(segue: UIStoryboardSegue) {
         if (segue.identifier != nil)
         {
             if segue.identifier == "unwindFromDetail"{
                 let bdVC = segue.sourceViewController as! BusinessDetailViewController
                 let indexp = bdVC.index
-                addTrackToPlaylist(indexp)
+                self.addTrackToPlaylist(indexp)
             }
         }
 
@@ -60,24 +65,26 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         if (segue.identifier != nil) {
             if segue.identifier == "unwindToSearch" {
                 
-                let gPlacesVC = segue.sourceViewController as! GPlacesSearchViewController
-                if let searchVC = self.parentViewController as? SearchPagerTabStrip{
-                
-                    searchVC.chosenCoordinates = gPlacesVC.currentLocationCoordinates
-                    
-                    self.googleParameters["location"] = searchVC.chosenCoordinates
-                    
-                    self.searchWithKeyword(searchQuery)
-                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
-                    
-                    // CHANGE
-                }else{
-                    self.googleParameters["location"] = gPlacesVC.currentLocationCoordinates
-                    self.currentCity = gPlacesVC.currentCity
-                    self.searchWithKeyword(searchQuery)
-                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
-                
-                }
+//                print("unwinded from locationSearchVC")
+//                
+//                let gPlacesVC = segue.sourceViewController as! LocationSearchViewController
+//                if let searchVC = self.parentViewController as? SearchPagerTabStrip{
+//                
+//                    searchVC.chosenCoordinates = gPlacesVC.currentLocationCoordinates
+//                    
+//                    self.googleParameters["location"] = searchVC.chosenCoordinates
+//                    
+//                    self.searchWithKeyword(searchQuery)
+//                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+//                    
+//                    // CHANGE
+//                }else{
+//                    self.googleParameters["location"] = gPlacesVC.currentLocationCoordinates
+//                    self.currentCity = gPlacesVC.currentCity
+//                    self.searchWithKeyword(searchQuery)
+//                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+//                
+//                }
             }
         }
     }
@@ -198,7 +205,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         }else if (segue.identifier == "presentGPlacesVC"){
             
             let navController = segue.destinationViewController as! UINavigationController
-            let upcoming = navController.topViewController as! GPlacesSearchViewController
+            let upcoming = navController.topViewController as! LocationSearchViewController
             
             if self.navigationItem.title != "Around You"{
                 upcoming.searchQuery = self.navigationItem.title
@@ -253,8 +260,21 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     // MARK: - VIEWDIDLOAD
     
     override func viewDidAppear(animated: Bool) {
+        
+        if locationUpdated == true{
+            if let searchPager = self.parentViewController as? SearchPagerTabStrip{
+                self.googleParameters["location"] = searchPager.chosenCoordinates
+                
+                self.searchWithKeyword(searchQuery)
+                self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+            }
+            self.locationUpdated = false
+        }
+        
         ConfigureFunctions.resetNavigationBar(self.navigationController!)
+        
         if searchTextField != nil{
+            searchTextField.placeholder = "Search for Places"
             searchTextField.delegate = self
             self.tableView.reloadData()
         }
@@ -277,10 +297,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
             ConfigureFunctions.configureStatusBar(self.navigationController!)
         }
-        
-        let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")
-    
-        navigationItem.rightBarButtonItem = rightButton
 
         // Register Nibs
         self.tableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
@@ -293,7 +309,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     func pressedCancel(sender:UIBarButtonItem){
         resignFirstResponder()
     }
-    
     
     func configureCustomSearchController() {
         customSearchController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, self.tableView.frame.size.width, 50.0), searchBarFont: UIFont(name: "Futura", size: 16.0)!, searchBarTextColor: UIColor.orangeColor(), searchBarTintColor: UIColor.blackColor())
@@ -309,7 +324,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
-        resignFirstResponder()
+        self.resignFirstResponder()
         // This will close the keyboard when touched outside.
     }
     

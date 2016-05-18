@@ -7,18 +7,30 @@ enum SearchType {
     case Place
 }
 
-class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate, UITableViewDelegate, CustomSearchControllerDelegate{
+class LocationSearchViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate, UITableViewDelegate, CustomSearchControllerDelegate{
     
     @IBOutlet weak var resultsTableView: UITableView!
     
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var mainSearchTextField: UITextField!
+    
+    @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
+    
+    @IBAction func pressedCancel(sender: AnyObject) {
+        performSegueWithIdentifier("unwindFromLocation", sender: self)
+    }
+    
+    @IBAction func pressedSearch(sender: AnyObject) {
+        print("searching")
+    }
+    
     
     var shouldShowSearchResults = false
     var customSearchBar: CustomSearchBar!
     var tableDataSource: GMSAutocompleteTableDataSource?
     
     var customSearchController: CustomSearchController!
-    //var customSearchPlaceController : CustomSearchController!
     
     var searchType: SearchType = .Address
     
@@ -49,11 +61,19 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
         resultsTableView.reloadData()
     }
     @IBAction func mainSearchEditingEnded(sender: AnyObject) {
-        performSegueWithIdentifier("unwindToSearch", sender: self)
+        performSegueWithIdentifier("unwindFromNewLocation", sender: self)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        self.resultsTableView.tableHeaderView = nil
+//        self.resultsTableView.addSubview(headerView)
+//        self.resultsTableView.contentInset = UIEdgeInsets(top: 49.0, left: 0, bottom: 0, right: 0)
+//        self.resultsTableView.contentOffset = CGPoint(x: 0, y: -49.0)
+        
+        //self.resultsTableView.sectionHeaderHeight = 49
+        //self.resultsTableView.tableHeaderView = headerView
         
         configureTableDataSource()
         configureFilterType()
@@ -110,22 +130,23 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
 
     }
     
-    func configureCustomSearchController() {
-        customSearchController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, resultsTableView.frame.size.width, 35.0), searchBarFont: UIFont(name: "Futura", size: 12.0)!, searchBarTextColor: UIColor.orangeColor(), searchBarTintColor: UIColor.blackColor())
-        
-        customSearchController.customSearchBar.showsCancelButton = false
-        customSearchController.customSearchBar.showsScopeBar = false
-        customSearchController.customSearchBar.placeholder = "Current Location"
-        
-        // CHANGE MAGNIFYING GLASS IMAGE HERE
-        //customSearchController.customSearchBar.setImage(UIImage(), forSearchBarIcon: UISearchBarIcon.Search, state: UIControlState.Normal)
-        
-        resultsTableView.tableHeaderView = customSearchController.customSearchBar
-        
-        customSearchController.customDelegate = self
-        
-    }
-    
+//    
+//    func configureCustomSearchController() {
+//        customSearchController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, resultsTableView.frame.size.width, 35.0), searchBarFont: UIFont(name: "Futura", size: 12.0)!, searchBarTextColor: UIColor.orangeColor(), searchBarTintColor: UIColor.blackColor())
+//        
+////        customSearchController.customSearchBar.showsCancelButton = false
+////        customSearchController.customSearchBar.showsScopeBar = false
+////        customSearchController.customSearchBar.placeholder = "Current Location"
+//        
+//        // CHANGE MAGNIFYING GLASS IMAGE HERE
+//        //customSearchController.customSearchBar.setImage(UIImage(), forSearchBarIcon: UISearchBarIcon.Search, state: UIControlState.Normal)
+//        
+//        resultsTableView.tableHeaderView = customSearchController.customSearchBar
+//        
+//        customSearchController.customDelegate = self
+//        
+//    }
+//    
     func didStartSearching() {
         searchType = .Address
         configureFilterType()
@@ -180,7 +201,7 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
     
 }
 
-extension GPlacesSearchViewController: GMSAutocompleteTableDataSourceDelegate {
+extension LocationSearchViewController: GMSAutocompleteTableDataSourceDelegate {
     func tableDataSource(tableDataSource: GMSAutocompleteTableDataSource, didAutocompleteWithPlace place: GMSPlace) {
         customSearchController?.active = false
         
@@ -209,7 +230,7 @@ extension GPlacesSearchViewController: GMSAutocompleteTableDataSourceDelegate {
                 break
             }
         }
-        performSegueWithIdentifier("unwindToSearch", sender: self)
+        performSegueWithIdentifier("unwindFromNewLocation", sender: self)
     }
     
     func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String?) -> Bool {
