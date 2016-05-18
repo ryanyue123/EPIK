@@ -78,10 +78,13 @@ class CZPickerViewController: UIViewController {
     }
     
     @IBAction func showWithImages(sender: AnyObject) {
-        pickerWithImage = CZPickerView(headerTitle: "Fruits", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
+        pickerWithImage = CZPickerView(headerTitle: headerTitle, cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
+        pickerWithImage!.headerBackgroundColor = appDefaults.color
+        pickerWithImage!.confirmButtonBackgroundColor = appDefaults.color
         pickerWithImage?.delegate = self
         pickerWithImage?.dataSource = self
-        pickerWithImage?.needFooterView = false
+        pickerWithImage?.needFooterView = true
+        pickerWithImage?.allowMultipleSelection = true
         pickerWithImage?.show()
     }
 }
