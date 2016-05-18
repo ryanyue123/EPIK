@@ -21,8 +21,8 @@ enum CurrentView {
     case SearchPlace
 }
 
-class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, IndicatorInfoProvider, UITextFieldDelegate, Dimmable  {
-    
+class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, IndicatorInfoProvider, UITextFieldDelegate, MGSwipeTableCellDelegate, ModalViewControllerDelegate{
+    var addToOwnPlaylists: [PFObject]!
     var itemInfo: IndicatorInfo = "Places"
     var playlist_swiped: String!
     var itemReceived: Array<AnyObject> = []
@@ -363,12 +363,12 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     }
     func configureSwipeButtons(cell: MGSwipeTableCell){
         
-        let routeButton = MGSwipeButton(title: "Route", icon: UIImage(named: "location_icon"),backgroundColor: appDefaults.color, padding: 25)
+        let routeButton = MGSwipeButton(title: "ROUTE", icon: UIImage(named: "swipe_route"),backgroundColor: appDefaults.color, padding: 25)
         routeButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
         routeButton.centerIconOverText()
         routeButton.titleLabel?.font = appDefaults.font
         
-        let addButton = MGSwipeButton(title: "Add", icon: UIImage(named: "location_icon"),backgroundColor: UIColor.greenColor(), padding: 25)
+        let addButton = MGSwipeButton(title: "ADD", icon: UIImage(named: "swipe_add"),backgroundColor: UIColor.greenColor(), padding: 25)
         addButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
         addButton.centerIconOverText()
         addButton.titleLabel?.font = appDefaults.font
