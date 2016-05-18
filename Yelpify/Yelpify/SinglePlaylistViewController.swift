@@ -967,16 +967,15 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func configureSwipeButtons(cell: MGSwipeTableCell, mode: ListMode){
         if mode == .View{
-            let routeButton = MGSwipeButton(title: "Route", icon: UIImage(named: "location_icon"),backgroundColor: appDefaults.color, padding: 25)
+            let routeButton = MGSwipeButton(title: "ROUTE", icon: UIImage(named: "swipe_route"),backgroundColor: appDefaults.color, padding: 25)
             routeButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
             routeButton.centerIconOverText()
             routeButton.titleLabel?.font = appDefaults.font
             
-            let addButton = MGSwipeButton(title: "Add", icon: UIImage(named: "location_icon"),backgroundColor: appDefaults.color, padding: 25)
+            let addButton = MGSwipeButton(title: "ADD", icon: UIImage(named: "swipe_add"),backgroundColor: appDefaults.color, padding: 25)
             addButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
             addButton.centerIconOverText()
             addButton.titleLabel?.font = appDefaults.font
-            
             
             cell.rightButtons = [addButton]
             cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
@@ -989,6 +988,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             cell.leftExpansion.buttonIndex = 0
             cell.leftExpansion.fillOnTrigger = true
             cell.leftExpansion.threshold = 1
+            
         }else if mode == .Edit{
             cell.rightButtons.removeAll()
             cell.leftButtons.removeAll()
@@ -1059,10 +1059,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             let addButton = cell.rightButtons[0] as! MGSwipeButton
             if cell.swipeState.rawValue == 2{
                 routeButton.backgroundColor = appDefaults.color
-                addButton.backgroundColor = UIColor.greenColor()
+                addButton.backgroundColor = UIColor(netHex: 0x27a915)
             }
             else if cell.swipeState.rawValue >= 4{
-                addButton.backgroundColor = UIColor.greenColor()
+                addButton.backgroundColor = UIColor(netHex: 0x27a915)
                 routeButton.backgroundColor = appDefaults.color
                 cell.swipeBackgroundColor = appDefaults.color
             }

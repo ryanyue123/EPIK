@@ -12,7 +12,7 @@ import XLActionController
 
 private let reuseIdentifier = "listCell"
 
-class ProfileCollectionViewController: UICollectionViewController {
+class ProfileCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var user: PFUser!
     var user_playlists = [PFObject]()
@@ -30,7 +30,7 @@ class ProfileCollectionViewController: UICollectionViewController {
         
         let width = CGRectGetWidth(collectionView!.bounds)
         let layout = collectionViewLayout as! UICollectionViewFlowLayout
-        layout.headerReferenceSize = CGSize(width: width, height: 180)
+        layout.headerReferenceSize = CGSize(width: width, height: 200)
         layout.itemSize = CGSize(width: width, height: 62)
         
         //navigationBar.tintColor = UIColor.whiteColor()
@@ -84,7 +84,7 @@ class ProfileCollectionViewController: UICollectionViewController {
             
             let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "profileHeader", forIndexPath: indexPath) as! ProfileHeaderCollectionReusableView
             
-            headerView.frame.size.height = 300.0
+            //headerView.frame.size.height = 300.0
             headerView.user = user
             headerView.listnum = self.user_playlists.count
             headerView.configureView()
@@ -119,6 +119,13 @@ class ProfileCollectionViewController: UICollectionViewController {
         return cell
     }
     
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        if (section == 0) {
+            return UIEdgeInsetsMake(10, 7.5, 0, 7.5)
+        }
+        return UIEdgeInsetsMake(0, 7.5, 0, 7.5)
+    }
+
     
     @IBAction func showSettings(sender: UIBarButtonItem) {
         let actionController = YoutubeActionController()
@@ -134,5 +141,4 @@ class ProfileCollectionViewController: UICollectionViewController {
 
     }
     
-
 }

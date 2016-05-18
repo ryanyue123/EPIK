@@ -46,6 +46,9 @@ class ProfileLayout: UICollectionViewFlowLayout {
             let numberOfColumns: CGFloat = 2
             
             let itemWidth = (CGRectGetWidth(self.collectionView!.frame) - (30 * (numberOfColumns - 1))) / numberOfColumns
+            print("lkjsljdflksdjklfsdlkfsdkl")
+            print(self.collectionView!.frame.width)
+            print(itemWidth)
             return CGSizeMake(itemWidth, itemWidth)
         }
     }

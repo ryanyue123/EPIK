@@ -10,7 +10,6 @@ import UIKit
 import Parse
 import GoogleMaps
 import FBSDKCoreKit
-import Buglife
 import RAMAnimatedTabBarController
 
 @UIApplicationMain
@@ -20,8 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-        Buglife.sharedBuglife().startWithAPIKey("o2adovD9LwmddLyj0xYTgQtt")
         
         Parse.enableLocalDatastore()
         

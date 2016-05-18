@@ -12,16 +12,20 @@ import Haneke
 import Parse
 import DGElasticPullToRefresh
 import XLPagerTabStrip
+import MGSwipeTableCell
+import CZPicker
+
 
 enum CurrentView {
     case AddPlace
     case SearchPlace
 }
 
-class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, IndicatorInfoProvider, UITextFieldDelegate  {
-    
+class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, IndicatorInfoProvider, UITextFieldDelegate, MGSwipeTableCellDelegate, ModalViewControllerDelegate{
+    var addToOwnPlaylists: [PFObject]!
     var itemInfo: IndicatorInfo = "Places"
-    
+    var playlist_swiped: String!
+    var itemReceived: Array<AnyObject> = []
     // MARK: - GLOBAL VARIABLES
     var googlePlacesClient = GooglePlacesAPIClient()
     var customSearchController: CustomSearchController!
@@ -32,6 +36,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var searchDidChange = false
     var searchQuery = ""
     var currentCity = ""
+    
+    var locationUpdated = false
     
     var currentView: CurrentView = .SearchPlace
     
@@ -44,13 +50,16 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         return itemInfo
     }
     
+    private let dimLevel: CGFloat = 0.8
+    private let dimSpeed: Double = 0.5
+    
     @IBAction func unwindToSearchBusinessVC(segue: UIStoryboardSegue) {
         if (segue.identifier != nil)
         {
             if segue.identifier == "unwindFromDetail"{
                 let bdVC = segue.sourceViewController as! BusinessDetailViewController
                 let indexp = bdVC.index
-                addTrackToPlaylist(indexp)
+                self.addTrackToPlaylist(indexp)
             }
         }
 
@@ -60,24 +69,26 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         if (segue.identifier != nil) {
             if segue.identifier == "unwindToSearch" {
                 
-                let gPlacesVC = segue.sourceViewController as! GPlacesSearchViewController
-                if let searchVC = self.parentViewController as? SearchPagerTabStrip{
-                
-                    searchVC.chosenCoordinates = gPlacesVC.currentLocationCoordinates
-                    
-                    self.googleParameters["location"] = searchVC.chosenCoordinates
-                    
-                    self.searchWithKeyword(searchQuery)
-                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
-                    
-                    // CHANGE
-                }else{
-                    self.googleParameters["location"] = gPlacesVC.currentLocationCoordinates
-                    self.currentCity = gPlacesVC.currentCity
-                    self.searchWithKeyword(searchQuery)
-                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
-                
-                }
+//                print("unwinded from locationSearchVC")
+//                
+//                let gPlacesVC = segue.sourceViewController as! LocationSearchViewController
+//                if let searchVC = self.parentViewController as? SearchPagerTabStrip{
+//                
+//                    searchVC.chosenCoordinates = gPlacesVC.currentLocationCoordinates
+//                    
+//                    self.googleParameters["location"] = searchVC.chosenCoordinates
+//                    
+//                    self.searchWithKeyword(searchQuery)
+//                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+//                    
+//                    // CHANGE
+//                }else{
+//                    self.googleParameters["location"] = gPlacesVC.currentLocationCoordinates
+//                    self.currentCity = gPlacesVC.currentCity
+//                    self.searchWithKeyword(searchQuery)
+//                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+//                
+//                }
             }
         }
     }
@@ -156,11 +167,25 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return businessObjects.count
     }
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+
+    
+    // MGSwipeTableCell Delegate Methods
+    
+    func swipeTableCell(cell: MGSwipeTableCell!, canSwipe direction: MGSwipeDirection) -> Bool {
+        return true
+    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
+        cell.delegate = self
         cell.tag = indexPath.row
+        
+        configureSwipeButtons(cell)
         
         if self.currentView == .SearchPlace{
             cell.actionButton.hidden = true
@@ -204,7 +229,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         }else if (segue.identifier == "presentGPlacesVC"){
             
             let navController = segue.destinationViewController as! UINavigationController
-            let upcoming = navController.topViewController as! GPlacesSearchViewController
+            let upcoming = navController.topViewController as! LocationSearchViewController
             
             if self.navigationItem.title != "Around You"{
                 upcoming.searchQuery = self.navigationItem.title
@@ -238,13 +263,27 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             
         }
     }
-    
-    func addTrackToPlaylistFromTap(gestRec: UITapGestureRecognizer){
-        if let buttonActionView = gestRec.view{
-            let index = buttonActionView.tag
-            let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as! BusinessTableViewCell
-            addTrackToPlaylist(cell.actionButton)
+    func sendValue(value: AnyObject){
+        itemReceived.append(value as! NSObject)
+        
+        for item in itemReceived{
+            
+            
+            let index = item as! Int
+            var playlist = addToOwnPlaylists[index]["place_id_list"] as! [String]
+            print(playlist)
+            playlist.append(self.playlist_swiped)
+            print(playlist)
+            addToOwnPlaylists[index]["place_id_list"] = playlist
+            addToOwnPlaylists[index].saveInBackgroundWithBlock({ (success, error) in
+                if (error == nil) {
+                    print("Saved")
+                    }
+                })
+            
+            itemReceived = []
         }
+        
         
     }
     
@@ -266,8 +305,21 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     // MARK: - VIEWDIDLOAD
     
     override func viewDidAppear(animated: Bool) {
+        
+        if locationUpdated == true{
+            if let searchPager = self.parentViewController as? SearchPagerTabStrip{
+                self.googleParameters["location"] = searchPager.chosenCoordinates
+                
+                self.searchWithKeyword(searchQuery)
+                self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+            }
+            self.locationUpdated = false
+        }
+        
         ConfigureFunctions.resetNavigationBar(self.navigationController!)
+        
         if searchTextField != nil{
+            searchTextField.placeholder = "Search for Places"
             searchTextField.delegate = self
             self.tableView.reloadData()
         }
@@ -290,10 +342,6 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
             ConfigureFunctions.configureStatusBar(self.navigationController!)
         }
-        
-        let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")
-    
-        navigationItem.rightBarButtonItem = rightButton
 
         // Register Nibs
         self.tableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
@@ -307,13 +355,91 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         resignFirstResponder()
     }
     
-    
     func configureCustomSearchController() {
         customSearchController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, self.tableView.frame.size.width, 50.0), searchBarFont: UIFont(name: "Futura", size: 16.0)!, searchBarTextColor: UIColor.orangeColor(), searchBarTintColor: UIColor.blackColor())
         
         customSearchController.customSearchBar.placeholder = "Search in this awesome bar..."
         self.tableView.tableHeaderView = customSearchController.customSearchBar
     }
+    func configureSwipeButtons(cell: MGSwipeTableCell){
+        
+        let routeButton = MGSwipeButton(title: "ROUTE", icon: UIImage(named: "swipe_route"),backgroundColor: appDefaults.color, padding: 25)
+        routeButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
+        routeButton.centerIconOverText()
+        routeButton.titleLabel?.font = appDefaults.font
+        
+        let addButton = MGSwipeButton(title: "ADD", icon: UIImage(named: "swipe_add"),backgroundColor: UIColor.greenColor(), padding: 25)
+        addButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
+        addButton.centerIconOverText()
+        addButton.titleLabel?.font = appDefaults.font
+        
+        
+        cell.rightButtons = [addButton]
+        cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
+        cell.rightExpansion.buttonIndex = 0
+        cell.rightExpansion.fillOnTrigger = false
+        cell.rightExpansion.threshold = 1
+        
+        cell.leftButtons = [routeButton]
+        cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
+        cell.leftExpansion.buttonIndex = 0
+        cell.leftExpansion.fillOnTrigger = true
+        cell.leftExpansion.threshold = 1
+    }
+    
+    func swipeTableCell(cell: MGSwipeTableCell!, tappedButtonAtIndex index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
+        let indexPath = tableView.indexPathForCell(cell)
+        
+        //self.playlist_swiped = self.businessObjects[indexPath!.row].gPlaceID
+        //self.playlist_swiped = self.placeIDs[(indexPath?.row)!]
+        let business = businessObjects[indexPath!.row]
+        self.playlist_swiped = business.gPlaceID
+        let actions = PlaceActions()
+        let pickerController = CZPickerViewController()
+        
+        
+        if direction == MGSwipeDirection.LeftToRight{
+            print("swipelefttoright")
+            actions.openInMaps(business)
+        }else if direction == MGSwipeDirection.RightToLeft{
+            let query = PFQuery(className: "Playlists")
+            query.whereKey("createdBy", equalTo: PFUser.currentUser()!)
+            query.findObjectsInBackgroundWithBlock({ (object, error) in
+                if (error == nil) {
+                    self.addToOwnPlaylists = object!
+                    var user_array = [String]()
+                    dispatch_async(dispatch_get_main_queue(), {
+                        for playlist in object! {
+                            user_array.append(playlist["playlistName"] as! String)
+                        }
+                        pickerController.fruits = user_array
+                        pickerController.headerTitle = "Playlists To Add To"
+                        pickerController.showWithMultipleSelections(UIViewController)
+                        pickerController.delegate = self
+                        })
+                    }
+                })
+            }
+        return true
+        }
+    func swipeTableCell(cell: MGSwipeTableCell!, didChangeSwipeState state: MGSwipeState, gestureIsActive: Bool) {
+        print(gestureIsActive)
+        let routeButton = cell.leftButtons.first as! MGSwipeButton
+        let addButton = cell.rightButtons[0] as! MGSwipeButton
+        if cell.swipeState.rawValue == 2{
+            routeButton.backgroundColor = appDefaults.color
+            addButton.backgroundColor = UIColor.greenColor()
+        }
+        else if cell.swipeState.rawValue >= 4{
+            addButton.backgroundColor = UIColor.greenColor()
+            routeButton.backgroundColor = appDefaults.color
+            //cell.swipeBackgroundColor = appDefaults.color
+            }
+            
+        }
+        
+    
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -322,7 +448,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
-        resignFirstResponder()
+        self.resignFirstResponder()
         // This will close the keyboard when touched outside.
     }
     

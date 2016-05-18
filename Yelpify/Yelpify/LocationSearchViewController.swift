@@ -1,5 +1,6 @@
 import UIKit
 import GoogleMaps
+import Async
 
 enum SearchType {
     case City
@@ -7,18 +8,30 @@ enum SearchType {
     case Place
 }
 
-class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate, UITableViewDelegate, CustomSearchControllerDelegate{
+class LocationSearchViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate, UITableViewDelegate, CustomSearchControllerDelegate, UITextFieldDelegate{
     
     @IBOutlet weak var resultsTableView: UITableView!
     
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var mainSearchTextField: UITextField!
+    
+    @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
+    
+    @IBAction func pressedCancel(sender: AnyObject) {
+        performSegueWithIdentifier("unwindFromLocation", sender: self)
+    }
+    
+    @IBAction func pressedSearch(sender: AnyObject) {
+        print("searching")
+    }
+    
     
     var shouldShowSearchResults = false
     var customSearchBar: CustomSearchBar!
     var tableDataSource: GMSAutocompleteTableDataSource?
     
     var customSearchController: CustomSearchController!
-    //var customSearchPlaceController : CustomSearchController!
     
     var searchType: SearchType = .Address
     
@@ -49,11 +62,17 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
         resultsTableView.reloadData()
     }
     @IBAction func mainSearchEditingEnded(sender: AnyObject) {
-        performSegueWithIdentifier("unwindToSearch", sender: self)
+        performSegueWithIdentifier("unwindFromNewLocation", sender: self)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        mainSearchTextField.delegate = self
+        
+        Async.main{
+            self.configureHeaderView()
+        }
         
         configureTableDataSource()
         configureFilterType()
@@ -61,6 +80,32 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
 
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        updateHeaderView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateHeaderView()
+    }
+    
+    func updateHeaderView(){
+        let headerRect = CGRect(x: 0, y: 0, width: resultsTableView.frame.size.width, height: resultsTableView.frame.size.height)
+        //resultsTableView.tableHeaderView?.frame = headerRect
+        resultsTableView.frame = headerRect
+    }
+//
+    private var headerHeight: CGFloat = 50.0
+    
+    func configureHeaderView(){
+        //self.playlistInfoName.font = UIFont(name: "Montserrat-Regular", size: 32.0)
+        resultsTableView.tableHeaderView = nil
+        resultsTableView.addSubview(headerView)
+        resultsTableView.contentInset = UIEdgeInsets(top: headerHeight, left: 0, bottom: 0, right: 0)
+        resultsTableView.contentOffset = CGPoint(x: 0, y: 0)
+    }
+
     override func viewDidAppear(animated: Bool) {
         print(currentLocationCoordinates)
     }
@@ -110,22 +155,23 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
 
     }
     
-    func configureCustomSearchController() {
-        customSearchController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, resultsTableView.frame.size.width, 35.0), searchBarFont: UIFont(name: "Futura", size: 12.0)!, searchBarTextColor: UIColor.orangeColor(), searchBarTintColor: UIColor.blackColor())
-        
-        customSearchController.customSearchBar.showsCancelButton = false
-        customSearchController.customSearchBar.showsScopeBar = false
-        customSearchController.customSearchBar.placeholder = "Current Location"
-        
-        // CHANGE MAGNIFYING GLASS IMAGE HERE
-        //customSearchController.customSearchBar.setImage(UIImage(), forSearchBarIcon: UISearchBarIcon.Search, state: UIControlState.Normal)
-        
-        resultsTableView.tableHeaderView = customSearchController.customSearchBar
-        
-        customSearchController.customDelegate = self
-        
-    }
-    
+//    
+//    func configureCustomSearchController() {
+//        customSearchController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, resultsTableView.frame.size.width, 35.0), searchBarFont: UIFont(name: "Futura", size: 12.0)!, searchBarTextColor: UIColor.orangeColor(), searchBarTintColor: UIColor.blackColor())
+//        
+////        customSearchController.customSearchBar.showsCancelButton = false
+////        customSearchController.customSearchBar.showsScopeBar = false
+////        customSearchController.customSearchBar.placeholder = "Current Location"
+//        
+//        // CHANGE MAGNIFYING GLASS IMAGE HERE
+//        //customSearchController.customSearchBar.setImage(UIImage(), forSearchBarIcon: UISearchBarIcon.Search, state: UIControlState.Normal)
+//        
+//        resultsTableView.tableHeaderView = customSearchController.customSearchBar
+//        
+//        customSearchController.customDelegate = self
+//        
+//    }
+//    
     func didStartSearching() {
         searchType = .Address
         configureFilterType()
@@ -180,7 +226,7 @@ class GPlacesSearchViewController: UIViewController, UISearchBarDelegate, UISear
     
 }
 
-extension GPlacesSearchViewController: GMSAutocompleteTableDataSourceDelegate {
+extension LocationSearchViewController: GMSAutocompleteTableDataSourceDelegate {
     func tableDataSource(tableDataSource: GMSAutocompleteTableDataSource, didAutocompleteWithPlace place: GMSPlace) {
         customSearchController?.active = false
         
@@ -209,7 +255,7 @@ extension GPlacesSearchViewController: GMSAutocompleteTableDataSourceDelegate {
                 break
             }
         }
-        performSegueWithIdentifier("unwindToSearch", sender: self)
+        performSegueWithIdentifier("unwindFromNewLocation", sender: self)
     }
     
     func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String?) -> Bool {
