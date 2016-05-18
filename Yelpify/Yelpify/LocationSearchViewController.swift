@@ -1,5 +1,6 @@
 import UIKit
 import GoogleMaps
+import Async
 
 enum SearchType {
     case City
@@ -7,7 +8,7 @@ enum SearchType {
     case Place
 }
 
-class LocationSearchViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate, UITableViewDelegate, CustomSearchControllerDelegate{
+class LocationSearchViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate, UITableViewDelegate, CustomSearchControllerDelegate, UITextFieldDelegate{
     
     @IBOutlet weak var resultsTableView: UITableView!
     
@@ -67,13 +68,11 @@ class LocationSearchViewController: UIViewController, UISearchBarDelegate, UISea
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.resultsTableView.tableHeaderView = nil
-//        self.resultsTableView.addSubview(headerView)
-//        self.resultsTableView.contentInset = UIEdgeInsets(top: 49.0, left: 0, bottom: 0, right: 0)
-//        self.resultsTableView.contentOffset = CGPoint(x: 0, y: -49.0)
+        mainSearchTextField.delegate = self
         
-        //self.resultsTableView.sectionHeaderHeight = 49
-        //self.resultsTableView.tableHeaderView = headerView
+        Async.main{
+            self.configureHeaderView()
+        }
         
         configureTableDataSource()
         configureFilterType()
@@ -81,6 +80,32 @@ class LocationSearchViewController: UIViewController, UISearchBarDelegate, UISea
 
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        updateHeaderView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateHeaderView()
+    }
+    
+    func updateHeaderView(){
+        let headerRect = CGRect(x: 0, y: 0, width: resultsTableView.frame.size.width, height: resultsTableView.frame.size.height)
+        //resultsTableView.tableHeaderView?.frame = headerRect
+        resultsTableView.frame = headerRect
+    }
+//
+    private var headerHeight: CGFloat = 50.0
+    
+    func configureHeaderView(){
+        //self.playlistInfoName.font = UIFont(name: "Montserrat-Regular", size: 32.0)
+        resultsTableView.tableHeaderView = nil
+        resultsTableView.addSubview(headerView)
+        resultsTableView.contentInset = UIEdgeInsets(top: headerHeight, left: 0, bottom: 0, right: 0)
+        resultsTableView.contentOffset = CGPoint(x: 0, y: 0)
+    }
+
     override func viewDidAppear(animated: Bool) {
         print(currentLocationCoordinates)
     }

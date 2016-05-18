@@ -1742,9 +1742,6 @@
                                             <state key="normal" title="Search">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="534" y="11" width="47" height="109"/>
-                                            </variation>
                                             <connections>
                                                 <action selector="pressedSearch:" destination="yju-Dj-JQn" eventType="touchUpInside" id="wE1-2n-Shl"/>
                                             </connections>
@@ -1762,8 +1759,7 @@
                                                     <exclude reference="lR7-Em-w1y"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="214.5" y="57" width="171" height="14"/>
+                                            <variation key="heightClass=regular-widthClass=compact">
                                                 <mask key="constraints">
                                                     <include reference="lR7-Em-w1y"/>
                                                 </mask>
@@ -1778,9 +1774,6 @@
                                             <state key="normal" title="Cancel">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="16" y="11" width="47" height="109"/>
-                                            </variation>
                                             <connections>
                                                 <segue destination="MaZ-WG-NVz" kind="unwind" unwindAction="unwindToSearchPagerTapStrip:" id="eCS-gb-RsX"/>
                                             </connections>
@@ -1833,7 +1826,7 @@
                                     </variation>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ceN-VT-nM6">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="44" id="ceN-VT-nM6">
                                         <rect key="frame" x="0.0" y="156" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ceN-VT-nM6" id="ywO-DU-6me">
@@ -1850,39 +1843,33 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="UuA-CI-uoy" firstAttribute="centerY" secondItem="1AJ-Vn-USh" secondAttribute="centerY" id="2qh-8m-EEp"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="UuA-CI-uoy" secondAttribute="trailing" constant="7" id="CEo-rB-mzn"/>
-                            <constraint firstItem="UuA-CI-uoy" firstAttribute="top" secondItem="NrW-oX-fyU" secondAttribute="bottom" constant="16" id="GYd-YG-HEL"/>
+                            <constraint firstItem="Ozg-ms-cdl" firstAttribute="top" secondItem="UuA-CI-uoy" secondAttribute="bottom" constant="36" id="4Ys-sy-XYy"/>
                             <constraint firstItem="UuA-CI-uoy" firstAttribute="leading" secondItem="1AJ-Vn-USh" secondAttribute="leading" id="GZB-Yc-zgC"/>
                             <constraint firstItem="UuA-CI-uoy" firstAttribute="bottom" secondItem="Ozg-ms-cdl" secondAttribute="top" id="ILk-kb-d92"/>
-                            <constraint firstItem="UuA-CI-uoy" firstAttribute="centerX" secondItem="1AJ-Vn-USh" secondAttribute="centerX" id="Nzy-AG-V7f"/>
+                            <constraint firstItem="UuA-CI-uoy" firstAttribute="leading" secondItem="1AJ-Vn-USh" secondAttribute="leadingMargin" constant="8" id="Wqw-A2-XPg"/>
                             <constraint firstItem="UuA-CI-uoy" firstAttribute="top" secondItem="1AJ-Vn-USh" secondAttribute="top" id="boS-AK-Thx"/>
-                            <constraint firstItem="Ozg-ms-cdl" firstAttribute="top" secondItem="UuA-CI-uoy" secondAttribute="bottom" constant="36" id="fgS-wg-rBI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="UuA-CI-uoy" secondAttribute="trailing" constant="7" id="dBO-rZ-JWj"/>
                             <constraint firstAttribute="trailing" secondItem="UuA-CI-uoy" secondAttribute="trailing" id="kgM-2c-Y6b"/>
-                            <constraint firstItem="UuA-CI-uoy" firstAttribute="leading" secondItem="1AJ-Vn-USh" secondAttribute="leadingMargin" constant="8" id="yyS-Lb-UUq"/>
+                            <constraint firstItem="UuA-CI-uoy" firstAttribute="top" secondItem="NrW-oX-fyU" secondAttribute="bottom" constant="16" id="l72-oY-UR5"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="2qh-8m-EEp"/>
-                                <exclude reference="CEo-rB-mzn"/>
-                                <exclude reference="GYd-YG-HEL"/>
-                                <exclude reference="Nzy-AG-V7f"/>
-                                <exclude reference="yyS-Lb-UUq"/>
-                                <exclude reference="fgS-wg-rBI"/>
+                                <exclude reference="Wqw-A2-XPg"/>
+                                <exclude reference="dBO-rZ-JWj"/>
+                                <exclude reference="l72-oY-UR5"/>
+                                <exclude reference="4Ys-sy-XYy"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="constraints">
-                                <include reference="2qh-8m-EEp"/>
-                                <include reference="CEo-rB-mzn"/>
-                                <include reference="GYd-YG-HEL"/>
                                 <exclude reference="GZB-Yc-zgC"/>
                                 <exclude reference="ILk-kb-d92"/>
-                                <include reference="Nzy-AG-V7f"/>
+                                <include reference="Wqw-A2-XPg"/>
                                 <exclude reference="boS-AK-Thx"/>
+                                <include reference="dBO-rZ-JWj"/>
                                 <exclude reference="kgM-2c-Y6b"/>
-                                <include reference="yyS-Lb-UUq"/>
-                                <include reference="fgS-wg-rBI"/>
+                                <include reference="l72-oY-UR5"/>
+                                <include reference="4Ys-sy-XYy"/>
                             </mask>
                         </variation>
                     </view>
@@ -3464,18 +3451,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.89543876259999999" green="0.89543876259999999" blue="0.89543876259999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="BOO-TA-swY" customClass="ProfileLayout" customModule="Yelpify" customModuleProvider="target">
-                            <size key="itemSize" width="162" height="178.84999999999999"/>
-                            <size key="headerReferenceSize" width="50" height="300"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="15" minY="15" maxX="15" maxY="15"/>
-                        </collectionViewFlowLayout>
+                        <collectionViewLayout key="collectionViewLayout" id="0Uf-Ta-JwL" customClass="ProfileLayout" customModule="Yelpify" customModuleProvider="target"/>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="EBC-pP-4BD" customClass="CollectionViewCell" customModule="Yelpify" customModuleProvider="target">
                                 <rect key="frame" x="15" y="315" width="162" height="178.84999999999999"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="162" height="178.84999999999999"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="default_restaurant" translatesAutoresizingMaskIntoConstraints="NO" id="Gdc-vn-MFt">
@@ -3502,6 +3484,9 @@
                                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
+                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="67" y="157" width="28.5" height="14"/>
+                                            </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="OC Night Adventure" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jiM-XH-Ae6">
                                             <rect key="frame" x="8" y="64" width="134" height="21"/>
@@ -3635,7 +3620,7 @@
                                 <rect key="frame" x="219" y="315" width="162" height="178.84999999999999"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="162" height="178.84999999999999"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="default_restaurant" translatesAutoresizingMaskIntoConstraints="NO" id="POZ-wp-fE3">
@@ -3662,6 +3647,9 @@
                                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
+                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="67" y="157" width="28.5" height="14"/>
+                                            </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="OC Night Adventure" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BGQ-hn-vGC">
                                             <rect key="frame" x="8" y="64" width="134" height="21"/>
@@ -3792,10 +3780,6 @@
                                 </connections>
                             </collectionViewCell>
                         </cells>
-                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="awB-E8-WJc">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </collectionReusableView>
                         <connections>
                             <outlet property="dataSource" destination="TIl-fd-tes" id="rcI-ql-X9E"/>
                             <outlet property="delegate" destination="TIl-fd-tes" id="9uv-dE-7v0"/>
