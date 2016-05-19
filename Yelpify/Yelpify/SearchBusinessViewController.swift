@@ -526,21 +526,22 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     func textFieldShouldReturn(textField:UITextField) -> Bool {
         searchQuery = textField.text!
         searchWithKeyword(searchQuery)
-        if currentCity != ""{
-            let longString = textField.text! + " NEAR " + currentCity.uppercaseString
-            let longestWord = " NEAR " + currentCity.uppercaseString
-            
-            let longestWordRange = (longString as NSString).rangeOfString(longestWord)
-            
-            let attributedString = NSMutableAttributedString(string: longString, attributes: [NSFontAttributeName : appDefaults.font.fontWithSize(14)])
-            
-            attributedString.setAttributes([NSFontAttributeName : appDefaults.font.fontWithSize(9), NSForegroundColorAttributeName : appDefaults.color_darker
-                ], range: longestWordRange)
-            
-            
-            textField.attributedText = attributedString
-            //textField.text! += " NEAR " + currentCity.uppercaseString
-        }
+        textField.text = searchQuery
+//        if currentCity != ""{
+//            let longString = textField.text! + " NEAR " + currentCity.uppercaseString
+//            let longestWord = " NEAR " + currentCity.uppercaseString
+//            
+//            let longestWordRange = (longString as NSString).rangeOfString(longestWord)
+//            
+//            let attributedString = NSMutableAttributedString(string: longString, attributes: [NSFontAttributeName : appDefaults.font.fontWithSize(14)])
+//            
+//            attributedString.setAttributes([NSFontAttributeName : appDefaults.font.fontWithSize(9), NSForegroundColorAttributeName : appDefaults.color_darker
+//                ], range: longestWordRange)
+//            
+//            
+//            textField.attributedText = attributedString
+//            //textField.text! += " NEAR " + currentCity.uppercaseString
+//        }
         textField.resignFirstResponder() //close keyboard
         return true
         // Will allow user to press "return" button to close keyboard
