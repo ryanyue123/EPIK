@@ -555,21 +555,21 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     func textFieldDidEndEditing(textField: UITextField) {
         let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")
         
-        if currentCity != ""{
-            let longString = textField.text! + " NEAR " + currentCity.uppercaseString
-            let longestWord = " NEAR " + currentCity.uppercaseString
-            
-            let longestWordRange = (longString as NSString).rangeOfString(longestWord)
-            
-            let attributedString = NSMutableAttributedString(string: longString, attributes: [NSFontAttributeName : appDefaults.font.fontWithSize(14)])
-            
-            attributedString.setAttributes([NSFontAttributeName : appDefaults.font.fontWithSize(9), NSForegroundColorAttributeName : appDefaults.color_darker
-                ], range: longestWordRange)
-            
-            
-            textField.attributedText = attributedString
-            //textField.text! += " NEAR " + currentCity.uppercaseString
-        }
+//        if currentCity != ""{
+//            let longString = textField.text! + " NEAR " + currentCity.uppercaseString
+//            let longestWord = " NEAR " + currentCity.uppercaseString
+//            
+//            let longestWordRange = (longString as NSString).rangeOfString(longestWord)
+//            
+//            let attributedString = NSMutableAttributedString(string: longString, attributes: [NSFontAttributeName : appDefaults.font.fontWithSize(14)])
+//            
+//            attributedString.setAttributes([NSFontAttributeName : appDefaults.font.fontWithSize(9), NSForegroundColorAttributeName : appDefaults.color_darker
+//                ], range: longestWordRange)
+//            
+//            
+//            textField.attributedText = attributedString
+//            //textField.text! += " NEAR " + currentCity.uppercaseString
+//        }
 
         
         navigationItem.rightBarButtonItem = rightButton

@@ -349,7 +349,13 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         
         self.navigationController?.navigationBar.titleTextAttributes = [
             NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(showWhenScrollDownAlpha) ]
-        self.navigationItem.title = object.businessName
+        if object != nil{
+            self.navigationItem.title = object.businessName
+        }else if gPlaceObject != nil{
+            self.navigationItem.title = gPlaceObject.name
+        }else{
+            self.navigationItem.title = "Details"
+        }
         
         self.navigationController?.navigationBar.backgroundColor = appDefaults.color.colorWithAlphaComponent((showWhenScrollDownAlpha))
         
