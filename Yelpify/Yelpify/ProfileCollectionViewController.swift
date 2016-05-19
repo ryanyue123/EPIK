@@ -185,7 +185,7 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
         
         self.navigationController?.navigationBar.titleTextAttributes = [
             NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(showWhenScrollDownAlpha) ]
-        self.navigationItem.title = "hi"
+        self.navigationItem.title = user.username
         self.navigationController?.navigationBar.backgroundColor = appDefaults.color.colorWithAlphaComponent((showWhenScrollDownAlpha))
         
         // Handle Status Bar
