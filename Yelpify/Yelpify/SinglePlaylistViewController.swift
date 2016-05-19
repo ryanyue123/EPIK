@@ -1081,13 +1081,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                                     user_array.append(playlist["playlistName"] as! String)
                                 }
                                 pickerController.fruits = user_array
-                                var result:Array<UIImage> = []
-                                for playlist in user_array{
-                                    result.append(UIImage(named:"default_icon")!)
-                                }
-                                pickerController.fruitImages = result as! [UIImage]
                                 pickerController.headerTitle = "Playlists To Add To"
-                                pickerController.showWithImages(UIViewController)
+                                pickerController.showWithMultipleSelections(UIViewController)
                                 pickerController.delegate = self
                             })
                         }
