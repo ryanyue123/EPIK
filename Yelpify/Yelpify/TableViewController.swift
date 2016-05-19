@@ -273,7 +273,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlists_location = objects!
                     self.all_playlists.append(self.playlists_location)
-                    self.label_array.append("Playlists Near Me")
+                    self.label_array.append("Lists Near You")
                     self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
                     //self.tableView.reloadData()
                     
@@ -283,7 +283,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                     query2.findObjectsInBackgroundWithBlock {(user: [PFObject]?, error: NSError?) -> Void in
                         if ((error) == nil)
                         {
-                            self.label_array.append("My Playlists")
+                            self.label_array.append("My Lists")
                             dispatch_async(dispatch_get_main_queue(), {
                                 if (user!.count != 0) {
                                     self.playlists_user = user!

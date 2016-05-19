@@ -312,6 +312,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             print(playlist)
             playlist.append(self.playlist_swiped)
             print(playlist)
+            
+            addToOwnPlaylists[index]["num_places"] = playlist.count
             addToOwnPlaylists[index]["place_id_list"] = playlist
             addToOwnPlaylists[index].saveInBackgroundWithBlock({ (success, error) in
                 if (error == nil) {
