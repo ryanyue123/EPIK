@@ -54,13 +54,8 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
         self.configureColors()
         self.configureHeaderView()
         
-        // Test code, to be placed into functions in the future
-        self.title = "EPIK"
-        let leftButton =  UIBarButtonItem(title: "Search", style: UIBarButtonItemStyle.Plain, target: self, action: nil)
-        let rightButton = UIBarButtonItem(title: "New", style: UIBarButtonItemStyle.Plain, target: self, action: "showPlaylistAlert:")
-        
-        //navigationItem.leftBarButtonItem = leftButton
-        navigationItem.rightBarButtonItem = rightButton
+        // Add Items to Nav Bar
+        self.addNavBarItems()
         
         // Pull to Refresh
         let loadingView = DGElasticPullToRefreshLoadingViewCircle()
@@ -87,6 +82,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
             NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(1) ]
         //self.tableView.reloadData()
         self.navigationController?.navigationBar.backgroundColor = appDefaults.color.colorWithAlphaComponent(1)
+        self.addNavBarItems()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -101,6 +97,14 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateHeaderView()
+    }
+    
+    func addNavBarItems(){
+        self.title = "EPIK"
+        let leftButton = UIBarButtonItem(image: UIImage(named: "updates_icon"), style: .Plain, target: self, action: nil)
+        let rightButton = UIBarButtonItem(image: UIImage(named: "new_list_icon"), style: .Plain, target: self, action: "showPlaylistAlert:")
+        navigationItem.leftBarButtonItem = leftButton
+        navigationItem.rightBarButtonItem = rightButton
     }
     
     // MARK: - Configure Methods

@@ -238,9 +238,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         cell.moreButton.addTarget(self, action: "addTrackToPlaylist:", forControlEvents: .TouchUpInside)
         
         let tappedGestureRec = UITapGestureRecognizer(target: self, action: "addTrackToPlaylistFromTap:")
-        cell.actionButtonView.tag = indexPath.row
         cell.actionButtonView.addGestureRecognizer(tappedGestureRec)
-        
+        cell.actionButtonView.tag = indexPath.row
         
         return cell
     }
@@ -258,6 +257,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             
             let indexPath = tableView.indexPathForSelectedRow
             let object = businessObjects[indexPath!.row]
+            upcoming.fromSearchTab = true
             upcoming.object = object
             upcoming.index = indexPath!.row
             self.tableView.deselectRowAtIndexPath(indexPath!, animated: true)
@@ -336,6 +336,35 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         print(placeIDs)
     }
     
+    func addTrackToPlaylistFromTap(sender: UIGestureRecognizer){
+        let index = sender.view!.tag
+        let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as! BusinessTableViewCell
+        
+        let button = cell.moreButton
+        
+        if button.tintColor == UIColor.greenColor(){
+            button.tintColor = appDefaults.color_darker
+            print("removed")
+            let index = button.tag
+            let indexToRemove = self.placeIDs.indexOf(businessObjects[index].gPlaceID)
+            print(indexToRemove)
+            placeIDs.removeAtIndex(indexToRemove!)
+            businessArray.removeAtIndex(indexToRemove!)
+        }else{
+            button.tintColor = UIColor.greenColor()
+            print("pressed")
+            let index = button.tag
+            placeIDs.append(businessObjects[index].gPlaceID)
+            businessArray.append(businessObjects[index])
+            print(businessArray)
+            
+        }
+        
+        
+        print(placeIDs)
+    }
+    
+    
     func textFieldDidChange(textField: UITextField){
         print("hi")
     }
@@ -393,7 +422,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     }
     
     func pressedCancel(sender:UIBarButtonItem){
-        resignFirstResponder()
+        addPlaceSearchTextField.resignFirstResponder()
+        self.view.endEditing(true)
     }
     
     func configureCustomSearchController() {
@@ -517,12 +547,30 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
+        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain , target: self, action: "pressedCancel:")
         
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
         let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")
+        
+        if currentCity != ""{
+            let longString = textField.text! + " NEAR " + currentCity.uppercaseString
+            let longestWord = " NEAR " + currentCity.uppercaseString
+            
+            let longestWordRange = (longString as NSString).rangeOfString(longestWord)
+            
+            let attributedString = NSMutableAttributedString(string: longString, attributes: [NSFontAttributeName : appDefaults.font.fontWithSize(14)])
+            
+            attributedString.setAttributes([NSFontAttributeName : appDefaults.font.fontWithSize(9), NSForegroundColorAttributeName : appDefaults.color_darker
+                ], range: longestWordRange)
+            
+            
+            textField.attributedText = attributedString
+            //textField.text! += " NEAR " + currentCity.uppercaseString
+        }
+
         
         navigationItem.rightBarButtonItem = rightButton
 

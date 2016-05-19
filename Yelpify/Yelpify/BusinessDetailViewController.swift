@@ -47,6 +47,8 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     
     var index: Int!
     
+    var fromSearchTab: Bool = false
+    
     var photoRefs = [String]()
     var reviewArray = NSArray()
     var infoArray = [("detail_location", ""), ("detail_phone", ""), ("detail_hours", "")]//, ("detail_web", "")] //[(UIImage, String)]()
@@ -261,9 +263,13 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     }
 
     override func viewWillAppear(animated: Bool) {
+
     }
     
     override func viewDidAppear(animated: Bool) {
+        if fromSearchTab == true{
+            
+        }
         handleNavigationBarOnScroll()
     }
     
@@ -343,7 +349,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         
         self.navigationController?.navigationBar.titleTextAttributes = [
             NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(showWhenScrollDownAlpha) ]
-        self.navigationItem.title = "details"
+        self.navigationItem.title = object.businessName
         
         self.navigationController?.navigationBar.backgroundColor = appDefaults.color.colorWithAlphaComponent((showWhenScrollDownAlpha))
         

@@ -99,7 +99,7 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView, SendCustomI
     func configureView(){
         let firstname = user["first_name"] as! String
         let lastname = user["last_name"] as! String
-        nameLabel.text = firstname + " " + lastname
+        nameLabel.text = firstname.uppercaseFirst + " " + lastname.uppercaseFirst
         listCount.text = String(listnum)
         
         

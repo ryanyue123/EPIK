@@ -68,6 +68,11 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
         }
     }
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        searchTextField.resignFirstResponder()
+        self.view.endEditing(true)
+    }
+    
     override func viewDidLoad() {
         
         if sharedVariables.currentCoordinates == ""{
@@ -192,6 +197,8 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
             let n = (Int(arc4random()) % nElements) + index
             if n != index{
                 swap(&childViewControllers[index], &childViewControllers[n])
+                searchTextField.resignFirstResponder()
+                self.view.endEditing(true)
             }
         }
         let nItems = 1 + (rand() % 8)
@@ -207,6 +214,8 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
         else {
             pagerBehaviour = .Common(skipIntermediateViewControllers: rand() % 2 == 0)
         }
+        searchTextField.resignFirstResponder()
+        self.view.endEditing(true)
         super.reloadPagerTabStripView()
     }
 }

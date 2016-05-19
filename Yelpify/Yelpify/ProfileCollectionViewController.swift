@@ -262,9 +262,9 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         if (section == 0) {
-            return UIEdgeInsetsMake(-50.0, 9, 0, 9)
+            return UIEdgeInsetsMake(-50.0, 9, 9, 9)
         }
-        return UIEdgeInsetsMake(-50.0, 9, 0, 9)
+        return UIEdgeInsetsMake(-50.0, 9, 9, 9)
     }
 
     

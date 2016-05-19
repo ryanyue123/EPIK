@@ -150,6 +150,19 @@ extension String {
         let end = start.advancedBy(r.endIndex - r.startIndex)
         return self[Range(start ..< end)]
     }
+    
+    var first: String {
+        return String(characters.prefix(1))
+    }
+    
+    var last: String {
+        return String(characters.suffix(1))
+    }
+    
+    var uppercaseFirst: String {
+        return first.uppercaseString + String(characters.dropFirst())
+    }
+    
 }
 
     
