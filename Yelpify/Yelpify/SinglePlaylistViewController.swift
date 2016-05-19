@@ -136,7 +136,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                     self.playlistTableView.reloadData()
                 })
             }else if item as! NSObject == "Rating"{
+                self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
                 getIDsFromArrayOfBusiness(self.playlistArray, completion: { (result) in
+                    self.placeIDs = result
                     self.placeArray = self.sortGooglePlaces(self.placeArray, type: "rating")
                     self.playlistTableView.reloadData()
                 })
