@@ -21,7 +21,7 @@ enum CurrentView {
     case SearchPlace
 }
 
-class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, IndicatorInfoProvider, UITextFieldDelegate, MGSwipeTableCellDelegate, ModalViewControllerDelegate{
+class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, IndicatorInfoProvider, UITextFieldDelegate, MGSwipeTableCellDelegate, ModalViewControllerDelegate, Dimmable{
     var addToOwnPlaylists: [PFObject]!
     var itemInfo: IndicatorInfo = "Places"
     var playlist_swiped: String!
@@ -60,6 +60,19 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
                 let bdVC = segue.sourceViewController as! BusinessDetailViewController
                 let indexp = bdVC.index
                 self.addTrackToPlaylist(indexp)
+            }else if segue.identifier == "unwindToSearchCancel"{
+                print("unwindToSearchCancel")
+                if let pagerTabVC = self.parentViewController as? SearchPagerTabStrip{
+                    UIView.animateWithDuration(0.2, animations: {
+                        pagerTabVC.navigationController?.navigationBar.alpha = 1
+                    })
+                    pagerTabVC.dim(.Out, alpha: dimLevel, speed: dimSpeed)
+                }else{
+                    UIView.animateWithDuration(0.2, animations: {
+                        self.navigationController?.navigationBar.alpha = 1
+                    })
+                    dim(.Out, alpha: dimLevel, speed: dimSpeed)
+                }
             }
         }
 
@@ -68,6 +81,28 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     @IBAction func unwindToSearchBusinessVCWithSearch(segue: UIStoryboardSegue) {
         if (segue.identifier != nil) {
             if segue.identifier == "unwindToSearch" {
+                if let pagerTabVC = self.parentViewController as? SearchPagerTabStrip{
+                    UIView.animateWithDuration(0.2, animations: {
+                        pagerTabVC.navigationController?.navigationBar.alpha = 1
+                    })
+                    pagerTabVC.dim(.Out, alpha: dimLevel, speed: dimSpeed)
+                }else{
+                    UIView.animateWithDuration(0.2, animations: {
+                        self.navigationController?.navigationBar.alpha = 1
+                    })
+                    dim(.Out, alpha: dimLevel, speed: dimSpeed)
+                }
+
+                let locationVC = segue.sourceViewController as! LocationSearchViewController
+                self.googleParameters["location"] = locationVC.currentLocationCoordinates
+                self.currentCity = locationVC.currentCity
+                if searchQuery != ""{
+                    self.searchWithKeyword(searchQuery)
+                }else{
+                    searchQuery = "food"
+                    self.searchWithKeyword(searchQuery)
+                }
+                self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
                 
 //                print("unwinded from locationSearchVC")
 //                
@@ -238,7 +273,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             
             print(currentCity)
             if self.currentCity != ""{
-                upcoming.mainSearchTextField.text = self.currentCity
+                upcoming.mainSearchTextField?.text = self.currentCity
             }
         }
     }
@@ -309,22 +344,14 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     override func viewDidAppear(animated: Bool) {
         
-//        if locationUpdated == true{
-//            self.searchWithKeyword(searchQuery)
-////            if let searchPager = self.parentViewController as? SearchPagerTabStrip{
-////                //self.googleParameters["location"] = searchPager.chosenCoordinates
-////                if searchQuery != ""{
-////                    self.searchWithKeyword(searchQuery)
-////                }else{
-////                    self.searchWithKeyword("food")
-////                }
-////                
-////                self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
-////            }
-//            self.locationUpdated = false
-//        }
-        
         ConfigureFunctions.resetNavigationBar(self.navigationController!)
+        
+        if ((self.parentViewController as? SearchPagerTabStrip) == nil){
+            let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")
+            
+            navigationItem.rightBarButtonItem = rightButton
+        }
+        
         
         if searchTextField != nil{
             searchTextField.placeholder = "Search for Places"
@@ -356,7 +383,13 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     }
     
     func pressedLocation(sender: UIBarButtonItem){
-        performSegueWithIdentifier("pickLocation", sender: self)
+        if let _ = self.parentViewController as? SearchPagerTabStrip{
+            performSegueWithIdentifier("pickLocation", sender: self)
+        }else{
+            dim(.In, alpha: dimLevel, speed: dimSpeed)
+            self.navigationController?.navigationBar.alpha = 0.5
+            performSegueWithIdentifier("pickLocation", sender: self)
+        }
     }
     
     func pressedCancel(sender:UIBarButtonItem){

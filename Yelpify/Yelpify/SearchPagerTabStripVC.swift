@@ -27,15 +27,16 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
     @IBAction func unwindToSearchPagerTapStrip(segue: UIStoryboardSegue) {
         dim(.Out, alpha: dimLevel, speed: dimSpeed)
         if (segue.identifier != nil){
-            if segue.identifier == "unwindFromLocation"{
-                dim(.Out, alpha: dimLevel, speed: dimSpeed)
-                UIView.animateWithDuration(0.2, animations: {
-                    self.navigationController?.navigationBar.alpha = 1
-                })
-//                if let searchPlaceVC = self.childViewControllers[0] as? SearchBusinessViewController{
-//                    searchPlaceVC.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
-//                }
-            }
+//            if segue.identifier == "unwindFromLocation"{
+//                print("unwindFromLocation")
+//                dim(.Out, alpha: dimLevel, speed: dimSpeed)
+//                UIView.animateWithDuration(0.2, animations: {
+//                    self.navigationController?.navigationBar.alpha = 1
+//                })
+////                if let searchPlaceVC = self.childViewControllers[0] as? SearchBusinessViewController{
+////                    searchPlaceVC.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+////                }
+//            }
         }
     }
     

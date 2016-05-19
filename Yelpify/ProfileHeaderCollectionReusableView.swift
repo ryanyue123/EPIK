@@ -101,7 +101,12 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView, SendCustomI
         let lastname = user["last_name"] as! String
         nameLabel.text = firstname + " " + lastname
         listCount.text = String(listnum)
+        
+        
+        // CHANGE
+        profileImageView.alpha = 0
         Animations.roundSquareImageView(profileImageView, outerView: profileView, borderWidth: 3.0, borderColor: .whiteColor())
+        Animations.fadeInImageView(profileImageView, imageToAdd: UIImage(named: "face")!, beginScale: 0.6)
     }
     
 }

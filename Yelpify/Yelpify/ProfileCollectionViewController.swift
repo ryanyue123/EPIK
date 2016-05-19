@@ -211,15 +211,15 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
             headerView.user = user
             headerView.configureSegmentedBar()
             
-            
-            if user == PFUser.currentUser(){
-                headerView.changeBGPicButton.hidden = false
-                headerView.changeBGPicButton.hidden = false
-            }else{
-                headerView.changeBGPicButton.hidden = true
-                headerView.changeBGPicButton.hidden = true
-            }
-            
+//            
+//            if user == PFUser.currentUser(){
+//                headerView.changeBGPicButton.hidden = false
+//                headerView.changeBGPicButton.hidden = false
+//            }else{
+//                headerView.changeBGPicButton.hidden = true
+//                headerView.changeBGPicButton.hidden = true
+//            }
+//            
             headerView.listnum = self.user_playlists.count
             headerView.configureView()
             
@@ -253,11 +253,18 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
         return cell
     }
     
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let controller = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
+        controller.object = user_playlists[indexPath.row]
+        self.navigationController!.pushViewController(controller, animated: true)
+        
+    }
+    
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         if (section == 0) {
-            return UIEdgeInsetsMake(-50.0, 7.5, 0, 7.5)
+            return UIEdgeInsetsMake(-50.0, 9, 0, 9)
         }
-        return UIEdgeInsetsMake(-50.0, 7.5, 0, 7.5)
+        return UIEdgeInsetsMake(-50.0, 9, 0, 9)
     }
 
     

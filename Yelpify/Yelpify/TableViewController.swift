@@ -59,7 +59,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
         let leftButton =  UIBarButtonItem(title: "Search", style: UIBarButtonItemStyle.Plain, target: self, action: nil)
         let rightButton = UIBarButtonItem(title: "New", style: UIBarButtonItemStyle.Plain, target: self, action: "showPlaylistAlert:")
         
-        navigationItem.leftBarButtonItem = leftButton
+        //navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton
         
         // Pull to Refresh

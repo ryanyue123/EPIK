@@ -213,25 +213,25 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         let pickerController = CZPickerViewController()
         let randomController = RandomPlaceController()
         
-        actionController.addAction(Action(ActionData(title: "Get Random Place", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
+        actionController.addAction(Action(ActionData(title: "Randomize", image: UIImage(named: "action_random")!), style: .Default, handler: { action in
             if self.playlistArray.count != 0{
                 self.performSegueWithIdentifier("randomPlace", sender: self)
             }
             
         }))
         if (editable) {
-            actionController.addAction(Action(ActionData(title: "Edit Playlist", image: UIImage(named: "yt-add-to-playlist-icon")!), style: .Default, handler: { action in
+            actionController.addAction(Action(ActionData(title: "Edit", image: UIImage(named: "action_edit")!), style: .Default, handler: { action in
                 print("Edit pressed")
                 self.activateEditMode()
                 self.playlistTableView.reloadData()
             }))
         }
         if (self.editable) {
-            actionController.addAction(Action(ActionData(title: "Make Collaborative...", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
+            actionController.addAction(Action(ActionData(title: "Make Collaborative", image: UIImage(named: "action_collab")!), style: .Default, handler: { action in
                 self.makeCollaborative()
             }))
         }
-        actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "yt-share-icon")!), style: .Cancel, handler: { action in
+        actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "action_sort")!), style: .Cancel, handler: { action in
             pickerController.headerTitle = "Sort Options"
             pickerController.fruits = ["Alphabetical","Rating"]
             pickerController.showWithFooter(UIViewController)

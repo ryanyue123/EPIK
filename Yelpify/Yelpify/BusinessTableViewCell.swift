@@ -123,7 +123,7 @@ class BusinessTableViewCell: MGSwipeTableCell {
             businessBackgroundImage.hnk_setImageFromURL(URL)
         }
         else{
-            businessBackgroundImage.image =  UIImage(named: "default_restaurant")
+            businessBackgroundImage.image =  UIImage(named: "default_business_bg")
                 
         }
     }

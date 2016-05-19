@@ -21,7 +21,7 @@ class LocationSearchViewController: UIViewController, UITableViewDelegate, UITex
     @IBOutlet weak var cancelButton: UIButton!
     
     @IBAction func pressedCancel(sender: AnyObject) {
-        performSegueWithIdentifier("unwindFromLocation", sender: self)
+        performSegueWithIdentifier("unwindToSearchCancel", sender: self)
     }
     
     @IBAction func pressedSearch(sender: AnyObject) {
@@ -67,6 +67,7 @@ class LocationSearchViewController: UIViewController, UITableViewDelegate, UITex
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //self.resultsTableView.tableHeaderView?.transform = CGAffineTransformMakeScale(0, 0)
         
         self.mainSearchTextField.text = currentCity
         
@@ -174,7 +175,11 @@ extension LocationSearchViewController: GMSAutocompleteTableDataSourceDelegate {
                 break
             }
         }
-        performSegueWithIdentifier("unwindFromNewLocation", sender: self)
+        if let _ = self.parentViewController as? SearchPagerTabStrip{
+            performSegueWithIdentifier("unwindFromNewLocation", sender: self)
+        }else{
+            performSegueWithIdentifier("unwindToSearch", sender: self)
+        }
     }
     
     func tableDataSource(tableDataSource: GMSAutocompleteTableDataSource, didFailAutocompleteWithError error: NSError) {

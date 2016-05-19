@@ -12,7 +12,6 @@ import UIKit
 class RandomPlaceController: UIViewController{
     
     @IBOutlet weak var RestaurantName: UILabel!
-    @IBOutlet weak var RestaurantAddress: UILabel!
     
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var cardImageView: UIImageView!
@@ -46,7 +45,6 @@ class RandomPlaceController: UIViewController{
         
         let randomBusiness = getRandomPlace(businessArray)
         RestaurantName.text = randomBusiness.businessName
-        RestaurantAddress.text = randomBusiness.businessAddress
         googleClient.getImage(randomBusiness.businessPhotoReference) { (image) in
             self.backgroundImage.image = image
             self.cardImageView.image = image
