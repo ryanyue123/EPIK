@@ -25,7 +25,8 @@ class CZPickerViewController: UIViewController {
     var headerTitle = String()
     var businessArrayToSort: [Business]!
     var didSet = false
-    var delegate:ModalViewControllerDelegate!
+    
+    var delegate: ModalViewControllerDelegate!
     
     
     override func viewDidLoad() {

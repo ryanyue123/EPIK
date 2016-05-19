@@ -57,10 +57,7 @@ class BusinessTableViewCell: MGSwipeTableCell {
         let businessList = ["restaurant","food","amusement","bakery","bar","beauty_salon","bowling_alley","cafe","car_rental","car_repair","clothing_store","department_store","grocery_or_supermarket","gym","hospital","liquor_store","lodging","meal_takeaway","movie_theater","night_club","police","shopping_mall"]
         
         if business.businessTypes.count != 0 && businessList.contains(String(business.businessTypes[0])){
-            //categoryIcon.image = UIImage(named: String(business.businessTypes[0]) + "_Icon")!
-            if String(business.businessTypes[0]) != "restaurant"{
-                categoryIcon.transform = CGAffineTransformMakeScale(1.6, 1.6)
-            }
+            categoryIcon.transform = CGAffineTransformMakeScale(1.6, 1.6)
             let origImage = UIImage(named: String(business.businessTypes[0]) + "_Icon")!
             let tintedImage = origImage.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
             categoryIcon.image = tintedImage
@@ -72,7 +69,6 @@ class BusinessTableViewCell: MGSwipeTableCell {
             let tintedImage = origImage.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
             categoryIcon.image = tintedImage
             categoryIcon.tintColor = appDefaults.color_darker
-            //categoryIcon.image = UIImage(named: "default_Icon")!
         }
         
         // Set Name

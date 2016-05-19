@@ -13,11 +13,20 @@ class SearchPeopleCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var handleLabel: UILabel!
     @IBOutlet weak var profilePicture: UIImageView!
+    @IBOutlet weak var addPersonButton: UIButton!
     
-    func configureCell(name: String, handle: String){
+    func configureCell(name: String, handle: String, collab: Bool = false){
         nameLabel.text = name
         handleLabel.text = handle
         roundProf()
+        
+        addPersonButton.tintColor = appDefaults.color_darker
+        
+        if collab == true{
+            addPersonButton.hidden = false
+        }else{
+            addPersonButton.hidden = true
+        }
     }
     
     func roundProf(){

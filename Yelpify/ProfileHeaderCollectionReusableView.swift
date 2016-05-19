@@ -8,14 +8,32 @@
 
 import UIKit
 import Parse
-class ProfileHeaderCollectionReusableView: UICollectionReusableView {
+import BetterSegmentedControl
+
+enum PictureToChange {
+    case Profile
+    case Cover
+}
+
+protocol ShouldSegueToImagePickerDelegate{
+    func shouldSegue()
+}
+
+class ProfileHeaderCollectionReusableView: UICollectionReusableView, SendCustomImages {
     
     var user: PFUser!
     var listnum: Int!
+    var delegate: ShouldSegueToImagePickerDelegate!
+    
+    @IBOutlet weak var segmentedIndicatorView: UIView!
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
+    var pictureToChange: PictureToChange!
+    
+    @IBOutlet weak var coverPhoto: UIImageView!
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -28,30 +46,62 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
     
     @IBOutlet weak var segmentedBarView: UIView!
     
+    @IBOutlet weak var changeBGPicButton: UIButton!
+    @IBOutlet weak var changeProfPicButton: UIButton!
     
     @IBAction func pressedFollowButton(sender: AnyObject) {
+        
     }
     
+    @IBAction func pressedChangeProfPicButton(sender: AnyObject) {
+        self.pictureToChange = .Profile
+        //delegate.shouldSegue()
+    }
+    
+    @IBAction func pressedChangeBGPicButton(sender: AnyObject) {
+        self.pictureToChange = .Cover
+        //delegate.shouldSegue()
+    }
+    
+    func configureSegmentedBar(){
+        let control = BetterSegmentedControl(
+            frame: CGRect(x: 0.0, y: 0.0, width: self.frame.size.width, height: 40),
+            titles: ["Lists", "Following"],
+            index: 0,
+            backgroundColor: appDefaults.color,
+            titleColor: UIColor.whiteColor(),
+            indicatorViewBackgroundColor: appDefaults.color,
+            selectedTitleColor: .whiteColor())
+        control.autoresizingMask = [.FlexibleWidth]
+        control.panningDisabled = true
+        control.titleFont = UIFont(name: "Montserrat", size: 12.0)!
+        control.addTarget(self, action: nil, forControlEvents: .ValueChanged)
+        control.alpha = 0
+        self.segmentedBarView.addSubview(control)
+        UIView.animateWithDuration(0.3) {
+            control.alpha = 1
+            self.segmentedBarView.bringSubviewToFront(self.segmentedIndicatorView)
+        }
+    }
+    
+    func sendImage(image: UIImage) {
+        if self.pictureToChange == .Profile{
+            self.profileImageView.image = image
+        }else{
+            self.coverPhoto.image = image
+        }
+    }
+    
+    // MARK: - Image Picker Functions
+    var customProfilePic: UIImage!
+    var customCoverPic: UIImage!
     
     func configureView(){
         let firstname = user["first_name"] as! String
         let lastname = user["last_name"] as! String
         nameLabel.text = firstname + " " + lastname
         listCount.text = String(listnum)
-        setupProfilePicture()
+        Animations.roundSquareImageView(profileImageView, outerView: profileView, borderWidth: 3.0, borderColor: .whiteColor())
     }
     
-    
-    private func setupProfilePicture(){
-        self.roundingUIView(self.profileImageView, cornerRadiusParam: 50)
-        self.roundingUIView(self.profileView, cornerRadiusParam: 50)
-        self.profileImageView.layer.borderWidth = 4.0
-        self.profileImageView.layer.borderColor = UIColor.whiteColor().CGColor
-    }
-
-    private func roundingUIView(let aView: UIView!, let cornerRadiusParam: CGFloat!) {
-        aView.clipsToBounds = true
-        aView.layer.cornerRadius = cornerRadiusParam
-    }
-
 }

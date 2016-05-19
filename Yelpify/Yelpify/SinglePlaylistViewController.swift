@@ -34,6 +34,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     @IBOutlet weak var playlistInfoBG: UIImageView!
     
+    @IBOutlet weak var indicatorTabView: UIView!
+    
     
     let imagePicker = UIImagePickerController()
     
@@ -189,17 +191,22 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func makeCollaborative() {
-        let searchVC = self.storyboard?.instantiateViewControllerWithIdentifier("searchpeople")
-        let searchPeopleVC = searchVC?.childViewControllers[0] as! SearchPeopleTableViewController
+        //let searchVC = self.storyboard?.instantiateViewControllerWithIdentifier("searchpeople")
+        let searchPeopleVC = self.storyboard?.instantiateViewControllerWithIdentifier("searchPeopleVC") as! SearchPeopleTableViewController
+        let navController = UINavigationController(rootViewController: searchPeopleVC) // Creating a navigation controller with VC1 at the root of the navigation stack.
+        self.presentViewController(navController, animated:true, completion: nil)
+        //let searchPeopleVC = searchVC?.childViewControllers[0] as! SearchPeopleTableViewController
+        
+        searchPeopleVC.mode = .Collaborate
+        searchPeopleVC.collaborative = true
         searchPeopleVC.playlist = self.object
         self.dismissViewControllerAnimated(false, completion: nil)
-        self.presentViewController(searchVC!, animated: true, completion: nil)
+        self.presentViewController(navController, animated: true, completion: nil)
     }
     
     
     
     func showActionsMenu(sender: AnyObject) {
-        
         let actionController = YoutubeActionController()
         let pickerController = CZPickerViewController()
         let randomController = RandomPlaceController()
@@ -324,12 +331,6 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         let tap = UITapGestureRecognizer(target: self, action: "pressedOnAddPlace:")
         self.addPlaceImageButton.userInteractionEnabled = true
         self.addPlaceImageButton.addGestureRecognizer(tap)
-        
-        setupProfilePicture()
-        
-        //        // tapRecognizer, placed in viewDidLoad
-        //        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPress:")
-        //        self.view.addGestureRecognizer(longPressRecognizer)
         
         // Register Nibs
         self.playlistTableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
@@ -504,15 +505,25 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         // Set User Name
         let user = object["createdBy"] as! PFUser
         self.playlistInfoUser.alpha = 0
+        var byTitle = "BY " + user.username!.uppercaseString
         self.playlistInfoUser.setTitle("BY " + user.username!.uppercaseString, forState: .Normal)
+        if let collabArray = object["Collaborators"] as? [PFUser]{
+            if collabArray.count > 0{
+                byTitle += " AND OTHERS" //+ String(collabArray[0].username).uppercaseString
+            }
+        }
+        self.playlistInfoUser.setTitle(byTitle, forState: .Normal)
+        
         fadeInView(self.playlistInfoUser, duration: pushDuration, beginScale: pushBeginScale)
         
         // Set Icon // CHANGE
         fadeInImageView(self.playlistInfoIcon, imageToAdd: UIImage(named: "default_Icon")!, duration: pushDuration, beginScale: pushBeginScale)
+        self.playlistInfoIcon.transform = CGAffineTransformMakeScale(1.2, 1.2)
         //self.playlistInfoIcon.image = UIImage(named: "default_Icon")
         
         // Set Collaborators/ Authors Image
-        // self.creatorImageView.image =
+        self.setupCollaborators(object)
+        
         self.fadeInView(self.collaboratorsView, duration: pushDuration, beginScale: pushBeginScale)
         self.fadeInImageView(self.creatorImageView, imageToAdd: UIImage(named: "face")!,  duration: pushDuration, beginScale: 0.8)
         
@@ -541,6 +552,35 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         if let avgPrice = object["average_price"] as? Int{
             self.setPriceRating(avgPrice)
+        }
+    }
+    
+    // CHANGE
+    func setupCollaborators(object: PFObject){
+        let collabList = object["Collaborators"] as! NSArray
+        if collabList.count > 0{
+            let originalX = self.collaboratorsView.frame.origin.x
+            let originalWidth = self.collaboratorsView.frame.width
+            self.collaboratorsView.transform = CGAffineTransformMakeScale(2.0, 0)
+            self.collaboratorsView.transform = CGAffineTransformMakeTranslation(originalX - originalWidth, 0)
+            
+            let newRect = CGRectMake(self.collaboratorsView.frame.origin.x + originalWidth,
+                                     self.collaboratorsView.frame.origin.y, originalWidth,
+                                     self.collaboratorsView.frame.height)
+            
+            self.creatorImageView.transform = CGAffineTransformMakeTranslation(originalX - originalWidth, 0)
+        
+            let collabProfPic = UIImageView(frame: newRect)
+            collabProfPic.image = UIImage(named: "face")
+            self.collaboratorsView.backgroundColor = UIColor.clearColor()
+            self.setupProfilePicture(self.creatorImageView)
+            self.setupProfilePicture(collabProfPic)
+            
+            self.collaboratorsView.addSubview(collabProfPic)
+            
+        }else{
+            self.setupProfilePicture(self.creatorImageView)
+            self.collaboratorsView.backgroundColor = UIColor.clearColor()
         }
     }
     
@@ -777,7 +817,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             index: 0,
             backgroundColor: appDefaults.color,
             titleColor: UIColor.whiteColor(),
-            indicatorViewBackgroundColor: appDefaults.color_darker,
+            indicatorViewBackgroundColor: appDefaults.color,
             selectedTitleColor: .whiteColor())
         control.autoresizingMask = [.FlexibleWidth]
         control.panningDisabled = true
@@ -787,6 +827,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.segmentedBarView.addSubview(control)
         UIView.animateWithDuration(0.3) {
             control.alpha = 1
+        self.segmentedBarView.bringSubviewToFront(self.indicatorTabView)
         }
     }
     
@@ -795,20 +836,28 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         switch self.contentToDisplay{
         case .Places:
             self.contentToDisplay = .Comments
+            
+            let tX = self.view.frame.width / 2
+            
+            UIView.animateWithDuration(0.2, animations: {
+                self.indicatorTabView.transform = CGAffineTransformMakeTranslation(tX, 0)
+            })
+            
+            
             self.playlistTableView.allowsSelection = false
             self.playlistTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
             
             self.addPlaceImageButton.hidden = false
-            //self.fadeInImageView(self.addPlaceImageButton, imageToAdd: UIImage(named: "add_icon")!, duration: 0.2, beginScale: 0.5)
-            
-//            UIView.animateWithDuration(0.2, animations: {
-//                self.addPlaceImageButton.transform = CGAffineTransformMakeScale(0.5, 0.5)},
-//                                       completion: { finish in
-//                UIView.animateWithDuration(0.6){self.addPlaceImageButton.transform = CGAffineTransformIdentity}
-//            })
 
         case .Comments:
+            
             self.contentToDisplay = .Places
+            
+            let tX = self.view.frame.width / 2
+            UIView.animateWithDuration(0.2, animations: {
+                self.indicatorTabView.transform = CGAffineTransformMakeTranslation(0, 0)
+            })
+            
             self.playlistTableView.allowsSelection = true
             self.playlistTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
             self.addPlaceImageButton.hidden = true
@@ -848,11 +897,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 //        shadowView.tag = 100
 //    }
 //    
-    func setupProfilePicture(){
+    func setupProfilePicture(imageView: UIImageView){
         self.roundingUIView(self.creatorImageView, cornerRadiusParam: 15)
-        self.roundingUIView(self.collaboratorsView, cornerRadiusParam: 15)
-        self.collaboratorsView.layer.borderWidth = 2.0
-        self.collaboratorsView.layer.borderColor = UIColor.whiteColor().CGColor
+        //self.roundingUIView(self.collaboratorsView, cornerRadiusParam: 15)
+        imageView.clipsToBounds = true
+        imageView.layer.borderWidth = 2.0
+        imageView.layer.borderColor = UIColor.whiteColor().CGColor
+        //self.collaboratorsView.layer.borderColor = UIColor.whiteColor().CGColor
     }
     
     private func roundingUIView(let aView: UIView!, let cornerRadiusParam: CGFloat!) {
@@ -1017,7 +1068,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         if self.mode == ListMode.View{
             if index == 0{
                 if direction == MGSwipeDirection.LeftToRight{
-                    actions.openInMaps(business)
+                    PlaceActions.openInMaps(business)
                 }else if direction == MGSwipeDirection.RightToLeft{
                     let query = PFQuery(className: "Playlists")
                     query.whereKey("createdBy", equalTo: PFUser.currentUser()!)

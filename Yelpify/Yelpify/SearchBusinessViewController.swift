@@ -402,13 +402,13 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         //self.playlist_swiped = self.placeIDs[(indexPath?.row)!]
         let business = businessObjects[indexPath!.row]
         self.playlist_swiped = business.gPlaceID
-        let actions = PlaceActions()
+        //let actions = PlaceActions()
         let pickerController = CZPickerViewController()
         
         
         if direction == MGSwipeDirection.LeftToRight{
             print("swipelefttoright")
-            actions.openInMaps(business)
+            PlaceActions.openInMaps(business)
         }else if direction == MGSwipeDirection.RightToLeft{
             let query = PFQuery(className: "Playlists")
             query.whereKey("createdBy", equalTo: PFUser.currentUser()!)

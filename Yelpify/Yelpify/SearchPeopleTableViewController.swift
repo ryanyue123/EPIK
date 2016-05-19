@@ -10,6 +10,11 @@ import UIKit
 import Parse
 import XLPagerTabStrip
 
+enum PeopleMode{
+    case View
+    case Collaborate
+}
+
 class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegate, IndicatorInfoProvider {
     
     @IBOutlet weak var searchField: UITextField!
@@ -19,6 +24,26 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
     var collaborative = false
     var collaboration_list = [PFObject]()
     var playlist: PFObject!
+    var mode: PeopleMode! = .View
+    
+    func addPersonToCollab(button: UIButton) {
+        
+        if button.tintColor == appDefaults.color_darker{
+            button.tintColor = UIColor.greenColor()
+            let index = button.tag
+            self.collaboration_list.append(self.user_list[index])
+            
+            print("added", user_list[index])
+        }else{
+            button.tintColor = appDefaults.color_darker
+            let index = button.tag
+            let itemToRemove = user_list[index]
+            let indexToRemove = collaboration_list.indexOf(itemToRemove)
+            self.collaboration_list.removeAtIndex(indexToRemove!)
+            
+            print("removed", user_list[index])
+        }
+    }
     
     var locationUpdated = false
     
@@ -40,18 +65,25 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
         navigationItem.rightBarButtonItem = rightButton
 
         self.searchFor("")
-        self.tableView.allowsSelection = true
     }
     
     override func viewDidAppear(animated: Bool) {
         ConfigureFunctions.resetNavigationBar(self.navigationController!)
         
-        if (searchTextField == nil) {
-            searchTextField.placeholder = "Search for People"
-            searchTextField = searchField
-            collaborative = true
+        if let _ = self.parentViewController as? SearchPagerTabStrip{
+            collaborative = false
+            tableView.allowsSelection = true
+        }else{
+            tableView.allowsSelection = false
         }
-        searchTextField.delegate = self
+        
+//        if (searchTextField != nil) {
+//            searchTextField.placeholder = "Search for People"
+//            searchTextField = searchField
+//            collaborative = true
+//        }
+        searchField.placeholder = "Search for People"
+        searchField.delegate = self
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -105,7 +137,7 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
                 print("Saved")
             }
         }
-        self.dismissViewControllerAnimated(false, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     // MARK: - Table view data source
 
@@ -130,8 +162,14 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
         
         //let profPic = user["profile_pic"] // CHANGE
         
-        cell.configureCell(fullName, handle: handle)
-//        
+        if collaborative == false{
+            cell.configureCell(fullName, handle: handle)
+        }else{
+            cell.addPersonButton.tag = indexPath.row
+            cell.addPersonButton.addTarget(self, action: "addPersonToCollab:", forControlEvents: .TouchUpInside)
+            cell.configureCell(fullName, handle: handle, collab: true)
+        }
+//
 //        cell.nameLabel.text = first_name + " " + last_name
 //        cell.handleLabel.text = "@" + (user["username"] as! String)
 
@@ -139,14 +177,9 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if (collaborative) {
-            self.collaboration_list.append(self.user_list[indexPath.row])
-        }
-        else {
-            let controller = storyboard!.instantiateViewControllerWithIdentifier("profileVC") as! ProfileCollectionViewController
-            controller.user = self.user_list[indexPath.row] as! PFUser
-            self.navigationController!.pushViewController(controller, animated: true)
-            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        }
+        let controller = storyboard!.instantiateViewControllerWithIdentifier("profileVC") as! ProfileCollectionViewController
+        controller.user = self.user_list[indexPath.row] as! PFUser
+        self.navigationController!.pushViewController(controller, animated: true)
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 }

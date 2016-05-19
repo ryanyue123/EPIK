@@ -10,34 +10,36 @@ import Foundation
 import UIKit
 
 struct PlaceActions{
-    private func convertAddress(address: String) -> String{
-        let addressArray = address.characters.split{$0 == " "}.map(String.init)
-        var resultString = ""
-        for word in addressArray{
-            resultString += word + "+"
-        }
-        return resultString
-    }
-    
-    private func convertPhone(phone: String) -> Int{
-        let phoneArray = phone.characters.map { String($0) }
-        var result = ""
-        for char in phoneArray{
-            if Int(char) != nil{
-                result += char
+   
+    static func openInMaps(business: Business? = nil, place: GooglePlaceDetail? = nil) {
+        func convertAddress(address: String) -> String{
+            let addressArray = address.characters.split{$0 == " "}.map(String.init)
+            var resultString = ""
+            for word in addressArray{
+                resultString += word + "+"
             }
+            return resultString
         }
-        return Int(result)!
-    }
-    
-    func openInMaps(business: Business) {
-        let latitude = business.businessLatitude!
-        let longitude = business.businessLongitude!
+        
+        var latitude: Double!
+        var longitude: Double!
+        
+        if business != nil{
+            latitude = business!.businessLatitude!
+            longitude = business!.businessLongitude!
+        }else{
+            latitude = place!.latitude
+            longitude = place!.longitude
+        }
         
         if (UIApplication.sharedApplication().canOpenURL(NSURL(string: "comgooglemaps://")!))
         {
-            let name = convertAddress(business.businessAddress!)
-            //let name = self.object.businessName//self.object.businessName?.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+            var name: String!
+            if business != nil{
+                name = convertAddress(business!.businessAddress)
+            }else{
+                name = convertAddress(place!.formattedAddress)
+            }
             print(name)
             let url = NSURL(string: "comgooglemaps://?daddr=\(name)&center=\(latitude),\(longitude)&directionsmode=driving")!
             print(url)
@@ -49,9 +51,26 @@ struct PlaceActions{
         }
     }
     
-    func openInPhone(business: Business)
+    static func openInPhone(business: Business? = nil, place: GooglePlaceDetail? = nil)
     {
-        let telnum = convertPhone(business.businessPhone!)
+        func convertPhone(phone: String) -> Int{
+            let phoneArray = phone.characters.map { String($0) }
+            var result = ""
+            for char in phoneArray{
+                if Int(char) != nil{
+                    result += char
+                }
+            }
+            return Int(result)!
+        }
+        
+        var telnum: Int!
+        if business != nil{
+            telnum = convertPhone(business!.businessPhone!)
+        }else{
+            telnum = convertPhone(place!.phone)
+        }
+        
         if(UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel://")!))
         {
             let url = NSURL(string: "tel://\(telnum)")

@@ -32,6 +32,9 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
                 UIView.animateWithDuration(0.2, animations: {
                     self.navigationController?.navigationBar.alpha = 1
                 })
+//                if let searchPlaceVC = self.childViewControllers[0] as? SearchBusinessViewController{
+//                    searchPlaceVC.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+//                }
             }
         }
     }

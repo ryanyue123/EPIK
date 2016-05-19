@@ -13,21 +13,65 @@ import BetterSegmentedControl
 
 private let reuseIdentifier = "listCell"
 
-class ProfileCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+protocol SendCustomImages {
+    func sendImage(image: UIImage)
+}
+
+class ProfileCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, ShouldSegueToImagePickerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     var user: PFUser!
     var user_playlists = [PFObject]()
     
+    var imagePicker = UIImagePickerController()
+    
+    var headerView: ProfileHeaderCollectionReusableView!
+    
+    var sendImagesDelegate: SendCustomImages!
+    
     func goToSettings(){
         performSegueWithIdentifier("SettingsView", sender: self)
     }
+
+    func shouldSegue() {
+        print("segue")
+        showImagePicker()
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            sendImagesDelegate.sendImage(pickedImage)
+        }
+        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func showImagePicker(){
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .PhotoLibrary
+        
+        // Configure Status Bar
+        let statusBarRect = CGRect(x: 0, y: 0, width: imagePicker.navigationBar.frame.size.width, height: 20.0)
+        let statusBarView = UIView(frame: statusBarRect)
+        statusBarView.backgroundColor = appDefaults.color
+        imagePicker.view.addSubview(statusBarView)
+        
+        // Configure Navigation Bar
+        imagePicker.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Top, barMetrics: .Default)
+        imagePicker.navigationBar.backgroundColor = appDefaults.color
+        self.presentViewController(imagePicker, animated: true, completion: nil)
+}
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.imagePicker.delegate = self
         //let navigationBar = navigationController!.navigationBar
         ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
         ConfigureFunctions.configureStatusBar(self.navigationController!)
-        
         
         let width = CGRectGetWidth(collectionView!.bounds)
         let layout = collectionViewLayout as! UICollectionViewFlowLayout
@@ -54,7 +98,6 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
                 })
             }
         }
-        
         
         // Register Nibs
         self.collectionView!.registerNib(UINib(nibName: "ProfileHeader", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "profileHeader")
@@ -101,7 +144,10 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
         if indexPathArray!.count > 0{
             let fadeAlpha = (-collectionView!.contentOffset.y / headerHeight) * 0.5
             //print("indexPathArray", indexPathArray!)
-            let headerView = self.collectionView!.supplementaryViewForElementKind(UICollectionElementKindSectionHeader, atIndexPath: indexPathArray![0]) as! ProfileHeaderCollectionReusableView
+            if self.headerView != nil{
+                headerView.alpha = fadeAlpha
+            }
+//            let headerView = self.collectionView!.supplementaryViewForElementKind(UICollectionElementKindSectionHeader, atIndexPath: indexPathArray![0]) as! ProfileHeaderCollectionReusableView
             headerView.alpha = fadeAlpha
         }
         //self.playlistInfoName.alpha = fadeAlpha
@@ -123,11 +169,12 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
         // Applies height and origin
         let indexPathArray = self.collectionView?.indexPathsForVisibleSupplementaryElementsOfKind(UICollectionElementKindSectionHeader)
         if indexPathArray?.count > 0{
-            let headerView = self.collectionView!.supplementaryViewForElementKind(UICollectionElementKindSectionHeader, atIndexPath: indexPathArray![0]) as! ProfileHeaderCollectionReusableView
-            print("origin.y", headerView.frame.origin.y)
-            print("height", headerView.frame.size.height)
-
-            headerView.frame = headerRect
+            //let headerView = self.collectionView!.supplementaryViewForElementKind(UICollectionElementKindSectionHeader, atIndexPath: indexPathArray![0]) as! ProfileHeaderCollectionReusableView
+            //print("origin.y", headerView.frame.origin.y)
+            //print("height", headerView.frame.size.height)
+            if self.headerView != nil{
+                headerView.frame = headerRect
+            }
         }
     }
     
@@ -160,8 +207,19 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
             
             let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "profileHeader", forIndexPath: indexPath) as! ProfileHeaderCollectionReusableView
             
-            //headerView.frame.size.height = 350.0
+            self.headerView = headerView
             headerView.user = user
+            headerView.configureSegmentedBar()
+            
+            
+            if user == PFUser.currentUser(){
+                headerView.changeBGPicButton.hidden = false
+                headerView.changeBGPicButton.hidden = false
+            }else{
+                headerView.changeBGPicButton.hidden = true
+                headerView.changeBGPicButton.hidden = true
+            }
+            
             headerView.listnum = self.user_playlists.count
             headerView.configureView()
             

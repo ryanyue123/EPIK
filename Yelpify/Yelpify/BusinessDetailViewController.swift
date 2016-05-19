@@ -31,6 +31,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var typeIconImageView: UIImageView!
     
     @IBOutlet weak var segmentedView: UIView!
+    @IBOutlet weak var segmentedTabBar: UIView!
     
     var statusBarView: UIView!
     var navBarShadowView: UIView!
@@ -52,20 +53,24 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     
     var APIClient = APIDataHandler()
     let gpClient = GooglePlacesAPIClient()
-    //var yelpClient = APIDataHandler()
-    //var yelpObj:YelpBusiness!
-
     
     @IBOutlet weak var directionsButton: UIButton!
     @IBOutlet weak var callButton: UIButton!
     @IBOutlet weak var webButton: UIButton!
     
+    @IBOutlet weak var addButtonImage: UIImageView!
+    @IBOutlet weak var routeButtonImage: UIImageView!
+    @IBOutlet weak var callButtonImage: UIImageView!
+    
     @IBAction func showBusinessList(sender: UIBarButtonItem) {
         navigationController?.popViewControllerAnimated(true)
     }
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        self.addTapToActions()
         
         // Register Nibs
         self.tableView.registerNib(UINib(nibName: "ReviewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "reviewCell")
@@ -194,11 +199,21 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             // Set Price Rating
             self.setPriceRating(gPlaceObject.priceRating)
             
-            
+            self.directionsButton.enabled = true
+            self.callButton.enabled = true
         }
     
         self.tableView.reloadData()
     
+    }
+    
+    func addTapToActions(){
+        let add = UITapGestureRecognizer(target: self, action: "pressedAdd")
+        let route = UITapGestureRecognizer(target: self, action: "pressedRoute")
+        let call = UITapGestureRecognizer(target: self, action: "pressedCall")
+        self.addButtonImage.addGestureRecognizer(add)
+        self.routeButtonImage.addGestureRecognizer(route)
+        self.callButtonImage.addGestureRecognizer(call)
     }
     
     func setInfo(place: GooglePlaceDetail){
@@ -211,6 +226,18 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         } // CHANGE
         
         self.tableView.reloadData()
+    }
+    
+    func pressedAdd(){
+        
+    }
+    
+    func pressedRoute(){
+        PlaceActions.openInMaps(nil, place: gPlaceObject)
+    }
+    
+    func pressedCall(){
+        PlaceActions.openInPhone(nil, place: gPlaceObject)
     }
     
     func getHours(hoursArray: NSMutableArray) -> String{
@@ -288,8 +315,10 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         let businessList = ["restaurant","food","amusement","bakery","bar","beauty_salon","bowling_alley","cafe","car_rental","car_repair","clothing_store","department_store","grocery_or_supermarket","gym","hospital","liquor_store","lodging","meal_takeaway","movie_theater","night_club","police","shopping_mall"]
         
         if businessTypes.count != 0 && businessList.contains(String(businessTypes[0])){
+            self.typeIconImageView.transform = CGAffineTransformMakeScale(1.2, 1.2)
             self.typeIconImageView.image = UIImage(named: String(businessTypes[0]) + "_Icon")!
         }else{
+            self.typeIconImageView.transform = CGAffineTransformMakeScale(1.2, 1.2)
             self.typeIconImageView.image = UIImage(named: "default_Icon")!
         }
 
@@ -394,12 +423,12 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     
     func configureSegmentedBar(){
         let control = BetterSegmentedControl(
-            frame: CGRect(x: 0.0, y: 0.0, width: self.headerView.frame.size.width, height: 40),
+            frame: CGRect(x: 0.0, y: 0.0, width: self.tableView.frame.size.width, height: 40),
             titles: ["Info", "Reviews"],
             index: 0,
             backgroundColor: appDefaults.color,
             titleColor: UIColor.whiteColor(),
-            indicatorViewBackgroundColor: appDefaults.color_darker,
+            indicatorViewBackgroundColor: appDefaults.color,
             selectedTitleColor: .whiteColor())
         control.autoresizingMask = [.FlexibleWidth]
         control.panningDisabled = true
@@ -409,8 +438,55 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         self.segmentedView.addSubview(control)
         UIView.animateWithDuration(0.3) {
             control.alpha = 1
+            self.segmentedView.bringSubviewToFront(self.segmentedTabBar)
         }
     }
+    
+    
+    func switchContentType(){
+        if self.contentToDisplay == .Places{
+            self.contentToDisplay = .Comments
+            
+            let tX = self.view.frame.width / 2
+            
+            UIView.animateWithDuration(0.2, animations: {
+                self.segmentedTabBar.transform = CGAffineTransformMakeTranslation(tX, 0)
+            })
+            
+            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+        }else{
+            self.contentToDisplay = .Places
+            
+            let tX = self.view.frame.width / 2
+            UIView.animateWithDuration(0.2, animations: {
+                self.segmentedTabBar.transform = CGAffineTransformMakeTranslation(0, 0)
+            })
+            
+            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+        }
+        
+    }
+
+    
+//    func configureSegmentedBar(){
+//        let control = BetterSegmentedControl(
+//            frame: CGRect(x: 0.0, y: 0.0, width: self.headerView.frame.size.width, height: 40),
+//            titles: ["Info", "Reviews"],
+//            index: 0,
+//            backgroundColor: appDefaults.color,
+//            titleColor: UIColor.whiteColor(),
+//            indicatorViewBackgroundColor: appDefaults.color_darker,
+//            selectedTitleColor: .whiteColor())
+//        control.autoresizingMask = [.FlexibleWidth]
+//        control.panningDisabled = true
+//        control.titleFont = UIFont(name: "Montserrat", size: 12.0)!
+//        control.addTarget(self, action: "switchContentType", forControlEvents: .ValueChanged)
+//        control.alpha = 0
+//        self.segmentedView.addSubview(control)
+//        UIView.animateWithDuration(0.3) {
+//            control.alpha = 1
+//        }
+//    }
 
     
     func configureTableView(){
@@ -480,54 +556,41 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     @IBAction func openInMaps(sender: UIButton) {
-        let latitude = self.object.businessLatitude!
-        let longitude = self.object.businessLongitude!
-        
-        if (UIApplication.sharedApplication().canOpenURL(NSURL(string: "comgooglemaps://")!))
-        {
-            let name = convertAddress(self.object.businessAddress!)
-            //let name = self.object.businessName//self.object.businessName?.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-            print(name)
-            let url = NSURL(string: "comgooglemaps://?saddr=\(name)&center=\(latitude),\(longitude)&directionsmode=driving")!
-            print(url)
-            UIApplication.sharedApplication().openURL(url)
-        }
-        else
-        {
-            print("not allowed")
-        }
+        PlaceActions.openInMaps(nil, place: gPlaceObject)
     }
     
     @IBAction func openInPhone(sender: UIButton)
     {
-        let telnum = convertPhone(self.object.businessPhone!)
-        if(UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel://")!))
-        {
-            let url = NSURL(string: "tel://\(telnum)")
-            UIApplication.sharedApplication().openURL(url!)
-        }
-    }
-    @IBAction func openInWeb(sender: UIButton)
-    {
-        //check is self.object.businessURL is nil
-        //let url = self.object.businessURL
-        let url = NSURL(string: "")
-        if (UIApplication.sharedApplication().canOpenURL(url!))
-        {
-            UIApplication.sharedApplication().openURL(url!)
-        }
-    }
-    
-    func switchContentType(){
-        if self.contentToDisplay == .Places{
-            self.contentToDisplay = .Comments
-            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+        if object != nil{
+            PlaceActions.openInPhone(object)
         }else{
-            self.contentToDisplay = .Places
-            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+            PlaceActions.openInPhone(nil, place: gPlaceObject)
         }
     }
     
+    @IBAction func addPlaceButtonPressed(sender: AnyObject) {
+        
+    }
+    
+//    @IBAction func openInWeb(sender: UIButton)
+//    {
+//        let url = NSURL(string: "")
+//        if (UIApplication.sharedApplication().canOpenURL(url!))
+//        {
+//            UIApplication.sharedApplication().openURL(url!)
+//        }
+//    }
+    
+//    func switchContentType(){
+//        if self.contentToDisplay == .Places{
+//            self.contentToDisplay = .Comments
+//            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+//        }else{
+//            self.contentToDisplay = .Places
+//            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+//        }
+//    }
+//    
     // MARK: - Table View Functions
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch contentToDisplay {
