@@ -1,5 +1,5 @@
 //
-//  TableViewController.swift
+//  HomeViewController.swift
 //  Yelpify
 //
 //  Created by Ryan Yue on 4/9/16.
@@ -28,7 +28,7 @@ struct appDefaults {
     
 }
 
-class TableViewController: UITableViewController, CLLocationManagerDelegate {
+class HomeViewController: UITableViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var tableViewImage: UIImageView!
     @IBOutlet weak var tableViewDescrip: UILabel!
@@ -273,7 +273,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                 dispatch_async(dispatch_get_main_queue(), {
                     self.playlists_location = objects!
                     self.all_playlists.append(self.playlists_location)
-                    self.label_array.append("Lists Near You")
+                    self.label_array.append("Trending Lists")
                     self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
                     //self.tableView.reloadData()
                     
@@ -293,32 +293,32 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
                                 else {
                                     self.all_playlists.append([])
                                 }
-                                let query3 = PFUser.query()!
-                                query3.whereKeyExists("username")
-                                query3.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
-                                query3.findObjectsInBackgroundWithBlock {(objects1: [PFObject]?, error: NSError?) -> Void in
-                                    if ((error) == nil)
-                                    {
-                                        dispatch_async(dispatch_get_main_queue(), {
-                                            if let recentarray = objects1![0]["recentlyViewed"] as? [String]
-                                            {
-                                                let query4 = PFQuery(className: "Playlists")
-                                                query4.whereKey("objectId", containedIn: recentarray)
-                                                query4.findObjectsInBackgroundWithBlock {(objects2: [PFObject]?, error: NSError?) -> Void in
-                                                    if ((error) == nil)
-                                                    {
-                                                        dispatch_async(dispatch_get_main_queue(), {
-                                                            self.recent_playlists = objects2!
-                                                            self.all_playlists.append(self.recent_playlists)
-                                                            self.label_array.append("Recently Viewed")
-                                                            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
-                                                        })
-                                                    }
-                                                }
-                                            }
-                                        })
-                                    }
-                                }
+//                                let query3 = PFUser.query()!
+//                                query3.whereKeyExists("username")
+//                                query3.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
+//                                query3.findObjectsInBackgroundWithBlock {(objects1: [PFObject]?, error: NSError?) -> Void in
+//                                    if ((error) == nil)
+//                                    {
+//                                        dispatch_async(dispatch_get_main_queue(), {
+//                                            if let recentarray = objects1![0]["recentlyViewed"] as? [String]
+//                                            {
+//                                                let query4 = PFQuery(className: "Playlists")
+//                                                query4.whereKey("objectId", containedIn: recentarray)
+//                                                query4.findObjectsInBackgroundWithBlock {(objects2: [PFObject]?, error: NSError?) -> Void in
+//                                                    if ((error) == nil)
+//                                                    {
+//                                                        dispatch_async(dispatch_get_main_queue(), {
+//                                                            self.recent_playlists = objects2!
+//                                                            self.all_playlists.append(self.recent_playlists)
+//                                                            self.label_array.append("Recently Viewed")
+//                                                            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+//                                                        })
+//                                                    }
+//                                                }
+//                                            }
+//                                        })
+//                                    }
+//                                }
                             })
                         }
                         else
@@ -370,7 +370,7 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
     }
 }
 
-extension TableViewController: UICollectionViewDataSource, UICollectionViewDelegate
+extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate
 {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return all_playlists[collectionView.tag].count
@@ -457,7 +457,7 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         self.col = indexPath.row
 
         // Perform Segue and Pass List Data
-        let listVC = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
+        let listVC = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! ListViewController//SinglePlaylistViewController
         let temparray = all_playlists[collectionView.tag]
         listVC.object = temparray[indexPath.row] as! PFObject
         self.navigationController!.pushViewController(listVC, animated: true)

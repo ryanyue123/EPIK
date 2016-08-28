@@ -254,7 +254,7 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
+        let controller = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! ListViewController
         controller.object = user_playlists[indexPath.row]
         self.navigationController!.pushViewController(controller, animated: true)
         

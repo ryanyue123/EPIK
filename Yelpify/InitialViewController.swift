@@ -24,19 +24,19 @@ class InitialViewController: UIViewController {
         print(PFUser.currentUser())
         if (PFUser.currentUser() == nil) {
             self.animate()
-            Async.main(after: 2){
+            Async.main(after: 0.5){
                 self.performSegueWithIdentifier("loginscreen", sender: self)
             }
         }else{
             self.animate()
-            Async.main(after: 2){
+            Async.main(after: 0.5){
                 self.performSegueWithIdentifier("showHome", sender: self)
             }
         }
     }
     
     func animate(){
-        UIView.animateWithDuration(3, animations: {
+        UIView.animateWithDuration(1, animations: {
             self.background.transform = CGAffineTransformMakeScale(1.2, 1.2)
             self.logo.transform = CGAffineTransformMakeScale(0.9, 0.9)
         })

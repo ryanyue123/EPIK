@@ -22,6 +22,7 @@ class BusinessTableViewCell: MGSwipeTableCell {
   
     let cache = Shared.imageCache
     
+    @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var businessTitleLabel: UILabel!
     
@@ -39,6 +40,8 @@ class BusinessTableViewCell: MGSwipeTableCell {
     @IBOutlet weak var actionButtonView: UIView!
     
     func configureCellWith(business: Business, mode: BusinessCellMode, completion:() -> Void){
+        
+        mainView.addShadow(4, opacity: 0.2, offset: CGSize(width: 0, height: 4))
 
         switch mode {
         case .Add:
@@ -140,6 +143,13 @@ class BusinessTableViewCell: MGSwipeTableCell {
         
     }
     
+//    func addShadow(){
+//        self.mainView.layer.shadowColor = UIColor.blackColor().CGColor
+//        self.mainView.layer.shadowOpacity = 0.2
+//        self.mainView.layer.shadowOffset = CGSize(width: 0, height: 4)
+//        self.mainView.layer.shadowRadius = 4
+//    }
+//    
     
     @IBAction func actionButtonPressed(sender: AnyObject) {
         self.actionButton.tintColor = UIColor.greenColor()

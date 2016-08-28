@@ -18,7 +18,7 @@ class ZoomSegue: UIStoryboardSegue {
     }
     
     override func perform() {
-        let sourceVC = self.sourceViewController as! TableViewController
+        let sourceVC = self.sourceViewController as! HomeViewController
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         //let destVC = storyboard.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
         let destVC = self.destinationViewController
