@@ -41,7 +41,7 @@ class BusinessTableViewCell: MGSwipeTableCell {
     
     func configureCellWith(business: Business, mode: BusinessCellMode, completion:() -> Void){
         
-        mainView.addShadow(4, opacity: 0.2, offset: CGSize(width: 0, height: 4))
+        mainView.addShadow(4, opacity: 0.2, offset: CGSize(width: 0, height: 4), path: true)
 
         switch mode {
         case .Add:
@@ -155,11 +155,6 @@ class BusinessTableViewCell: MGSwipeTableCell {
         self.actionButton.tintColor = UIColor.greenColor()
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         

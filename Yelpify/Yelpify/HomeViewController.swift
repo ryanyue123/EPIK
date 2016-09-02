@@ -39,10 +39,7 @@ class HomeViewController: UITableViewController, CLLocationManagerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
-        ConfigureFunctions.configureStatusBar(self.navigationController!)
-        
+        self.configureTopBar()
         // Get Location and Fetch
         DataFunctions.getLocation { (coordinates) in
             sharedVariables.currentCoordinates = String(coordinates.latitude) + "," + String(coordinates.longitude)

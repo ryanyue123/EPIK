@@ -31,6 +31,8 @@
 		901DFAEC1CBF481800AFD002 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CE2EE821C6C5EC8000C9088 /* Main.storyboard */; };
 		902EE0091CED5F5500598A2E /* PeopleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 902EE0081CED5F5500598A2E /* PeopleCell.xib */; };
 		9038B75E1CBCD041004B220B /* ActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9038B75D1CBCD041004B220B /* ActionsViewController.swift */; };
+		903FC9D51D7677BB00AE312E /* ProfileCollectionViewController-old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903FC9D41D7677BB00AE312E /* ProfileCollectionViewController-old.swift */; };
+		903FC9D71D767FD100AE312E /* ProfileHeader-old.xib in Resources */ = {isa = PBXBuildFile; fileRef = 903FC9D61D767FD100AE312E /* ProfileHeader-old.xib */; };
 		905F87941CD741BB004046CD /* SearchPlaylistCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */; };
 		905F87961CD742C7004046CD /* ListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 905F87951CD742C7004046CD /* ListCell.xib */; };
 		905F879D1CD99E3C004046CD /* ProfileCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905F879C1CD99E3C004046CD /* ProfileCollectionViewController.swift */; };
@@ -69,7 +71,6 @@
 		90C177DF1CCB5B85007344CE /* PostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90C177DC1CCB5B85007344CE /* PostCell.xib */; };
 		90C177E01CCB5B85007344CE /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C177DD1CCB5B85007344CE /* PostCell.swift */; };
 		90C177E11CCB5B85007344CE /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C177DE1CCB5B85007344CE /* DataProvider.swift */; };
-		90C96AAE1CCAF72B00E9EC28 /* ConfigureFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C96AAD1CCAF72B00E9EC28 /* ConfigureFunctions.swift */; };
 		90DA32851C93616700D5EBDF /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90DA327B1C93615100D5EBDF /* OpenSans-Bold.ttf */; };
 		90DA32861C93616700D5EBDF /* OpenSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90DA327C1C93615100D5EBDF /* OpenSans-ExtraBold.ttf */; };
 		90DA32871C93616700D5EBDF /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90DA327D1C93615100D5EBDF /* OpenSans-Light.ttf */; };
@@ -157,6 +158,8 @@
 		9025184D1C8825E700BB3E05 /* Haneke.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Haneke.framework; path = "Pods/../build/Debug-iphoneos/Haneke.framework"; sourceTree = "<group>"; };
 		902EE0081CED5F5500598A2E /* PeopleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PeopleCell.xib; sourceTree = "<group>"; };
 		9038B75D1CBCD041004B220B /* ActionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionsViewController.swift; sourceTree = "<group>"; };
+		903FC9D41D7677BB00AE312E /* ProfileCollectionViewController-old.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ProfileCollectionViewController-old.swift"; sourceTree = "<group>"; };
+		903FC9D61D767FD100AE312E /* ProfileHeader-old.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ProfileHeader-old.xib"; sourceTree = "<group>"; };
 		905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlaylistCollectionViewController.swift; sourceTree = "<group>"; };
 		905F87951CD742C7004046CD /* ListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ListCell.xib; path = Yelpify/ListCell.xib; sourceTree = "<group>"; };
 		905F879B1CD99A03004046CD /* Yelpify-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Yelpify-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -197,7 +200,6 @@
 		90C177DC1CCB5B85007344CE /* PostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostCell.xib; sourceTree = "<group>"; };
 		90C177DD1CCB5B85007344CE /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		90C177DE1CCB5B85007344CE /* DataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
-		90C96AAD1CCAF72B00E9EC28 /* ConfigureFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigureFunctions.swift; sourceTree = "<group>"; };
 		90DA32711C93613600D5EBDF /* Montserrat-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraBold.otf"; sourceTree = "<group>"; };
 		90DA32721C93613600D5EBDF /* Montserrat-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.otf"; sourceTree = "<group>"; };
 		90DA32731C93613600D5EBDF /* Montserrat-UltraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-UltraLight.otf"; sourceTree = "<group>"; };
@@ -271,7 +273,6 @@
 			isa = PBXGroup;
 			children = (
 				90B6D69D1CD49888006928E8 /* SearchPagerTabStripVC.swift */,
-				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
 				905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */,
 				3CE1DEF71CDC831A007B08C2 /* SearchPeopleTableViewController.swift */,
 				90E505DE1C8E375200F47285 /* LocationSearchViewController.swift */,
@@ -393,6 +394,7 @@
 				3CA5CB3B1CE7D4D100D1F278 /* Search */,
 				905F879C1CD99E3C004046CD /* ProfileCollectionViewController.swift */,
 				908278AC1D70302700B77822 /* ListViewController.swift */,
+				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
 				ED55870D1CE6EA590049CF93 /* SettingsViewController.swift */,
 				3CD034501CBA122A00675F88 /* HomeViewController.swift */,
 				90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */,
@@ -402,6 +404,7 @@
 				9038B75D1CBCD041004B220B /* ActionsViewController.swift */,
 				905F879B1CD99A03004046CD /* Yelpify-Bridging-Header.h */,
 				EDD4DCCC1CDD666C00376DF8 /* CZPickerViewController.swift */,
+				903FC9D41D7677BB00AE312E /* ProfileCollectionViewController-old.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -441,6 +444,7 @@
 			children = (
 				906059CB1CE95B7A00071D19 /* InfoCell.xib */,
 				905F879E1CD9A453004046CD /* ProfileHeader.xib */,
+				903FC9D61D767FD100AE312E /* ProfileHeader-old.xib */,
 				902EE0081CED5F5500598A2E /* PeopleCell.xib */,
 				905F87951CD742C7004046CD /* ListCell.xib */,
 				9001FEE81CEAEADC00A863C1 /* ImageCarousel.xib */,
@@ -486,7 +490,6 @@
 				90E505E11C8E944100F47285 /* CustomSearchController.swift */,
 				90E505E31C8E946700F47285 /* CustomSearchBar.swift */,
 				90B6D69B1CD35BBE006928E8 /* CustomSegue.swift */,
-				90C96AAD1CCAF72B00E9EC28 /* ConfigureFunctions.swift */,
 				3CA5CB391CE7D32B00D1F278 /* ViewController+Extensions.swift */,
 				908851951CDEE43700F63A40 /* DataFunctions.swift */,
 			);
@@ -692,6 +695,7 @@
 				ED52E64E1CCB2E0300CEBAE2 /* YoutubeCell.xib in Resources */,
 				90DA32861C93616700D5EBDF /* OpenSans-ExtraBold.ttf in Resources */,
 				90DA32931C93616700D5EBDF /* Montserrat-Regular.otf in Resources */,
+				903FC9D71D767FD100AE312E /* ProfileHeader-old.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -788,7 +792,6 @@
 				90B6D69C1CD35BBE006928E8 /* CustomSegue.swift in Sources */,
 				907E0CE51C76768D00872135 /* LocuAPIClient.swift in Sources */,
 				90711BD51CAF4DEA0032A257 /* PlaylistObject.swift in Sources */,
-				90C96AAE1CCAF72B00E9EC28 /* ConfigureFunctions.swift in Sources */,
 				905F879D1CD99E3C004046CD /* ProfileCollectionViewController.swift in Sources */,
 				9038B75E1CBCD041004B220B /* ActionsViewController.swift in Sources */,
 				3CA5CB3E1CE7D63800D1F278 /* AddCommentViewController.swift in Sources */,
@@ -804,6 +807,7 @@
 				907E0CEB1C7828E100872135 /* APIDataHandler.swift in Sources */,
 				9001FEE71CEAB7B000A863C1 /* ProfileLayout.swift in Sources */,
 				907E0CE71C77F34100872135 /* GooglePlacesAPIClient.swift in Sources */,
+				903FC9D51D7677BB00AE312E /* ProfileCollectionViewController-old.swift in Sources */,
 				90E505E21C8E944100F47285 /* CustomSearchController.swift in Sources */,
 				3CB8D45C1CBB575F00870F38 /* ListCollectionViewCell.swift in Sources */,
 				90C177E01CCB5B85007344CE /* PostCell.swift in Sources */,
@@ -996,7 +1000,7 @@
 				INFOPLIST_FILE = Yelpify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = pmang;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Limitless.Yelpify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Yelpify/Yelpify-Bridging-Header.h";
@@ -1021,7 +1025,7 @@
 				INFOPLIST_FILE = Yelpify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = pmang;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Limitless.Yelpify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Yelpify/Yelpify-Bridging-Header.h";

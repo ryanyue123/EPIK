@@ -79,12 +79,13 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         self.tableView.registerNib(UINib(nibName: "InfoCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "infoCell")
         self.tableView.registerNib(UINib(nibName: "ImageCarousel", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "imageCarousel")
         
-        self.navBarShadowView = ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
+        let topBars = self.configureTopBar()
+        self.navBarShadowView = topBars.0
+        self.statusBarView = topBars.1
         
         self.tableView.separatorStyle = .None
         
         // Configure status bar and set alpha to 0
-        self.statusBarView = ConfigureFunctions.configureStatusBar(self.navigationController!)
         self.loadedStatusBar = true
         self.loadedNavBar = true
         
@@ -165,7 +166,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
                 self.tableView.reloadData()
             }
         }else{
-        // IF SEGUEING FROM SINGLEPLAYLISTCONTROLLER
+        // IF SEGUEING FROM LISTVIEWCONTROLLER
             
             self.setInfo(gPlaceObject)
             

@@ -12,12 +12,12 @@ import XLActionController
 import BetterSegmentedControl
 
 private let reuseIdentifier = "listCell"
+//
+//protocol SendCustomImages {
+//    func sendImage(image: UIImage)
+//}
 
-protocol SendCustomImages {
-    func sendImage(image: UIImage)
-}
-
-class ProfileCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, ShouldSegueToImagePickerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+class ProfileCollectionViewController_old: UICollectionViewController, UICollectionViewDelegateFlowLayout, ShouldSegueToImagePickerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     var user: PFUser!
     var user_playlists = [PFObject]()
@@ -31,7 +31,7 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
     func goToSettings(){
         performSegueWithIdentifier("SettingsView", sender: self)
     }
-
+    
     func shouldSegue() {
         print("segue")
         showImagePicker()
@@ -64,17 +64,17 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
         self.presentViewController(imagePicker, animated: true, completion: nil)
     }
     
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.imagePicker.delegate = self
         //let navigationBar = navigationController!.navigationBar
-        self.statusBar = self.configureTopBar().1
+        self.configureTopBar()
         
         let width = CGRectGetWidth(collectionView!.bounds)
         let layout = collectionViewLayout as! UICollectionViewFlowLayout
-        layout.headerReferenceSize = CGSize(width: width, height: 149)
+        layout.headerReferenceSize = CGSize(width: width, height: 350)
         layout.itemSize = CGSize(width: width, height: 62)
         
         //navigationBar.tintColor = UIColor.whiteColor()
@@ -100,16 +100,16 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
         
         // Register Nibs
         self.collectionView!.registerNib(UINib(nibName: "ProfileHeader", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "profileHeader")
-
+        
         // Uncomment the following line to preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
         
-
+        
         // Register cell classes
         self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         //self.collectionView!.collectionViewLayout = CollectionViewLayout()
         //collectionView?.reloadData()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -128,18 +128,14 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
         updateHeaderView()
     }
     
-    private let headerHeight: CGFloat = 149.0
-
+    private let headerHeight: CGFloat = 350.0
+    
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         print("content offset", self.collectionView!.contentOffset.y)
         //fadeHeaderBG()
         updateHeaderView()
-        self.updateNavigationBarForFade(self.headerHeight, bottomScrollView: scrollView)
-        if self.statusBar != nil{
-            self.updateStatusBarForFade(self.headerHeight, bottomScrollView: scrollView, statusBar: self.statusBar!)
-        }
-        //handleNavigationBarOnScroll()
+        handleNavigationBarOnScroll()
     }
     
     func fadeHeaderBG(){
@@ -150,7 +146,7 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
             if self.headerView != nil{
                 headerView.alpha = fadeAlpha
             }
-//            let headerView = self.collectionView!.supplementaryViewForElementKind(UICollectionElementKindSectionHeader, atIndexPath: indexPathArray![0]) as! ProfileHeaderCollectionReusableView
+            //            let headerView = self.collectionView!.supplementaryViewForElementKind(UICollectionElementKindSectionHeader, atIndexPath: indexPathArray![0]) as! ProfileHeaderCollectionReusableView
             headerView.alpha = fadeAlpha
         }
         //self.playlistInfoName.alpha = fadeAlpha
@@ -164,7 +160,7 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
         if collectionView!.contentOffset.y < -64.0{
             //print("Scrolled above offset")
             headerRect.origin.y = collectionView!.contentOffset.y
-            headerRect.size.height = -collectionView!.contentOffset.y - 64.0 + 149.0
+            headerRect.size.height = -collectionView!.contentOffset.y - 64.0 + 350.0
         }else if collectionView!.contentOffset.y > 64.0{
             self.navigationItem.titleView?.tintColor = UIColor.whiteColor()
         }
@@ -199,7 +195,7 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
         //self.view.viewWithTag(100)!.backgroundColor = appDefaults.color.colorWithAlphaComponent(showWhenScrollDownAlpha)
     }
     
-
+    
     // MARK: UICollectionViewDataSource
     
     override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
@@ -212,17 +208,17 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
             
             self.headerView = headerView
             headerView.user = user
-           //headerView.configureSegmentedBar()
+            //headerView.configureSegmentedBar()
             
-//            
-//            if user == PFUser.currentUser(){
-//                headerView.changeBGPicButton.hidden = false
-//                headerView.changeBGPicButton.hidden = false
-//            }else{
-//                headerView.changeBGPicButton.hidden = true
-//                headerView.changeBGPicButton.hidden = true
-//            }
-//            
+            //
+            //            if user == PFUser.currentUser(){
+            //                headerView.changeBGPicButton.hidden = false
+            //                headerView.changeBGPicButton.hidden = false
+            //            }else{
+            //                headerView.changeBGPicButton.hidden = true
+            //                headerView.changeBGPicButton.hidden = true
+            //            }
+            //
             headerView.listnum = self.user_playlists.count
             headerView.configureView()
             
@@ -232,34 +228,33 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
             assert(false, "Unexpected element kind")
         }
     }
-
     
-
+    
+    
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
-
-
+    
+    
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return user_playlists.count
     }
-
+    
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         collectionView.registerNib(UINib(nibName: "ListCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "listCell")
-
+        
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("listCell", forIndexPath: indexPath) as! ListCollectionViewCell
-
+        
         cell.configureCell(user_playlists[indexPath.row])
-       //cell.configureCellLayout()
-    
+        //cell.configureCellLayout()
+        
         return cell
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let controller = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! ListViewController
         controller.object = user_playlists[indexPath.row]
-        self.changeTopBarColor(.clearColor())
         self.navigationController!.pushViewController(controller, animated: true)
         
     }
@@ -270,7 +265,7 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
         }
         return UIEdgeInsetsMake(-50.0, 9, 9, 9)
     }
-
+    
     
     @IBAction func showSettings(sender: UIBarButtonItem) {
         let actionController = YoutubeActionController()
@@ -283,7 +278,7 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
         actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
         
         presentViewController(actionController, animated: false, completion: nil)
-
+        
     }
     
 }

@@ -18,11 +18,11 @@ enum ContentTypes {
     case Places, Comments
 }
 
-enum ListMode{
-    case View, Edit
-}
-
 class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate, MGSwipeTableCellDelegate, ModalViewControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate, UITextFieldDelegate, Dimmable{
+    
+    enum ListMode{
+        case View, Edit
+    }
     
     //@IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
     
@@ -325,9 +325,8 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         super.viewDidLoad()
         
         imagePicker.delegate = self
-        
-        ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
-        self.statusBarView = ConfigureFunctions.configureStatusBar(self.navigationController!)
+    
+        self.statusBarView = self.configureTopBar().1
         
         self.configurePlaylistInfoView()
         
@@ -663,39 +662,40 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+    private func activateEditMode() {
+//        
+//        // Make Title Text Editable
+//        self.titleTextField.enable()
+//        self.titleTextField.delegate = self
+//        
+//        // Show Change BG Image Button
+//        self.changePlaylistImageButton.hidden = false
+//        
+//        // Replace More Button With Cancel Button
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "deactivateEditMode")
+//        
+//        // Animate and Show Add Place Button
+//        self.addPlaceImageButton.hidden = false
+//        UIView.animateWithDuration(0.3,delay: 0.0,options: UIViewAnimationOptions.BeginFromCurrentState,animations: {
+//            self.addPlaceImageButton.transform = CGAffineTransformMakeScale(0.5, 0.5)},
+//                                   completion: { finish in
+//                                    UIView.animateWithDuration(0.6){self.addPlaceImageButton.transform = CGAffineTransformIdentity}
+//        })
+//        
+//        // Set Editing to True
+//        self.setEditing(true, animated: true)
+//        
+//        // Set Edit Mode
+//        self.mode = .Edit
+//        
+//        // Replace Back Button with Done
+//        self.navigationItem.setHidesBackButton(true, animated: true)
+//        let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(SinglePlaylistViewController.savePlaylistToParse(_:)))
+//        self.navigationItem.leftBarButtonItem = backButton
+    }
+    
     
     // MARK: Activate and Deactivate Edit Modes
-    func activateEditMode() {
-        
-        // Make Title Text Editable
-        self.playlistInfoName.userInteractionEnabled = true
-        self.playlistInfoName.delegate = self
-        
-        // Show Change BG Image Button
-        self.changePlaylistImageButton.hidden = false
-    
-        // Replace More Button With Cancel Button
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "deactivateEditMode")
-        
-        // Animate and Show Add Place Button
-        self.addPlaceImageButton.hidden = false
-        UIView.animateWithDuration(0.3,delay: 0.0,options: UIViewAnimationOptions.BeginFromCurrentState,animations: {
-            self.addPlaceImageButton.transform = CGAffineTransformMakeScale(0.5, 0.5)},
-                                   completion: { finish in
-                                    UIView.animateWithDuration(0.6){self.addPlaceImageButton.transform = CGAffineTransformIdentity}
-        })
-        
-        // Set Editing to True
-        self.setEditing(true, animated: true)
-        
-        // Set Edit Mode
-        self.mode = .Edit
-        
-        // Replace Back Button with Done
-        self.navigationItem.setHidesBackButton(true, animated: true)
-        let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(SinglePlaylistViewController.savePlaylistToParse(_:)))
-        self.navigationItem.leftBarButtonItem = backButton
-    }
     
     func deactivateEditMode() {
         
@@ -707,7 +707,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.changePlaylistImageButton.hidden = true
         
         // Restore More Icon to Right Side of Nav Bar
-        let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "showActionsMenu:")
+        let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "ssMenu:")
         navigationItem.rightBarButtonItem = rightButton
         
         // Restore Back Button

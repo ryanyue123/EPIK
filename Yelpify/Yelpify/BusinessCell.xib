@@ -22,17 +22,17 @@
             <rect key="frame" x="0.0" y="0.0" width="400" height="129"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6ro-66-9Xw" id="xp5-Wz-efQ">
-                <rect key="frame" x="0.0" y="0.0" width="400" height="128.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="400" height="129"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XaJ-6M-PlA">
                         <rect key="frame" x="16" y="0.0" width="368" height="118"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6tb-VY-uEj">
-                                <rect key="frame" x="0.0" y="0.0" width="147" height="108"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6tb-VY-uEj">
+                                <rect key="frame" x="0.0" y="0.0" width="147" height="118"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mT1-mC-8Pn">
-                                        <rect key="frame" x="0.0" y="0.0" width="147" height="108"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mT1-mC-8Pn">
+                                        <rect key="frame" x="0.0" y="0.0" width="147" height="118"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     </imageView>
@@ -64,14 +64,14 @@
                                 <color key="textColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open Now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qPl-BP-Rgz">
-                                <rect key="frame" x="159" y="79" width="64" height="15"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Open Now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qPl-BP-Rgz">
+                                <rect key="frame" x="159" y="61" width="64" height="15"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                                 <color key="textColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fgm-SL-aq5" customClass="CosmosView" customModule="Cosmos">
-                                <rect key="frame" x="159" y="33" width="90" height="18"/>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fgm-SL-aq5" customClass="CosmosView" customModule="Cosmos">
+                                <rect key="frame" x="159" y="33" width="0.0" height="0.0"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
@@ -88,15 +88,15 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9FX-Rz-nD1">
-                                <rect key="frame" x="317" y="0.0" width="51" height="108"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9FX-Rz-nD1">
+                                <rect key="frame" x="317" y="0.0" width="51" height="118"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="51" id="gB9-qM-R01"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vVT-hq-Qlq">
-                                <rect key="frame" x="335" y="41" width="24" height="24"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vVT-hq-Qlq">
+                                <rect key="frame" x="335" y="47" width="24" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="24" id="VH4-0S-SFh"/>
                                     <constraint firstAttribute="height" constant="24" id="dTn-gr-VDu"/>
@@ -106,8 +106,8 @@
                                     <color key="titleColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123 Health Street, Irvine CA 92134" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="roP-Ec-1in">
-                                <rect key="frame" x="159" y="59" width="193" height="15"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="123 Health Street, Irvine CA 92134" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="roP-Ec-1in">
+                                <rect key="frame" x="159" y="41" width="193" height="15"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Light" family="Montserrat" pointSize="12"/>
                                 <color key="textColor" red="0.2274509804" green="0.4823529412" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -138,6 +138,11 @@
                             <constraint firstItem="uu2-eA-gBO" firstAttribute="leading" secondItem="PFR-j6-cgi" secondAttribute="trailing" constant="5" id="saq-Rh-yq6"/>
                             <constraint firstItem="6tb-VY-uEj" firstAttribute="width" secondItem="XaJ-6M-PlA" secondAttribute="width" multiplier="2:5" id="u8Q-bJ-Ybl"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="TcT-jb-sfS"/>
+                            </mask>
+                        </variation>
                     </view>
                 </subviews>
                 <color key="backgroundColor" red="0.89543876259999999" green="0.89543876259999999" blue="0.89543876259999999" alpha="1" colorSpace="calibratedRGB"/>

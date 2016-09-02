@@ -10,15 +10,19 @@ import Foundation
 import UIKit
 import CoreLocation
 import SwiftLocation
+import Parse
+import Async
 
 struct DataFunctions {
     static func getLocation(completion: (coordinates: CLLocationCoordinate2D) -> Void){
-        
-        Location.getLocation(withAccuracy: .Any, onSuccess: { (foundLocation) in
+        Location.getLocation(withAccuracy: .Block, frequency: .OneShot, timeout: 30, onSuccess: { (foundLocation) in
             completion(coordinates: foundLocation.coordinate)
-            }) { (lastValidLocation, error) in
+            
+        }) { (lastValidLocation, error) in
+            print(error)
+            if lastValidLocation != nil{
                 completion(coordinates: (lastValidLocation?.coordinate)!)
-                print(error)
+            }
         }
     }
 }

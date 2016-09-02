@@ -97,17 +97,17 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView, SendCustomI
     var customCoverPic: UIImage!
     
     func configureView(){
-        let firstname = user["first_name"] as! String
-        let lastname = user["last_name"] as! String
-        nameLabel.text = firstname.uppercaseFirst + " " + lastname.uppercaseFirst
-        listCount.text = String(listnum)
-        
-        
-        // CHANGE
-        profileImageView.alpha = 0
-        Animations.roundSquareImageView(profileImageView, outerView: profileView, borderWidth: 3.0, borderColor: .whiteColor())
-        Animations.fadeInView(self.profileView, beginScale: 0.7)
-        Animations.fadeInImageView(profileImageView, imageToAdd: UIImage(named: "face")!, beginScale: 0.7)
+//        let firstname = user["first_name"] as! String
+//        let lastname = user["last_name"] as! String
+//        nameLabel.text = firstname.uppercaseFirst + " " + lastname.uppercaseFirst
+//        listCount.text = String(listnum)
+//        
+//        
+//        // CHANGE
+//        profileImageView.alpha = 0
+//        Animations.roundSquareImageView(profileImageView, outerView: profileView, borderWidth: 3.0, borderColor: .whiteColor())
+//        Animations.fadeInView(self.profileView, beginScale: 0.7)
+//        Animations.fadeInImageView(profileImageView, imageToAdd: UIImage(named: "face")!, beginScale: 0.7)
     }
     
 }

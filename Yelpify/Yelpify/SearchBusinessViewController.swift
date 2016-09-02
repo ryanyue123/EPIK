@@ -21,7 +21,7 @@ enum CurrentView {
     case SearchPlace
 }
 
-class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, IndicatorInfoProvider, UITextFieldDelegate, MGSwipeTableCellDelegate, ModalViewControllerDelegate, Dimmable{
+class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate, IndicatorInfoProvider, UITextFieldDelegate, MGSwipeTableCellDelegate, ModalViewControllerDelegate, Dimmable{
     var addToOwnPlaylists: [PFObject]!
     var itemInfo: IndicatorInfo = "Places"
     var playlist_swiped: String!
@@ -40,8 +40,24 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var locationUpdated = false
     
     var currentView: CurrentView = .SearchPlace
-    
+
     var searchTextField: UITextField!
+
+    
+    // MARK: - TABLEVIEW VARIABLES
+    private var businessObjects: [Business] = []
+    private var businessShown: [Bool] = []
+    
+    // Parse variables
+    private var index: NSIndexPath!
+    var placeIDs = [String]()
+    var businessArray = [Business]()
+    var newPlacesArray = [GooglePlaceDetail]()
+    
+    // MARK: - TABLEVIEW FUNCTIONS
+    
+    @IBOutlet weak var tableView: UITableView!
+    
     @IBOutlet weak var addPlaceSearchTextField: UITextField!
     
     // MARK: - OUTLETS
@@ -155,10 +171,13 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     }
     
     // MARK: - DATA TASKS
-    func getCurrentLocation(){
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestLocation()
+    func getLocationAndSearch(){
+        DataFunctions.getLocation { (coordinates) in
+            self.googleParameters["location"] = "\(coordinates.latitude),\(coordinates.longitude)"
+            self.performInitialSearch()
+            self.placeIDs.removeAll()
+        }
+
     }
     
     func firstDictFromDict(dict: NSDictionary) -> NSDictionary{
@@ -177,77 +196,13 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     }
     
     
-    // MARK: - TABLEVIEW VARIABLES
-    private var businessObjects: [Business] = []
-    private var businessShown: [Bool] = []
-
-    // Parse variables
-    private var index: NSIndexPath!
-    var placeIDs = [String]()
-    var businessArray = [Business]()
-    var newPlacesArray = [GooglePlaceDetail]()
-
-    // MARK: - TABLEVIEW FUNCTIONS
-
-    @IBOutlet weak var tableView: UITableView!
-    
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        cell.backgroundColor = UIColor.whiteColor()
-    }
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return businessObjects.count
-    }
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-
-    
     // MGSwipeTableCell Delegate Methods
     
     func swipeTableCell(cell: MGSwipeTableCell!, canSwipe direction: MGSwipeDirection) -> Bool {
         return true
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-        cell.delegate = self
-        cell.tag = indexPath.row
-        
-        configureSwipeButtons(cell)
-        
-        if self.currentView == .SearchPlace{
-            cell.actionButton.hidden = true
-        }else{
-            cell.actionButton.hidden = false
-        }
-        
-        let business = self.businessObjects[indexPath.row]
-        
-        cell.configureCellWith(business, mode: .Add) { (place) -> Void in
-            
-        }
-        
-        cell.moreButton.tag = indexPath.row
-        cell.moreButton.addTarget(self, action: "addTrackToPlaylist:", forControlEvents: .TouchUpInside)
-        
-        let tappedGestureRec = UITapGestureRecognizer(target: self, action: "addTrackToPlaylistFromTap:")
-        cell.actionButtonView.addGestureRecognizer(tappedGestureRec)
-        cell.actionButtonView.tag = indexPath.row
-        
-        return cell
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("showBusinessDetail", sender: self)
-    }
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if (segue.identifier == "showBusinessDetail"){
@@ -374,8 +329,8 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     // MARK: - VIEWDIDLOAD
     
     override func viewDidAppear(animated: Bool) {
-        
-        ConfigureFunctions.resetNavigationBar(self.navigationController!)
+
+        self.navigationController?.resetNavigationBar()
         
         if ((self.parentViewController as? SearchPagerTabStrip) == nil){
             let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")
@@ -394,21 +349,15 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     override func viewDidLoad(){
         
-        //self.tableView.reloadData()
-        
         // Get Location and Perform Search
-        DataFunctions.getLocation { (coordinates) in
-            self.googleParameters["location"] = "\(coordinates.latitude),\(coordinates.longitude)"
-            self.performInitialSearch()
-            self.placeIDs.removeAll()
-        }
+        self.getLocationAndSearch()
         
         if self.navigationController?.navigationBar.backgroundColor != appDefaults.color{
             // Configure Functions
-            ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
-            ConfigureFunctions.configureStatusBar(self.navigationController!)
+           self.configureTopBar()
         }
 
+        self.tableView.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0)
         // Register Nibs
         self.tableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
     }
@@ -581,3 +530,75 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
 
 
 }
+
+extension SearchBusinessViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.backgroundColor = UIColor.whiteColor()
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return businessObjects.count
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 128.5
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
+        cell.delegate = self
+        cell.tag = indexPath.row
+        
+        configureSwipeButtons(cell)
+        
+        if self.currentView == .SearchPlace{
+            cell.actionButton.hidden = true
+        }else{
+            cell.actionButton.hidden = false
+        }
+        
+        let business = self.businessObjects[indexPath.row]
+        
+        cell.configureCellWith(business, mode: .Add) { (place) -> Void in
+            
+        }
+        
+        cell.moreButton.tag = indexPath.row
+        cell.moreButton.addTarget(self, action: "addTrackToPlaylist:", forControlEvents: .TouchUpInside)
+        
+        let tappedGestureRec = UITapGestureRecognizer(target: self, action: "addTrackToPlaylistFromTap:")
+        cell.actionButtonView.addGestureRecognizer(tappedGestureRec)
+        cell.actionButtonView.tag = indexPath.row
+        
+        return cell
+    }
+
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.performSegueWithIdentifier("showBusinessDetail", sender: self)
+    }
+    
+    func tableView(tableView: UITableView, didHighlightRowAtIndexPath indexPath: NSIndexPath) {
+        let cell  = tableView.cellForRowAtIndexPath(indexPath) as! BusinessTableViewCell
+        cell.mainView.backgroundColor = UIColor.selectedGray()
+        cell.businessBackgroundImage.alpha = 0.8
+        cell.BusinessRating.backgroundColor = UIColor.selectedGray()
+    }
+    
+    func tableView(tableView: UITableView, didUnhighlightRowAtIndexPath indexPath: NSIndexPath) {
+        let cell  = tableView.cellForRowAtIndexPath(indexPath) as! BusinessTableViewCell
+        cell.mainView.backgroundColor = UIColor.whiteColor()
+        cell.businessBackgroundImage.alpha = 1
+        cell.BusinessRating.backgroundColor = UIColor.clearColor()
+    }
+    
+    
+    
+}
+

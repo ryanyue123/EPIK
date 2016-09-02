@@ -56,8 +56,7 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
         
         if self.navigationController?.navigationBar.backgroundColor != appDefaults.color{
             // Configure Functions
-            ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
-            ConfigureFunctions.configureStatusBar(self.navigationController!)
+           self.configureTopBar()
         }
         
         let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")
@@ -68,7 +67,7 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
     }
     
     override func viewDidAppear(animated: Bool) {
-        ConfigureFunctions.resetNavigationBar(self.navigationController!)
+        self.configureTopBar()
         
         if let _ = self.parentViewController as? SearchPagerTabStrip{
             collaborative = false

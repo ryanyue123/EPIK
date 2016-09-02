@@ -30,8 +30,7 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
         
         if self.navigationController?.navigationBar.backgroundColor != appDefaults.color{
             // Configure Functions
-            ConfigureFunctions.configureNavigationBar(self.navigationController!, outterView: self.view)
-            ConfigureFunctions.configureStatusBar(self.navigationController!)
+           self.configureTopBar()
         }
         
         self.collection_view.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
@@ -62,7 +61,7 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
     }
 
     override func viewDidAppear(animated: Bool) {
-        ConfigureFunctions.resetNavigationBar(self.navigationController!)
+        self.navigationController?.resetNavigationBar()
         if locationUpdated == true{
             // UPDATE LOCATION UPDATES
         }

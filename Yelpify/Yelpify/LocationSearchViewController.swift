@@ -71,6 +71,8 @@ class LocationSearchViewController: UIViewController, UITableViewDelegate, UITex
         
         self.mainSearchTextField.text = currentCity
         
+        self.resultsTableView.contentInset = UIEdgeInsets(top: -20, left: 0, bottom: 0, right: 0)
+        
         self.outterView.layer.cornerRadius = 20.0
         self.outterView.clipsToBounds = true
         

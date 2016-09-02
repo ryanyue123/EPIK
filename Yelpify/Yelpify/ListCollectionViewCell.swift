@@ -14,6 +14,7 @@ class ListCollectionViewCell: UICollectionViewCell {
     
     let cache = Shared.imageCache
     
+    @IBOutlet var mainView: UIView!
     @IBOutlet weak var listIcon: UIImageView!
     @IBOutlet weak var playlistImage: UIImageView!
     @IBOutlet weak var listName: UILabel!
@@ -44,6 +45,8 @@ class ListCollectionViewCell: UICollectionViewCell {
     
     
     func configureCell(cellobject: PFObject){
+        
+        self.mainView.addShadow(4, opacity: 0.2, offset: CGSize(width: 0, height: 4), path: true)
         self.listName.text = cellobject["playlistName"] as? String
         let createdByUser = cellobject["createdBy"] as! PFUser
         createdByUser.fetchIfNeededInBackgroundWithBlock { (object, error) in
