@@ -95,6 +95,8 @@
 		90E505DF1C8E375200F47285 /* LocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E505DE1C8E375200F47285 /* LocationSearchViewController.swift */; };
 		90E505E21C8E944100F47285 /* CustomSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E505E11C8E944100F47285 /* CustomSearchController.swift */; };
 		90E505E41C8E946700F47285 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E505E31C8E946700F47285 /* CustomSearchBar.swift */; };
+		90E64B711D7A601D005F3C3C /* MapTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E64B701D7A601D005F3C3C /* MapTestViewController.swift */; };
+		90E64B751D7B7BDA005F3C3C /* MapMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E64B741D7B7BDA005F3C3C /* MapMethods.swift */; };
 		90F34CDF1CB0893300CC0870 /* SinglePlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */; };
 		90FBF9121CCF27D800355AB3 /* ActionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED52E6511CCB2E8A00CEBAE2 /* ActionData.swift */; };
 		ED405A101CC1D03C0017A9AB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED405A0F1CC1D03C0017A9AB /* LoginViewController.swift */; };
@@ -224,6 +226,8 @@
 		90E505DE1C8E375200F47285 /* LocationSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchViewController.swift; sourceTree = "<group>"; };
 		90E505E11C8E944100F47285 /* CustomSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSearchController.swift; sourceTree = "<group>"; };
 		90E505E31C8E946700F47285 /* CustomSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
+		90E64B701D7A601D005F3C3C /* MapTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTestViewController.swift; sourceTree = "<group>"; };
+		90E64B741D7B7BDA005F3C3C /* MapMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapMethods.swift; sourceTree = "<group>"; };
 		90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePlaylistViewController.swift; sourceTree = "<group>"; };
 		981001A34CAB5A147D7CB122 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B140D093A1A89D68777F3561 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -342,6 +346,7 @@
 				9001FEE61CEAB7B000A863C1 /* ProfileLayout.swift */,
 				ED99B82A1CDC4C1900C7E43F /* PlaceActions.swift */,
 				908278AE1D70305900B77822 /* UIExtensions.swift */,
+				90E64B741D7B7BDA005F3C3C /* MapMethods.swift */,
 				9025184F1C88276C00BB3E05 /* View Controllers */,
 				3CA6CFFB1CC05A880004B989 /* Cells */,
 				906059CA1CE9482700071D19 /* Segues */,
@@ -390,6 +395,7 @@
 		9025184F1C88276C00BB3E05 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				90E64B701D7A601D005F3C3C /* MapTestViewController.swift */,
 				3CA5CB3C1CE7D4F800D1F278 /* Login/Signup */,
 				3CA5CB3B1CE7D4D100D1F278 /* Search */,
 				905F879C1CD99E3C004046CD /* ProfileCollectionViewController.swift */,
@@ -796,6 +802,7 @@
 				9038B75E1CBCD041004B220B /* ActionsViewController.swift in Sources */,
 				3CA5CB3E1CE7D63800D1F278 /* AddCommentViewController.swift in Sources */,
 				90B6D69E1CD49888006928E8 /* SearchPagerTabStripVC.swift in Sources */,
+				90E64B751D7B7BDA005F3C3C /* MapMethods.swift in Sources */,
 				9001FEED1CEB0A2600A863C1 /* Animations.swift in Sources */,
 				3CBFD89D1CD4355900290F25 /* SearchPlaylistCell.swift in Sources */,
 				9081EF811CE44A8600E571E2 /* CellConfigurator.swift in Sources */,
@@ -816,6 +823,7 @@
 				90C177D41CCB50A6007344CE /* YoutubeExampleViewController.swift in Sources */,
 				906059C91CE9482200071D19 /* ZoomSegue.swift in Sources */,
 				ED5587101CE6ED560049CF93 /* SettingsTableViewCell.swift in Sources */,
+				90E64B711D7A601D005F3C3C /* MapTestViewController.swift in Sources */,
 				3C7C56451CD479EF009D8B34 /* SignUpViewController.swift in Sources */,
 				EDA8CEF51CAF506400A5C2ED /* SortMethods.swift in Sources */,
 				90DC57B91C72843A001F1891 /* YelpAPIClient.swift in Sources */,

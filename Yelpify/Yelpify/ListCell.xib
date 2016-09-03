@@ -55,6 +55,11 @@
                                     <constraint firstItem="tvr-fv-rIy" firstAttribute="top" secondItem="9u1-Gy-DEi" secondAttribute="top" id="MTg-Ts-Co6"/>
                                     <constraint firstAttribute="width" constant="180" id="aVf-ti-fyb"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="aVf-ti-fyb"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i4D-V9-CyA" userLabel="Seperator">
                                 <rect key="frame" x="18" y="171" width="145" height="1"/>

@@ -1,5 +1,6 @@
 import UIKit
 import GoogleMaps
+import GooglePlaces
 import Async
 
 enum SearchType {

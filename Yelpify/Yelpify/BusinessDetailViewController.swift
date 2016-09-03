@@ -79,10 +79,8 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         self.tableView.registerNib(UINib(nibName: "InfoCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "infoCell")
         self.tableView.registerNib(UINib(nibName: "ImageCarousel", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "imageCarousel")
         
-        let topBars = self.configureTopBar()
-        self.navBarShadowView = topBars.0
-        self.statusBarView = topBars.1
-        
+        self.navigationController?.configureTopBar()
+    
         self.tableView.separatorStyle = .None
         
         // Configure status bar and set alpha to 0

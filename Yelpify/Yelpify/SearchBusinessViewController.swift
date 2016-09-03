@@ -330,7 +330,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     override func viewDidAppear(animated: Bool) {
 
-        self.navigationController?.resetNavigationBar()
+        self.navigationController?.resetNavigationBar(1)
         
         if ((self.parentViewController as? SearchPagerTabStrip) == nil){
             let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")
@@ -354,7 +354,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         
         if self.navigationController?.navigationBar.backgroundColor != appDefaults.color{
             // Configure Functions
-           self.configureTopBar()
+           self.navigationController!.configureTopBar()
         }
 
         self.tableView.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0)

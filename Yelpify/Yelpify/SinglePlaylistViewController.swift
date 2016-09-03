@@ -326,7 +326,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         imagePicker.delegate = self
     
-        self.statusBarView = self.configureTopBar().1
+        self.navigationController?.configureTopBar()
         
         self.configurePlaylistInfoView()
         

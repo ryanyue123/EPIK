@@ -64,13 +64,12 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
         self.presentViewController(imagePicker, animated: true, completion: nil)
     }
     
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.imagePicker.delegate = self
-        //let navigationBar = navigationController!.navigationBar
-        self.statusBar = self.configureTopBar().1
+        
+        self.navigationController?.configureTopBar()
+        self.navigationController?.navigationBar.addShadow(0.2, offset: CGSizeMake(0, 5), path: true)
         
         let width = CGRectGetWidth(collectionView!.bounds)
         let layout = collectionViewLayout as! UICollectionViewFlowLayout
@@ -114,8 +113,6 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
     }
     
     override func viewDidAppear(animated: Bool) {
-        //ConfigureFunctions.resetNavigationBar(self.navigationController!)
-        handleNavigationBarOnScroll()
     }
     
     override func viewWillLayoutSubviews() {
@@ -132,14 +129,11 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
 
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
-        print("content offset", self.collectionView!.contentOffset.y)
-        //fadeHeaderBG()
         updateHeaderView()
-        self.updateNavigationBarForFade(self.headerHeight, bottomScrollView: scrollView)
-        if self.statusBar != nil{
-            self.updateStatusBarForFade(self.headerHeight, bottomScrollView: scrollView, statusBar: self.statusBar!)
+        self.navigationController!.updateNavigationBarForFade(self.headerHeight, bottomScrollView: scrollView)
+        if self.navigationController?.statusBar != nil{
+            self.navigationController!.updateStatusBarForFade(self.headerHeight, bottomScrollView: scrollView)
         }
-        //handleNavigationBarOnScroll()
     }
     
     func fadeHeaderBG(){
@@ -181,25 +175,6 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
         }
     }
     
-    func handleNavigationBarOnScroll(){
-        
-        let showWhenScrollDownAlpha = (self.collectionView!.contentOffset.y / 180.0)
-        //let showWhenScrollUpAlpha = (-playlistTableView.contentOffset.y / playlistTableHeaderHeight)
-        
-        self.navigationController?.navigationBar.titleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(showWhenScrollDownAlpha) ]
-        self.navigationItem.title = user.username
-        self.navigationController?.navigationBar.backgroundColor = appDefaults.color.colorWithAlphaComponent((showWhenScrollDownAlpha))
-        
-        // Handle Status Bar
-        //self.statusBarView.alpha = showWhenScrollDownAlpha
-        
-        // Handle Nav Shadow View
-        //self.statusBarView.backgroundColor = appDefaults.color.colorWithAlphaComponent(showWhenScrollDownAlpha)
-        //self.view.viewWithTag(100)!.backgroundColor = appDefaults.color.colorWithAlphaComponent(showWhenScrollDownAlpha)
-    }
-    
-
     // MARK: UICollectionViewDataSource
     
     override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
@@ -259,7 +234,7 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let controller = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! ListViewController
         controller.object = user_playlists[indexPath.row]
-        self.changeTopBarColor(.clearColor())
+        self.navigationController!.changeTopBarColor(.clearColor())
         self.navigationController!.pushViewController(controller, animated: true)
         
     }

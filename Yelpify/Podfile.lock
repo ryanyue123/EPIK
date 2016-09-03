@@ -15,7 +15,13 @@ PODS:
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.15.0):
     - FBSDKCoreKit
-  - GoogleMaps (1.13.2)
+  - GoogleMaps (2.0.1):
+    - GoogleMaps/Maps (= 2.0.1)
+  - GoogleMaps/Base (2.0.1)
+  - GoogleMaps/Maps (2.0.1):
+    - GoogleMaps/Base (= 2.0.1)
+  - GooglePlaces (2.0.1):
+    - GoogleMaps/Base (= 2.0.1)
   - HanekeSwift (0.10.1)
   - MGSwipeTableCell (1.5.5)
   - Parse (1.14.2):
@@ -38,7 +44,8 @@ DEPENDENCIES:
   - DGElasticPullToRefresh
   - FBSDKCoreKit
   - FBSDKLoginKit
-  - GoogleMaps (~> 1.13.2)
+  - GoogleMaps
+  - GooglePlaces
   - HanekeSwift
   - MGSwipeTableCell
   - Parse
@@ -59,7 +66,8 @@ SPEC CHECKSUMS:
   DGElasticPullToRefresh: 040f39ae69840b3261d163fe6735c5901bf851e9
   FBSDKCoreKit: 6680cbd33a4243d80700f182d0af36b3fa7f3118
   FBSDKLoginKit: 96d9b70b5784490f02ab86119e542a1f182017a8
-  GoogleMaps: b20a103ff307f58392e603cf142e59d7e30374c1
+  GoogleMaps: f09da64fc987c1aa29394567c3cab5a3df83c402
+  GooglePlaces: 72fab1d1651c6df0322f2aad245ffb15b80d3c56
   HanekeSwift: 08e47d3d0f2899ec58e5d257beba0de619aca9e8
   MGSwipeTableCell: bafeb5f351124544c9364ecbdf24c7b06a37d340
   Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230

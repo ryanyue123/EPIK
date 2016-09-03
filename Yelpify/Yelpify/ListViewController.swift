@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleMaps
 import MapKit
 import Parse
 import Async
@@ -25,6 +26,7 @@ class ListViewController: UIViewController, Dimmable {
     @IBOutlet var indicatorView: UIView!
     @IBOutlet var pullDownBar: UIView!
     
+    @IBOutlet var bannerImageView: UIImageView!
     @IBOutlet var listTypeLabel: UILabel!
     @IBOutlet var titleTextField: UITextField!
     @IBOutlet var numPlacesLabel: UILabel!
@@ -84,14 +86,15 @@ class ListViewController: UIViewController, Dimmable {
         performSegueWithIdentifier("tapImageButton", sender: self)
     }
     
-    
+    override func viewDidAppear(animated: Bool) {
+        self.navigationController?.resetTopBars(0)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.configureTopBar()
-//        self.changeTopBarColor(.clearColor())
-        
+        self.mapView.delegate = self
+        self.bannerImageView.addShadow(offset: CGSize(width: 0, height: 5))
         self.addPlaceButton.addShadow()
         self.bottomView.addShadow()
         self.indicatorView.addShadow(opacity: 0.2, offset: CGSize(width: 0, height: 5))
@@ -106,10 +109,6 @@ class ListViewController: UIViewController, Dimmable {
         self.listTableView.delegate = self
         self.listTableView.dataSource = self
         
-        // set initial location in Honolulu
-        let initialLocation = CLLocation(latitude: 21.282778, longitude: -157.829444)
-        centerMapOnLocation(initialLocation)
-        
         let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: #selector(self.showActionsMenu(_:)))
         navigationItem.rightBarButtonItem = rightButton
     }
@@ -119,8 +118,14 @@ class ListViewController: UIViewController, Dimmable {
         func updateBusinessesFromIDs(ids:[String], reloadIndex: Int = 0){
             if ids.count > 0{
                 apiClient.performDetailedSearch(ids[0]) { (detailedGPlace) in
+                    self.mapView.addMarker(detailedGPlace.latitude, long: detailedGPlace.longitude)
+                    
                     self.placeArray[reloadIndex] = detailedGPlace
                     self.playlistArray[reloadIndex] = detailedGPlace.convertToBusiness()
+                    
+                    if reloadIndex == self.placeArray.count - 1 {
+                        self.mapView.initializeMap()
+                    }
                     
                     let idsSlice = Array(ids[1..<ids.count])
                     let index = NSIndexPath(forRow: reloadIndex, inSection: 0)
@@ -138,6 +143,7 @@ class ListViewController: UIViewController, Dimmable {
         Async.main{
             let placeIDs = self.object["place_id_list"] as! [String]
             self.placeIDs = placeIDs
+            self.configureHeader()
             }.main{
                 // Get Array of IDs from Parse
                 for _ in 0..<self.placeIDs.count{
@@ -148,9 +154,37 @@ class ListViewController: UIViewController, Dimmable {
             }.main{
                 updateBusinessesFromIDs(self.placeIDs)
         }
-
-
     }
+    
+    // MARK: - Set Up Header View With Info
+    func configureHeader() {
+        
+        let pushAlpha: Double = 1.0
+        let pushDuration: Double = 0.7
+        let pushBeginScale: CGFloat = 1.0
+        let pushAllScale: CGFloat = 1.1
+        
+        // Set List Name
+        if let name = object["playlistName"] as? String{
+            self.titleTextField.fadeIn(name, duration: pushDuration, beginScale: pushBeginScale)
+        }
+        
+        // Set BG if custom BG exists in Parse
+        if let bg = object["custom_bg"] as? PFFile{
+            bg.getDataInBackgroundWithBlock({ (data, error) in
+                if error == nil{
+                    let image = UIImage(data: data!)
+                    self.bannerImageView.fadeIn(image!, endAlpha: 0.5, beginScale: 1.2)
+                }
+            })
+        }else{
+            self.bannerImageView.fadeIn(UIImage(named: "default_list_bg")!, endAlpha: 0.5, beginScale: 1.2)
+        }
+        
+        // Set Number of Places
+        self.numPlacesLabel.text = String(self.placeIDs.count) + " Places"
+    }
+
     
     func activateEditMode() {
         
@@ -294,15 +328,6 @@ class ListViewController: UIViewController, Dimmable {
         self.listTableView.reloadData()
     }
 
-    
-    let regionRadius: CLLocationDistance = 1000
-    
-    func centerMapOnLocation(location: CLLocation) {
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
-                                                                  regionRadius * 2.0, regionRadius * 2.0)
-        mapView.setRegion(coordinateRegion, animated: true)
-    }
-    
     func configureRecognizers(){
         self.originalFrame = self.bottomView.frame
         let panGR = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGR(_:)))
@@ -582,6 +607,42 @@ extension ListViewController: UIScrollViewDelegate {
     }
 }
 
+extension ListViewController: MKMapViewDelegate{
+    
+    func mapViewDidFinishLoadingMap(mapView: MKMapView) {
+        print("done finished loading")
+    }
+    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        // Don't want to show a custom image if the annotation is the user's location.
+        guard !annotation.isKindOfClass(MKUserLocation) else {
+            return nil
+        }
+        
+        let annotationIdentifier = "AnnotationIdentifier"
+        
+        var annotationView: MKAnnotationView?
+        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(annotationIdentifier) {
+            annotationView = dequeuedAnnotationView
+            annotationView?.annotation = annotation
+        }
+        else {
+            let av = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+            av.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            annotationView = av
+        }
+        
+        if let annotationView = annotationView {
+            // Configure your annotation view here
+            annotationView.canShowCallout = true
+            annotationView.image = UIImage(named: "annotation")
+        }
+        
+        return annotationView
+    }
+
+}
+
 extension ListViewController: UIGestureRecognizerDelegate{
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
         if gestureRecognizer is UITapGestureRecognizer {
@@ -673,5 +734,4 @@ extension ListViewController: ModalViewControllerDelegate{
         
         presentViewController(actionController, animated: true, completion: nil)
     }
-
 }

@@ -106,7 +106,7 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
         super.viewDidLoad()
         
         // Configure Functions
-        self.configureTopBar()
+        self.navigationController?.configureTopBar()
         
         setupBarButtonItems()
     }

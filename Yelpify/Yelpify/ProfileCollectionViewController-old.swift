@@ -70,7 +70,7 @@ class ProfileCollectionViewController_old: UICollectionViewController, UICollect
         super.viewDidLoad()
         self.imagePicker.delegate = self
         //let navigationBar = navigationController!.navigationBar
-        self.configureTopBar()
+        self.navigationController?.configureTopBar()
         
         let width = CGRectGetWidth(collectionView!.bounds)
         let layout = collectionViewLayout as! UICollectionViewFlowLayout
