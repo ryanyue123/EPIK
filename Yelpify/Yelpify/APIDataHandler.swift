@@ -28,7 +28,7 @@ class APIDataHandler {
     
     var gpClient = GooglePlacesAPIClient()
     
-    func performAPISearch(googleParameters: Dictionary<String, String>, completion:(businessObjectArray: [Business]) -> Void) {
+    func performAPISearch(_ googleParameters: Dictionary<String, String>, completion:@escaping (_ businessObjectArray: [Business]) -> Void) {
         
         gpClient.searchPlacesWithParameters(googleParameters) { (result) -> Void in
             self.parseGPlacesJSON(result, completion: { (businessArray) -> Void in
@@ -38,7 +38,7 @@ class APIDataHandler {
         
     }
     
-    func performDetailedSearch(googleID: String, completion: (detailedGPlace: GooglePlaceDetail) -> Void){
+    func performDetailedSearch(_ googleID: String, completion: @escaping (_ detailedGPlace: GooglePlaceDetail) -> Void){
         self.gpClient.searchPlaceWithID(googleID) { (JSONdata) in
             self.parseGoogleDetailedData(JSONdata, completion: { (detailedGPlace) in
                 completion(detailedGPlace: detailedGPlace)
@@ -48,7 +48,7 @@ class APIDataHandler {
     
 
     // Detailed Search
-    func parseGoogleDetailedData(data: NSData, completion: (detailedGPlace: GooglePlaceDetail) -> Void){
+    func parseGoogleDetailedData(_ data: Data, completion: (_ detailedGPlace: GooglePlaceDetail) -> Void){
         let json = JSON(data: data)
         if json.count > 0 {
             if let place = json["result"].dictionary{
@@ -152,7 +152,7 @@ class APIDataHandler {
                         DetailedObject.website = website
                     }
                     
-                    completion(detailedGPlace: DetailedObject)
+                    completion(DetailedObject)
                 }
             }
         
@@ -163,7 +163,7 @@ class APIDataHandler {
 
 
     // Regular Search
-    func parseGPlacesJSON(data: NSData, completion: (businessArray: [Business]) -> Void){
+    func parseGPlacesJSON(_ data: Data, completion: (_ businessArray: [Business]) -> Void){
         let json = JSON(data: data)
         if let places = json["results"].array{
             if places.count > 0{
@@ -213,7 +213,7 @@ class APIDataHandler {
                     arrayOfBusinesses.append(businessObject)
                 }
                 
-                completion(businessArray: arrayOfBusinesses)
+                completion(arrayOfBusinesses)
             }
         }
     }

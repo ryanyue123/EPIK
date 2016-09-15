@@ -11,8 +11,8 @@ import UIKit
 
 struct PlaceActions{
    
-    static func openInMaps(business: Business? = nil, place: GooglePlaceDetail? = nil) {
-        func convertAddress(address: String) -> String{
+    static func openInMaps(_ business: Business? = nil, place: GooglePlaceDetail? = nil) {
+        func convertAddress(_ address: String) -> String{
             let addressArray = address.characters.split{$0 == " "}.map(String.init)
             var resultString = ""
             for word in addressArray{
@@ -32,7 +32,7 @@ struct PlaceActions{
             longitude = place!.longitude
         }
         
-        if (UIApplication.sharedApplication().canOpenURL(NSURL(string: "comgooglemaps://")!))
+        if (UIApplication.shared.canOpenURL(URL(string: "comgooglemaps://")!))
         {
             var name: String!
             if business != nil{
@@ -41,9 +41,9 @@ struct PlaceActions{
                 name = convertAddress(place!.formattedAddress)
             }
             print(name)
-            let url = NSURL(string: "comgooglemaps://?daddr=\(name)&center=\(latitude),\(longitude)&directionsmode=driving")!
+            let url = URL(string: "comgooglemaps://?daddr=\(name)&center=\(latitude),\(longitude)&directionsmode=driving")!
             print(url)
-            UIApplication.sharedApplication().openURL(url)
+            UIApplication.shared.openURL(url)
         }
         else
         {
@@ -51,9 +51,9 @@ struct PlaceActions{
         }
     }
     
-    static func openInPhone(business: Business? = nil, place: GooglePlaceDetail? = nil)
+    static func openInPhone(_ business: Business? = nil, place: GooglePlaceDetail? = nil)
     {
-        func convertPhone(phone: String) -> Int{
+        func convertPhone(_ phone: String) -> Int{
             let phoneArray = phone.characters.map { String($0) }
             var result = ""
             for char in phoneArray{
@@ -71,20 +71,20 @@ struct PlaceActions{
             telnum = convertPhone(place!.phone)
         }
         
-        if(UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel://")!))
+        if(UIApplication.shared.canOpenURL(URL(string: "tel://")!))
         {
-            let url = NSURL(string: "tel://\(telnum)")
-            UIApplication.sharedApplication().openURL(url!)
+            let url = URL(string: "tel://\(telnum)")
+            UIApplication.shared.openURL(url!)
         }
     }
-    func openInWeb(business: Business)
+    func openInWeb(_ business: Business)
     {
         //check is self.object.businessURL is nil
         //let url = self.object.businessURL
-        let url = NSURL(string: "")
-        if (UIApplication.sharedApplication().canOpenURL(url!))
+        let url = URL(string: "")
+        if (UIApplication.shared.canOpenURL(url!))
         {
-            UIApplication.sharedApplication().openURL(url!)
+            UIApplication.shared.openURL(url!)
         }
     }
 

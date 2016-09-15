@@ -15,17 +15,17 @@ class YoutubeViewController: UIViewController {
     
     
         
-    override func viewWillAppear(animated: Bool){
+    override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
         
-    @IBAction func backButtonDidTouch(sender: UIButton) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonDidTouch(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
     }
         
     
-    @IBAction func Options(sender: UITapGestureRecognizer){
+    @IBAction func Options(_ sender: UITapGestureRecognizer){
         let actionController = YoutubeActionController()
         
         actionController.addAction(Action(ActionData(title: "Add to Watch Later", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in

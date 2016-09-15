@@ -12,8 +12,8 @@ import Cosmos
 import MGSwipeTableCell
 
 enum BusinessCellMode {
-    case Add
-    case More
+    case add
+    case more
 }
 
 class BusinessTableViewCell: MGSwipeTableCell {
@@ -39,19 +39,19 @@ class BusinessTableViewCell: MGSwipeTableCell {
     
     @IBOutlet weak var actionButtonView: UIView!
     
-    func configureCellWith(business: Business, mode: BusinessCellMode, completion:() -> Void){
+    func configureCellWith(_ business: Business, mode: BusinessCellMode, completion:() -> Void){
         
         mainView.addShadow(4, opacity: 0.2, offset: CGSize(width: 0, height: 4), path: true)
 
         switch mode {
-        case .Add:
+        case .add:
             self.configureButton(UIImage(named: "checkMark")!)
-            let tapRec = UITapGestureRecognizer(target: self, action: "actionButtonPressed:")
+            let tapRec = UITapGestureRecognizer(target: self, action: #selector(BusinessTableViewCell.actionButtonPressed(_:)))
             actionButtonView.addGestureRecognizer(tapRec)
 
-        case .More:
+        case .more:
             self.configureButton(UIImage(named: "more_icon")!)
-            self.moreButton.hidden = true
+            self.moreButton.isHidden = true
         default:
             self.configureButton(UIImage(named: "more_icon")!)
         }
@@ -59,17 +59,17 @@ class BusinessTableViewCell: MGSwipeTableCell {
         //Set Icon
         let businessList = ["restaurant","food","amusement","bakery","bar","beauty_salon","bowling_alley","cafe","car_rental","car_repair","clothing_store","department_store","grocery_or_supermarket","gym","hospital","liquor_store","lodging","meal_takeaway","movie_theater","night_club","police","shopping_mall"]
         
-        if business.businessTypes.count != 0 && businessList.contains(String(business.businessTypes[0])){
-            categoryIcon.transform = CGAffineTransformMakeScale(1.6, 1.6)
-            let origImage = UIImage(named: String(business.businessTypes[0]) + "_Icon")!
-            let tintedImage = origImage.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        if business.businessTypes.count != 0 && businessList.contains(String(describing: business.businessTypes[0])){
+            categoryIcon.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
+            let origImage = UIImage(named: String(describing: business.businessTypes[0]) + "_Icon")!
+            let tintedImage = origImage.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
             categoryIcon.image = tintedImage
             categoryIcon.tintColor = appDefaults.color_darker
             
         }else{
-            categoryIcon.transform = CGAffineTransformMakeScale(1.6, 1.6)
+            categoryIcon.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
             let origImage = UIImage(named: "default_Icon")!
-            let tintedImage = origImage.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+            let tintedImage = origImage.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
             categoryIcon.image = tintedImage
             categoryIcon.tintColor = appDefaults.color_darker
         }
@@ -106,7 +106,7 @@ class BusinessTableViewCell: MGSwipeTableCell {
         self.businessBackgroundImage.backgroundColor = appDefaults.color
         self.businessBackgroundImage.image = nil
         
-        func buildPlacePhotoURLString(photoReference: String) -> String{
+        func buildPlacePhotoURLString(_ photoReference: String) -> String{
             let photoParameters = [
                 "key" : "AIzaSyDkxzICx5QqztP8ARvq9z0DxNOF_1Em8Qc",
                 "photoreference" : photoReference,
@@ -115,14 +115,14 @@ class BusinessTableViewCell: MGSwipeTableCell {
             var result = "https://maps.googleapis.com/maps/api/place/photo?"
             for (key, value) in photoParameters{
                 let addString = key + "=" + value + "&"
-                result += addString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+                result += addString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
             }
             return result
         }
         if business.businessPhotoReference != ""{
             let PhotoURL = buildPlacePhotoURLString(business.businessPhotoReference)
             //let URLString = self.items[indexPath.row]
-            let URL = NSURL(string:PhotoURL)!
+            let URL = Foundation.URL(string:PhotoURL)!
             businessBackgroundImage.hnk_setImageFromURL(URL)
         }
         else{
@@ -131,7 +131,7 @@ class BusinessTableViewCell: MGSwipeTableCell {
         }
     }
     
-    func configureButton(image: UIImage){
+    func configureButton(_ image: UIImage){
         //let tintedImage = image.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         if actionButton != nil{
             //self.actionButton.setImage(tintedImage, forState: .Normal)
@@ -139,7 +139,7 @@ class BusinessTableViewCell: MGSwipeTableCell {
         }
     }
     
-    func changeImageViewColor(imageView: UIImageView, color: UIColor) {
+    func changeImageViewColor(_ imageView: UIImageView, color: UIColor) {
         
     }
     
@@ -151,11 +151,11 @@ class BusinessTableViewCell: MGSwipeTableCell {
 //    }
 //    
     
-    @IBAction func actionButtonPressed(sender: AnyObject) {
-        self.actionButton.tintColor = UIColor.greenColor()
+    @IBAction func actionButtonPressed(_ sender: AnyObject) {
+        self.actionButton.tintColor = UIColor.green
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state

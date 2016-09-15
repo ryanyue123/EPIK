@@ -42,7 +42,7 @@ class TableChildExampleViewController: UITableViewController, IndicatorInfoProvi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.registerNib(UINib(nibName: "PostCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: cellIdentifier)
+        tableView.registerNib(UINib(nibName: "PostCell", bundle: Bundle.mainBundle()), forCellReuseIdentifier: cellIdentifier)
         tableView.estimatedRowHeight = 60.0;
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.allowsSelection = false
@@ -51,22 +51,22 @@ class TableChildExampleViewController: UITableViewController, IndicatorInfoProvi
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
     
     // MARK: - UITableViewDataSource
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return DataProvider.sharedInstance.postsData.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! PostCell
         let data = DataProvider.sharedInstance.postsData.objectAtIndex(indexPath.row) as!
     NSDictionary
@@ -79,7 +79,7 @@ class TableChildExampleViewController: UITableViewController, IndicatorInfoProvi
     
     // MARK: - IndicatorInfoProvider
 
-    func indicatorInfoForPagerTabStrip(pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+    func indicatorInfoForPagerTabStrip(_ pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return itemInfo
     }
 }

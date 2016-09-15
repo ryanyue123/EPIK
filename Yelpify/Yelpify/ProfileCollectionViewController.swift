@@ -10,11 +10,31 @@ import UIKit
 import Parse
 import XLActionController
 import BetterSegmentedControl
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 private let reuseIdentifier = "listCell"
 
 protocol SendCustomImages {
-    func sendImage(image: UIImage)
+    func sendImage(_ image: UIImage)
 }
 
 class ProfileCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, ShouldSegueToImagePickerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
@@ -29,7 +49,7 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
     var sendImagesDelegate: SendCustomImages!
     
     func goToSettings(){
-        performSegueWithIdentifier("SettingsView", sender: self)
+        performSegue(withIdentifier: "SettingsView", sender: self)
     }
 
     func shouldSegue() {
@@ -37,20 +57,20 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
         showImagePicker()
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             sendImagesDelegate.sendImage(pickedImage)
         }
-        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+        imagePicker.dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        imagePicker.dismiss(animated: true, completion: nil)
     }
     
     func showImagePicker(){
         imagePicker.allowsEditing = false
-        imagePicker.sourceType = .PhotoLibrary
+        imagePicker.sourceType = .photoLibrary
         
         // Configure Status Bar
         let statusBarRect = CGRect(x: 0, y: 0, width: imagePicker.navigationBar.frame.size.width, height: 20.0)
@@ -59,9 +79,9 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
         imagePicker.view.addSubview(statusBarView)
         
         // Configure Navigation Bar
-        imagePicker.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Top, barMetrics: .Default)
+        imagePicker.navigationBar.setBackgroundImage(UIImage(), for: .top, barMetrics: .default)
         imagePicker.navigationBar.backgroundColor = appDefaults.color
-        self.presentViewController(imagePicker, animated: true, completion: nil)
+        self.present(imagePicker, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -69,28 +89,28 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
         self.imagePicker.delegate = self
         
         self.navigationController?.configureTopBar()
-        self.navigationController?.navigationBar.addShadow(0.2, offset: CGSizeMake(0, 5), path: true)
+        self.navigationController?.navigationBar.addShadow(0.2, offset: CGSize(width: 0, height: 5), path: true)
         
-        let width = CGRectGetWidth(collectionView!.bounds)
+        let width = collectionView!.bounds.width
         let layout = collectionViewLayout as! UICollectionViewFlowLayout
         layout.headerReferenceSize = CGSize(width: width, height: 149)
         layout.itemSize = CGSize(width: width, height: 62)
         
         //navigationBar.tintColor = UIColor.whiteColor()
         
-        let rightButton = UIBarButtonItem(title: "Settings", style: .Plain , target: self, action: #selector(self.goToSettings))
+        let rightButton = UIBarButtonItem(title: "Settings", style: .plain , target: self, action: #selector(self.goToSettings))
         
         navigationItem.rightBarButtonItem = rightButton
         if (user == nil)
         {
-            user = PFUser.currentUser()
+            user = PFUser.current()
         }
         let query = PFQuery(className: "Playlists")
         query.whereKey("createdBy", equalTo: user)
-        query.findObjectsInBackgroundWithBlock { (objects, error) in
+        query.findObjectsInBackground { (objects, error) in
             if (error == nil)
             {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.user_playlists = objects!
                     self.collectionView?.reloadData()
                 })
@@ -98,21 +118,21 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
         }
         
         // Register Nibs
-        self.collectionView!.registerNib(UINib(nibName: "ProfileHeader", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "profileHeader")
+        self.collectionView!.register(UINib(nibName: "ProfileHeader", bundle: Bundle.main), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "profileHeader")
 
         // Uncomment the following line to preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
         
 
         // Register cell classes
-        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         //self.collectionView!.collectionViewLayout = CollectionViewLayout()
         //collectionView?.reloadData()
 
         // Do any additional setup after loading the view.
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
     }
     
     override func viewWillLayoutSubviews() {
@@ -125,10 +145,10 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
         updateHeaderView()
     }
     
-    private let headerHeight: CGFloat = 149.0
+    fileprivate let headerHeight: CGFloat = 149.0
 
     
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         updateHeaderView()
         self.navigationController!.updateNavigationBarForFade(self.headerHeight, bottomScrollView: scrollView)
         if self.navigationController?.statusBar != nil{
@@ -137,7 +157,7 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
     }
     
     func fadeHeaderBG(){
-        let indexPathArray = self.collectionView?.indexPathsForVisibleSupplementaryElementsOfKind(UICollectionElementKindSectionHeader)
+        let indexPathArray = self.collectionView?.indexPathsForVisibleSupplementaryElements(ofKind: UICollectionElementKindSectionHeader)
         if indexPathArray!.count > 0{
             let fadeAlpha = (-collectionView!.contentOffset.y / headerHeight) * 0.5
             //print("indexPathArray", indexPathArray!)
@@ -160,11 +180,11 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
             headerRect.origin.y = collectionView!.contentOffset.y
             headerRect.size.height = -collectionView!.contentOffset.y - 64.0 + 149.0
         }else if collectionView!.contentOffset.y > 64.0{
-            self.navigationItem.titleView?.tintColor = UIColor.whiteColor()
+            self.navigationItem.titleView?.tintColor = UIColor.white
         }
         
         // Applies height and origin
-        let indexPathArray = self.collectionView?.indexPathsForVisibleSupplementaryElementsOfKind(UICollectionElementKindSectionHeader)
+        let indexPathArray = self.collectionView?.indexPathsForVisibleSupplementaryElements(ofKind: UICollectionElementKindSectionHeader)
         if indexPathArray?.count > 0{
             //let headerView = self.collectionView!.supplementaryViewForElementKind(UICollectionElementKindSectionHeader, atIndexPath: indexPathArray![0]) as! ProfileHeaderCollectionReusableView
             //print("origin.y", headerView.frame.origin.y)
@@ -177,13 +197,13 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
     
     // MARK: UICollectionViewDataSource
     
-    override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         switch kind {
             
         case UICollectionElementKindSectionHeader:
             
-            let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "profileHeader", forIndexPath: indexPath) as! ProfileHeaderCollectionReusableView
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "profileHeader", for: indexPath) as! ProfileHeaderCollectionReusableView
             
             self.headerView = headerView
             headerView.user = user
@@ -210,36 +230,36 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
 
     
 
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
 
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return user_playlists.count
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        collectionView.registerNib(UINib(nibName: "ListCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "listCell")
+        collectionView.register(UINib(nibName: "ListCell", bundle: Bundle.main), forCellWithReuseIdentifier: "listCell")
 
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("listCell", forIndexPath: indexPath) as! ListCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "listCell", for: indexPath) as! ListCollectionViewCell
 
-        cell.configureCell(user_playlists[indexPath.row])
+        cell.configureCell(user_playlists[(indexPath as NSIndexPath).row])
        //cell.configureCellLayout()
     
         return cell
     }
     
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! ListViewController
-        controller.object = user_playlists[indexPath.row]
-        self.navigationController!.changeTopBarColor(.clearColor())
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let controller = storyboard!.instantiateViewController(withIdentifier: "singlePlaylistVC") as! ListViewController
+        controller.object = user_playlists[(indexPath as NSIndexPath).row]
+        self.navigationController!.changeTopBarColor(.clear())
         self.navigationController!.pushViewController(controller, animated: true)
         
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         if (section == 0) {
             return UIEdgeInsetsMake(-50.0, 9, 9, 9)
         }
@@ -247,7 +267,7 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
     }
 
     
-    @IBAction func showSettings(sender: UIBarButtonItem) {
+    @IBAction func showSettings(_ sender: UIBarButtonItem) {
         let actionController = YoutubeActionController()
         
         actionController.addAction(Action(ActionData(title: "Logout", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in

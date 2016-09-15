@@ -13,8 +13,8 @@ class InfoTableViewCell: UITableViewCell {
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var label: UILabel!
     
-    func configureCell(icon: UIImage, label: String){
-        self.separatorInset = UIEdgeInsetsMake(0, CGRectGetWidth(self.bounds), 0, 0)
+    func configureCell(_ icon: UIImage, label: String){
+        self.separatorInset = UIEdgeInsetsMake(0, self.bounds.width, 0, 0)
         self.icon.image = icon
         self.label.text = label
     }
@@ -24,7 +24,7 @@ class InfoTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

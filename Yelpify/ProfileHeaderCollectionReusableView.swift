@@ -11,8 +11,8 @@ import Parse
 import BetterSegmentedControl
 
 enum PictureToChange {
-    case Profile
-    case Cover
+    case profile
+    case cover
 }
 
 protocol ShouldSegueToImagePickerDelegate{
@@ -49,17 +49,17 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView, SendCustomI
     @IBOutlet weak var changeBGPicButton: UIButton!
     @IBOutlet weak var changeProfPicButton: UIButton!
     
-    @IBAction func pressedFollowButton(sender: AnyObject) {
+    @IBAction func pressedFollowButton(_ sender: AnyObject) {
         
     }
     
-    @IBAction func pressedChangeProfPicButton(sender: AnyObject) {
-        self.pictureToChange = .Profile
+    @IBAction func pressedChangeProfPicButton(_ sender: AnyObject) {
+        self.pictureToChange = .profile
         //delegate.shouldSegue()
     }
     
-    @IBAction func pressedChangeBGPicButton(sender: AnyObject) {
-        self.pictureToChange = .Cover
+    @IBAction func pressedChangeBGPicButton(_ sender: AnyObject) {
+        self.pictureToChange = .cover
         //delegate.shouldSegue()
     }
     
@@ -78,14 +78,14 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView, SendCustomI
         control.addTarget(self, action: nil, forControlEvents: .ValueChanged)
         control.alpha = 0
         self.segmentedBarView.addSubview(control)
-        UIView.animateWithDuration(0.3) {
+        UIView.animate(withDuration: 0.3, animations: {
             control.alpha = 1
-            self.segmentedBarView.bringSubviewToFront(self.segmentedIndicatorView)
-        }
+            self.segmentedBarView.bringSubview(toFront: self.segmentedIndicatorView)
+        }) 
     }
     
-    func sendImage(image: UIImage) {
-        if self.pictureToChange == .Profile{
+    func sendImage(_ image: UIImage) {
+        if self.pictureToChange == .profile{
             self.profileImageView.image = image
         }else{
             self.coverPhoto.image = image

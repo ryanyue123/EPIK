@@ -11,8 +11,8 @@ import Parse
 import XLPagerTabStrip
 
 enum PeopleMode{
-    case View
-    case Collaborate
+    case view
+    case collaborate
 }
 
 class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegate, IndicatorInfoProvider {
@@ -24,12 +24,12 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
     var collaborative = false
     var collaboration_list = [PFObject]()
     var playlist: PFObject!
-    var mode: PeopleMode! = .View
+    var mode: PeopleMode! = .view
     
-    func addPersonToCollab(button: UIButton) {
+    func addPersonToCollab(_ button: UIButton) {
         
         if button.tintColor == appDefaults.color_darker{
-            button.tintColor = UIColor.greenColor()
+            button.tintColor = UIColor.green
             let index = button.tag
             self.collaboration_list.append(self.user_list[index])
             
@@ -38,8 +38,8 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
             button.tintColor = appDefaults.color_darker
             let index = button.tag
             let itemToRemove = user_list[index]
-            let indexToRemove = collaboration_list.indexOf(itemToRemove)
-            self.collaboration_list.removeAtIndex(indexToRemove!)
+            let indexToRemove = collaboration_list.index(of: itemToRemove)
+            self.collaboration_list.remove(at: indexToRemove!)
             
             print("removed", user_list[index])
         }
@@ -47,7 +47,7 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
     
     var locationUpdated = false
     
-    func indicatorInfoForPagerTabStrip(pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+    func indicatorInfoForPagerTabStrip(_ pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return itemInfo
     }
 
@@ -59,17 +59,17 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
            self.navigationController?.configureTopBar()
         }
         
-        let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")
+        let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .plain, target: self, action: "pressedLocation:")
         
         navigationItem.rightBarButtonItem = rightButton
 
         self.searchFor("")
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         self.navigationController?.configureTopBar()
         
-        if let _ = self.parentViewController as? SearchPagerTabStrip{
+        if let _ = self.parent as? SearchPagerTabStrip{
             collaborative = false
             tableView.allowsSelection = true
         }else{
@@ -85,16 +85,16 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
         searchField.delegate = self
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let query = PFUser.query()!
-        query.whereKey("search_name", containsString: self.searchTextField.text!.uppercaseString)
-        query.findObjectsInBackgroundWithBlock { (objects, error) in
+        query.whereKey("search_name", contains: self.searchTextField.text!.uppercased())
+        query.findObjectsInBackground { (objects, error) in
             if (error == nil)
             {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.user_list = objects!
                     textField.resignFirstResponder()
-                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+                    self.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
                 })
             }
         }
@@ -102,60 +102,60 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
     }
     
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain , target: self, action: "pressedCancel:")
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain , target: self, action: "pressedCancel:")
         
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
-        let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .plain, target: self, action: "pressedLocation:")
         
         navigationItem.rightBarButtonItem = rightButton
         
     }
     
-    func searchFor(search: String){
+    func searchFor(_ search: String){
         let query = PFUser.query()!
-        query.whereKey("search_name", containsString: search)
-        query.findObjectsInBackgroundWithBlock { (objects, error) in
+        query.whereKey("search_name", contains: search)
+        query.findObjectsInBackground { (objects, error) in
             if (error == nil)
             {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.user_list = objects!
-                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+                    self.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
                 })
             }
         }
     }
 
     
-    @IBAction func saveToParse(sender: UIBarButtonItem) {
+    @IBAction func saveToParse(_ sender: UIBarButtonItem) {
         playlist["Collaborators"] = self.collaboration_list
-        playlist.saveInBackgroundWithBlock { (success, error) in
+        playlist.saveInBackground { (success, error) in
             if (error == nil) {
                 print("Saved")
             }
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return self.user_list.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("searchPeople", forIndexPath: indexPath) as! SearchPeopleCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "searchPeople", for: indexPath) as! SearchPeopleCell
         
-        let user = self.user_list[indexPath.row]
-        let first_name = (user["first_name"] as! String).capitalizedString
-        let last_name = (user["last_name"] as! String).capitalizedString
+        let user = self.user_list[(indexPath as NSIndexPath).row]
+        let first_name = (user["first_name"] as! String).capitalized
+        let last_name = (user["last_name"] as! String).capitalized
         let fullName = first_name + " " + last_name
         let handle = "@" + (user["username"] as! String)
         
@@ -164,8 +164,8 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
         if collaborative == false{
             cell.configureCell(fullName, handle: handle)
         }else{
-            cell.addPersonButton.tag = indexPath.row
-            cell.addPersonButton.addTarget(self, action: "addPersonToCollab:", forControlEvents: .TouchUpInside)
+            cell.addPersonButton.tag = (indexPath as NSIndexPath).row
+            cell.addPersonButton.addTarget(self, action: #selector(SearchPeopleTableViewController.addPersonToCollab(_:)), for: .touchUpInside)
             cell.configureCell(fullName, handle: handle, collab: true)
         }
 //
@@ -175,10 +175,10 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
         return cell
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("profileVC") as! ProfileCollectionViewController
-        controller.user = self.user_list[indexPath.row] as! PFUser
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let controller = storyboard!.instantiateViewController(withIdentifier: "profileVC") as! ProfileCollectionViewController
+        controller.user = self.user_list[(indexPath as NSIndexPath).row] as! PFUser
         self.navigationController!.pushViewController(controller, animated: true)
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.tableView.deselectRow(at: indexPath, animated: true)
     }
 }

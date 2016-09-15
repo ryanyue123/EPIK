@@ -21,7 +21,7 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
     
     var locationUpdated = false
     
-    func indicatorInfoForPagerTabStrip(pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+    func indicatorInfoForPagerTabStrip(_ pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return itemInfo
     }
 
@@ -40,13 +40,13 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         // Register cell classes
-        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         let query = PFQuery(className: "Playlists")
         query.limit = 10
-        query.findObjectsInBackgroundWithBlock { (objects, error) in
+        query.findObjectsInBackground { (objects, error) in
             if (error == nil)
             {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.playlist_query = objects!
                     self.collection_view.reloadData()
                 })
@@ -55,12 +55,12 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.collection_view.reloadData()
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         self.navigationController?.resetNavigationBar(0)
         if locationUpdated == true{
             // UPDATE LOCATION UPDATES
@@ -73,19 +73,19 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
         }
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
         self.resignFirstResponder()
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print("hello")
         let query = PFQuery(className: "Playlists")
-        query.whereKey("playlistName", containsString: textField.text?.uppercaseString)        
-        query.findObjectsInBackgroundWithBlock { (objects, error) in
+        query.whereKey("playlistName", contains: textField.text?.uppercased())        
+        query.findObjectsInBackground { (objects, error) in
             if (error == nil)
             {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
 
                     self.playlist_query = objects!
                     self.collection_view.reloadData()
@@ -95,13 +95,13 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
         return true
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain , target: self, action: "pressedCancel:")
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain , target: self, action: "pressedCancel:")
         
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
-        let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .plain, target: self, action: "pressedLocation:")
         
         navigationItem.rightBarButtonItem = rightButton
         
@@ -110,30 +110,30 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
     
     // MARK: UICollectionViewDataSource
 
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
 
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         print(playlist_query.count)
         return playlist_query.count
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        collectionView.registerNib(UINib(nibName: "ListCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "listCell")
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("listCell", forIndexPath: indexPath) as! ListCollectionViewCell
-        let cellobject = self.playlist_query[indexPath.row]
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        collectionView.register(UINib(nibName: "ListCell", bundle: Bundle.main), forCellWithReuseIdentifier: "listCell")
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "listCell", for: indexPath) as! ListCollectionViewCell
+        let cellobject = self.playlist_query[(indexPath as NSIndexPath).row]
         
         cell.configureCell(cellobject)
         
         return cell
     }
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
-        controller.object = playlist_query[indexPath.row]
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let controller = storyboard!.instantiateViewController(withIdentifier: "singlePlaylistVC") as! SinglePlaylistViewController
+        controller.object = playlist_query[(indexPath as NSIndexPath).row]
         self.navigationController!.pushViewController(controller, animated: true)
         
     }

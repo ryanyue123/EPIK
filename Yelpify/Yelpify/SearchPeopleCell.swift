@@ -15,7 +15,7 @@ class SearchPeopleCell: UITableViewCell {
     @IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var addPersonButton: UIButton!
     
-    func configureCell(name: String, handle: String, collab: Bool = false){
+    func configureCell(_ name: String, handle: String, collab: Bool = false){
         nameLabel.text = name
         handleLabel.text = handle
         roundProf()
@@ -23,9 +23,9 @@ class SearchPeopleCell: UITableViewCell {
         addPersonButton.tintColor = appDefaults.color_darker
         
         if collab == true{
-            addPersonButton.hidden = false
+            addPersonButton.isHidden = false
         }else{
-            addPersonButton.hidden = true
+            addPersonButton.isHidden = true
         }
     }
     
@@ -33,10 +33,10 @@ class SearchPeopleCell: UITableViewCell {
         self.roundingUIView(self.profilePicture, cornerRadiusParam: 30)
         self.roundingUIView(self.profilePicture, cornerRadiusParam: 30)
         self.profilePicture.layer.borderWidth = 1.0
-        self.profilePicture.layer.borderColor = appDefaults.color_darker.CGColor
+        self.profilePicture.layer.borderColor = appDefaults.color_darker.cgColor
     }
     
-    private func roundingUIView(let aView: UIView!, let cornerRadiusParam: CGFloat!) {
+    fileprivate func roundingUIView(_ aView: UIView!, cornerRadiusParam: CGFloat!) {
         aView.clipsToBounds = true
         aView.layer.cornerRadius = cornerRadiusParam
     }
@@ -46,7 +46,7 @@ class SearchPeopleCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

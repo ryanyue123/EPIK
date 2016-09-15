@@ -11,67 +11,67 @@ import UIKit
 
 struct Animations{
     // MARK: - Animation Functions
-    static func fadeInImageView(imageView: UIImageView, imageToAdd: UIImage, duration: Double = 1,  endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1){
+    static func fadeInImageView(_ imageView: UIImageView, imageToAdd: UIImage, duration: Double = 1,  endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1){
         
         imageView.alpha = 0
         imageView.image = imageToAdd
-        imageView.transform = CGAffineTransformMakeScale(beginScale, beginScale)
+        imageView.transform = CGAffineTransform(scaleX: beginScale, y: beginScale)
         imageView.clipsToBounds = true
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animate(withDuration: duration, animations: {
             imageView.alpha = endAlpha
-            imageView.transform = CGAffineTransformMakeScale(endScale, endScale)
+            imageView.transform = CGAffineTransform(scaleX: endScale, y: endScale)
         })
     }
     
-    static func fadeInView(view: UIView, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
+    static func fadeInView(_ view: UIView, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
         view.alpha = 0
         view.layer.frame.origin.y += beginOffsetY
-        view.transform = CGAffineTransformMakeScale(beginScale, beginScale)
+        view.transform = CGAffineTransform(scaleX: beginScale, y: beginScale)
         view.clipsToBounds = true
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animate(withDuration: duration, animations: {
             view.layer.frame.origin.y -= endOffsetY
             view.alpha = endAlpha
-            view.transform = CGAffineTransformMakeScale(endScale, endScale)
+            view.transform = CGAffineTransform(scaleX: endScale, y: endScale)
         })
     }
     
-    static func fadeInLabel(label: UILabel, textToSet: String, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
+    static func fadeInLabel(_ label: UILabel, textToSet: String, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
         label.alpha = 0
         label.layer.frame.origin.y += beginOffsetY
         label.text = textToSet
-        label.transform = CGAffineTransformMakeScale(beginScale, beginScale)
+        label.transform = CGAffineTransform(scaleX: beginScale, y: beginScale)
         label.clipsToBounds = true
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animate(withDuration: duration, animations: {
             label.layer.frame.origin.y -= endOffsetY
             label.alpha = endAlpha
-            label.transform = CGAffineTransformMakeScale(endScale, endScale)
+            label.transform = CGAffineTransform(scaleX: endScale, y: endScale)
         })
     }
     
-    static func fadeInTextField(textField: UITextField, textToSet: String, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
+    static func fadeInTextField(_ textField: UITextField, textToSet: String, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
         textField.alpha = 0
         textField.layer.frame.origin.y += beginOffsetY
         textField.text = textToSet
-        textField.transform = CGAffineTransformMakeScale(beginScale, beginScale)
+        textField.transform = CGAffineTransform(scaleX: beginScale, y: beginScale)
         textField.clipsToBounds = true
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animate(withDuration: duration, animations: {
             textField.layer.frame.origin.y -= endOffsetY
             textField.alpha = endAlpha
-            textField.transform = CGAffineTransformMakeScale(endScale, endScale)
+            textField.transform = CGAffineTransform(scaleX: endScale, y: endScale)
         })
     }
     
-    static func roundCorners(view: UIView, radius: CGFloat = 20.0, corners: UIRectCorner = [.TopLeft, .TopRight, .BottomLeft, .BottomRight]){
+    static func roundCorners(_ view: UIView, radius: CGFloat = 20.0, corners: UIRectCorner = [.topLeft, .topRight, .bottomLeft, .bottomRight]){
         
         let roundedRect = CGRect(x: view.frame.origin.x, y: view.frame.origin.y, width: view.frame.width, height: view.frame.height)
         
         // Round the banner's corners
-        let maskPath: UIBezierPath = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: (corners), cornerRadii: CGSizeMake(radius, radius))
+        let maskPath: UIBezierPath = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: (corners), cornerRadii: CGSize(width: radius, height: radius))
         
         let maskLayer: CAShapeLayer = CAShapeLayer()
         
         maskLayer.frame = view.bounds
-        maskLayer.path = maskPath.CGPath
+        maskLayer.path = maskPath.cgPath
         view.layer.mask = maskLayer
         
         // Round cell corners
@@ -80,8 +80,8 @@ struct Animations{
 //        view.layer.masksToBounds = false
     }
     
-    static func roundSquareImageView(imageView: UIImageView, outerView: UIView?, borderWidth: CGFloat?, borderColor: UIColor? = UIColor.whiteColor()){
-        func roundingUIView(let aView: UIView!, let cornerRadiusParam: CGFloat!) {
+    static func roundSquareImageView(_ imageView: UIImageView, outerView: UIView?, borderWidth: CGFloat?, borderColor: UIColor? = UIColor.white){
+        func roundingUIView(_ aView: UIView!, cornerRadiusParam: CGFloat!) {
             aView.clipsToBounds = true
             aView.layer.cornerRadius = cornerRadiusParam
         }
@@ -92,7 +92,7 @@ struct Animations{
         
         if borderWidth != nil{
             imageView.layer.borderWidth = borderWidth!
-            imageView.layer.borderColor = borderColor!.CGColor
+            imageView.layer.borderColor = borderColor!.cgColor
         }
     }
 

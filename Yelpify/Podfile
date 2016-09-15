@@ -1,7 +1,7 @@
 platform :ios, '9.0'
 use_frameworks!
 
-pod 'SwiftLocation'
+pod 'SwiftLocation', '~> 1.0.5'
 pod 'Parse'
 pod 'Alamofire'
 pod 'HanekeSwift'
@@ -11,7 +11,7 @@ pod 'FBSDKCoreKit'
 pod 'FBSDKLoginKit'
 pod 'XLPagerTabStrip'
 pod 'XLActionController'
-pod 'Cosmos', '~> 1.2'
+pod 'Cosmos'
 pod 'DGElasticPullToRefresh'
 pod 'RAMAnimatedTabBarController'
 pod 'SwiftyJSON'
@@ -20,3 +20,11 @@ pod 'BetterSegmentedControl'
 pod 'CZPicker'
 pod 'AsyncSwift'
 pod 'SwiftPhotoGallery'
+
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            config.build_settings['SWIFT_VERSION'] = '3.0'
+        end
+    end
+end

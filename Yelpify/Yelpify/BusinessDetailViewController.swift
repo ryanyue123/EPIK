@@ -13,6 +13,26 @@ import Cosmos
 import BetterSegmentedControl
 import Async
 import SwiftPhotoGallery
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SwiftPhotoGalleryDelegate, SwiftPhotoGalleryDataSource {
 
@@ -38,7 +58,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     var loadedStatusBar = false
     var loadedNavBar = false
     
-    var contentToDisplay: ContentTypes = .Places
+    var contentToDisplay: ContentTypes = .places
     
     //var placePhoto: UIImage? = UIImage(named: "default_restaurant")
     let cache = Shared.dataCache
@@ -64,8 +84,8 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var routeButtonImage: UIImageView!
     @IBOutlet weak var callButtonImage: UIImageView!
     
-    @IBAction func showBusinessList(sender: UIBarButtonItem) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func showBusinessList(_ sender: UIBarButtonItem) {
+        navigationController?.popViewController(animated: true)
     }
     
     override func viewDidLoad() {
@@ -75,13 +95,13 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         self.addTapToActions()
         
         // Register Nibs
-        self.tableView.registerNib(UINib(nibName: "ReviewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "reviewCell")
-        self.tableView.registerNib(UINib(nibName: "InfoCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "infoCell")
-        self.tableView.registerNib(UINib(nibName: "ImageCarousel", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "imageCarousel")
+        self.tableView.register(UINib(nibName: "ReviewCell", bundle: Bundle.main), forCellReuseIdentifier: "reviewCell")
+        self.tableView.register(UINib(nibName: "InfoCell", bundle: Bundle.main), forCellReuseIdentifier: "infoCell")
+        self.tableView.register(UINib(nibName: "ImageCarousel", bundle: Bundle.main), forCellReuseIdentifier: "imageCarousel")
         
         self.navigationController?.configureTopBar()
     
-        self.tableView.separatorStyle = .None
+        self.tableView.separatorStyle = .none
         
         // Configure status bar and set alpha to 0
         self.loadedStatusBar = true
@@ -90,8 +110,8 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         configureHeaderView()
         configureSegmentedBar()
 
-        self.directionsButton.enabled = false
-        self.callButton.enabled = false
+        self.directionsButton.isEnabled = false
+        self.callButton.isEnabled = false
         //self.webButton.enabled = false
         self.title = "Details"
         
@@ -159,8 +179,8 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
                 */
                 
                 // Set Action Buttons
-                self.directionsButton.enabled = true
-                self.callButton.enabled = true
+                self.directionsButton.isEnabled = true
+                self.callButton.isEnabled = true
                 self.tableView.reloadData()
             }
         }else{
@@ -200,8 +220,8 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             // Set Price Rating
             self.setPriceRating(gPlaceObject.priceRating)
             
-            self.directionsButton.enabled = true
-            self.callButton.enabled = true
+            self.directionsButton.isEnabled = true
+            self.callButton.isEnabled = true
         }
     
         self.tableView.reloadData()
@@ -209,15 +229,15 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func addTapToActions(){
-        let add = UITapGestureRecognizer(target: self, action: "pressedAdd")
-        let route = UITapGestureRecognizer(target: self, action: "pressedRoute")
-        let call = UITapGestureRecognizer(target: self, action: "pressedCall")
+        let add = UITapGestureRecognizer(target: self, action: #selector(BusinessDetailViewController.pressedAdd))
+        let route = UITapGestureRecognizer(target: self, action: #selector(BusinessDetailViewController.pressedRoute))
+        let call = UITapGestureRecognizer(target: self, action: #selector(BusinessDetailViewController.pressedCall))
         self.addButtonImage.addGestureRecognizer(add)
         self.routeButtonImage.addGestureRecognizer(route)
         self.callButtonImage.addGestureRecognizer(call)
     }
     
-    func setInfo(place: GooglePlaceDetail){
+    func setInfo(_ place: GooglePlaceDetail){
         self.infoArray[0] = ("detail_location", place.address as String)
         self.infoArray[1] = ("detail_phone", place.phone as String)
         if gPlaceObject.hours.count == 7{
@@ -241,38 +261,38 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         PlaceActions.openInPhone(nil, place: gPlaceObject)
     }
     
-    func getHours(hoursArray: NSMutableArray) -> String{
+    func getHours(_ hoursArray: NSMutableArray) -> String{
         let dayDict = [0: "Sunday", 1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday"]
         
         let hoursArr = hoursArray
         print(hoursArr)
-        hoursArr.insertObject(hoursArr[6], atIndex: 0)
+        hoursArr.insert(hoursArr[6], at: 0)
         hoursArr.removeLastObject()
         
         let today = getDayOfWeek()!
         let hoursToday = hoursArr[today]
-        let hoursTodayArr = hoursToday.componentsSeparatedByString(",")
+        let hoursTodayArr = (hoursToday as AnyObject).components(separatedBy: ",")
         if hoursTodayArr.count > 1{
             return "24 Hours"
         }else{
-            let parsedString = hoursTodayArr[0].stringByReplacingOccurrencesOfString((dayDict[today]! + ":"), withString: "")
+            let parsedString = hoursTodayArr[0].replacingOccurrences(of: (dayDict[today]! + ":"), with: "")
             return parsedString
         }
         
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
 
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         if fromSearchTab == true{
             
         }
         handleNavigationBarOnScroll()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         self.loadedNavBar = false
         self.loadedStatusBar = false
     }
@@ -287,7 +307,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         updateHeaderView()
     }
     
-    func getReviewText(reviewDict: [NSDictionary]) -> [String]{
+    func getReviewText(_ reviewDict: [NSDictionary]) -> [String]{
         var result: [String] = []
         for review in reviewDict{
             result.append(review["text"] as! String)
@@ -295,7 +315,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         return result
     }
     
-    func setPriceRating(price: Int){
+    func setPriceRating(_ price: Int){
         var result = ""
         if price != -1{
             for _ in 0..<price{
@@ -315,15 +335,15 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
-    func setTypeIcon(businessTypes: NSArray){
+    func setTypeIcon(_ businessTypes: NSArray){
         // Set Icon
         let businessList = ["restaurant","food","amusement","bakery","bar","beauty_salon","bowling_alley","cafe","car_rental","car_repair","clothing_store","department_store","grocery_or_supermarket","gym","hospital","liquor_store","lodging","meal_takeaway","movie_theater","night_club","police","shopping_mall"]
         
-        if businessTypes.count != 0 && businessList.contains(String(businessTypes[0])){
-            self.typeIconImageView.transform = CGAffineTransformMakeScale(1.2, 1.2)
-            self.typeIconImageView.image = UIImage(named: String(businessTypes[0]) + "_Icon")!
+        if businessTypes.count != 0 && businessList.contains(String(describing: businessTypes[0])){
+            self.typeIconImageView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            self.typeIconImageView.image = UIImage(named: String(describing: businessTypes[0]) + "_Icon")!
         }else{
-            self.typeIconImageView.transform = CGAffineTransformMakeScale(1.2, 1.2)
+            self.typeIconImageView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
             self.typeIconImageView.image = UIImage(named: "default_Icon")!
         }
 
@@ -331,7 +351,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     
     // MARK: - Scroll View
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.fadeBG()
         self.updateHeaderView()
         self.handleNavigationBarOnScroll()
@@ -347,7 +367,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         let showWhenScrollDownAlpha = 1 - (-tableView.contentOffset.y / headerHeight)
         
         self.navigationController?.navigationBar.titleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(showWhenScrollDownAlpha) ]
+            NSForegroundColorAttributeName: UIColor.white.withAlphaComponent(showWhenScrollDownAlpha) ]
         if object != nil{
             self.navigationItem.title = object.businessName
         }else if gPlaceObject != nil{
@@ -356,7 +376,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             self.navigationItem.title = "Details"
         }
         
-        self.navigationController?.navigationBar.backgroundColor = appDefaults.color.colorWithAlphaComponent((showWhenScrollDownAlpha))
+        self.navigationController?.navigationBar.backgroundColor = appDefaults.color.withAlphaComponent((showWhenScrollDownAlpha))
         
         // Handle Status Bar
         //let statusBarView = self.view.viewWithTag(100)
@@ -367,7 +387,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         
         // Handle Nav Shadow View
         if loadedNavBar == true{
-            self.navBarShadowView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(showWhenScrollDownAlpha)
+            self.navBarShadowView.backgroundColor = UIColor.black.withAlphaComponent(showWhenScrollDownAlpha)
         }
         //self.view.viewWithTag(102)!.backgroundColor = appDefaults.color.colorWithAlphaComponent(showWhenScrollDownAlpha)
     }
@@ -375,7 +395,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     
     // MARK: - Setup Views
     
-    private let headerHeight: CGFloat = 320.0
+    fileprivate let headerHeight: CGFloat = 320.0
     
     func configureHeaderView(){
         tableView.tableHeaderView = nil
@@ -392,7 +412,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             headerRect.size.height = -tableView.contentOffset.y
         }else if self.tableView.contentOffset.y > headerHeight{
             self.navigationItem.title = "hi"
-            self.navigationItem.titleView?.tintColor = UIColor.whiteColor()
+            self.navigationItem.titleView?.tintColor = UIColor.white
         }
         
         headerView.frame = headerRect
@@ -406,12 +426,12 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         shadowView.layer.shadowOffset = CGSize(width: 0, height: 3) // your offset
         shadowView.layer.shadowRadius =  10 //your radius
         self.view.addSubview(shadowView)
-        self.view.bringSubviewToFront(shadowView)
+        self.view.bringSubview(toFront: shadowView)
         
         shadowView.tag = 102
     }
     
-    func setCoverPhoto(ref: String){
+    func setCoverPhoto(_ ref: String){
         self.gpClient.getImage(ref) { (image) in
             self.fadeOutImage(self.placePhotoImageView)
             
@@ -424,11 +444,11 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
-    func fadeOutImage(imageView: UIImageView, endAlpha: CGFloat = 0.0){
-        UIImageView.animateWithDuration(1) {
+    func fadeOutImage(_ imageView: UIImageView, endAlpha: CGFloat = 0.0){
+        UIImageView.animate(withDuration: 1, animations: {
             imageView.image = UIImage()
             imageView.alpha = 1
-        }
+        }) 
         imageView.alpha = endAlpha
     }
     
@@ -447,33 +467,33 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         control.addTarget(self, action: "switchContentType", forControlEvents: .ValueChanged)
         control.alpha = 0
         self.segmentedView.addSubview(control)
-        UIView.animateWithDuration(0.3) {
+        UIView.animate(withDuration: 0.3, animations: {
             control.alpha = 1
-            self.segmentedView.bringSubviewToFront(self.segmentedTabBar)
-        }
+            self.segmentedView.bringSubview(toFront: self.segmentedTabBar)
+        }) 
     }
     
     
     func switchContentType(){
-        if self.contentToDisplay == .Places{
-            self.contentToDisplay = .Comments
+        if self.contentToDisplay == .places{
+            self.contentToDisplay = .comments
             
             let tX = self.view.frame.width / 2
             
-            UIView.animateWithDuration(0.2, animations: {
-                self.segmentedTabBar.transform = CGAffineTransformMakeTranslation(tX, 0)
+            UIView.animate(withDuration: 0.2, animations: {
+                self.segmentedTabBar.transform = CGAffineTransform(translationX: tX, y: 0)
             })
             
-            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+            self.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
         }else{
-            self.contentToDisplay = .Places
+            self.contentToDisplay = .places
             
             let tX = self.view.frame.width / 2
-            UIView.animateWithDuration(0.2, animations: {
-                self.segmentedTabBar.transform = CGAffineTransformMakeTranslation(0, 0)
+            UIView.animate(withDuration: 0.2, animations: {
+                self.segmentedTabBar.transform = CGAffineTransform(translationX: 0, y: 0)
             })
             
-            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+            self.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
         }
         
     }
@@ -518,21 +538,21 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
     
     let imageNames = ["face", "temp_profile", "default_restaurant"]
     
-    func numberOfImagesInGallery(gallery: SwiftPhotoGallery) -> Int {
+    func numberOfImagesInGallery(_ gallery: SwiftPhotoGallery) -> Int {
         return imageNames.count
     }
     
-    func imageInGallery(gallery: SwiftPhotoGallery, forIndex: Int) -> UIImage? {
+    func imageInGallery(_ gallery: SwiftPhotoGallery, forIndex: Int) -> UIImage? {
         return UIImage(named: imageNames[forIndex])
     }
     
-    func galleryDidTapToClose(gallery: SwiftPhotoGallery) {
+    func galleryDidTapToClose(_ gallery: SwiftPhotoGallery) {
         // do something cool like:
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func addItemToPlaylist(sender: UIBarButtonItem) {
-        performSegueWithIdentifier("unwindFromDetail", sender: self)
+    @IBAction func addItemToPlaylist(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "unwindFromDetail", sender: self)
     }
     
 //    @IBAction func PressedButton(sender: AnyObject) {
@@ -546,7 +566,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
 //
 //    }
     
-    func convertAddress(address: String) -> String{
+    func convertAddress(_ address: String) -> String{
         let addressArray = address.characters.split{$0 == " "}.map(String.init)
         var resultString = ""
         for word in addressArray{
@@ -555,7 +575,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         return resultString
     }
     
-    func convertPhone(phone: String) -> Int{
+    func convertPhone(_ phone: String) -> Int{
         let phoneArray = phone.characters.map { String($0) }
         var result = ""
         for char in phoneArray{
@@ -566,11 +586,11 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         return Int(result)!
     }
     
-    @IBAction func openInMaps(sender: UIButton) {
+    @IBAction func openInMaps(_ sender: UIButton) {
         PlaceActions.openInMaps(nil, place: gPlaceObject)
     }
     
-    @IBAction func openInPhone(sender: UIButton)
+    @IBAction func openInPhone(_ sender: UIButton)
     {
         if object != nil{
             PlaceActions.openInPhone(object)
@@ -579,7 +599,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
-    @IBAction func addPlaceButtonPressed(sender: AnyObject) {
+    @IBAction func addPlaceButtonPressed(_ sender: AnyObject) {
         
     }
     
@@ -603,18 +623,18 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
 //    }
 //    
     // MARK: - Table View Functions
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch contentToDisplay {
-        case .Places:
+        case .places:
             return 4
-        case .Comments:
+        case .comments:
             return self.reviewArray.count
         }
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if contentToDisplay == .Places{
-            if indexPath.row != 3{
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if contentToDisplay == .places{
+            if (indexPath as NSIndexPath).row != 3{
                 return 60.0
             }else{
                 return 223.0
@@ -624,19 +644,19 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // IF SEGMENTED IS ON PLACES (INFO)
-        if self.contentToDisplay == .Places{
-            if indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 2{
-                let infoCell = tableView.dequeueReusableCellWithIdentifier("infoCell", forIndexPath: indexPath) as! InfoTableViewCell
+        if self.contentToDisplay == .places{
+            if (indexPath as NSIndexPath).row == 0 || (indexPath as NSIndexPath).row == 1 || (indexPath as NSIndexPath).row == 2{
+                let infoCell = tableView.dequeueReusableCell(withIdentifier: "infoCell", for: indexPath) as! InfoTableViewCell
                 
-                infoCell.configureCell(UIImage(named: self.infoArray[indexPath.row].0)!, label: self.infoArray[indexPath.row].1)
+                infoCell.configureCell(UIImage(named: self.infoArray[(indexPath as NSIndexPath).row].0)!, label: self.infoArray[(indexPath as NSIndexPath).row].1)
                 
                 return infoCell
             }else{
                 // IMAGE CAROUSEL
-                let imageCarouselCell = tableView.dequeueReusableCellWithIdentifier("imageCarousel", forIndexPath: indexPath) as! ImageCarouselTableViewCell
+                let imageCarouselCell = tableView.dequeueReusableCell(withIdentifier: "imageCarousel", for: indexPath) as! ImageCarouselTableViewCell
                 
                 if gPlaceObject != nil{
                     if gPlaceObject.photos.count > 0{
@@ -652,12 +672,12 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             }
             
             // IF SEGMENTED IS ON COMMENTS (REVIEWS)
-        }else if self.contentToDisplay == .Comments{
-            let reviewCell = tableView.dequeueReusableCellWithIdentifier("reviewCell", forIndexPath: indexPath) as! ReviewTableViewCell
+        }else if self.contentToDisplay == .comments{
+            let reviewCell = tableView.dequeueReusableCell(withIdentifier: "reviewCell", for: indexPath) as! ReviewTableViewCell
 
             self.tableView.rowHeight = 140.0
             
-            reviewCell.configureCell(self.reviewArray[indexPath.row] as! NSDictionary)
+            reviewCell.configureCell(self.reviewArray[(indexPath as NSIndexPath).row] as! NSDictionary)
             
             return reviewCell
         }else{
@@ -665,7 +685,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
 
@@ -673,20 +693,20 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
 
 func getDayOfWeek()->Int? {
     
-    let date = NSDate()
-    let calendar = NSCalendar.currentCalendar()
-    let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+    let date = Date()
+    let calendar = Calendar.current
+    let components = (calendar as NSCalendar).components([.day , .month , .year], from: date)
     
-    let today = String(format: "%04d", components.year) + "-" + String(format: "%02d", components.month) + "-" + String(format: "%02d", components.day)
+    let today = String(format: "%04d", components.year!) + "-" + String(format: "%02d", components.month!) + "-" + String(format: "%02d", components.day!)
     
-    let formatter  = NSDateFormatter()
+    let formatter  = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd"
     
-    if let todayDate = formatter.dateFromString(today) {
-        let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        let myComponents = myCalendar.components(.Weekday, fromDate: todayDate)
+    if let todayDate = formatter.date(from: today) {
+        let myCalendar = Calendar(identifier: Calendar.Identifier.gregorian)
+        let myComponents = (myCalendar as NSCalendar).components(.weekday, from: todayDate)
         let weekDay = myComponents.weekday
-        return weekDay - 1
+        return weekDay! - 1
     } else {
         return nil
     }

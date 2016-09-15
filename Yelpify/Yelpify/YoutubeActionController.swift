@@ -14,10 +14,10 @@ import XLActionController
 import UIKit
 import XLActionController
 
-public class YoutubeCell: ActionCell {
+open class YoutubeCell: ActionCell {
     
-    public lazy var animatableBackgroundView: UIView = { [weak self] in
-        let view = UIView(frame: self?.frame ?? CGRectZero)
+    open lazy var animatableBackgroundView: UIView = { [weak self] in
+        let view = UIView(frame: self?.frame ?? CGRect.zero)
         view.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.40)
         return view
         }()
@@ -31,7 +31,7 @@ public class YoutubeCell: ActionCell {
         super.init(coder: aDecoder)
     }
     
-    public override func awakeFromNib() {
+    open override func awakeFromNib() {
         super.awakeFromNib()
         initialize()
     }
@@ -39,37 +39,37 @@ public class YoutubeCell: ActionCell {
     func initialize() {
         actionTitleLabel?.textColor = UIColor(white: 0.098, alpha: 1.0)
         let backgroundView = UIView()
-        backgroundView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.0)
+        backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.0)
         backgroundView.addSubview(animatableBackgroundView)
         selectedBackgroundView = backgroundView
     }
     
-    public override var highlighted: Bool {
+    open override var highlighted: Bool {
         didSet {
             if highlighted {
-                animatableBackgroundView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.0)
+                animatableBackgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.0)
                 animatableBackgroundView.frame = CGRect(x: 0, y: 0, width: 30, height: frame.height)
                 animatableBackgroundView.center = CGPoint(x: frame.width * 0.5, y: frame.height * 0.5)
                 
-                UIView.animateWithDuration(0.5) { [weak self] in
+                UIView.animate(withDuration: 0.5, animations: { [weak self] in
                     guard let me  = self else {
                         return
                     }
                     
                     me.animatableBackgroundView.frame = CGRect(x: 0, y: 0, width: me.frame.width, height: me.frame.height)
-                    me.animatableBackgroundView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.08)
-                }
+                    me.animatableBackgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.08)
+                }) 
             } else {
-                animatableBackgroundView.backgroundColor = animatableBackgroundView.backgroundColor?.colorWithAlphaComponent(0.0)
+                animatableBackgroundView.backgroundColor = animatableBackgroundView.backgroundColor?.withAlphaComponent(0.0)
             }
         }
     }
 }
 
 
-public class YoutubeActionController: ActionController<YoutubeCell, ActionData, UICollectionReusableView, Void, UICollectionReusableView, Void> {
+open class YoutubeActionController: ActionController<YoutubeCell, ActionData, UICollectionReusableView, Void, UICollectionReusableView, Void> {
     
-    public override init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: NSBundle? = nil) {
+    public override init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         settings.behavior.hideOnScrollDown = false
         settings.animation.scale = nil
@@ -89,7 +89,7 @@ public class YoutubeActionController: ActionController<YoutubeCell, ActionData, 
         }
     }
     
-    override public func dismissView(presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((completed: Bool) -> Void)?) {
+    override open func dismissView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((_ completed: Bool) -> Void)?) {
         onWillDismissView()
         let animationSettings = settings.animation.dismiss
         let upTime = 0.1

@@ -17,12 +17,12 @@ class InitialViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
     }
     
-    override func viewDidAppear(animated: Bool) {
-        print(PFUser.currentUser())
-        if (PFUser.currentUser() == nil) {
+    override func viewDidAppear(_ animated: Bool) {
+        print(PFUser.current())
+        if (PFUser.current() == nil) {
             self.animate()
             Async.main(after: 0.5){
                 self.performSegueWithIdentifier("loginscreen", sender: self)
@@ -36,9 +36,9 @@ class InitialViewController: UIViewController {
     }
     
     func animate(){
-        UIView.animateWithDuration(1, animations: {
-            self.background.transform = CGAffineTransformMakeScale(1.2, 1.2)
-            self.logo.transform = CGAffineTransformMakeScale(0.9, 0.9)
+        UIView.animate(withDuration: 1, animations: {
+            self.background.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            self.logo.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         })
     }
 

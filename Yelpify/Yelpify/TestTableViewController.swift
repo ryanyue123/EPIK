@@ -41,22 +41,22 @@ class TestTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return businessObjects.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("TestTableViewCell", forIndexPath: indexPath) as! TestTableViewCell
-        cell.tag = indexPath.row
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TestTableViewCell", for: indexPath) as! TestTableViewCell
+        cell.tag = (indexPath as NSIndexPath).row
         
-        let business = businessObjects[indexPath.row]
+        let business = businessObjects[(indexPath as NSIndexPath).row]
         cell.businessNameLabel.text = business.businessName
         
-        businessShown[indexPath.row] = true
+        businessShown[(indexPath as NSIndexPath).row] = true
         return cell
     }
 

@@ -18,24 +18,24 @@ class ZoomSegue: UIStoryboardSegue {
     }
     
     override func perform() {
-        let sourceVC = self.sourceViewController as! HomeViewController
+        let sourceVC = self.source as! HomeViewController
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         //let destVC = storyboard.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! SinglePlaylistViewController
-        let destVC = self.destinationViewController
+        let destVC = self.destination
         
         sourceVC.view.superview?.addSubview(destVC.view)
         //sourceVC.view.addSubview(destVC.view)
         
-        destVC.view.transform = CGAffineTransformMakeScale(0.05, 0.05)
+        destVC.view.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
         
-        UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseInOut, animations: {
-            destVC.view.transform = CGAffineTransformMakeScale(1.0, 1.0)
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions(), animations: {
+            destVC.view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         }) { (finished) in
             destVC.view.removeFromSuperview()
             
-            let time = dispatch_time(DISPATCH_TIME_NOW, Int64(0.001 * Double(NSEC_PER_SEC)))
+            let time = DispatchTime.now() + Double(Int64(0.001 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
             
-            dispatch_after(time, dispatch_get_main_queue(), {
+            DispatchQueue.main.asyncAfter(deadline: time, execute: {
                 sourceVC.navigationController?.pushViewController(destVC, animated: false)
                 //sourceVC.presentViewController(destVC, animated: false, completion: nil)
             })

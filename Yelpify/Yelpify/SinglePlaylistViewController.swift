@@ -15,13 +15,13 @@ import CZPicker
 import Async
 
 enum ContentTypes {
-    case Places, Comments
+    case places, comments
 }
 
 class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate, MGSwipeTableCellDelegate, ModalViewControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate, UITextFieldDelegate, Dimmable{
     
     enum ListMode{
-        case View, Edit
+        case view, edit
     }
     
     //@IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
@@ -39,9 +39,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     let imagePicker = UIImagePickerController()
     
-    @IBAction func loadImageButton(sender: AnyObject) {
+    @IBAction func loadImageButton(_ sender: AnyObject) {
         imagePicker.allowsEditing = false
-        imagePicker.sourceType = .PhotoLibrary
+        imagePicker.sourceType = .photoLibrary
         
         // Configure Status Bar
         let statusBarRect = CGRect(x: 0, y: 0, width: imagePicker.navigationBar.frame.size.width, height: 20.0)
@@ -50,10 +50,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         imagePicker.view.addSubview(statusBarView)
         
         // Configure Navigation Bar
-        imagePicker.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Top, barMetrics: .Default)
+        imagePicker.navigationBar.setBackgroundImage(UIImage(), for: .top, barMetrics: .default)
         imagePicker.navigationBar.backgroundColor = appDefaults.color
         
-        presentViewController(imagePicker, animated: true, completion: nil)
+        present(imagePicker, animated: true, completion: nil)
     }
     
     @IBOutlet weak var changePlaylistImageButton: UIButton!
@@ -73,12 +73,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     var customImage: UIImage! = nil
     
-    var mode: ListMode! = .View
+    var mode: ListMode! = .view
     
     var statusBarView: UIView!
     
     let offset_HeaderStop:CGFloat = 40.0
-    var contentToDisplay: ContentTypes = .Places
+    var contentToDisplay: ContentTypes = .places
     
     var collaborators = [PFObject]()
     var playlistArray = [Business]()
@@ -107,27 +107,27 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     var viewDisappearing = false
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            playlistInfoBG.contentMode = .ScaleAspectFill
+            playlistInfoBG.contentMode = .scaleAspectFill
             playlistInfoBG.clipsToBounds = true
             playlistInfoBG.image = pickedImage
             self.customImage = pickedImage
         }
         
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
     
-    func sendValue(value: AnyObject){
+    func sendValue(_ value: AnyObject){
         itemReceived.append(value as! NSObject)
         
         for item in itemReceived{
-            if item as! NSObject == "Alphabetical"{
+            if (item as! NSObject) as! String == "Alphabetical"{
                 self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
                 getIDsFromArrayOfBusiness(self.playlistArray, completion: { (result) in
                     self.placeIDs = result
@@ -135,7 +135,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                     print("sorting")
                     self.playlistTableView.reloadData()
                 })
-            }else if item as! NSObject == "Rating"{
+            }else if (item as! NSObject) as! String == "Rating"{
                 self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
                 getIDsFromArrayOfBusiness(self.playlistArray, completion: { (result) in
                     self.placeIDs = result
@@ -153,7 +153,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 
                 addToOwnPlaylists[index]["num_places"] = playlist.count
                 addToOwnPlaylists[index]["place_id_list"] = playlist
-                addToOwnPlaylists[index].saveInBackgroundWithBlock({ (success, error) in
+                addToOwnPlaylists[index].saveInBackground(block: { (success, error) in
                     if (error == nil) {
                         print("Saved")
                     }
@@ -165,30 +165,30 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
     }
     
-    func getIDsFromArrayOfBusiness(business: [Business], completion: (result:[String])->Void){
+    func getIDsFromArrayOfBusiness(_ business: [Business], completion: (_ result:[String])->Void){
         var result:[String] = []
         for b in business{
             result.append(b.gPlaceID)
         }
-        completion(result: result)
+        completion(result)
     }
     
-    func sortMethods(businesses: Array<Business>, type: String)->[Business]{
+    func sortMethods(_ businesses: Array<Business>, type: String)->[Business]{
         var sortedBusinesses: Array<Business> = []
         if type == "name"{
-            sortedBusinesses = businesses.sort{$0.businessName < $1.businessName}
+            sortedBusinesses = businesses.sorted{$0.businessName < $1.businessName}
         } else if type == "rating"{
-            sortedBusinesses = businesses.sort{$0.businessRating > $1.businessRating}
+            sortedBusinesses = businesses.sorted{$0.businessRating > $1.businessRating}
         }
         return sortedBusinesses
     }
     
-    func sortGooglePlaces(gPlaces: [GooglePlaceDetail],type:String) -> [GooglePlaceDetail]{
+    func sortGooglePlaces(_ gPlaces: [GooglePlaceDetail],type:String) -> [GooglePlaceDetail]{
         var sortedBusinesses: Array<GooglePlaceDetail> = []
         if type == "name"{
-            sortedBusinesses = gPlaces.sort{$0.name < $1.name}
+            sortedBusinesses = gPlaces.sorted{$0.name < $1.name}
         } else if type == "rating"{
-            sortedBusinesses = gPlaces.sort{$0.rating > $1.rating}
+            sortedBusinesses = gPlaces.sorted{$0.rating > $1.rating}
         }
         return sortedBusinesses
 
@@ -196,21 +196,21 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     func makeCollaborative() {
         //let searchVC = self.storyboard?.instantiateViewControllerWithIdentifier("searchpeople")
-        let searchPeopleVC = self.storyboard?.instantiateViewControllerWithIdentifier("searchPeopleVC") as! SearchPeopleTableViewController
+        let searchPeopleVC = self.storyboard?.instantiateViewController(withIdentifier: "searchPeopleVC") as! SearchPeopleTableViewController
         let navController = UINavigationController(rootViewController: searchPeopleVC) // Creating a navigation controller with VC1 at the root of the navigation stack.
-        self.presentViewController(navController, animated:true, completion: nil)
+        self.present(navController, animated:true, completion: nil)
         //let searchPeopleVC = searchVC?.childViewControllers[0] as! SearchPeopleTableViewController
         
-        searchPeopleVC.mode = .Collaborate
+        searchPeopleVC.mode = .collaborate
         searchPeopleVC.collaborative = true
         searchPeopleVC.playlist = self.object
-        self.dismissViewControllerAnimated(false, completion: nil)
-        self.presentViewController(navController, animated: true, completion: nil)
+        self.dismiss(animated: false, completion: nil)
+        self.present(navController, animated: true, completion: nil)
     }
     
     
     
-    func showActionsMenu(sender: AnyObject) {
+    func showActionsMenu(_ sender: AnyObject) {
         let actionController = YoutubeActionController()
         let pickerController = CZPickerViewController()
         let randomController = RandomPlaceController()
@@ -245,28 +245,28 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
     }
     
-    @IBAction func selectContentType(sender: AnyObject) {
+    @IBAction func selectContentType(_ sender: AnyObject) {
         // crap code I know
         if sender.selectedSegmentIndex == 0 {
-            contentToDisplay = .Places
+            contentToDisplay = .places
         }
         else {
-            contentToDisplay = .Comments
+            contentToDisplay = .comments
         }
         
         playlistTableView.reloadData()
     }
     
     
-    @IBAction func unwindToSinglePlaylist(segue: UIStoryboardSegue)
+    @IBAction func unwindToSinglePlaylist(_ segue: UIStoryboardSegue)
     {
         print(segue.identifier)
         if(segue.identifier != nil) {
             if(segue.identifier == "unwindToPlaylist") {
-                if let sourceVC = segue.sourceViewController as? SearchBusinessViewController
+                if let sourceVC = segue.source as? SearchBusinessViewController
                 {
-                    playlistArray.appendContentsOf(sourceVC.businessArray)
-                    placeIDs.appendContentsOf(sourceVC.placeIDs)
+                    playlistArray.append(contentsOf: sourceVC.businessArray)
+                    placeIDs.append(contentsOf: sourceVC.placeIDs)
                     
                     // Appends empty GooglePlaceDetail Objects to make list parallel to placeIDs and playlistArray
                     for _ in 0..<(placeIDs.count - placeArray.count){
@@ -285,14 +285,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
 
-    @IBAction func unwindToSinglePlaylistWithComment(segue: UIStoryboardSegue){
-        dim(.Out, alpha: dimLevel, speed: dimSpeed)
+    @IBAction func unwindToSinglePlaylistWithComment(_ segue: UIStoryboardSegue){
+        dim(.out, alpha: dimLevel, speed: dimSpeed)
             if (segue.identifier == "withComment"){
-            let sourceVC = segue.sourceViewController as? AddCommentViewController
+            let sourceVC = segue.source as? AddCommentViewController
                 
-            let username = "@ " + (PFUser.currentUser()?.username)!
+            let username = "@ " + (PFUser.current()?.username)!
             let newComment = sourceVC?.comment_content.text!
-            let date = NSDate().timeIntervalSince1970.description
+            let date = Date().timeIntervalSince1970.description
                 
             if sourceVC?.comment_content.text != ""{
             // SAVE COMMENT TO PARSE
@@ -330,21 +330,21 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         self.configurePlaylistInfoView()
         
-        self.addPlaceImageButton.hidden = true
-        let tap = UITapGestureRecognizer(target: self, action: "pressedOnAddPlace:")
-        self.addPlaceImageButton.userInteractionEnabled = true
+        self.addPlaceImageButton.isHidden = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(SinglePlaylistViewController.pressedOnAddPlace(_:)))
+        self.addPlaceImageButton.isUserInteractionEnabled = true
         self.addPlaceImageButton.addGestureRecognizer(tap)
         
         // Register Nibs
-        self.playlistTableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
-        self.playlistTableView.registerNib(UINib(nibName: "ReviewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "reviewCell")
+        self.playlistTableView.register(UINib(nibName: "BusinessCell", bundle: Bundle.main), forCellReuseIdentifier: "businessCell")
+        self.playlistTableView.register(UINib(nibName: "ReviewCell", bundle: Bundle.main), forCellReuseIdentifier: "reviewCell")
         
         
         self.playlistTableView.backgroundColor = appDefaults.color_bg
         if (self.editable == true) {
             self.activateEditMode()
         }
-        else if(object["createdBy"] as! PFUser == PFUser.currentUser()! || (object["Collaborators"] as! NSArray).containsObject(PFUser.currentUser()!)) {
+        else if(object["createdBy"] as! PFUser == PFUser.current()! || (object["Collaborators"] as! NSArray).contains(PFUser.current()!)) {
             self.editable = true
             configureRecentlyViewed()
         }
@@ -375,14 +375,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             self.updateBusinessesFromIDs(self.placeIDs)
         }
         
-        let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "showActionsMenu:")
+        let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .plain, target: self, action: #selector(SinglePlaylistViewController.showActionsMenu(_:)))
         navigationItem.rightBarButtonItem = rightButton
         
     }
     let dimLevel: CGFloat = 0.8
     let dimSpeed: Double = 0.5
     
-    override func viewDidAppear(animated: Bool){
+    override func viewDidAppear(_ animated: Bool){
         handleNavigationBarOnScroll()
         if self.loadedSegmented == false{
             self.configureSegmentedBar()
@@ -391,7 +391,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         //self.performSegueWithIdentifier("addComment", sender: self)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         if (object == nil) {
             playlist_name = playlist.playlistname
@@ -401,7 +401,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         self.viewDisappearing = true
     }
     
@@ -419,7 +419,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         commentsArray = object["comments"] as! [[String : String]]
     }
     
-    func updateBusinessesFromIDs(ids:[String], reloadIndex: Int = 0){
+    func updateBusinessesFromIDs(_ ids:[String], reloadIndex: Int = 0){
         if ids.count > 0{
             apiClient.performDetailedSearch(ids[0]) { (detailedGPlace) in
                 self.placeArray[reloadIndex] = detailedGPlace
@@ -428,39 +428,39 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 // self.placeArray.append(detailedGPlace)
                 // self.playlistArray.append(detailedGPlace.convertToBusiness())
                 let idsSlice = Array(ids[1..<ids.count])
-                let index = NSIndexPath(forRow: reloadIndex, inSection: 0)
-                self.playlistTableView.reloadRowsAtIndexPaths([index], withRowAnimation: .Fade) // CHANGE
+                let index = IndexPath(row: reloadIndex, section: 0)
+                self.playlistTableView.reloadRows(at: [index], with: .fade) // CHANGE
                 let newIndex = reloadIndex + 1
                 self.updateBusinessesFromIDs(idsSlice, reloadIndex: newIndex)
             }
         }else{
-            self.segmentedBarView.userInteractionEnabled = true
+            self.segmentedBarView.isUserInteractionEnabled = true
             //self.playlistTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
         }
     }
     
-    func convertBusinessesToIDs(businesses: [Business], completion: (ids: [String]) -> Void) {
+    func convertBusinessesToIDs(_ businesses: [Business], completion: (_ ids: [String]) -> Void) {
         var ids: [String] = []
         for business in businesses{
             ids.append(business.gPlaceID)
         }
-        completion(ids: ids)
+        completion(ids)
     }
     
-    func pressedOnAddPlace(img: AnyObject){
-        if self.contentToDisplay == .Places{
-            performSegueWithIdentifier("tapImageButton", sender: self)
-        }else if self.contentToDisplay == .Comments{
-            performSegueWithIdentifier("addComment", sender: self)
+    func pressedOnAddPlace(_ img: AnyObject){
+        if self.contentToDisplay == .places{
+            performSegue(withIdentifier: "tapImageButton", sender: self)
+        }else if self.contentToDisplay == .comments{
+            performSegue(withIdentifier: "addComment", sender: self)
         }
     }
     
     
-    func unwindView(sender: UIBarButtonItem) {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+    func unwindView(_ sender: UIBarButtonItem) {
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
-    func setPriceRating(price: Int){
+    func setPriceRating(_ price: Int){
         var result = ""
         if price != -1 && price != 0{
             for _ in 0..<price{
@@ -474,7 +474,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
-    func getAveragePrice(completion:(avg: Int) -> Void){
+    func getAveragePrice(_ completion:(_ avg: Int) -> Void){
         var total = 0.0
         var numOfPlaces = 0.0
         for place in self.placeArray{
@@ -484,9 +484,9 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             }
         }
         if numOfPlaces > 0{
-            completion(avg: Int(round(total/numOfPlaces)))
+            completion(Int(round(total/numOfPlaces)))
         }else{
-            completion(avg: -1)
+            completion(-1)
         }
     }
     
@@ -508,20 +508,20 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         // Set User Name
         let user = object["createdBy"] as! PFUser
         self.playlistInfoUser.alpha = 0
-        var byTitle = "BY " + user.username!.uppercaseString
-        self.playlistInfoUser.setTitle("BY " + user.username!.uppercaseString, forState: .Normal)
+        var byTitle = "BY " + user.username!.uppercased()
+        self.playlistInfoUser.setTitle("BY " + user.username!.uppercased(), for: UIControlState())
         if let collabArray = object["Collaborators"] as? [PFUser]{
             if collabArray.count > 0{
                 byTitle += " AND OTHERS" //+ String(collabArray[0].username).uppercaseString
             }
         }
-        self.playlistInfoUser.setTitle(byTitle, forState: .Normal)
+        self.playlistInfoUser.setTitle(byTitle, for: UIControlState())
         
         fadeInView(self.playlistInfoUser, duration: pushDuration, beginScale: pushBeginScale)
         
         // Set Icon // CHANGE
         fadeInImageView(self.playlistInfoIcon, imageToAdd: UIImage(named: "default_Icon")!, duration: pushDuration, beginScale: pushBeginScale)
-        self.playlistInfoIcon.transform = CGAffineTransformMakeScale(1.2, 1.2)
+        self.playlistInfoIcon.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
         //self.playlistInfoIcon.image = UIImage(named: "default_Icon")
         
         // Set Collaborators/ Authors Image
@@ -532,7 +532,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
         // Set BG if custom BG exists in Parse
         if let bg = object["custom_bg"] as? PFFile{
-            bg.getDataInBackgroundWithBlock({ (data, error) in
+            bg.getDataInBackground(block: { (data, error) in
                 if error == nil{
                     let image = UIImage(data: data!)
                     self.fadeInImageView(self.playlistInfoBG, imageToAdd: image!, endAlpha: 0.5, beginScale: 1.2)
@@ -550,7 +550,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             self.numOfFollowersLabel.text = "0"
         }
         else {
-            self.numOfFollowersLabel.text = String(followCount)
+            self.numOfFollowersLabel.text = String(describing: followCount)
         }
         
         if let avgPrice = object["average_price"] as? Int{
@@ -559,23 +559,23 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     // CHANGE
-    func setupCollaborators(object: PFObject){
+    func setupCollaborators(_ object: PFObject){
         let collabList = object["Collaborators"] as! NSArray
         if collabList.count > 0{
             let originalX = self.collaboratorsView.frame.origin.x
             let originalWidth = self.collaboratorsView.frame.width
-            self.collaboratorsView.transform = CGAffineTransformMakeScale(2.0, 0)
-            self.collaboratorsView.transform = CGAffineTransformMakeTranslation(originalX - originalWidth, 0)
+            self.collaboratorsView.transform = CGAffineTransform(scaleX: 2.0, y: 0)
+            self.collaboratorsView.transform = CGAffineTransform(translationX: originalX - originalWidth, y: 0)
             
-            let newRect = CGRectMake(self.collaboratorsView.frame.origin.x + originalWidth,
-                                     self.collaboratorsView.frame.origin.y, originalWidth,
-                                     self.collaboratorsView.frame.height)
+            let newRect = CGRect(x: self.collaboratorsView.frame.origin.x + originalWidth,
+                                     y: self.collaboratorsView.frame.origin.y, width: originalWidth,
+                                     height: self.collaboratorsView.frame.height)
             
-            self.creatorImageView.transform = CGAffineTransformMakeTranslation(originalX - originalWidth, 0)
+            self.creatorImageView.transform = CGAffineTransform(translationX: originalX - originalWidth, y: 0)
         
             let collabProfPic = UIImageView(frame: newRect)
             collabProfPic.image = UIImage(named: "face")
-            self.collaboratorsView.backgroundColor = UIColor.clearColor()
+            self.collaboratorsView.backgroundColor = UIColor.clear
             self.setupProfilePicture(self.creatorImageView)
             self.setupProfilePicture(collabProfPic)
             
@@ -583,58 +583,58 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             
         }else{
             self.setupProfilePicture(self.creatorImageView)
-            self.collaboratorsView.backgroundColor = UIColor.clearColor()
+            self.collaboratorsView.backgroundColor = UIColor.clear
         }
     }
     
     // MARK: - Animation Functions
-    func fadeInImageView(imageView: UIImageView, imageToAdd: UIImage, duration: Double = 1,  endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1){
+    func fadeInImageView(_ imageView: UIImageView, imageToAdd: UIImage, duration: Double = 1,  endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1){
         
         imageView.alpha = 0
         imageView.image = imageToAdd
-        imageView.transform = CGAffineTransformMakeScale(beginScale, beginScale)
+        imageView.transform = CGAffineTransform(scaleX: beginScale, y: beginScale)
         imageView.clipsToBounds = true
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animate(withDuration: duration, animations: {
             imageView.alpha = endAlpha
-            imageView.transform = CGAffineTransformMakeScale(endScale, endScale)
+            imageView.transform = CGAffineTransform(scaleX: endScale, y: endScale)
         })
     }
     
-    func fadeInView(view: UIView, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
+    func fadeInView(_ view: UIView, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
         view.alpha = 0
         view.layer.frame.origin.y += beginOffsetY
-        view.transform = CGAffineTransformMakeScale(beginScale, beginScale)
+        view.transform = CGAffineTransform(scaleX: beginScale, y: beginScale)
         view.clipsToBounds = true
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animate(withDuration: duration, animations: {
             view.layer.frame.origin.y -= endOffsetY
             view.alpha = endAlpha
-            view.transform = CGAffineTransformMakeScale(endScale, endScale)
+            view.transform = CGAffineTransform(scaleX: endScale, y: endScale)
         })
     }
     
-    func fadeInLabel(label: UILabel, textToSet: String, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
+    func fadeInLabel(_ label: UILabel, textToSet: String, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
         label.alpha = 0
         label.layer.frame.origin.y += beginOffsetY
         label.text = textToSet
-        label.transform = CGAffineTransformMakeScale(beginScale, beginScale)
+        label.transform = CGAffineTransform(scaleX: beginScale, y: beginScale)
         label.clipsToBounds = true
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animate(withDuration: duration, animations: {
             label.layer.frame.origin.y -= endOffsetY
             label.alpha = endAlpha
-            label.transform = CGAffineTransformMakeScale(endScale, endScale)
+            label.transform = CGAffineTransform(scaleX: endScale, y: endScale)
         })
     }
     
-    func fadeInTextField(textField: UITextField, textToSet: String, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
+    func fadeInTextField(_ textField: UITextField, textToSet: String, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
         textField.alpha = 0
         textField.layer.frame.origin.y += beginOffsetY
         textField.text = textToSet
-        textField.transform = CGAffineTransformMakeScale(beginScale, beginScale)
+        textField.transform = CGAffineTransform(scaleX: beginScale, y: beginScale)
         textField.clipsToBounds = true
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animate(withDuration: duration, animations: {
             textField.layer.frame.origin.y -= endOffsetY
             textField.alpha = endAlpha
-            textField.transform = CGAffineTransformMakeScale(endScale, endScale)
+            textField.transform = CGAffineTransform(scaleX: endScale, y: endScale)
         })
     }
 
@@ -642,17 +642,17 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func configureRecentlyViewed() {
         let viewedlist: NSMutableArray = []
         let recentlyviewed = PFUser.query()!
-        recentlyviewed.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
-        recentlyviewed.findObjectsInBackgroundWithBlock {(objects1: [PFObject]?, error: NSError?) -> Void in
+        recentlyviewed.whereKey("username", equalTo: (PFUser.current()?.username)!)
+        recentlyviewed.findObjectsInBackground {(objects1: [PFObject]?, error: NSError?) -> Void in
             let recent = objects1![0]
             if let recentarray = recent["recentlyViewed"] as? [String]
             {
-                viewedlist.addObjectsFromArray(recentarray)
+                viewedlist.addObjects(from: recentarray)
             }
-            viewedlist.insertObject(self.object.objectId!, atIndex: 0)
+            viewedlist.insert(self.object.objectId!, at: 0)
             
             recent["recentlyViewed"] = viewedlist
-            recent.saveInBackgroundWithBlock({ (success, error) in
+            recent.saveInBackground(block: { (success, error) in
                 if (error == nil)
                 {
                     print("Success")
@@ -662,7 +662,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
-    private func activateEditMode() {
+    fileprivate func activateEditMode() {
 //        
 //        // Make Title Text Editable
 //        self.titleTextField.enable()
@@ -700,14 +700,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     func deactivateEditMode() {
         
         // Make Title Text Editable
-        self.playlistInfoName.userInteractionEnabled = false
+        self.playlistInfoName.isUserInteractionEnabled = false
         self.playlistInfoName.delegate = nil
         
         // Hide Change BG Image Button
-        self.changePlaylistImageButton.hidden = true
+        self.changePlaylistImageButton.isHidden = true
         
         // Restore More Icon to Right Side of Nav Bar
-        let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "ssMenu:")
+        let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .plain, target: self, action: "ssMenu:")
         navigationItem.rightBarButtonItem = rightButton
         
         // Restore Back Button
@@ -718,13 +718,13 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.setEditing(false, animated: true)
         
         // Hide Add Place Button
-        self.addPlaceImageButton.hidden = true
+        self.addPlaceImageButton.isHidden = true
         // Change to View Mode
-        self.mode = .View
+        self.mode = .view
     }
     
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         textField.resignFirstResponder()
         return true
@@ -732,7 +732,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     // MARK: - Reload Data After Pass
     
-    func convertParseArrayToBusinessArray(parseArray: [NSDictionary], completion: (resultArray: [Business])->Void){
+    func convertParseArrayToBusinessArray(_ parseArray: [NSDictionary], completion: (_ resultArray: [Business])->Void){
         var businessArray: [Business] = []
         for dict in parseArray{
             var business = Business()
@@ -748,12 +748,12 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
             business.gPlaceID = dict["id"] as! String
             businessArray.append(business)
         }
-        completion(resultArray: businessArray)
+        completion(businessArray)
     }
     
     // MARK: - Scroll View
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         fadePlaylistBG()
         updateHeaderView()
         handleNavigationBarOnScroll()
@@ -789,10 +789,10 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         //let showWhenScrollUpAlpha = (-playlistTableView.contentOffset.y / playlistTableHeaderHeight)
         
         self.navigationController?.navigationBar.titleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(showWhenScrollDownAlpha) ]
+            NSForegroundColorAttributeName: UIColor.white.withAlphaComponent(showWhenScrollDownAlpha) ]
         self.navigationItem.title = playlist_name
         
-        self.navigationController?.navigationBar.backgroundColor = appDefaults.color.colorWithAlphaComponent((showWhenScrollDownAlpha))
+        self.navigationController?.navigationBar.backgroundColor = appDefaults.color.withAlphaComponent((showWhenScrollDownAlpha))
         
         // Handle Status Bar
         self.statusBarView.alpha = showWhenScrollDownAlpha
@@ -804,7 +804,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     // MARK: - Setup Views
     
-    private var playlistTableHeaderHeight: CGFloat = 350.0
+    fileprivate var playlistTableHeaderHeight: CGFloat = 350.0
     
     func configurePlaylistInfoView(){
         self.playlistInfoName.font = UIFont(name: "Montserrat-Regular", size: 32.0)
@@ -829,42 +829,42 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         control.addTarget(self, action: "switchContentType", forControlEvents: .ValueChanged)
         control.alpha = 0
         self.segmentedBarView.addSubview(control)
-        UIView.animateWithDuration(0.3) {
+        UIView.animate(withDuration: 0.3, animations: {
             control.alpha = 1
-        self.segmentedBarView.bringSubviewToFront(self.indicatorTabView)
-        }
+        self.segmentedBarView.bringSubview(toFront: self.indicatorTabView)
+        }) 
     }
     
     
     func switchContentType(){
         switch self.contentToDisplay{
-        case .Places:
-            self.contentToDisplay = .Comments
+        case .places:
+            self.contentToDisplay = .comments
             
             let tX = self.view.frame.width / 2
             
-            UIView.animateWithDuration(0.2, animations: {
-                self.indicatorTabView.transform = CGAffineTransformMakeTranslation(tX, 0)
+            UIView.animate(withDuration: 0.2, animations: {
+                self.indicatorTabView.transform = CGAffineTransform(translationX: tX, y: 0)
             })
             
             
             self.playlistTableView.allowsSelection = false
-            self.playlistTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+            self.playlistTableView.reloadSections(IndexSet(integer: 0), with: .fade)
             
-            self.addPlaceImageButton.hidden = false
+            self.addPlaceImageButton.isHidden = false
 
-        case .Comments:
+        case .comments:
             
-            self.contentToDisplay = .Places
+            self.contentToDisplay = .places
             
             let tX = self.view.frame.width / 2
-            UIView.animateWithDuration(0.2, animations: {
-                self.indicatorTabView.transform = CGAffineTransformMakeTranslation(0, 0)
+            UIView.animate(withDuration: 0.2, animations: {
+                self.indicatorTabView.transform = CGAffineTransform(translationX: 0, y: 0)
             })
             
             self.playlistTableView.allowsSelection = true
-            self.playlistTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
-            self.addPlaceImageButton.hidden = true
+            self.playlistTableView.reloadSections(IndexSet(integer: 0), with: .fade)
+            self.addPlaceImageButton.isHidden = true
 
         }
     }
@@ -880,7 +880,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }else if playlistTableView.contentOffset.y > -playlistTableHeaderHeight{
             //print("Scrolled below offset")
             self.navigationItem.title = playlist_name
-            self.navigationItem.titleView?.tintColor = UIColor.whiteColor()
+            self.navigationItem.titleView?.tintColor = UIColor.white
             
             //            headerRect.origin.y = playlistTableView.contentOffset.y
             //            headerRect.size.height = -playlistTableView.contentOffset.y//playlistTableHeaderHeight//playlistTableView.contentOffset.y
@@ -901,104 +901,104 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
 //        shadowView.tag = 100
 //    }
 //    
-    func setupProfilePicture(imageView: UIImageView){
+    func setupProfilePicture(_ imageView: UIImageView){
         self.roundingUIView(self.creatorImageView, cornerRadiusParam: 15)
         //self.roundingUIView(self.collaboratorsView, cornerRadiusParam: 15)
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 2.0
-        imageView.layer.borderColor = UIColor.whiteColor().CGColor
+        imageView.layer.borderColor = UIColor.white.cgColor
         //self.collaboratorsView.layer.borderColor = UIColor.whiteColor().CGColor
     }
     
-    private func roundingUIView(let aView: UIView!, let cornerRadiusParam: CGFloat!) {
+    fileprivate func roundingUIView(_ aView: UIView!, cornerRadiusParam: CGFloat!) {
         aView.clipsToBounds = true
         aView.layer.cornerRadius = cornerRadiusParam
     }
     
     func addGestureToCollaboratorView(){
         let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:Selector("tappedCollaborators"))
-        self.collaboratorsView.userInteractionEnabled = true
+        self.collaboratorsView.isUserInteractionEnabled = true
         self.collaboratorsView.addGestureRecognizer(tapGestureRecognizer)
     }
     
     // MARK: - Table View Functions
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch contentToDisplay {
-        case .Places:
+        case .places:
             return playlistArray.count
             
-        case .Comments:
+        case .comments:
             return commentsArray.count
         }
     }
     
     
-    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        if self.mode == .Edit{
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        if self.mode == .edit{
             return true
         }else{
             return false
         }
     }
     
-    func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-        var itemToMove = playlistArray[fromIndexPath.row]
-        var placeItemToMove = placeArray[fromIndexPath.row]
-        var idOfItemToMove = placeIDs[fromIndexPath.row]
+    func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to toIndexPath: IndexPath) {
+        let itemToMove = playlistArray[(fromIndexPath as NSIndexPath).row]
+        let placeItemToMove = placeArray[(fromIndexPath as NSIndexPath).row]
+        let idOfItemToMove = placeIDs[(fromIndexPath as NSIndexPath).row]
         
-        playlistArray.removeAtIndex(fromIndexPath.row)
-        placeArray.removeAtIndex(fromIndexPath.row)
-        placeIDs.removeAtIndex(fromIndexPath.row)
+        playlistArray.remove(at: (fromIndexPath as NSIndexPath).row)
+        placeArray.remove(at: (fromIndexPath as NSIndexPath).row)
+        placeIDs.remove(at: (fromIndexPath as NSIndexPath).row)
         
-        playlistArray.insert(itemToMove, atIndex: toIndexPath.row)
-        placeArray.insert(placeItemToMove, atIndex: toIndexPath.row)
-        placeIDs.insert(idOfItemToMove, atIndex: toIndexPath.row)
+        playlistArray.insert(itemToMove, at: (toIndexPath as NSIndexPath).row)
+        placeArray.insert(placeItemToMove, at: (toIndexPath as NSIndexPath).row)
+        placeIDs.insert(idOfItemToMove, at: (toIndexPath as NSIndexPath).row)
     }
     
-    func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
             return true
     }
 
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-            return .Delete
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+            return .delete
     }
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete{
-            playlistArray.removeAtIndex(indexPath.row)
-            placeArray.removeAtIndex(indexPath.row)
-            placeIDs.removeAtIndex(indexPath.row)
-            self.playlistTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            playlistArray.remove(at: (indexPath as NSIndexPath).row)
+            placeArray.remove(at: (indexPath as NSIndexPath).row)
+            placeIDs.remove(at: (indexPath as NSIndexPath).row)
+            self.playlistTableView.deleteRows(at: [indexPath], with: .fade)
             self.playlistTableView.reloadData()
         }
         
     
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // IF SEGMENTED IS ON PLACES
-        if self.contentToDisplay == .Places{
-            let businessCell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
+        if self.contentToDisplay == .places{
+            let businessCell = tableView.dequeueReusableCell(withIdentifier: "businessCell", for: indexPath) as! BusinessTableViewCell
             
             businessCell.delegate = self
             configureSwipeButtons(businessCell, mode: self.mode)
             
-            dispatch_async(dispatch_get_main_queue(), {
-                businessCell.configureCellWith(self.playlistArray[indexPath.row], mode: .More) {
+            DispatchQueue.main.async(execute: {
+                businessCell.configureCellWith(self.playlistArray[(indexPath as NSIndexPath).row], mode: .more) {
                     return businessCell
                 }
             })
             return businessCell
             
             // IF SEGMENTED IS ON COMMENTS
-        }else if self.contentToDisplay == .Comments{
-            let reviewCell = tableView.dequeueReusableCellWithIdentifier("reviewCell", forIndexPath: indexPath) as! ReviewTableViewCell
+        }else if self.contentToDisplay == .comments{
+            let reviewCell = tableView.dequeueReusableCell(withIdentifier: "reviewCell", for: indexPath) as! ReviewTableViewCell
             
-            reviewCell.configureCell(self.commentsArray[indexPath.row], ratingHidden: true)
+            reviewCell.configureCell(self.commentsArray[(indexPath as NSIndexPath).row], ratingHidden: true)
             
             return reviewCell
         }else{
@@ -1006,51 +1006,51 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if (self.contentToDisplay == .Comments) {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if (self.contentToDisplay == .comments) {
             return UITableViewAutomaticDimension
         }
         return 110.0
     }
     
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if (self.contentToDisplay == .Comments) {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        if (self.contentToDisplay == .comments) {
             return UITableViewAutomaticDimension
         }
         return 110.0
     }
     
-    func configureSwipeButtons(cell: MGSwipeTableCell, mode: ListMode){
-        if mode == .View{
+    func configureSwipeButtons(_ cell: MGSwipeTableCell, mode: ListMode){
+        if mode == .view{
             let routeButton = MGSwipeButton(title: "ROUTE", icon: UIImage(named: "swipe_route"),backgroundColor: appDefaults.color, padding: 25)
-            routeButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
-            routeButton.centerIconOverText()
-            routeButton.titleLabel?.font = appDefaults.font
+            routeButton?.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
+            routeButton?.centerIconOverText()
+            routeButton?.titleLabel?.font = appDefaults.font
             
             let addButton = MGSwipeButton(title: "ADD", icon: UIImage(named: "swipe_add"),backgroundColor: appDefaults.color, padding: 25)
-            addButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
-            addButton.centerIconOverText()
-            addButton.titleLabel?.font = appDefaults.font
+            addButton?.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
+            addButton?.centerIconOverText()
+            addButton?.titleLabel?.font = appDefaults.font
             
             cell.rightButtons = [addButton]
-            cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
+            cell.rightSwipeSettings.transition = MGSwipeTransition.clipCenter
             cell.rightExpansion.buttonIndex = 0
             cell.rightExpansion.fillOnTrigger = false
             cell.rightExpansion.threshold = 1
             
             cell.leftButtons = [routeButton]
-            cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
+            cell.leftSwipeSettings.transition = MGSwipeTransition.clipCenter
             cell.leftExpansion.buttonIndex = 0
             cell.leftExpansion.fillOnTrigger = true
             cell.leftExpansion.threshold = 1
             
-        }else if mode == .Edit{
+        }else if mode == .edit{
             cell.rightButtons.removeAll()
             cell.leftButtons.removeAll()
-            let deleteButton = MGSwipeButton(title: "Delete",icon: UIImage(named: "location_icon"),backgroundColor: UIColor.redColor(),padding: 25)
-            deleteButton.centerIconOverText()
+            let deleteButton = MGSwipeButton(title: "Delete",icon: UIImage(named: "location_icon"),backgroundColor: UIColor.red,padding: 25)
+            deleteButton?.centerIconOverText()
             cell.leftButtons = [deleteButton]
-            cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
+            cell.leftSwipeSettings.transition = MGSwipeTransition.clipCenter
             cell.leftExpansion.buttonIndex = 0
             cell.leftExpansion.fillOnTrigger = true
             cell.leftExpansion.threshold = 1
@@ -1059,28 +1059,28 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     
     // MGSwipeTableCell Delegate Methods
     
-    func swipeTableCell(cell: MGSwipeTableCell!, canSwipe direction: MGSwipeDirection) -> Bool {
+    func swipeTableCell(_ cell: MGSwipeTableCell!, canSwipe direction: MGSwipeDirection) -> Bool {
         return true
     }
     
-    func swipeTableCell(cell: MGSwipeTableCell!, tappedButtonAtIndex index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
-        let indexPath = playlistTableView.indexPathForCell(cell)
-        self.playlist_swiped = self.placeIDs[(indexPath?.row)!]
-        let business = playlistArray[indexPath!.row]
+    func swipeTableCell(_ cell: MGSwipeTableCell!, tappedButtonAt index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
+        let indexPath = playlistTableView.indexPath(for: cell)
+        self.playlist_swiped = self.placeIDs[((indexPath as NSIndexPath?)?.row)!]
+        let business = playlistArray[(indexPath! as NSIndexPath).row]
         let actions = PlaceActions()
         let pickerController = CZPickerViewController()
-        if self.mode == ListMode.View{
+        if self.mode == ListMode.view{
             if index == 0{
-                if direction == MGSwipeDirection.LeftToRight{
+                if direction == MGSwipeDirection.leftToRight{
                     PlaceActions.openInMaps(business)
-                }else if direction == MGSwipeDirection.RightToLeft{
+                }else if direction == MGSwipeDirection.rightToLeft{
                     let query = PFQuery(className: "Playlists")
-                    query.whereKey("createdBy", equalTo: PFUser.currentUser()!)
-                    query.findObjectsInBackgroundWithBlock({ (object, error) in
+                    query.whereKey("createdBy", equalTo: PFUser.current()!)
+                    query.findObjectsInBackground(block: { (object, error) in
                         if (error == nil) {
                             self.addToOwnPlaylists = object!
                             var user_array = [String]()
-                            dispatch_async(dispatch_get_main_queue(), {
+                            DispatchQueue.main.async(execute: {
                                 for playlist in object! {
                                     user_array.append(playlist["playlistName"] as! String)
                                 }
@@ -1095,16 +1095,16 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 
             }
         }
-        else if self.mode == ListMode.Edit{
-            playlistArray.removeAtIndex(indexPath!.row)
+        else if self.mode == ListMode.edit{
+            playlistArray.remove(at: (indexPath! as NSIndexPath).row)
             self.playlistTableView.reloadData()
         }
         
         return true
     }
     
-    func swipeTableCell(cell: MGSwipeTableCell!, didChangeSwipeState state: MGSwipeState, gestureIsActive: Bool) {
-        if self.mode == .View{
+    func swipeTableCell(_ cell: MGSwipeTableCell!, didChange state: MGSwipeState, gestureIsActive: Bool) {
+        if self.mode == .view{
             let routeButton = cell.leftButtons.first as! MGSwipeButton
             let addButton = cell.rightButtons[0] as! MGSwipeButton
             if cell.swipeState.rawValue == 2{
@@ -1121,23 +1121,23 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        performSegueWithIdentifier("showBusinessDetail", sender: self)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "showBusinessDetail", sender: self)
         
     }
     
     // Override to support conditional editing of the table view.
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
     
-    override func setEditing(editing: Bool, animated: Bool) {
+    override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         self.playlistTableView.setEditing(editing, animated: animated)
     }
     
-    func convertPlacesArrayToDictionary(placesArray: [Business])-> [NSDictionary]{
+    func convertPlacesArrayToDictionary(_ placesArray: [Business])-> [NSDictionary]{
         var placeDictArray = [NSDictionary]()
         for business in placesArray{
             placeDictArray.append(business.getDictionary())
@@ -1149,11 +1149,11 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
        
     }
     
-    func saveComments(comment: NSDictionary) {
+    func saveComments(_ comment: NSDictionary) {
         var current_comment = object["comment"] as! [NSDictionary]
-        current_comment.insert(comment, atIndex: 0)
+        current_comment.insert(comment, at: 0)
         object["comment"] = current_comment
-        object.saveInBackgroundWithBlock { (success, error) in
+        object.saveInBackground { (success, error) in
             if (error == nil) {
                 print("Saved comments")
             }
@@ -1161,7 +1161,7 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     // MARK: - SAVE PLAYLIST
-    func savePlaylistToParse(sender: UIBarButtonItem)
+    func savePlaylistToParse(_ sender: UIBarButtonItem)
     {
         self.deactivateEditMode()
         
@@ -1225,14 +1225,14 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
         self.playlistTableView.reloadData()
     }
     
-    @IBAction func showProfileView(sender: UIButton) {
-        performSegueWithIdentifier("showProfileView", sender: self)
+    @IBAction func showProfileView(_ sender: UIButton) {
+        performSegue(withIdentifier: "showProfileView", sender: self)
     }
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showBusinessDetail"){
-            let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
+            let upcoming: BusinessDetailViewController = segue.destination as! BusinessDetailViewController
             
-            let index = playlistTableView.indexPathForSelectedRow!.row
+            let index = (playlistTableView.indexPathForSelectedRow! as NSIndexPath).row
             print(index)
             
             // IF NO NEW PLACE IS ADDED
@@ -1247,22 +1247,22 @@ class SinglePlaylistViewController: UIViewController, UITableViewDelegate, UITab
                 upcoming.index = index
             }
             
-            self.playlistTableView.deselectRowAtIndexPath(playlistTableView.indexPathForSelectedRow!, animated: true)
+            self.playlistTableView.deselectRow(at: playlistTableView.indexPathForSelectedRow!, animated: true)
         }
         else if (segue.identifier == "showProfileView") {
-            let upcoming = segue.destinationViewController as! ProfileCollectionViewController
+            let upcoming = segue.destination as! ProfileCollectionViewController
             upcoming.user = object["createdBy"] as! PFUser
         }else if (segue.identifier == "randomPlace") {
-            let upcoming = segue.destinationViewController as! RandomPlaceController
+            let upcoming = segue.destination as! RandomPlaceController
             upcoming.businessArray = self.playlistArray
         }else if (segue.identifier == "tapImageButton"){
-            let nav = segue.destinationViewController as! UINavigationController
+            let nav = segue.destination as! UINavigationController
             let upcoming = nav.childViewControllers[0] as! SearchBusinessViewController
-            upcoming.currentView = .AddPlace
+            upcoming.currentView = .addPlace
             upcoming.searchTextField = upcoming.addPlaceSearchTextField
         }
         else if (segue.identifier == "addComment") {
-            dim(.In, alpha: dimLevel, speed: dimSpeed)
+            dim(.in, alpha: dimLevel, speed: dimSpeed)
         }
     }
 }

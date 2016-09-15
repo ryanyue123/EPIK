@@ -12,7 +12,7 @@ import CZPicker
 
 protocol ModalViewControllerDelegate
 {
-    func sendValue(var value: AnyObject)
+    func sendValue(_ value: AnyObject)
 }
 
 
@@ -43,42 +43,42 @@ class CZPickerViewController: UIViewController {
     }
     
 
-    func showWithFooter(sender: AnyObject) {
+    func showWithFooter(_ sender: AnyObject) {
         let picker = CZPickerView(headerTitle: headerTitle, cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
-        picker.headerBackgroundColor = appDefaults.color
-        picker.confirmButtonBackgroundColor = appDefaults.color
-        picker.tapBackgroundToDismiss = true
-        picker.delegate = self
-        picker.dataSource = self
-        picker.needFooterView = true
-        picker.show()
+        picker?.headerBackgroundColor = appDefaults.color
+        picker?.confirmButtonBackgroundColor = appDefaults.color
+        picker?.tapBackgroundToDismiss = true
+        picker?.delegate = self
+        picker?.dataSource = self
+        picker?.needFooterView = true
+        picker?.show()
     }
     
-    @IBAction func showWithoutFooter(sender: AnyObject) {
+    @IBAction func showWithoutFooter(_ sender: AnyObject) {
         let picker = CZPickerView(headerTitle: headerTitle, cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
-        picker.headerBackgroundColor = appDefaults.color
-        picker.confirmButtonBackgroundColor = appDefaults.color
-        picker.delegate = self
-        picker.dataSource = self
-        picker.needFooterView = false
-        picker.show()
+        picker?.headerBackgroundColor = appDefaults.color
+        picker?.confirmButtonBackgroundColor = appDefaults.color
+        picker?.delegate = self
+        picker?.dataSource = self
+        picker?.needFooterView = false
+        picker?.show()
     }
     
     
-    func showWithMultipleSelections(sender: AnyObject){
+    func showWithMultipleSelections(_ sender: AnyObject){
         let picker = CZPickerView(headerTitle: headerTitle, cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
-        picker.headerBackgroundColor = appDefaults.color
-        picker.confirmButtonBackgroundColor = appDefaults.color
-        picker.delegate = self
-        picker.dataSource = self
-        picker.needFooterView = true
-        picker.allowMultipleSelection = true
-        picker.show()
+        picker?.headerBackgroundColor = appDefaults.color
+        picker?.confirmButtonBackgroundColor = appDefaults.color
+        picker?.delegate = self
+        picker?.dataSource = self
+        picker?.needFooterView = true
+        picker?.allowMultipleSelection = true
+        picker?.show()
         
         
     }
     
-    @IBAction func showWithImages(sender: AnyObject) {
+    @IBAction func showWithImages(_ sender: AnyObject) {
         pickerWithImage = CZPickerView(headerTitle: headerTitle, cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
         pickerWithImage!.headerBackgroundColor = appDefaults.color
         pickerWithImage!.confirmButtonBackgroundColor = appDefaults.color
@@ -91,32 +91,32 @@ class CZPickerViewController: UIViewController {
 }
 
 extension CZPickerViewController: CZPickerViewDelegate, CZPickerViewDataSource {
-    func czpickerView(pickerView: CZPickerView!, imageForRow row: Int) -> UIImage! {
+    func czpickerView(_ pickerView: CZPickerView!, imageForRow row: Int) -> UIImage! {
         if pickerView == pickerWithImage {
             return fruitImages[row]
         }
         return nil
     }
     
-    func numberOfRowsInPickerView(pickerView: CZPickerView!) -> Int {
+    func numberOfRows(in pickerView: CZPickerView!) -> Int {
         return fruits.count
     }
     
-    func czpickerView(pickerView: CZPickerView!, titleForRow row: Int) -> String! {
+    func czpickerView(_ pickerView: CZPickerView!, titleForRow row: Int) -> String! {
         //print(fruits[row])
         return fruits[row] as! String
     }
     
-    func czpickerView(pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int) {
-        delegate.sendValue(fruits[row])
+    func czpickerView(_ pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int) {
+        delegate.sendValue(fruits[row] as AnyObject)
         didSet = true
     }
     
-    func czpickerView(pickerView: CZPickerView!, didConfirmWithItemsAtRows rows: [AnyObject]!) {
+    func czpickerView(_ pickerView: CZPickerView!, didConfirmWithItemsAtRows rows: [AnyObject]!) {
         
         for row in rows {
             if let row = row as? Int {
-                delegate.sendValue(row)
+                delegate.sendValue(row as AnyObject)
             }
         }
     }

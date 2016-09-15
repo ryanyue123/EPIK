@@ -26,17 +26,17 @@ class AddCommentViewController: UIViewController, UITextViewDelegate {
         comment_content.becomeFirstResponder()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
     }
 
     // MARK: - TextField Delegate Functions
     
-    func textViewDidBeginEditing(textView: UITextView) {
-        self.popUpView.transform = CGAffineTransformMakeTranslation(0, -100)
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        self.popUpView.transform = CGAffineTransform(translationX: 0, y: -100)
     }
     
-    func textViewDidEndEditing(textView: UITextView) {
-        self.popUpView.transform = CGAffineTransformMakeTranslation(0, 100)
+    func textViewDidEndEditing(_ textView: UITextView) {
+        self.popUpView.transform = CGAffineTransform(translationX: 0, y: 100)
     }
 
 }

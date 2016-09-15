@@ -1,15 +1,15 @@
 import UIKit
 
-enum Direction { case In, Out }
+enum Direction { case `in`, out }
 
 protocol Dimmable { }
 
 extension Dimmable where Self: UIViewController {
     
-    func dim(direction: Direction, color: UIColor = UIColor.blackColor(), alpha: CGFloat = 0.0, speed: Double = 0.0) {
+    func dim(_ direction: Direction, color: UIColor = UIColor.black, alpha: CGFloat = 0.0, speed: Double = 0.0) {
         
         switch direction {
-        case .In:
+        case .in:
             
             // Create and add a dim view
             let dimView = UIView(frame: view.frame)
@@ -19,16 +19,16 @@ extension Dimmable where Self: UIViewController {
             
             // Deal with Auto Layout
             dimView.translatesAutoresizingMaskIntoConstraints = false
-            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[dimView]|", options: [], metrics: nil, views: ["dimView": dimView]))
-            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[dimView]|", options: [], metrics: nil, views: ["dimView": dimView]))
+            view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[dimView]|", options: [], metrics: nil, views: ["dimView": dimView]))
+            view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[dimView]|", options: [], metrics: nil, views: ["dimView": dimView]))
             
             // Animate alpha (the actual "dimming" effect)
-            UIView.animateWithDuration(speed) { () -> Void in
+            UIView.animate(withDuration: speed, animations: { () -> Void in
                 dimView.alpha = alpha
-            }
+            }) 
             
-        case .Out:
-            UIView.animateWithDuration(speed, animations: { () -> Void in
+        case .out:
+            UIView.animate(withDuration: speed, animations: { () -> Void in
                 self.view.subviews.last?.alpha = alpha ?? 0
                 }, completion: { (complete) -> Void in
                     self.view.subviews.last?.removeFromSuperview()

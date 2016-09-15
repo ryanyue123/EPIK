@@ -30,10 +30,10 @@ class ListCollectionViewCell: UICollectionViewCell {
         //addShadowToCell()
         
         // Round the banner's corners
-        var maskPath: UIBezierPath = UIBezierPath(roundedRect: self.layer.bounds, byRoundingCorners: ([.TopLeft, .TopRight, .BottomLeft, .BottomRight]), cornerRadii: CGSizeMake(5, 5))
-        var maskLayer: CAShapeLayer = CAShapeLayer()
+        let maskPath: UIBezierPath = UIBezierPath(roundedRect: self.layer.bounds, byRoundingCorners: ([.topLeft, .topRight, .bottomLeft, .bottomRight]), cornerRadii: CGSize(width: 5, height: 5))
+        let maskLayer: CAShapeLayer = CAShapeLayer()
         maskLayer.frame = self.layer.bounds
-        maskLayer.path = maskPath.CGPath
+        maskLayer.path = maskPath.cgPath
         self.layer.mask = maskLayer
         
         // Round cell corners
@@ -44,16 +44,16 @@ class ListCollectionViewCell: UICollectionViewCell {
     }
     
     
-    func configureCell(cellobject: PFObject){
+    func configureCell(_ cellobject: PFObject){
         
         self.mainView.addShadow(4, opacity: 0.2, offset: CGSize(width: 0, height: 4), path: true)
         self.listName.text = cellobject["playlistName"] as? String
         let createdByUser = cellobject["createdBy"] as! PFUser
-        createdByUser.fetchIfNeededInBackgroundWithBlock { (object, error) in
+        createdByUser.fetchIfNeededInBackground { (object, error) in
             if (error == nil)
             {
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.creatorName.text = "BY " + (object!["username"]?.uppercaseString)!
+                DispatchQueue.main.async(execute: {
+                    self.creatorName.text = "BY " + ((object!["username"]? as AnyObject).uppercased)!
                 })
             }
         }
@@ -62,14 +62,14 @@ class ListCollectionViewCell: UICollectionViewCell {
             self.followerCount.text = "0"
         }
         else {
-            self.followerCount.text = String(followCount)
+            self.followerCount.text = String(describing: followCount)
         }
         
         if let numPlaces = cellobject["num_places"] as? Int{
             self.numOfPlaces.text = String(numPlaces)
         }
         if let icon = cellobject["custom_bg"] as? PFFile{
-            icon.getDataInBackgroundWithBlock({ (data, error) in
+            icon.getDataInBackground(block: { (data, error) in
                 if error == nil{
                     let image = UIImage(data: data!)
                     self.playlistImage.image = image
@@ -104,16 +104,16 @@ class ListCollectionViewCell: UICollectionViewCell {
         self.layer.masksToBounds = false
         self.layer.shadowOpacity = 0.5
         self.layer.shadowRadius = 30.0
-        self.layer.shadowOffset = CGSizeZero
-        self.layer.shadowColor = UIColor.blackColor().CGColor
+        self.layer.shadowOffset = CGSize.zero
+        self.layer.shadowColor = UIColor.black.cgColor
         //self.layer.shouldRasterize = true
         //self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.contentView.layer.cornerRadius).CGPath
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.contentView.autoresizingMask.insert(.FlexibleHeight)
-        self.contentView.autoresizingMask.insert(.FlexibleWidth)
+        self.contentView.autoresizingMask.insert(.flexibleHeight)
+        self.contentView.autoresizingMask.insert(.flexibleWidth)
     }
     
 }

@@ -26,17 +26,17 @@ class ReviewTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    func configureCell(review: NSDictionary, ratingHidden: Bool = false){
+    func configureCell(_ review: NSDictionary, ratingHidden: Bool = false){
         
         self.roundProf()
         
-        self.contentView.autoresizingMask = [.FlexibleHeight]
+        self.contentView.autoresizingMask = [.flexibleHeight]
         // Set Review Text
         self.reviewTextView.text = review["text"] as? String
         
@@ -60,27 +60,27 @@ class ReviewTableViewCell: UITableViewCell {
         
         // Set Review Author Profile Picture
         if let profilePhotoURL = review["profile_photo_url"] as? String{
-            cache.fetch(URL: NSURL(string: profilePhotoURL)!).onSuccess({ (data) in
+            cache.fetch(URL: URL(string: profilePhotoURL)!).onSuccess({ (data) in
                 self.reviewProfileImage.image = UIImage(data: data)
             })
         }
         
         if let unixTime = review["time"] as? Double{
-            let date = NSDate(timeIntervalSince1970: unixTime)
-            let dateFormatter = NSDateFormatter()
+            let date = Date(timeIntervalSince1970: unixTime)
+            let dateFormatter = DateFormatter()
             //dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
-            dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
-            dateFormatter.timeZone = NSTimeZone()
-            let localDate = dateFormatter.stringFromDate(date)
+            dateFormatter.dateStyle = DateFormatter.Style.medium //Set date style
+            dateFormatter.timeZone = TimeZone()
+            let localDate = dateFormatter.string(from: date)
             self.reviewDate.text = localDate
         }else if let unixTimeString = review["time"] as? String{
             let unixTime = Double(unixTimeString)!
-            let date = NSDate(timeIntervalSince1970: unixTime)
-            let dateFormatter = NSDateFormatter()
+            let date = Date(timeIntervalSince1970: unixTime)
+            let dateFormatter = DateFormatter()
             //dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
-            dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
-            dateFormatter.timeZone = NSTimeZone()
-            let localDate = dateFormatter.stringFromDate(date)
+            dateFormatter.dateStyle = DateFormatter.Style.medium //Set date style
+            dateFormatter.timeZone = TimeZone()
+            let localDate = dateFormatter.string(from: date)
             self.reviewDate.text = localDate
 
         }
@@ -91,10 +91,10 @@ class ReviewTableViewCell: UITableViewCell {
         self.roundingUIView(self.reviewProfileImage, cornerRadiusParam: 15)
         self.roundingUIView(self.reviewProfileImage, cornerRadiusParam: 15)
         self.reviewProfileImage.layer.borderWidth = 1.0
-        self.reviewProfileImage.layer.borderColor = appDefaults.color_darker.CGColor //UIColor.whiteColor().CGColor
+        self.reviewProfileImage.layer.borderColor = appDefaults.color_darker.cgColor //UIColor.whiteColor().CGColor
     }
     
-    private func roundingUIView(let aView: UIView!, let cornerRadiusParam: CGFloat!) {
+    fileprivate func roundingUIView(_ aView: UIView!, cornerRadiusParam: CGFloat!) {
         aView.clipsToBounds = true
         aView.layer.cornerRadius = cornerRadiusParam
     }

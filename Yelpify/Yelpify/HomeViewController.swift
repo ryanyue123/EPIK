@@ -74,15 +74,15 @@ class HomeViewController: UITableViewController, CLLocationManagerDelegate {
         tableView.dg_removePullToRefresh()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.titleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(1) ]
+            NSForegroundColorAttributeName: UIColor.white.withAlphaComponent(1) ]
         //self.tableView.reloadData()
-        self.navigationController?.navigationBar.backgroundColor = appDefaults.color.colorWithAlphaComponent(1)
+        self.navigationController?.navigationBar.backgroundColor = appDefaults.color.withAlphaComponent(1)
         self.addNavBarItems()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         // Configure Views
     }
     
@@ -98,15 +98,15 @@ class HomeViewController: UITableViewController, CLLocationManagerDelegate {
     
     func addNavBarItems(){
         self.title = "EPIK"
-        let leftButton = UIBarButtonItem(image: UIImage(named: "updates_icon"), style: .Plain, target: self, action: nil)
-        let rightButton = UIBarButtonItem(image: UIImage(named: "new_list_icon"), style: .Plain, target: self, action: "showPlaylistAlert:")
+        let leftButton = UIBarButtonItem(image: UIImage(named: "updates_icon"), style: .plain, target: self, action: nil)
+        let rightButton = UIBarButtonItem(image: UIImage(named: "new_list_icon"), style: .plain, target: self, action: #selector(HomeViewController.showPlaylistAlert(_:)))
         navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton
     }
     
     // MARK: - Configure Methods
     
-    private let headerHeight: CGFloat = 150.0
+    fileprivate let headerHeight: CGFloat = 150.0
     
     func configureHeaderView(){
         tableView.tableHeaderView = nil
@@ -133,7 +133,7 @@ class HomeViewController: UITableViewController, CLLocationManagerDelegate {
     }
     
     // MARK: - Scroll View
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.fadeBG()
         self.updateHeaderView()
         
@@ -160,13 +160,13 @@ class HomeViewController: UITableViewController, CLLocationManagerDelegate {
         shadowView.layer.shadowOffset = CGSize(width: 0, height: 3) // your offset
         shadowView.layer.shadowRadius =  10 //your radius
         self.view.addSubview(shadowView)
-        self.view.bringSubviewToFront(shadowView)
+        self.view.bringSubview(toFront: shadowView)
         
         shadowView.tag = 102
     }
     
     
-    func configureStatusBar(navController: UINavigationController){
+    func configureStatusBar(_ navController: UINavigationController){
         let statusBarRect = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 20.0)
         let statusBarView = UIView(frame: statusBarRect)
         statusBarView.backgroundColor = appDefaults.color
@@ -175,7 +175,7 @@ class HomeViewController: UITableViewController, CLLocationManagerDelegate {
     
     func configureNavBar(){
         self.navigationController?.navigationBar.backgroundColor = appDefaults.color
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
     
     //var locationManager = CLLocationManager()
@@ -193,25 +193,25 @@ class HomeViewController: UITableViewController, CLLocationManagerDelegate {
     var inputTextField: UITextField!
     
     
-    func showPlaylistAlert(sender: UIBarButtonItem) {
-        let alertController = UIAlertController(title: "Create new playlist", message: "Enter name of playlist.", preferredStyle: UIAlertControllerStyle.Alert)
+    func showPlaylistAlert(_ sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: "Create new playlist", message: "Enter name of playlist.", preferredStyle: UIAlertControllerStyle.alert)
         
-        alertController.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
+        alertController.addTextField(configurationHandler: {(textField: UITextField!) in
             textField.placeholder = "Playlist Name"
-            textField.secureTextEntry = false
+            textField.isSecureTextEntry = false
             self.inputTextField = textField
         })
-        let deleteAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Destructive, handler: {(alert :UIAlertAction!) in
+        let deleteAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive, handler: {(alert :UIAlertAction!) in
             self.view.endEditing(true)
             print("Delete button tapped")
         })
         alertController.addAction(deleteAction)
-        let okAction = UIAlertAction(title: "Enter", style: UIAlertActionStyle.Default, handler: {(alert :UIAlertAction!) in
+        let okAction = UIAlertAction(title: "Enter", style: UIAlertActionStyle.default, handler: {(alert :UIAlertAction!) in
             if (!(self.inputTextField.text?.isEmpty)!) {
                 let query = PFQuery(className: "Playlists")
-                query.whereKey("createdBy", equalTo: PFUser.currentUser()!)
+                query.whereKey("createdBy", equalTo: PFUser.current()!)
                 query.whereKey("playlistName", equalTo: self.inputTextField.text!)
-                query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
+                query.findObjectsInBackground {(objects: [PFObject]?, error: NSError?) -> Void in
                     if ((error) == nil)
                     {
                         Async.main{
@@ -252,7 +252,7 @@ class HomeViewController: UITableViewController, CLLocationManagerDelegate {
             }
         })
         alertController.addAction(okAction)
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
 
@@ -262,30 +262,30 @@ class HomeViewController: UITableViewController, CLLocationManagerDelegate {
         self.label_array.removeAll()
         let query:PFQuery = PFQuery(className: "Playlists")
         query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: userlatitude, longitude: userlongitude), withinMiles: 1000000000.0)
-        query.orderByAscending("location")
-        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
+        query.order(byAscending: "location")
+        query.findObjectsInBackground {(objects: [PFObject]?, error: NSError?) -> Void in
             if ((error) == nil)
             {
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.playlists_location = objects!
                     self.all_playlists.append(self.playlists_location)
                     self.label_array.append("Trending Lists")
-                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+                    self.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
                     //self.tableView.reloadData()
                     
                     let query2: PFQuery = PFQuery(className: "Playlists")
-                    query2.whereKey("createdBy", equalTo: PFUser.currentUser()!)
-                    query2.orderByDescending("updatedAt")
-                    query2.findObjectsInBackgroundWithBlock {(user: [PFObject]?, error: NSError?) -> Void in
+                    query2.whereKey("createdBy", equalTo: PFUser.current()!)
+                    query2.order(byDescending: "updatedAt")
+                    query2.findObjectsInBackground {(user: [PFObject]?, error: NSError?) -> Void in
                         if ((error) == nil)
                         {
                             self.label_array.append("My Lists")
-                            dispatch_async(dispatch_get_main_queue(), {
+                            DispatchQueue.main.async(execute: {
                                 if (user!.count != 0) {
                                     self.playlists_user = user!
                                     self.all_playlists.append(self.playlists_user)
-                                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+                                    self.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
                                 }
                                 else {
                                     self.all_playlists.append([])
@@ -335,51 +335,51 @@ class HomeViewController: UITableViewController, CLLocationManagerDelegate {
     
     // MARK: - Table view data source
     var storedOffsets = [Int: CGFloat]()
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return self.all_playlists.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! TableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TableViewCell
         cell.reloadCollectionView()
         print(label_array)
-        cell.titleLabel.text = label_array[indexPath.row] 
+        cell.titleLabel.text = label_array[(indexPath as NSIndexPath).row] 
         cell.titleLabel.textColor = appDefaults.color
-        cell.selectionStyle = UITableViewCellSelectionStyle.None
+        cell.selectionStyle = UITableViewCellSelectionStyle.none
         return cell
     }
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let tableViewCell = cell as? TableViewCell else{return}
-        tableViewCell.setCollectionViewDataSourceDelegate(self, forRow: indexPath.row)
-        tableViewCell.collectionViewOffset = storedOffsets[indexPath.row] ?? 0
+        tableViewCell.setCollectionViewDataSourceDelegate(self, forRow: (indexPath as NSIndexPath).row)
+        tableViewCell.collectionViewOffset = storedOffsets[(indexPath as NSIndexPath).row] ?? 0
     }
-    override func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath:NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath:IndexPath) {
         
         guard let tableViewCell = cell as? TableViewCell else { return }
         
-        storedOffsets[indexPath.row] = tableViewCell.collectionViewOffset
+        storedOffsets[(indexPath as NSIndexPath).row] = tableViewCell.collectionViewOffset
     }
 }
 
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate
 {
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return all_playlists[collectionView.tag].count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        collectionView.registerNib(UINib(nibName: "ListCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "listCell")
+        collectionView.register(UINib(nibName: "ListCell", bundle: Bundle.main), forCellWithReuseIdentifier: "listCell")
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("listCell", forIndexPath: indexPath) as! ListCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "listCell", for: indexPath) as! ListCollectionViewCell
         
-        let cellobject = all_playlists[collectionView.tag][indexPath.row] as! PFObject
+        let cellobject = all_playlists[collectionView.tag][(indexPath as NSIndexPath).row] as! PFObject
         
         // CONFIGURE CELL
         //cell.alpha = 0
@@ -396,14 +396,14 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     
-    func configureCell(cell: ListCollectionViewCell, cellobject: PFObject, completion: () -> Void){
+    func configureCell(_ cell: ListCollectionViewCell, cellobject: PFObject, completion: () -> Void){
         cell.listName.text = cellobject["playlistName"] as? String
         let createdByUser = cellobject["createdBy"] as! PFUser
-        createdByUser.fetchIfNeededInBackgroundWithBlock { (object, error) in
+        createdByUser.fetchIfNeededInBackground { (object, error) in
             if (error == nil)
             {
-                dispatch_async(dispatch_get_main_queue(), {
-                    cell.creatorName.text = "BY " + (object!["username"]?.uppercaseString)!
+                DispatchQueue.main.async(execute: {
+                    cell.creatorName.text = "BY " + ((object!["username"]? as AnyObject).uppercased)!
                 })
             }
         }
@@ -412,14 +412,14 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             cell.followerCount.text = "0"
         }
         else {
-            cell.followerCount.text = String(followCount)
+            cell.followerCount.text = String(describing: followCount)
         }
         
         if let numPlaces = cellobject["num_places"] as? Int{
             cell.numOfPlaces.text = String(numPlaces)
         }
         if let icon = cellobject["custom_bg"] as? PFFile{
-            icon.getDataInBackgroundWithBlock({ (data, error) in
+            icon.getDataInBackground(block: { (data, error) in
                 if error == nil{
                     let image = UIImage(data: data!)
                     cell.playlistImage.image = image
@@ -449,14 +449,14 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         completion()
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.row = collectionView.tag
-        self.col = indexPath.row
+        self.col = (indexPath as NSIndexPath).row
 
         // Perform Segue and Pass List Data
-        let listVC = storyboard!.instantiateViewControllerWithIdentifier("singlePlaylistVC") as! ListViewController//SinglePlaylistViewController
+        let listVC = storyboard!.instantiateViewController(withIdentifier: "singlePlaylistVC") as! ListViewController//SinglePlaylistViewController
         let temparray = all_playlists[collectionView.tag]
-        listVC.object = temparray[indexPath.row] as! PFObject
+        listVC.object = temparray[(indexPath as NSIndexPath).row] as! PFObject
         self.navigationController!.pushViewController(listVC, animated: true)
         
 //        let segue = ZoomSegue(identifier: "showList", source: self, destination: listVC)
@@ -465,11 +465,11 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         //self.performSegueWithIdentifier("showPlaylist", sender: self)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if (segue.identifier == "showPlaylist")
         {
-            let upcoming = segue.destinationViewController as? SinglePlaylistViewController
+            let upcoming = segue.destination as? SinglePlaylistViewController
             
             let temparray = all_playlists[row]
             //let navController: UINavigationController = self.navigationController!

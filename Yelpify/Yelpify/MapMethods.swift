@@ -11,15 +11,15 @@ import MapKit
 import UIKit
 
 extension MKMapView{
-    func initializeMap(radiusOfMapArea: Double = 100){
+    func initializeMap(_ radiusOfMapArea: Double = 100){
         
         let zoomRect = rectForAnnotations(self.annotations)
         let padding: CGFloat = 40
-        self.mapType = .Standard
+        self.mapType = .standard
         self.setVisibleMapRect(zoomRect, edgePadding: UIEdgeInsetsMake(padding, padding, padding, padding), animated: true)
     }
     
-    func rectForAnnotations(annotations: [MKAnnotation]) -> MKMapRect {
+    func rectForAnnotations(_ annotations: [MKAnnotation]) -> MKMapRect {
         var zoomRect = MKMapRectNull
         for annotation in annotations {
             let annotationPoint = MKMapPointForCoordinate(annotation.coordinate)
@@ -34,7 +34,7 @@ extension MKMapView{
         return zoomRect
     }
     
-    func addMarker(lat: Double, long: Double){
+    func addMarker(_ lat: Double, long: Double){
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
         self.addAnnotation(annotation)

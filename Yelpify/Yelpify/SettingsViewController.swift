@@ -14,22 +14,22 @@ class SettingsViewController: UITableViewController,ModalViewControllerDelegate 
     
     var itemReceived: String!
     
-    @IBAction func logoutButton(sender: AnyObject) {
-        logoutUser(PFUser.currentUser()!)
+    @IBAction func logoutButton(_ sender: AnyObject) {
+        logoutUser(PFUser.current()!)
         
     }
     
-    func sendValue(value: AnyObject) {
+    func sendValue(_ value: AnyObject) {
         itemReceived = value as! String
         if itemReceived == "Yes"{
             PFUser.logOut()
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let Login = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as! UIViewController
-            self.presentViewController(Login, animated: true, completion: nil)
+            let Login = storyboard.instantiateViewController(withIdentifier: "LoginViewController") 
+            self.present(Login, animated: true, completion: nil)
         }
     }
     
-    func logoutUser(user: PFUser){
+    func logoutUser(_ user: PFUser){
         let pickerController = CZPickerViewController()
         pickerController.fruits = ["Yes","No"]
         pickerController.headerTitle = "Are you sure you want to log out?"
@@ -55,19 +55,19 @@ class SettingsViewController: UITableViewController,ModalViewControllerDelegate 
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return 1
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SettingsTableViewCell", forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsTableViewCell", for: indexPath)
 
         // Configure the cell...
 

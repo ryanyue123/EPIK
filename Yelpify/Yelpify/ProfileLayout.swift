@@ -19,8 +19,8 @@ class ProfileLayout: UICollectionViewFlowLayout {
         setupLayout()
     }
     
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        let layoutAttributes = super.layoutAttributesForElementsInRect(rect)! as [UICollectionViewLayoutAttributes]
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        let layoutAttributes = super.layoutAttributesForElements(in: rect)! as [UICollectionViewLayoutAttributes]
         let offset = collectionView!.contentOffset
         if (offset.y < 0) {
             let deltaY = fabs(offset.y)
@@ -29,7 +29,7 @@ class ProfileLayout: UICollectionViewFlowLayout {
                     if elementKind == UICollectionElementKindSectionHeader {
                         var frame = attributes.frame
                         frame.size.height = max(0, headerReferenceSize.height + deltaY)
-                        frame.origin.y = CGRectGetMinY(frame) - deltaY
+                        frame.origin.y = frame.minY - deltaY
                         attributes.frame = frame
                     }
                 }
@@ -45,8 +45,8 @@ class ProfileLayout: UICollectionViewFlowLayout {
         get {
             let numberOfColumns: CGFloat = 2
             
-            let itemWidth = (CGRectGetWidth(self.collectionView!.frame) - (30 * (numberOfColumns - 1))) / numberOfColumns
-            return CGSizeMake(itemWidth, itemWidth)
+            let itemWidth = (self.collectionView!.frame.width - (30 * (numberOfColumns - 1))) / numberOfColumns
+            return CGSize(width: itemWidth, height: itemWidth)
         }
     }
     
@@ -54,11 +54,11 @@ class ProfileLayout: UICollectionViewFlowLayout {
     {
         minimumInteritemSpacing = 10
         minimumLineSpacing = 10
-        scrollDirection = .Vertical
+        scrollDirection = .vertical
     }
 
     
-    override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true
     }
     

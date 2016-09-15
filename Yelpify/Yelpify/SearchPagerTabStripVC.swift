@@ -24,7 +24,7 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
     
     @IBOutlet weak var searchTextField: UITextField!
     
-    @IBAction func unwindToSearchPagerTapStrip(segue: UIStoryboardSegue) {
+    @IBAction func unwindToSearchPagerTapStrip(_ segue: UIStoryboardSegue) {
         dim(.Out, alpha: dimLevel, speed: dimSpeed)
         if (segue.identifier != nil){
 //            if segue.identifier == "unwindFromLocation"{
@@ -40,7 +40,7 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
         }
     }
     
-    @IBAction func unwindToSearchPagerTapStripWithLocation(segue: UIStoryboardSegue) {
+    @IBAction func unwindToSearchPagerTapStripWithLocation(_ segue: UIStoryboardSegue) {
         if (segue.identifier != nil){
             if segue.identifier == "unwindFromNewLocation"{
                 dim(.Out, alpha: dimLevel, speed: dimSpeed)
@@ -48,7 +48,7 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
                     self.navigationController?.navigationBar.alpha = 1
                 })
                 
-                let locationVC = segue.sourceViewController as! LocationSearchViewController
+                let locationVC = segue.source as! LocationSearchViewController
                 self.chosenCoordinates = locationVC.currentLocationCoordinates
                 self.currentCity = locationVC.currentCity
                 
@@ -68,7 +68,7 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
         }
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, withEvent event: UIEvent?) {
         searchTextField.resignFirstResponder()
         self.view.endEditing(true)
     }
@@ -111,33 +111,33 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
         setupBarButtonItems()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         setupBarButtonItems()
     }
     
     func setupBarButtonItems(){
-        let leftButton =  UIBarButtonItem(image: UIImage(named: "sort_icon"), style: .Plain, target: self, action: "pressedSearchBy:")
-        let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .Plain, target: self, action: "pressedLocation:")
+        let leftButton =  UIBarButtonItem(image: UIImage(named: "sort_icon"), style: .plain, target: self, action: "pressedSearchBy:")
+        let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .plain, target: self, action: "pressedLocation:")
         
         navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton
     }
     
-    private let dimLevel: CGFloat = 0.8
-    private let dimSpeed: Double = 0.5
+    fileprivate let dimLevel: CGFloat = 0.8
+    fileprivate let dimSpeed: Double = 0.5
     
-    func pressedLocation(sender: UIBarButtonItem){
+    func pressedLocation(_ sender: UIBarButtonItem){
         self.navigationController?.navigationBar.alpha = 0.5
         dim(.In, alpha: dimLevel, speed: dimSpeed)
         performSegueWithIdentifier("pickLocation", sender: self)
     }
     
-    func sendValue(value: AnyObject){
+    func sendValue(_ value: AnyObject){
         itemReceived.append(value as! NSObject)
-        print(String(itemReceived))
+        print(String(describing: itemReceived))
     }
     
-    func pressedSearchBy(sender: UIBarButtonItem){
+    func pressedSearchBy(_ sender: UIBarButtonItem){
         // Open Now, By Distance
         let pickerController = CZPickerViewController()
         pickerController.fruits = ["Open Now","Distance"]
@@ -146,9 +146,9 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
         pickerController.delegate = self
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepareForSegue(_ segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "pickLocation" {
-            let navVC = segue.destinationViewController as! UINavigationController
+            let navVC = segue.destination as! UINavigationController
             let destVC = navVC.childViewControllers[0] as! LocationSearchViewController
             
             destVC.currentCity = self.currentCity
@@ -168,17 +168,17 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
 //        searchTextField.resignFirstResponder()
 //    }
     
-    override func viewControllersForPagerTabStrip(pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
+    override func viewControllersForPagerTabStrip(_ pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        let searchPlaylistVC = storyboard.instantiateViewControllerWithIdentifier("searchPlaylistVC") as! SearchPlaylistCollectionViewController
+        let searchPlaylistVC = storyboard.instantiateViewController(withIdentifier: "searchPlaylistVC") as! SearchPlaylistCollectionViewController
         searchPlaylistVC.searchTextField = self.searchTextField
         
-        let searchBusinessVC = storyboard.instantiateViewControllerWithIdentifier("searchBusinessVC") as! SearchBusinessViewController
+        let searchBusinessVC = storyboard.instantiateViewController(withIdentifier: "searchBusinessVC") as! SearchBusinessViewController
         searchBusinessVC.searchTextField = self.searchTextField
         
-        let searchPeopleVC = storyboard.instantiateViewControllerWithIdentifier("searchPeopleVC") as! SearchPeopleTableViewController
+        let searchPeopleVC = storyboard.instantiateViewController(withIdentifier: "searchPeopleVC") as! SearchPeopleTableViewController
         searchPeopleVC.searchTextField = self.searchTextField
         
         let child_1 = searchBusinessVC
@@ -191,7 +191,7 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
         
         var childViewControllers = [child_1, child_2, child_3]
         
-        for (index, _) in childViewControllers.enumerate(){
+        for (index, _) in childViewControllers.enumerated(){
             let nElements = childViewControllers.count - index
             let n = (Int(arc4random()) % nElements) + index
             if n != index{
@@ -200,18 +200,18 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
                 self.view.endEditing(true)
             }
         }
-        let nItems = 1 + (rand() % 8)
+        let nItems = 1 + (arc4random() % 8)
         return Array(childViewControllers.prefix(Int(nItems)))
     }
     
     
     override func reloadPagerTabStripView() {
         isReload = true
-        if rand() % 2 == 0 {
-            pagerBehaviour = .Progressive(skipIntermediateViewControllers: rand() % 2 == 0 , elasticIndicatorLimit: rand() % 2 == 0 )
+        if arc4random() % 2 == 0 {
+            pagerBehaviour = .Progressive(skipIntermediateViewControllers: arc4random() % 2 == 0 , elasticIndicatorLimit: arc4random() % 2 == 0 )
         }
         else {
-            pagerBehaviour = .Common(skipIntermediateViewControllers: rand() % 2 == 0)
+            pagerBehaviour = .Common(skipIntermediateViewControllers: arc4random() % 2 == 0)
         }
         searchTextField.resignFirstResponder()
         self.view.endEditing(true)

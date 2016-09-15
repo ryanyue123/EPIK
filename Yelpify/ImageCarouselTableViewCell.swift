@@ -16,12 +16,12 @@ class ImageCarouselTableViewCell: UITableViewCell, SwiftPhotoGalleryDelegate, Sw
     @IBOutlet weak var imageThree: UIImageView!
     @IBOutlet weak var morePhotosButton: UIButton!
     
-    func setImages(place: GooglePlaceDetail){
+    func setImages(_ place: GooglePlaceDetail){
         
         let gPlacesClient = GooglePlacesAPIClient()
         let imageRefArray = place.photos
         
-        for (index, ref) in imageRefArray.enumerate(){
+        for (index, ref) in (imageRefArray?.enumerated())!{
             if index < 3{
                 gPlacesClient.getImage(ref as! String) { (image) in
                     switch index{
@@ -55,15 +55,15 @@ class ImageCarouselTableViewCell: UITableViewCell, SwiftPhotoGalleryDelegate, Sw
     
     let imageNames = ["face", "temp_profile", "default_restaurant"]
     
-    func numberOfImagesInGallery(gallery: SwiftPhotoGallery) -> Int {
+    func numberOfImagesInGallery(_ gallery: SwiftPhotoGallery) -> Int {
         return imageNames.count
     }
     
-    func imageInGallery(gallery: SwiftPhotoGallery, forIndex: Int) -> UIImage? {
+    func imageInGallery(_ gallery: SwiftPhotoGallery, forIndex: Int) -> UIImage? {
         return UIImage(named: imageNames[forIndex])
     }
     
-    func galleryDidTapToClose(gallery: SwiftPhotoGallery) {
+    func galleryDidTapToClose(_ gallery: SwiftPhotoGallery) {
         // do something cool like:
         //dismissViewControllerAnimated(true, completion: nil)
     }
@@ -74,7 +74,7 @@ class ImageCarouselTableViewCell: UITableViewCell, SwiftPhotoGalleryDelegate, Sw
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

@@ -17,18 +17,18 @@ class ActionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         configureHeaderView()
         applyBackgroundBlurEffect()
-        view.backgroundColor = UIColor.clearColor()
-        view.opaque = false
+        view.backgroundColor = UIColor.clear
+        view.isOpaque = false
     }
     
     func applyBackgroundBlurEffect() {
         // Blur Effect
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = self.view.bounds
         
         // Vibrancy Effect
-        let vibrancyEffect = UIVibrancyEffect(forBlurEffect: blurEffect)
+        let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
         let vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
         vibrancyEffectView.frame = blurEffectView.bounds
         
@@ -41,13 +41,13 @@ class ActionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func configureHeaderView(){
-        var headerRect = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: self.view.frame.size.height * 0.5)
+        let headerRect = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: self.view.frame.size.height * 0.5)
         tableHeaderView.frame = headerRect
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if tableView.contentOffset.y < -100{
-            performSegueWithIdentifier("unwindToSinglePlaylist", sender: self)
+            performSegue(withIdentifier: "unwindToSinglePlaylist", sender: self)
         }
         
     }
@@ -55,17 +55,17 @@ class ActionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     // MARK: - Table View Functions
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("actionCell", forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "actionCell", for: indexPath)
         
         return cell
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 6
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 

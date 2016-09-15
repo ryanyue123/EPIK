@@ -51,11 +51,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 //        }
         // Do any additional setup after loading the view, typically from a nib.
     }
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
 
     }
     
-    func textFieldShouldReturn(textField: UITextField!) -> Bool {   //delegate method
+    func textFieldShouldReturn(_ textField: UITextField!) -> Bool {   //delegate method
         textField.resignFirstResponder()
         if textField == usernameField{
             self.fadeNewImage(self.usernameBG, newImage: UIImage(named: "text_field_white")!)
@@ -65,25 +65,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    @IBAction func usernameFieldDidBeginEditing(sender: AnyObject) {
+    @IBAction func usernameFieldDidBeginEditing(_ sender: AnyObject) {
         self.fadeNewImage(self.usernameBG, newImage: UIImage(named: "text_field_grey")!)
     }
     
-    @IBAction func passwordFieldDidBeginEditing(sender: AnyObject) {
+    @IBAction func passwordFieldDidBeginEditing(_ sender: AnyObject) {
         self.fadeNewImage(self.passwordBG, newImage: UIImage(named: "text_field_grey")!)
     }
     
-    func fadeNewImage(imageView: UIImageView, newImage: UIImage){
-        func fadeInImage(image: UIImageView){
-            UIImageView.animateWithDuration(0.5) {
+    func fadeNewImage(_ imageView: UIImageView, newImage: UIImage){
+        func fadeInImage(_ image: UIImageView){
+            UIImageView.animate(withDuration: 0.5, animations: {
                 image.alpha = 1
-            }
+            }) 
         }
         
-        func fadeOutImage(image: UIImageView){
-            UIImageView.animateWithDuration(0.5) {
+        func fadeOutImage(_ image: UIImageView){
+            UIImageView.animate(withDuration: 0.5, animations: {
                 image.alpha = 0
-            }
+            }) 
         }
         
         fadeOutImage(imageView)
@@ -97,9 +97,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func fetchProfile() {
         print("Profile Fetched!")
         let parameters = ["fields": "email, first_name, last_name, picture.type(large)"]
-        FBSDKGraphRequest(graphPath: "me", parameters: parameters).startWithCompletionHandler{(connection, result, error) -> Void in
+        FBSDKGraphRequest(graphPath: "me", parameters: parameters).start{(connection, result, error) -> Void in
             
-            var results = result as! NSDictionary
+            let results = result as! NSDictionary
             if (error != nil)
             {
                 print(error)
@@ -113,8 +113,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     object["email"] = email
                     print(email)
                 }
-                if let picture = results["picture"] as? NSDictionary, data = picture["data"] as? NSDictionary,
-                    url = data["url"] as? String {
+                if let picture = results["picture"] as? NSDictionary, let data = picture["data"] as? NSDictionary,
+                    let url = data["url"] as? String {
                     object["profpicture"] = url
                     print(url)
                 }
@@ -131,7 +131,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     print(id)
                 }
                 
-                object.signUpInBackgroundWithBlock({ (success, error) in
+                object.signUpInBackground(block: { (success, error) in
                     if (error == nil)
                     {
                         print("user signed up")
@@ -139,12 +139,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 })
 
             }
-            self.performSegueWithIdentifier("loginSuccessSegue", sender: self)
+            self.performSegue(withIdentifier: "loginSuccessSegue", sender: self)
             
         }
     }
     
-    @IBAction func loginAction(sender: UIButton) {
+    @IBAction func loginAction(_ sender: UIButton) {
         let username = self.usernameField.text!
         let password = self.passwordField.text!
         
@@ -153,13 +153,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             print("hello")
             
-            PFUser.logInWithUsernameInBackground(username, password: password, block: { (user, error) in
+            PFUser.logInWithUsername(inBackground: username, password: password, block: { (user, error) in
                 if (error == nil)
                 {
                     if (user != nil)
                     {
                         print("success")
-                        self.performSegueWithIdentifier("loginSuccessSegue", sender: self)
+                        self.performSegue(withIdentifier: "loginSuccessSegue", sender: self)
                     }
                     else if (user == nil){
                         self.AnimationShakeTextField(self.usernameField)
@@ -173,26 +173,26 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     AnimationShakeTextField(passwordField)
         }
     }
-    func AnimationShakeTextField(textField:UITextField){
+    func AnimationShakeTextField(_ textField:UITextField){
         let animation = CABasicAnimation(keyPath: "position")
         animation.duration = 0.07
         animation.repeatCount = 4
         animation.autoreverses = true
-        animation.fromValue = NSValue(CGPoint: CGPointMake(textField.center.x - 5, textField.center.y))
-        animation.toValue = NSValue(CGPoint: CGPointMake(textField.center.x + 5, textField.center.y))
-        textField.layer.addAnimation(animation, forKey: "position")
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: textField.center.x - 5, y: textField.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: textField.center.x + 5, y: textField.center.y))
+        textField.layer.add(animation, forKey: "position")
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         return false
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.Portrait
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.portrait
     }
     
     

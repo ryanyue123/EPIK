@@ -26,7 +26,7 @@ class GooglePlacesAPIClient: NSObject {
         super.init()
     }
     
-    func searchPlacesWithParameters(searchParameters: Dictionary<String, String>, completion: (result: NSData) -> Void){
+    func searchPlacesWithParameters(_ searchParameters: Dictionary<String, String>, completion: @escaping (_ result: Data) -> Void){
         
         Alamofire.request(.GET, buildURLString(searchParameters))
             .responseJSON { response in
@@ -44,7 +44,7 @@ class GooglePlacesAPIClient: NSObject {
         }
     }
     
-    func searchPlaceWithID(id: String, completion: (data: NSData) -> Void){
+    func searchPlaceWithID(_ id: String, completion: @escaping (_ data: Data) -> Void){
         let parameters = ["key": googleAPIKey, "placeid": id]
         
         Alamofire.request(.GET, self.buildDetailedURLString(parameters))
@@ -67,9 +67,9 @@ class GooglePlacesAPIClient: NSObject {
 //
 //    }
     
-    func searchPlaceWithNameAndCoordinates(name: String, coordinates: NSArray, completion: (JSONdata: NSDictionary) -> Void) {
+    func searchPlaceWithNameAndCoordinates(_ name: String, coordinates: NSArray, completion: @escaping (_ JSONdata: NSDictionary) -> Void) {
         
-        let location = String(coordinates[0]) + "," + String(coordinates[1])
+        let location = String(describing: coordinates[0]) + "," + String(describing: coordinates[1])
         let parameters = [
             "key" : googleAPIKey,
             "query": name,
@@ -89,7 +89,7 @@ class GooglePlacesAPIClient: NSObject {
             }
     }
     
-    func getImageFromPhotoReference(photoReference: String, completion: (key: String) -> Void){
+    func getImageFromPhotoReference(_ photoReference: String, completion: @escaping (_ key: String) -> Void){
         
         let photoParameters = [
             "key" : googleAPIKey,
@@ -98,7 +98,7 @@ class GooglePlacesAPIClient: NSObject {
         ]
         
         let URLString = self.buildPlacePhotoURLString(photoParameters)
-        let URL = NSURL(string: URLString)!
+        let URL = Foundation.URL(string: URLString)!
         
         let fetcher = NetworkFetcher<UIImage>(URL: URL)
         cache.fetch(fetcher: fetcher).onSuccess { image in
@@ -109,44 +109,44 @@ class GooglePlacesAPIClient: NSObject {
         }
     }
     
-    func getImage(ref: String, completion: (image: UIImage) -> Void){
+    func getImage(_ ref: String, completion: (_ image: UIImage) -> Void){
         let photoParameters = [ "key" : googleAPIKey, "photoreference" : ref, "maxheight" : "800" ]
-        let URL = NSURL(string: self.buildPlacePhotoURLString(photoParameters))!
+        let URL = Foundation.URL(string: self.buildPlacePhotoURLString(photoParameters))!
         let fetcher = NetworkFetcher<UIImage>(URL: URL)
         cache.fetch(fetcher: fetcher).onSuccess { image in completion( image: image ) }
     }
     
-    private func getDataFromUrl(url: NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
-        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
-            completion(data: data, response: response, error: error)
-            }.resume()
+    fileprivate func getDataFromUrl(_ url: URL, completion: @escaping ((_ data: Data?, _ response: URLResponse?, _ error: NSError? ) -> Void)) {
+        URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
+            completion(data, response, error)
+            }) .resume()
     }
     
-    private func buildURLString(parameters: Dictionary<String, String>) -> String!{
+    fileprivate func buildURLString(_ parameters: Dictionary<String, String>) -> String!{
         var result = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
         // "https://maps.googleapis.com/maps/api/place/textsearch/json?"
         for (key, value) in parameters{
             let addString = key + "=" + value + "&"
-            result += addString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+            result += addString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
         }
         return result
     }
     
     
-    private func buildDetailedURLString(parameters: Dictionary<String, String>) -> String!{
+    fileprivate func buildDetailedURLString(_ parameters: Dictionary<String, String>) -> String!{
         var result = "https://maps.googleapis.com/maps/api/place/details/json?"
         for (key, value) in parameters{
             let addString = key + "=" + value + "&"
-            result += addString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+            result += addString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
         }
         return result
     }
     
-    func buildPlacePhotoURLString(parameters: Dictionary<String, String>) -> String{
+    func buildPlacePhotoURLString(_ parameters: Dictionary<String, String>) -> String{
         var result = "https://maps.googleapis.com/maps/api/place/photo?"
         for (key, value) in parameters{
             let addString = key + "=" + value + "&"
-            result += addString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+            result += addString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
         }
         return result
 

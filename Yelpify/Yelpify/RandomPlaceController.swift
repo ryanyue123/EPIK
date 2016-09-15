@@ -19,7 +19,7 @@ class RandomPlaceController: UIViewController{
     var businessArray: [Business]!
     var googleClient = GooglePlacesAPIClient()
     
-    func getRandomPlace(playlist: [Business])->Business{
+    func getRandomPlace(_ playlist: [Business])->Business{
         let num = Int32(arc4random_uniform(UInt32(playlist.count)))
         let randomPlace = playlist[Int(num)]
         return randomPlace
@@ -27,12 +27,12 @@ class RandomPlaceController: UIViewController{
     
     func applyBackgroundBlurEffect() {
         // Blur Effect
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = self.view.bounds
         
         // Vibrancy Effect
-        let vibrancyEffect = UIVibrancyEffect(forBlurEffect: blurEffect)
+        let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
         let vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
         vibrancyEffectView.frame = blurEffectView.bounds
         

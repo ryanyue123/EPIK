@@ -4,9 +4,9 @@ import GooglePlaces
 import Async
 
 enum SearchType {
-    case City
-    case Address
-    case Place
+    case city
+    case address
+    case place
 }
 
 class LocationSearchViewController: UIViewController, UITableViewDelegate, UITextFieldDelegate{
@@ -21,11 +21,11 @@ class LocationSearchViewController: UIViewController, UITableViewDelegate, UITex
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     
-    @IBAction func pressedCancel(sender: AnyObject) {
-        performSegueWithIdentifier("unwindToSearchCancel", sender: self)
+    @IBAction func pressedCancel(_ sender: AnyObject) {
+        performSegue(withIdentifier: "unwindToSearchCancel", sender: self)
     }
     
-    @IBAction func pressedSearch(sender: AnyObject) {
+    @IBAction func pressedSearch(_ sender: AnyObject) {
         print("searching")
     }
     
@@ -33,7 +33,7 @@ class LocationSearchViewController: UIViewController, UITableViewDelegate, UITex
     var shouldShowSearchResults = false
     var tableDataSource: GMSAutocompleteTableDataSource?
     
-    var searchType: SearchType = .Address
+    var searchType: SearchType = .address
     
     var currentLocation: String! = "Current Location"
     var currentLocationCoordinates: String! = "-33.0,180.0"
@@ -41,18 +41,18 @@ class LocationSearchViewController: UIViewController, UITableViewDelegate, UITex
     
     var searchQuery: String! = ""
 
-    @IBAction func mainSearchEditingDidChange(sender: AnyObject) {
+    @IBAction func mainSearchEditingDidChange(_ sender: AnyObject) {
         let searchText = mainSearchTextField.text
         
         searchQuery = searchText
         
         print(searchQuery)
         if searchQuery.characters.count > 0{
-            searchType = .City
+            searchType = .city
             do{
                 if let _ =  try Int(searchText![0]){
                     print("is int")
-                    searchType = .Address
+                    searchType = .address
                 }
             }catch{}
         }
@@ -62,7 +62,7 @@ class LocationSearchViewController: UIViewController, UITableViewDelegate, UITex
         resultsTableView.reloadData()
     }
     
-    @IBAction func mainSearchEditingDidEnd(sender: AnyObject) {
+    @IBAction func mainSearchEditingDidEnd(_ sender: AnyObject) {
         //performSegueWithIdentifier("unwindFromNewLocation", sender: self)
     }
     
@@ -84,26 +84,26 @@ class LocationSearchViewController: UIViewController, UITableViewDelegate, UITex
 
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         print(currentLocationCoordinates)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         self.mainSearchTextField.text = searchQuery
         self.mainSearchTextField.becomeFirstResponder()
     }
     
     func configureFilterType(){
         let filter = GMSAutocompleteFilter()
-        filter.type = GMSPlacesAutocompleteTypeFilter.Address
+        filter.type = GMSPlacesAutocompleteTypeFilter.address
         
         switch searchType{
-            case .Address:
-                filter.type = GMSPlacesAutocompleteTypeFilter.Address
-            case .City:
-                filter.type = GMSPlacesAutocompleteTypeFilter.City
+            case .address:
+                filter.type = GMSPlacesAutocompleteTypeFilter.address
+            case .city:
+                filter.type = GMSPlacesAutocompleteTypeFilter.city
             default:
-                filter.type = GMSPlacesAutocompleteTypeFilter.NoFilter
+                filter.type = GMSPlacesAutocompleteTypeFilter.noFilter
         }
 
         tableDataSource?.autocompleteFilter = filter
@@ -131,16 +131,16 @@ class LocationSearchViewController: UIViewController, UITableViewDelegate, UITex
 
     }
     
-    func didUpdateAutocompletePredictionsForTableDataSource(tableDataSource: GMSAutocompleteTableDataSource) {
+    func didUpdateAutocompletePredictions(for tableDataSource: GMSAutocompleteTableDataSource) {
         // Turn the network activity indicator off.
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         // Reload table data.
         resultsTableView.reloadData()
     }
     
-    func didRequestAutocompletePredictionsForTableDataSource(tableDataSource: GMSAutocompleteTableDataSource) {
+    func didRequestAutocompletePredictions(for tableDataSource: GMSAutocompleteTableDataSource) {
         // Turn the network activity indicator on.
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         // Reload table data.
         resultsTableView.reloadData()
     }
@@ -154,13 +154,13 @@ class LocationSearchViewController: UIViewController, UITableViewDelegate, UITex
 }
 
 extension LocationSearchViewController: GMSAutocompleteTableDataSourceDelegate {
-    func tableDataSource(tableDataSource: GMSAutocompleteTableDataSource, didAutocompleteWithPlace place: GMSPlace) {
+    func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didAutocompleteWith place: GMSPlace) {
         
         // Do something with the selected place.
-        if searchType == .Address{
+        if searchType == .address{
             mainSearchTextField.resignFirstResponder()
             mainSearchTextField.text = place.formattedAddress
-        }else if searchType == .Place{
+        }else if searchType == .place{
             mainSearchTextField.resignFirstResponder()
             mainSearchTextField.text = place.name
         }
@@ -178,19 +178,19 @@ extension LocationSearchViewController: GMSAutocompleteTableDataSourceDelegate {
                 break
             }
         }
-        if let _ = self.parentViewController as? SearchPagerTabStrip{
-            performSegueWithIdentifier("unwindFromNewLocation", sender: self)
+        if let _ = self.parent as? SearchPagerTabStrip{
+            performSegue(withIdentifier: "unwindFromNewLocation", sender: self)
         }else{
-            performSegueWithIdentifier("unwindToSearch", sender: self)
+            performSegue(withIdentifier: "unwindToSearch", sender: self)
         }
     }
     
-    func tableDataSource(tableDataSource: GMSAutocompleteTableDataSource, didFailAutocompleteWithError error: NSError) {
+    func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didFailAutocompleteWithError error: NSError) {
         // TODO: Handle the error.
         print("Error: \(error.description)")
     }
     
-    func tableDataSource(tableDataSource: GMSAutocompleteTableDataSource, didSelectPrediction prediction: GMSAutocompletePrediction) -> Bool {
+    func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didSelect prediction: GMSAutocompletePrediction) -> Bool {
         return true
     }
 }

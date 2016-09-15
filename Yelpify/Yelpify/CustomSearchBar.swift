@@ -21,8 +21,8 @@ class CustomSearchBar: UISearchBar {
         preferredFont = font
         preferredTextColor = textColor
         
-        searchBarStyle = UISearchBarStyle.Prominent
-        translucent = false
+        searchBarStyle = UISearchBarStyle.prominent
+        isTranslucent = false
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -31,10 +31,10 @@ class CustomSearchBar: UISearchBar {
     
     func indexOfSearchFieldInSubviews() -> Int! {
         var index: Int!
-        let searchBarView = subviews[0] as! UIView
+        let searchBarView = subviews[0] 
         
-        for var i=0; i<searchBarView.subviews.count; ++i {
-            if searchBarView.subviews[i].isKindOfClass(UITextField) {
+        for i in 0 ..< searchBarView.subviews.count += 1 {
+            if searchBarView.subviews[i].isKind(of: UITextField.self) {
                 index = i
                 break
             }
@@ -44,14 +44,14 @@ class CustomSearchBar: UISearchBar {
     }
     
 
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         
         if let index = indexOfSearchFieldInSubviews() {
             // Access the search field
-            let searchField: UITextField = (subviews[0] as! UIView).subviews[index] as! UITextField
+            let searchField: UITextField = (subviews[0] ).subviews[index] as! UITextField
             
             // Set its frame.
-            searchField.frame = CGRectMake(5.0, 5.0, frame.size.width - 10.0, frame.size.height - 10.0)
+            searchField.frame = CGRect(x: 5.0, y: 5.0, width: frame.size.width - 10.0, height: frame.size.height - 10.0)
             
             // Set the font and text color of the search field.
             searchField.font = preferredFont
@@ -61,21 +61,21 @@ class CustomSearchBar: UISearchBar {
             searchField.backgroundColor = barTintColor
         }
         
-        var startPoint = CGPointMake(0.0, frame.size.height)
-        var endPoint = CGPointMake(frame.size.width, frame.size.height)
-        var path = UIBezierPath()
-        path.moveToPoint(startPoint)
-        path.addLineToPoint(endPoint)
+        let startPoint = CGPoint(x: 0.0, y: frame.size.height)
+        let endPoint = CGPoint(x: frame.size.width, y: frame.size.height)
+        let path = UIBezierPath()
+        path.move(to: startPoint)
+        path.addLine(to: endPoint)
         
-        var shapeLayer = CAShapeLayer()
-        shapeLayer.path = path.CGPath
-        shapeLayer.strokeColor = preferredTextColor.CGColor
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.cgPath
+        shapeLayer.strokeColor = preferredTextColor.cgColor
         shapeLayer.lineWidth = 2.5
         
         layer.addSublayer(shapeLayer)
         
         
-        super.drawRect(rect)
+        super.draw(rect)
     }
 
 }

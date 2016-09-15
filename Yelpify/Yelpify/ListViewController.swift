@@ -18,7 +18,7 @@ import CZPicker
 class ListViewController: UIViewController, Dimmable {
     
     enum ListMode{
-        case View, Edit
+        case view, edit
     }
     
     @IBOutlet var topView: UIView!
@@ -53,17 +53,17 @@ class ListViewController: UIViewController, Dimmable {
     
     let imagePicker = UIImagePickerController()
     
-    var mode: ListMode! = .View
+    var mode: ListMode! = .view
     
-    @IBAction func unwindToSinglePlaylist(segue: UIStoryboardSegue)
+    @IBAction func unwindToSinglePlaylist(_ segue: UIStoryboardSegue)
     {
         print(segue.identifier)
         if(segue.identifier != nil) {
             if(segue.identifier == "unwindToPlaylist") {
-                if let sourceVC = segue.sourceViewController as? SearchBusinessViewController
+                if let sourceVC = segue.source as? SearchBusinessViewController
                 {
-                    playlistArray.appendContentsOf(sourceVC.businessArray)
-                    placeIDs.appendContentsOf(sourceVC.placeIDs)
+                    playlistArray.append(contentsOf: sourceVC.businessArray)
+                    placeIDs.append(contentsOf: sourceVC.placeIDs)
                     
                     // Appends empty GooglePlaceDetail Objects to make list parallel to placeIDs and playlistArray
                     for _ in 0..<(placeIDs.count - placeArray.count){
@@ -82,11 +82,11 @@ class ListViewController: UIViewController, Dimmable {
     }
 
     
-    @IBAction func pressedAddPlacesButton(sender: AnyObject) {
-        performSegueWithIdentifier("tapImageButton", sender: self)
+    @IBAction func pressedAddPlacesButton(_ sender: AnyObject) {
+        performSegue(withIdentifier: "tapImageButton", sender: self)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         self.navigationController?.resetTopBars(0)
     }
     
@@ -109,13 +109,13 @@ class ListViewController: UIViewController, Dimmable {
         self.listTableView.delegate = self
         self.listTableView.dataSource = self
         
-        let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: #selector(self.showActionsMenu(_:)))
+        let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .plain, target: self, action: #selector(self.showActionsMenu(_:)))
         navigationItem.rightBarButtonItem = rightButton
     }
     
 
     func loadData(){
-        func updateBusinessesFromIDs(ids:[String], reloadIndex: Int = 0){
+        func updateBusinessesFromIDs(_ ids:[String], reloadIndex: Int = 0){
             if ids.count > 0{
                 apiClient.performDetailedSearch(ids[0]) { (detailedGPlace) in
                     self.mapView.addMarker(detailedGPlace.latitude, long: detailedGPlace.longitude)
@@ -128,8 +128,8 @@ class ListViewController: UIViewController, Dimmable {
                     }
                     
                     let idsSlice = Array(ids[1..<ids.count])
-                    let index = NSIndexPath(forRow: reloadIndex, inSection: 0)
-                    self.listTableView.reloadRowsAtIndexPaths([index], withRowAnimation: .Fade) // CHANGE
+                    let index = IndexPath(row: reloadIndex, section: 0)
+                    self.listTableView.reloadRows(at: [index], with: .fade) // CHANGE
                     let newIndex = reloadIndex + 1
                     updateBusinessesFromIDs(idsSlice, reloadIndex: newIndex)
                 }
@@ -138,7 +138,7 @@ class ListViewController: UIViewController, Dimmable {
 
         
         // Register Nibs
-        self.listTableView.registerNib(UINib(nibName: "BusinessCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "businessCell")
+        self.listTableView.register(UINib(nibName: "BusinessCell", bundle: Bundle.main), forCellReuseIdentifier: "businessCell")
         
         Async.main{
             let placeIDs = self.object["place_id_list"] as! [String]
@@ -171,7 +171,7 @@ class ListViewController: UIViewController, Dimmable {
         
         // Set BG if custom BG exists in Parse
         if let bg = object["custom_bg"] as? PFFile{
-            bg.getDataInBackgroundWithBlock({ (data, error) in
+            bg.getDataInBackground(block: { (data, error) in
                 if error == nil{
                     let image = UIImage(data: data!)
                     self.bannerImageView.fadeIn(image!, endAlpha: 0.5, beginScale: 1.2)
@@ -196,25 +196,25 @@ class ListViewController: UIViewController, Dimmable {
         //self.changePlaylistImageButton.hidden = false
         
         // Replace More Button With Cancel Button
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(self.deactivateEditMode))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(self.deactivateEditMode))
         
         // Animate and Show Add Place Button
-        self.addPlaceButton.hidden = false
-        UIView.animateWithDuration(0.3,delay: 0.0,options: UIViewAnimationOptions.BeginFromCurrentState,animations: {
-            self.addPlaceButton.transform = CGAffineTransformMakeScale(0.5, 0.5)},
+        self.addPlaceButton.isHidden = false
+        UIView.animate(withDuration: 0.3,delay: 0.0,options: UIViewAnimationOptions.beginFromCurrentState,animations: {
+            self.addPlaceButton.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)},
                                    completion: { finish in
-                                    UIView.animateWithDuration(0.6){self.addPlaceButton.transform = CGAffineTransformIdentity}
+                                    UIView.animate(withDuration: 0.6, animations: {self.addPlaceButton.transform = CGAffineTransform.identity})
         })
         
         // Set Editing to True
         self.setEditing(true, animated: true)
         
         // Set Edit Mode
-        self.mode = .Edit
+        self.mode = .edit
         
         // Replace Back Button with Done
         self.navigationItem.setHidesBackButton(true, animated: true)
-        let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.savePlaylistToParse(_:)))
+        let backButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.savePlaylistToParse(_:)))
         self.navigationItem.leftBarButtonItem = backButton
     }
     
@@ -228,7 +228,7 @@ class ListViewController: UIViewController, Dimmable {
         //self.changePlaylistImageButton.hidden = true
         
         // Restore More Icon to Right Side of Nav Bar
-        let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .Plain, target: self, action: "showActionsMenu:")
+        let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .plain, target: self, action: #selector(ListViewController.showActionsMenu(_:)))
         navigationItem.rightBarButtonItem = rightButton
         
         // Restore Back Button
@@ -239,18 +239,18 @@ class ListViewController: UIViewController, Dimmable {
         self.setEditing(false, animated: true)
         
         // Hide Add Place Button
-        self.addPlaceButton.hidden = true
+        self.addPlaceButton.isHidden = true
         // Change to View Mode
-        self.mode = .View
+        self.mode = .view
     }
 
     
     
     // MARK: - SAVE PLAYLIST
-    func savePlaylistToParse(sender: UIBarButtonItem)
+    func savePlaylistToParse(_ sender: UIBarButtonItem)
     {
         
-        func getAveragePrice(completion:(avg: Int) -> Void){
+        func getAveragePrice(_ completion:(_ avg: Int) -> Void){
             var total = 0.0
             var numOfPlaces = 0.0
             for place in self.placeArray{
@@ -260,9 +260,9 @@ class ListViewController: UIViewController, Dimmable {
                 }
             }
             if numOfPlaces > 0{
-                completion(avg: Int(round(total/numOfPlaces)))
+                completion(Int(round(total/numOfPlaces)))
             }else{
-                completion(avg: -1)
+                completion(-1)
             }
         }
 
@@ -339,14 +339,14 @@ class ListViewController: UIViewController, Dimmable {
     
     var originalFrame: CGRect!
     
-    func handleTapGR(recognizer: UITapGestureRecognizer){
+    func handleTapGR(_ recognizer: UITapGestureRecognizer){
         if self.bottomView.y != (self.view.frame.height * 7/10){
     
         }
     }
     
-    func handlePanGR(recognizer: UIPanGestureRecognizer){
-        let translation = recognizer.translationInView(self.view)
+    func handlePanGR(_ recognizer: UIPanGestureRecognizer){
+        let translation = recognizer.translation(in: self.view)
         
         let viewTranslation = originalFrame.origin.y + translation.y
         
@@ -354,9 +354,9 @@ class ListViewController: UIViewController, Dimmable {
             self.bottomView.y = originalFrame.origin.y + translation.y
         }
         
-        if recognizer.state == .Ended{
+        if recognizer.state == .ended{
             
-            let velocity = recognizer.velocityInView(self.view)
+            let velocity = recognizer.velocity(in: self.view)
             let slideMultiplier = velocity.y / 200
             
             let slideFactor: CGFloat = 4 //Increase for more of a slide
@@ -373,13 +373,13 @@ class ListViewController: UIViewController, Dimmable {
             }
             
             if finalY > self.view.frame.height * 1/5 {
-                self.listTableView.scrollEnabled = false
+                self.listTableView.isScrollEnabled = false
             }else{
-                self.listTableView.scrollEnabled = true
+                self.listTableView.isScrollEnabled = true
             }
             
             
-            UIView.animateWithDuration(Double(slideFactor/10), delay: 0, usingSpringWithDamping: 3, initialSpringVelocity: 4, options: .CurveEaseOut, animations: {
+            UIView.animate(withDuration: Double(slideFactor/10), delay: 0, usingSpringWithDamping: 3, initialSpringVelocity: 4, options: .curveEaseOut, animations: {
                 recognizer.view!.y = finalY
                 }, completion: { (_) in
                     self.originalFrame = self.bottomView.frame
@@ -392,54 +392,54 @@ class ListViewController: UIViewController, Dimmable {
         //print("velocity", velocity, "magnitude", magnitude)
     }
     
-    func handleTouchRemoved(view: UIView){
+    func handleTouchRemoved(_ view: UIView){
         originalFrame = self.bottomView.frame
     }
     
-    func configureSwipeButtons(cell: MGSwipeTableCell, mode: ListMode){
-        if mode == .View{
-            let routeButton = MGSwipeButton(title: "ROUTE", icon: UIImage(named: "swipe_route")!.imageWithColor(appDefaults.color),backgroundColor: UIColor.clearColor(), padding: 25)
+    func configureSwipeButtons(_ cell: MGSwipeTableCell, mode: ListMode){
+        if mode == .view{
+            let routeButton = MGSwipeButton(title: "ROUTE", icon: UIImage(named: "swipe_route")!.imageWithColor(appDefaults.color),backgroundColor: UIColor.clear, padding: 25)
             routeButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 0))
             routeButton.centerIconOverText()
             routeButton.titleLabel?.font = appDefaults.font
             routeButton.titleLabel?.textColor = appDefaults.color
             
-            let addButton = MGSwipeButton(title: "ADD", icon: UIImage(named: "swipe_add")!.imageWithColor(appDefaults.color) ,backgroundColor: UIColor.clearColor(), padding: 25)
+            let addButton = MGSwipeButton(title: "ADD", icon: UIImage(named: "swipe_add")!.imageWithColor(appDefaults.color) ,backgroundColor: UIColor.clear, padding: 25)
             addButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 15))
             addButton.centerIconOverText()
             addButton.titleLabel?.font = appDefaults.font
             addButton.titleLabel?.textColor = appDefaults.color
             
             cell.rightButtons = [addButton]
-            cell.rightSwipeSettings.transition = MGSwipeTransition.ClipCenter
+            cell.rightSwipeSettings.transition = MGSwipeTransition.clipCenter
             cell.rightExpansion.buttonIndex = 0
             cell.rightExpansion.fillOnTrigger = false
             cell.rightExpansion.threshold = 1
             
             cell.leftButtons = [routeButton]
-            cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
+            cell.leftSwipeSettings.transition = MGSwipeTransition.clipCenter
             cell.leftExpansion.buttonIndex = 0
             cell.leftExpansion.fillOnTrigger = true
             cell.leftExpansion.threshold = 1
             
-        }else if mode == .Edit{
+        }else if mode == .edit{
             cell.rightButtons.removeAll()
             cell.leftButtons.removeAll()
-            let deleteButton = MGSwipeButton(title: "Delete",icon: UIImage(named: "location_icon"),backgroundColor: UIColor.redColor(),padding: 25)
-            deleteButton.centerIconOverText()
+            let deleteButton = MGSwipeButton(title: "Delete",icon: UIImage(named: "location_icon"),backgroundColor: UIColor.red,padding: 25)
+            deleteButton?.centerIconOverText()
             cell.leftButtons = [deleteButton]
-            cell.leftSwipeSettings.transition = MGSwipeTransition.ClipCenter
+            cell.leftSwipeSettings.transition = MGSwipeTransition.clipCenter
             cell.leftExpansion.buttonIndex = 0
             cell.leftExpansion.fillOnTrigger = true
             cell.leftExpansion.threshold = 1
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showBusinessDetail"){
-            let upcoming: BusinessDetailViewController = segue.destinationViewController as! BusinessDetailViewController
+            let upcoming: BusinessDetailViewController = segue.destination as! BusinessDetailViewController
             
-            let index = listTableView.indexPathForSelectedRow!.row
+            let index = (listTableView.indexPathForSelectedRow! as NSIndexPath).row
             print(index)
             
             // IF NO NEW PLACE IS ADDED
@@ -454,39 +454,39 @@ class ListViewController: UIViewController, Dimmable {
                 upcoming.index = index
             }
             
-            self.listTableView.deselectRowAtIndexPath(listTableView.indexPathForSelectedRow!, animated: true)
+            self.listTableView.deselectRow(at: listTableView.indexPathForSelectedRow!, animated: true)
         }else if (segue.identifier == "tapImageButton"){
-            let nav = segue.destinationViewController as! UINavigationController
+            let nav = segue.destination as! UINavigationController
             let upcoming = nav.childViewControllers[0] as! SearchBusinessViewController
-            upcoming.currentView = .AddPlace
+            upcoming.currentView = .addPlace
             upcoming.searchTextField = upcoming.addPlaceSearchTextField
         }
     }
 
-    func getIDsFromArrayOfBusiness(business: [Business], completion: (result:[String])->Void){
+    func getIDsFromArrayOfBusiness(_ business: [Business], completion: (_ result:[String])->Void){
         var result:[String] = []
         for b in business{
             result.append(b.gPlaceID)
         }
-        completion(result: result)
+        completion(result)
     }
     
-    func sortMethods(businesses: Array<Business>, type: String)->[Business]{
+    func sortMethods(_ businesses: Array<Business>, type: String)->[Business]{
         var sortedBusinesses: Array<Business> = []
         if type == "name"{
-            sortedBusinesses = businesses.sort{$0.businessName < $1.businessName}
+            sortedBusinesses = businesses.sorted{$0.businessName < $1.businessName}
         } else if type == "rating"{
-            sortedBusinesses = businesses.sort{$0.businessRating > $1.businessRating}
+            sortedBusinesses = businesses.sorted{$0.businessRating > $1.businessRating}
         }
         return sortedBusinesses
     }
     
-    func sortGooglePlaces(gPlaces: [GooglePlaceDetail],type:String) -> [GooglePlaceDetail]{
+    func sortGooglePlaces(_ gPlaces: [GooglePlaceDetail],type:String) -> [GooglePlaceDetail]{
         var sortedBusinesses: Array<GooglePlaceDetail> = []
         if type == "name"{
-            sortedBusinesses = gPlaces.sort{$0.name < $1.name}
+            sortedBusinesses = gPlaces.sorted{$0.name < $1.name}
         } else if type == "rating"{
-            sortedBusinesses = gPlaces.sort{$0.rating > $1.rating}
+            sortedBusinesses = gPlaces.sorted{$0.rating > $1.rating}
         }
         return sortedBusinesses
         
@@ -497,27 +497,27 @@ class ListViewController: UIViewController, Dimmable {
 
 extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return playlistArray.count
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 128.5
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let businessCell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessTableViewCell
-        businessCell.selectionStyle = .None
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let businessCell = tableView.dequeueReusableCell(withIdentifier: "businessCell", for: indexPath) as! BusinessTableViewCell
+        businessCell.selectionStyle = .none
         
         //businessCell.delegate = self
-        configureSwipeButtons(businessCell, mode: .View)
+        configureSwipeButtons(businessCell, mode: .view)
         
-        dispatch_async(dispatch_get_main_queue(), {
-            businessCell.configureCellWith(self.playlistArray[indexPath.row], mode: .More) {
+        DispatchQueue.main.async(execute: {
+            businessCell.configureCellWith(self.playlistArray[(indexPath as NSIndexPath).row], mode: .more) {
                 return businessCell
             }
         })
@@ -525,60 +525,60 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
 
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("showBusinessDetail", sender: self)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "showBusinessDetail", sender: self)
     }
     
-    func tableView(tableView: UITableView, didHighlightRowAtIndexPath indexPath: NSIndexPath) {
-        let cell  = tableView.cellForRowAtIndexPath(indexPath) as! BusinessTableViewCell
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let cell  = tableView.cellForRow(at: indexPath) as! BusinessTableViewCell
         cell.mainView.backgroundColor = UIColor.selectedGray()
         cell.businessBackgroundImage.alpha = 0.8
         cell.BusinessRating.backgroundColor = UIColor.selectedGray()
     }
     
-    func tableView(tableView: UITableView, didUnhighlightRowAtIndexPath indexPath: NSIndexPath) {
-        let cell  = tableView.cellForRowAtIndexPath(indexPath) as! BusinessTableViewCell
-        cell.mainView.backgroundColor = UIColor.whiteColor()
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        let cell  = tableView.cellForRow(at: indexPath) as! BusinessTableViewCell
+        cell.mainView.backgroundColor = UIColor.white
         cell.businessBackgroundImage.alpha = 1
         cell.BusinessRating.backgroundColor = UIColor.clearColor()
     }
     
-    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        if self.mode == .Edit{
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        if self.mode == .edit{
             return true
         }else{
             return false
         }
     }
     
-    func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-        let itemToMove = playlistArray[fromIndexPath.row]
-        let placeItemToMove = placeArray[fromIndexPath.row]
-        let idOfItemToMove = placeIDs[fromIndexPath.row]
+    func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to toIndexPath: IndexPath) {
+        let itemToMove = playlistArray[(fromIndexPath as NSIndexPath).row]
+        let placeItemToMove = placeArray[(fromIndexPath as NSIndexPath).row]
+        let idOfItemToMove = placeIDs[(fromIndexPath as NSIndexPath).row]
         
-        playlistArray.removeAtIndex(fromIndexPath.row)
-        placeArray.removeAtIndex(fromIndexPath.row)
-        placeIDs.removeAtIndex(fromIndexPath.row)
+        playlistArray.remove(at: (fromIndexPath as NSIndexPath).row)
+        placeArray.remove(at: (fromIndexPath as NSIndexPath).row)
+        placeIDs.remove(at: (fromIndexPath as NSIndexPath).row)
         
-        playlistArray.insert(itemToMove, atIndex: toIndexPath.row)
-        placeArray.insert(placeItemToMove, atIndex: toIndexPath.row)
-        placeIDs.insert(idOfItemToMove, atIndex: toIndexPath.row)
+        playlistArray.insert(itemToMove, at: (toIndexPath as NSIndexPath).row)
+        placeArray.insert(placeItemToMove, at: (toIndexPath as NSIndexPath).row)
+        placeIDs.insert(idOfItemToMove, at: (toIndexPath as NSIndexPath).row)
     }
     
-    func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return .Delete
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .delete
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete{
-            playlistArray.removeAtIndex(indexPath.row)
-            placeArray.removeAtIndex(indexPath.row)
-            placeIDs.removeAtIndex(indexPath.row)
-            self.listTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            playlistArray.remove(at: (indexPath as NSIndexPath).row)
+            placeArray.remove(at: (indexPath as NSIndexPath).row)
+            placeIDs.remove(at: (indexPath as NSIndexPath).row)
+            self.listTableView.deleteRows(at: [indexPath], with: .fade)
             self.listTableView.reloadData()
         }
         
@@ -588,7 +588,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension ListViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y > 0{
             self.indicatorView.showShadow(0.2)
         }else{
@@ -596,11 +596,11 @@ extension ListViewController: UIScrollViewDelegate {
         }
     }
     
-    func scrollViewDidScrollToTop(scrollView: UIScrollView) {
+    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
         self.indicatorView.hideShadow()
     }
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if scrollView.contentOffset.y < 0{
             self.indicatorView.hideShadow()
         }
@@ -609,26 +609,26 @@ extension ListViewController: UIScrollViewDelegate {
 
 extension ListViewController: MKMapViewDelegate{
     
-    func mapViewDidFinishLoadingMap(mapView: MKMapView) {
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
         print("done finished loading")
     }
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         // Don't want to show a custom image if the annotation is the user's location.
-        guard !annotation.isKindOfClass(MKUserLocation) else {
+        guard !annotation.isKind(of: MKUserLocation.self) else {
             return nil
         }
         
         let annotationIdentifier = "AnnotationIdentifier"
         
         var annotationView: MKAnnotationView?
-        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(annotationIdentifier) {
+        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) {
             annotationView = dequeuedAnnotationView
             annotationView?.annotation = annotation
         }
         else {
             let av = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
-            av.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            av.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             annotationView = av
         }
         
@@ -644,17 +644,17 @@ extension ListViewController: MKMapViewDelegate{
 }
 
 extension ListViewController: UIGestureRecognizerDelegate{
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if gestureRecognizer is UITapGestureRecognizer {
-            let location = touch.locationInView(self.listTableView)
-            return (self.listTableView.indexPathForRowAtPoint(location) == nil)
+            let location = touch.location(in: self.listTableView)
+            return (self.listTableView.indexPathForRow(at: location) == nil)
         }
         return true
     }
 }
 
 extension ListViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         textField.resignFirstResponder()
         return true
@@ -663,11 +663,11 @@ extension ListViewController: UITextFieldDelegate {
 
 extension ListViewController: ModalViewControllerDelegate{
     
-    func sendValue(value: AnyObject){
+    func sendValue(_ value: AnyObject){
         itemReceived.append(value as! NSObject)
         
         for item in itemReceived{
-            if item as! NSObject == "Alphabetical"{
+            if (item as! NSObject) as! String == "Alphabetical"{
                 self.playlistArray = self.sortMethods(self.playlistArray, type: "name")
                 getIDsFromArrayOfBusiness(self.playlistArray, completion: { (result) in
                     self.placeIDs = result
@@ -675,7 +675,7 @@ extension ListViewController: ModalViewControllerDelegate{
                     print("sorting")
                     self.listTableView.reloadData()
                 })
-            }else if item as! NSObject == "Rating"{
+            }else if (item as! NSObject) as! String == "Rating"{
                 self.playlistArray = self.sortMethods(self.playlistArray, type: "rating")
                 getIDsFromArrayOfBusiness(self.playlistArray, completion: { (result) in
                     self.placeIDs = result
@@ -693,7 +693,7 @@ extension ListViewController: ModalViewControllerDelegate{
                 
                 addToOwnPlaylists[index]["num_places"] = playlist.count
                 addToOwnPlaylists[index]["place_id_list"] = playlist
-                addToOwnPlaylists[index].saveInBackgroundWithBlock({ (success, error) in
+                addToOwnPlaylists[index].saveInBackground(block: { (success, error) in
                     if (error == nil) {
                         print("Saved")
                     }
@@ -705,7 +705,7 @@ extension ListViewController: ModalViewControllerDelegate{
         
     }
 
-    func showActionsMenu(sender: AnyObject) {
+    func showActionsMenu(_ sender: AnyObject) {
         let actionController = YoutubeActionController()
         let pickerController = CZPickerViewController()
         //let randomController = RandomPlaceController()
