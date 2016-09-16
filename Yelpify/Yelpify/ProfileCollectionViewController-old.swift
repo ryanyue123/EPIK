@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 import XLActionController
-import BetterSegmentedControl
+//import BetterSegmentedControl
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -290,14 +290,14 @@ class ProfileCollectionViewController_old: UICollectionViewController, UICollect
     @IBAction func showSettings(_ sender: UIBarButtonItem) {
         let actionController = YoutubeActionController()
         
-        actionController.addAction(Action(ActionData(title: "Logout", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
+        actionController.addAction(Action(ActionData(title: "Logout", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .default, handler: { action in
             PFUser.logOut()
             //create unwind segue
             
         }))
-        actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
+        actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .cancel, handler: nil))
         
-        presentViewController(actionController, animated: false, completion: nil)
+        present(actionController, animated: false, completion: nil)
         
     }
     

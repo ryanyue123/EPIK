@@ -51,7 +51,7 @@ class ReviewTableViewCell: UITableViewCell {
                 }
             }
         }else{
-            self.CommentRating.hidden = true
+            self.CommentRating.isHidden = true
         }
         
         if let profilePhoto = review["profile_photo"] as? UIImage{
@@ -60,7 +60,7 @@ class ReviewTableViewCell: UITableViewCell {
         
         // Set Review Author Profile Picture
         if let profilePhotoURL = review["profile_photo_url"] as? String{
-            cache.fetch(URL: URL(string: profilePhotoURL)!).onSuccess({ (data) in
+            cache.fetch(URL: URL(string: profilePhotoURL)! as NSURL).onSuccess(onSuccess: { (data) in
                 self.reviewProfileImage.image = UIImage(data: data)
             })
         }
@@ -70,7 +70,7 @@ class ReviewTableViewCell: UITableViewCell {
             let dateFormatter = DateFormatter()
             //dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
             dateFormatter.dateStyle = DateFormatter.Style.medium //Set date style
-            dateFormatter.timeZone = TimeZone()
+            dateFormatter.timeZone = TimeZone(abbreviation: "PST")
             let localDate = dateFormatter.string(from: date)
             self.reviewDate.text = localDate
         }else if let unixTimeString = review["time"] as? String{
@@ -79,7 +79,7 @@ class ReviewTableViewCell: UITableViewCell {
             let dateFormatter = DateFormatter()
             //dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
             dateFormatter.dateStyle = DateFormatter.Style.medium //Set date style
-            dateFormatter.timeZone = TimeZone()
+            dateFormatter.timeZone = TimeZone(abbreviation: "PST")
             let localDate = dateFormatter.string(from: date)
             self.reviewDate.text = localDate
 

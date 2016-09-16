@@ -131,30 +131,48 @@ class LocationSearchViewController: UIViewController, UITableViewDelegate, UITex
 
     }
     
-    func didUpdateAutocompletePredictions(for tableDataSource: GMSAutocompleteTableDataSource) {
+    func didUpdateAutocompletePredictionsForTableDataSource(tableDataSource: GMSAutocompleteTableDataSource) {
         // Turn the network activity indicator off.
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         // Reload table data.
-        resultsTableView.reloadData()
+        self.resultsTableView.reloadData()
     }
     
-    func didRequestAutocompletePredictions(for tableDataSource: GMSAutocompleteTableDataSource) {
+    func didRequestAutocompletePredictionsForTableDataSource(tableDataSource: GMSAutocompleteTableDataSource) {
         // Turn the network activity indicator on.
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         // Reload table data.
-        resultsTableView.reloadData()
+        self.resultsTableView.reloadData()
     }
     
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if segue.destinationViewController.isKindOfClass(SearchBusinessViewController){
-//            let searchBusinessVC: SearchBusinessViewController! = segue.destinationViewController as! SearchBusinessViewController
-//        }
+    
+//    func didUpdateAutocompletePredictions(for tableDataSource: GMSAutocompleteTableDataSource) {
+//        // Turn the network activity indicator off.
+//        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+//        // Reload table data.
+//        resultsTableView.reloadData()
 //    }
 //    
+//    func didRequestAutocompletePredictions(for tableDataSource: GMSAutocompleteTableDataSource) {
+//        // Turn the network activity indicator on.
+//        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+//        // Reload table data.
+//        resultsTableView.reloadData()
+//    }
+//    
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.destinationViewController.isKindOfClass(SearchBusinessViewController){
+//            let searchBusinessVC: SearchBusinessViewController! = segue.destination as! SearchBusinessViewController
+//        }
+//    }
+    
 }
 
+
 extension LocationSearchViewController: GMSAutocompleteTableDataSourceDelegate {
-    func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didAutocompleteWith place: GMSPlace) {
+    
+    func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didAutocompleteWith place: GMSPlace){
         
         // Do something with the selected place.
         if searchType == .address{
@@ -183,15 +201,16 @@ extension LocationSearchViewController: GMSAutocompleteTableDataSourceDelegate {
         }else{
             performSegue(withIdentifier: "unwindToSearch", sender: self)
         }
+
     }
     
-    func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didFailAutocompleteWithError error: NSError) {
+    func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didFailAutocompleteWithError error: Error){
         // TODO: Handle the error.
-        print("Error: \(error.description)")
+        print("Error: \(error.localizedDescription)")
     }
-    
-    func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didSelect prediction: GMSAutocompletePrediction) -> Bool {
-        return true
-    }
+        
+//    func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didSelect prediction: GMSAutocompletePrediction) -> Bool {
+//        return true
+//    }
 }
 

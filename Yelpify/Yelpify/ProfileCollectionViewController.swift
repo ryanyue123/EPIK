@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import XLActionController
+
 import BetterSegmentedControl
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
@@ -254,7 +255,7 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let controller = storyboard!.instantiateViewController(withIdentifier: "singlePlaylistVC") as! ListViewController
         controller.object = user_playlists[(indexPath as NSIndexPath).row]
-        self.navigationController!.changeTopBarColor(.clear())
+        self.navigationController!.changeTopBarColor(.clear)
         self.navigationController!.pushViewController(controller, animated: true)
         
     }
@@ -270,14 +271,14 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
     @IBAction func showSettings(_ sender: UIBarButtonItem) {
         let actionController = YoutubeActionController()
         
-        actionController.addAction(Action(ActionData(title: "Logout", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .Default, handler: { action in
+        actionController.addAction(Action(ActionData(title: "Logout", image: UIImage(named: "yt-add-to-watch-later-icon")!), style: .default, handler: { action in
             PFUser.logOut()
             //create unwind segue
             
         }))
-        actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
+        actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .cancel, handler: nil))
         
-        presentViewController(actionController, animated: false, completion: nil)
+        present(actionController, animated: false, completion: nil)
 
     }
     

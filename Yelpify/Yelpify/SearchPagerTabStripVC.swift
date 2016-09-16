@@ -10,7 +10,7 @@ import XLPagerTabStrip
 import UIKit
 import Parse
 import Foundation
-import XLActionController
+//import XLActionController
 import Async
 
 class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewControllerDelegate, Dimmable {
@@ -25,7 +25,7 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
     @IBOutlet weak var searchTextField: UITextField!
     
     @IBAction func unwindToSearchPagerTapStrip(_ segue: UIStoryboardSegue) {
-        dim(.Out, alpha: dimLevel, speed: dimSpeed)
+        dim(.out, alpha: dimLevel, speed: dimSpeed)
         if (segue.identifier != nil){
 //            if segue.identifier == "unwindFromLocation"{
 //                print("unwindFromLocation")
@@ -43,8 +43,8 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
     @IBAction func unwindToSearchPagerTapStripWithLocation(_ segue: UIStoryboardSegue) {
         if (segue.identifier != nil){
             if segue.identifier == "unwindFromNewLocation"{
-                dim(.Out, alpha: dimLevel, speed: dimSpeed)
-                UIView.animateWithDuration(0.2, animations: {
+                dim(.out, alpha: dimLevel, speed: dimSpeed)
+                UIView.animate(withDuration: 0.2, animations: {
                     self.navigationController?.navigationBar.alpha = 1
                 })
                 
@@ -68,7 +68,7 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
         }
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         searchTextField.resignFirstResponder()
         self.view.endEditing(true)
     }
@@ -87,19 +87,19 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
         
         // change selected bar color
         settings.style.buttonBarBackgroundColor = appDefaults.color
-        settings.style.buttonBarItemBackgroundColor = .whiteColor()
+        settings.style.buttonBarItemBackgroundColor = .white
         settings.style.selectedBarBackgroundColor = appDefaults.color
-        settings.style.buttonBarItemFont = .boldSystemFontOfSize(14)
+        settings.style.buttonBarItemFont = .boldSystemFont(ofSize: 14)
         settings.style.selectedBarHeight = 2.0
         settings.style.buttonBarMinimumLineSpacing = 0
-        settings.style.buttonBarItemTitleColor = UIColor.grayColor()
+        settings.style.buttonBarItemTitleColor = UIColor.gray
         settings.style.buttonBarItemsShouldFillAvailiableWidth = true
         //settings.style.buttonBarLeftContentInset = 0
         settings.style.buttonBarRightContentInset = -1
 
         changeCurrentIndexProgressive = { [weak self] (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             guard changeCurrentIndex == true else { return }
-            oldCell?.label.textColor = UIColor.grayColor()
+            oldCell?.label.textColor = UIColor.gray
             newCell?.label.textColor = appDefaults.color
         }
         
@@ -128,8 +128,8 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
     
     func pressedLocation(_ sender: UIBarButtonItem){
         self.navigationController?.navigationBar.alpha = 0.5
-        dim(.In, alpha: dimLevel, speed: dimSpeed)
-        performSegueWithIdentifier("pickLocation", sender: self)
+        dim(.in, alpha: dimLevel, speed: dimSpeed)
+        performSegue(withIdentifier: "pickLocation", sender: self)
     }
     
     func sendValue(_ value: AnyObject){
@@ -146,7 +146,7 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
         pickerController.delegate = self
     }
     
-    override func prepareForSegue(_ segue: UIStoryboardSegue, sender: AnyObject?) {
+    func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "pickLocation" {
             let navVC = segue.destination as! UINavigationController
             let destVC = navVC.childViewControllers[0] as! LocationSearchViewController
@@ -208,10 +208,10 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
     override func reloadPagerTabStripView() {
         isReload = true
         if arc4random() % 2 == 0 {
-            pagerBehaviour = .Progressive(skipIntermediateViewControllers: arc4random() % 2 == 0 , elasticIndicatorLimit: arc4random() % 2 == 0 )
+            pagerBehaviour = .progressive(skipIntermediateViewControllers: arc4random() % 2 == 0 , elasticIndicatorLimit: arc4random() % 2 == 0 )
         }
         else {
-            pagerBehaviour = .Common(skipIntermediateViewControllers: arc4random() % 2 == 0)
+            pagerBehaviour = .common(skipIntermediateViewControllers: arc4random() % 2 == 0)
         }
         searchTextField.resignFirstResponder()
         self.view.endEditing(true)

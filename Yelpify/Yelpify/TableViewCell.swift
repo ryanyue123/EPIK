@@ -26,15 +26,16 @@ class TableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setCollectionViewDataSourceDelegate
-        <D: UICollectionViewDataSource & UICollectionViewDelegate
-        (_ dataSourceDelegate: D, forRow row: Int) {
-        
-        collectionView.delegate = dataSourceDelegate
-        collectionView.dataSource = dataSourceDelegate
-        collectionView.tag = row
-        collectionView.reloadData()
-    }
+    
+//    func setCollectionViewDataSourceDelegate
+//        <D: UICollectionViewDataSource & UICollectionViewDelegate
+//        (_ dataSourceDelegate: D, forRow row: Int)> {
+//        
+//        collectionView.delegate = dataSourceDelegate
+//        collectionView.dataSource = dataSourceDelegate
+//        collectionView.tag = row
+//        collectionView.reloadData()
+//    }
     
     var collectionViewOffset: CGFloat {
         get {

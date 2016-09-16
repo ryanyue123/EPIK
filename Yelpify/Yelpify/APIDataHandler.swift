@@ -32,7 +32,7 @@ class APIDataHandler {
         
         gpClient.searchPlacesWithParameters(googleParameters) { (result) -> Void in
             self.parseGPlacesJSON(result, completion: { (businessArray) -> Void in
-                completion(businessObjectArray: businessArray)
+                completion(businessArray)
             })
         }
         
@@ -41,7 +41,7 @@ class APIDataHandler {
     func performDetailedSearch(_ googleID: String, completion: @escaping (_ detailedGPlace: GooglePlaceDetail) -> Void){
         self.gpClient.searchPlaceWithID(googleID) { (JSONdata) in
             self.parseGoogleDetailedData(JSONdata, completion: { (detailedGPlace) in
-                completion(detailedGPlace: detailedGPlace)
+                completion(detailedGPlace)
             })
         }
     }
@@ -91,7 +91,7 @@ class APIDataHandler {
                     if let dayArray = place["opening_hours"]?["weekday_text"].array{
                         for day in dayArray{
                             if let hours = day.string{
-                                DetailedObject.hours.addObject(hours)
+                                DetailedObject.hours.add(hours)
                             }
                         }
                     }
@@ -99,7 +99,7 @@ class APIDataHandler {
                     if let photoArray = place["photos"]?.array{
                         for photoDict in photoArray{
                             if let ref = photoDict["photo_reference"].string{
-                                DetailedObject.photos.addObject(ref)
+                                DetailedObject.photos.add(ref)
                             }
                         }
                     }
@@ -135,7 +135,7 @@ class APIDataHandler {
                                 if let rating = reviewDict["rating"]?.double{
                                     resultDict["rating"] = rating
                                 }
-                                DetailedObject.reviews.addObject(resultDict)
+                                DetailedObject.reviews.add(resultDict)
                             }
                         }
                     }
@@ -143,7 +143,7 @@ class APIDataHandler {
                     if let types = place["types"]?.array{
                         for type in types{
                             if let t = type.string{
-                                DetailedObject.types.addObject(t)
+                                DetailedObject.types.add(t)
                             }
                         }
                     }
@@ -201,7 +201,7 @@ class APIDataHandler {
                     if let types = place["types"].array{
                         for type in types{
                             if let t = type.string{
-                                businessObject.businessTypes.addObject(t)
+                                businessObject.businessTypes.add(t)
                             }
                         }
                     }

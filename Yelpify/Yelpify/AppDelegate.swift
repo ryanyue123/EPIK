@@ -10,7 +10,7 @@ import UIKit
 import Parse
 import GoogleMaps
 import FBSDKCoreKit
-import RAMAnimatedTabBarController
+//import RAMAnimatedTabBarController
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -47,8 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        UITabBar.appearance().backgroundColor = appDefaults.color
 //        
 //        UITabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName: appDefaults.font!], forState: .Normal)
-        
-        RAMAnimatedTabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName: appDefaults.font!], forState: .Normal)
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions:
             launchOptions)
@@ -142,12 +140,6 @@ extension String {
     
     subscript (i: Int) -> String {
         return String(self[i] as Character)
-    }
-    
-    subscript (r: Range<Int>) -> String {
-        let start = characters.index(startIndex, offsetBy: r.lowerBound)
-        let end = <#T##String.CharacterView corresponding to `start`##String.CharacterView#>.index(start, offsetBy: r.upperBound - r.lowerBound)
-        return self[Range(start ..< end)]
     }
     
     var first: String {

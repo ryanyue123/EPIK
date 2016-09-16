@@ -12,7 +12,7 @@ import Haneke
 import Cosmos
 import BetterSegmentedControl
 import Async
-import SwiftPhotoGallery
+//import SwiftPhotoGallery
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -34,7 +34,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SwiftPhotoGalleryDelegate, SwiftPhotoGalleryDataSource {
+class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var cosmosRating: CosmosView!
     @IBOutlet weak var headerView: UIView!
@@ -144,7 +144,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
                     if ratingValue != -1{
                         self.cosmosRating.rating = ratingValue
                     }else{
-                        self.cosmosRating.hidden = true
+                        self.cosmosRating.isHidden = true
                         //self.cosmosRating.addSubview(UILabel)
                     }
                 }
@@ -435,7 +435,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         self.gpClient.getImage(ref) { (image) in
             self.fadeOutImage(self.placePhotoImageView)
             
-            UIImageView.animateWithDuration(1) {
+            UIImageView.animate(withDuration: 1) {
                 self.placePhotoImageView.alpha = 0
                 self.placePhotoImageView.image = image
             }
@@ -458,21 +458,21 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
             titles: ["Info", "Reviews"],
             index: 0,
             backgroundColor: appDefaults.color,
-            titleColor: UIColor.whiteColor(),
+            titleColor: UIColor.white,
             indicatorViewBackgroundColor: appDefaults.color,
-            selectedTitleColor: .whiteColor())
-        control.autoresizingMask = [.FlexibleWidth]
+            selectedTitleColor: .white)
+        control.autoresizingMask = [.flexibleWidth]
         control.panningDisabled = true
         control.titleFont = UIFont(name: "Montserrat", size: 12.0)!
-        control.addTarget(self, action: "switchContentType", forControlEvents: .ValueChanged)
+        control.addTarget(self, action: "switchContentType", for: .valueChanged)
         control.alpha = 0
         self.segmentedView.addSubview(control)
         UIView.animate(withDuration: 0.3, animations: {
             control.alpha = 1
             self.segmentedView.bringSubview(toFront: self.segmentedTabBar)
-        }) 
+        })
     }
-    
+
     
     func switchContentType(){
         if self.contentToDisplay == .places{
@@ -525,30 +525,6 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         //tableView.separatorInset = UIEdgeInsetsMake(20, 0, 20, 0)
         //tableView.estimatedRowHeight = 140.0
         //tableView.rowHeight = UITableViewAutomaticDimension
-    }
-    
-    // MARK: - SwiftPhotoGallery Delegate Methods
-    
-    func configureCarouselGallery(){
-        let gallery = SwiftPhotoGallery(delegate: self, dataSource: self)
-        gallery.backgroundColor = appDefaults.color_bg
-        gallery.pageIndicatorTintColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
-        gallery.currentPageIndicatorTintColor = appDefaults.color_darker
-    }
-    
-    let imageNames = ["face", "temp_profile", "default_restaurant"]
-    
-    func numberOfImagesInGallery(_ gallery: SwiftPhotoGallery) -> Int {
-        return imageNames.count
-    }
-    
-    func imageInGallery(_ gallery: SwiftPhotoGallery, forIndex: Int) -> UIImage? {
-        return UIImage(named: imageNames[forIndex])
-    }
-    
-    func galleryDidTapToClose(_ gallery: SwiftPhotoGallery) {
-        // do something cool like:
-        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func addItemToPlaylist(_ sender: UIBarButtonItem) {

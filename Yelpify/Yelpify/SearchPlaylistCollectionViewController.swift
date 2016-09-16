@@ -132,9 +132,9 @@ class SearchPlaylistCollectionViewController: UICollectionViewController, UIText
         return cell
     }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let controller = storyboard!.instantiateViewController(withIdentifier: "singlePlaylistVC") as! SinglePlaylistViewController
-        controller.object = playlist_query[(indexPath as NSIndexPath).row]
-        self.navigationController!.pushViewController(controller, animated: true)
+//        let controller = storyboard!.instantiateViewController(withIdentifier: "singlePlaylistVC") as! SinglePlaylistViewController
+//        controller.object = playlist_query[(indexPath as NSIndexPath).row]
+//        self.navigationController!.pushViewController(controller, animated: true)
         
     }
 }

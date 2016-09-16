@@ -83,12 +83,12 @@ class BusinessTableViewCell: MGSwipeTableCell {
         // Set Rating
         //print("\(business.businessName): \(business.businessRating)")
         if business.businessRating != -1{
-            self.BusinessRating.hidden = false
+            self.BusinessRating.isHidden = false
             if let ratingValue2 = business.businessRating{
                 self.BusinessRating.rating = ratingValue2
             }
         }else{
-            self.BusinessRating.hidden = true
+            self.BusinessRating.isHidden = true
         }
         
         // Set Status
@@ -123,7 +123,7 @@ class BusinessTableViewCell: MGSwipeTableCell {
             let PhotoURL = buildPlacePhotoURLString(business.businessPhotoReference)
             //let URLString = self.items[indexPath.row]
             let URL = Foundation.URL(string:PhotoURL)!
-            businessBackgroundImage.hnk_setImageFromURL(URL)
+            businessBackgroundImage.hnk_setImageFromURL(URL: URL as NSURL)
         }
         else{
             businessBackgroundImage.image =  UIImage(named: "default_business_bg")

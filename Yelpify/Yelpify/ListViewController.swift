@@ -268,7 +268,7 @@ class ListViewController: UIViewController, Dimmable {
 
         self.deactivateEditMode()
         
-        let saveobject = object
+        let saveobject = object!
         
         Async.main{
 //            // Save Background Image
@@ -312,12 +312,12 @@ class ListViewController: UIViewController, Dimmable {
             }
             
             }.utility{
-                saveobject.saveInBackgroundWithBlock { (success, error)  -> Void in
+                saveobject.saveInBackground { (success, error)  -> Void in
                     if (error == nil){
                         print("saved")
                     }
                     else{
-                        print(error?.description)
+                        print(error?.localizedDescription)
                     }
                 }
         }
@@ -398,13 +398,13 @@ class ListViewController: UIViewController, Dimmable {
     
     func configureSwipeButtons(_ cell: MGSwipeTableCell, mode: ListMode){
         if mode == .view{
-            let routeButton = MGSwipeButton(title: "ROUTE", icon: UIImage(named: "swipe_route")!.imageWithColor(appDefaults.color),backgroundColor: UIColor.clear, padding: 25)
+            let routeButton = MGSwipeButton(title: "ROUTE", icon: UIImage(named: "swipe_route")!.imageWithColor(appDefaults.color),backgroundColor: UIColor.clear, padding: 25)!
             routeButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 0))
             routeButton.centerIconOverText()
             routeButton.titleLabel?.font = appDefaults.font
             routeButton.titleLabel?.textColor = appDefaults.color
             
-            let addButton = MGSwipeButton(title: "ADD", icon: UIImage(named: "swipe_add")!.imageWithColor(appDefaults.color) ,backgroundColor: UIColor.clear, padding: 25)
+            let addButton = MGSwipeButton(title: "ADD", icon: UIImage(named: "swipe_add")!.imageWithColor(appDefaults.color) ,backgroundColor: UIColor.clear, padding: 25)!
             addButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 15))
             addButton.centerIconOverText()
             addButton.titleLabel?.font = appDefaults.font
@@ -540,7 +540,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         let cell  = tableView.cellForRow(at: indexPath) as! BusinessTableViewCell
         cell.mainView.backgroundColor = UIColor.white
         cell.businessBackgroundImage.alpha = 1
-        cell.BusinessRating.backgroundColor = UIColor.clearColor()
+        cell.BusinessRating.backgroundColor = UIColor.clear
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -716,7 +716,7 @@ extension ListViewController: ModalViewControllerDelegate{
 //            }
 //            
 //        }))
-        actionController.addAction(Action(ActionData(title: "Edit", image: UIImage(named: "action_edit")!), style: .Default, handler: { action in
+        actionController.addAction(Action(ActionData(title: "Edit", image: UIImage(named: "action_edit")!), style: .default, handler: { action in
             print("Edit pressed")
             self.activateEditMode()
             self.listTableView.reloadData()
@@ -724,14 +724,14 @@ extension ListViewController: ModalViewControllerDelegate{
 //        actionController.addAction(Action(ActionData(title: "Make Collaborative", image: UIImage(named: "action_collab")!), style: .Default, handler: { action in
 //            self.makeCollaborative()
 //        }))
-        actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "action_sort")!), style: .Cancel, handler: { action in
+        actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "action_sort")!), style: .cancel, handler: { action in
             pickerController.headerTitle = "Sort Options"
             pickerController.fruits = ["Alphabetical","Rating"]
             pickerController.showWithFooter(UIViewController)
             pickerController.delegate = self
         }))
-        actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .Cancel, handler: nil))
+        actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .cancel, handler: nil))
         
-        presentViewController(actionController, animated: true, completion: nil)
+        present(actionController, animated: true, completion: nil)
     }
 }

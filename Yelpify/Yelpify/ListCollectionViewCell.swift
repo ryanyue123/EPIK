@@ -53,7 +53,7 @@ class ListCollectionViewCell: UICollectionViewCell {
             if (error == nil)
             {
                 DispatchQueue.main.async(execute: {
-                    self.creatorName.text = "BY " + ((object!["username"]? as AnyObject).uppercased)!
+                    //self.creatorName.text = "BY " + ((object!["username"] as! String).uppercased)!
                 })
             }
         }

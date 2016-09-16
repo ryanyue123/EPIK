@@ -15,13 +15,13 @@ import Async
 
 struct DataFunctions {
     static func getLocation(_ completion: @escaping (_ coordinates: CLLocationCoordinate2D) -> Void){
-        Location.getLocation(withAccuracy: .Block, frequency: .OneShot, timeout: 30, onSuccess: { (foundLocation) in
-            completion(coordinates: foundLocation.coordinate)
+        Location.getLocation(withAccuracy: .block, frequency: .oneShot, timeout: 30, onSuccess: { (foundLocation) in
+            completion(foundLocation.coordinate)
             
         }) { (lastValidLocation, error) in
             print(error)
             if lastValidLocation != nil{
-                completion(coordinates: (lastValidLocation?.coordinate)!)
+                completion((lastValidLocation?.coordinate)!)
             }
         }
     }

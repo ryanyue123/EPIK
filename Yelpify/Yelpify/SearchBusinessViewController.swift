@@ -10,7 +10,6 @@ import UIKit
 import CoreLocation
 import Haneke
 import Parse
-import DGElasticPullToRefresh
 import XLPagerTabStrip
 import MGSwipeTableCell
 import CZPicker
@@ -28,7 +27,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     var itemReceived: Array<AnyObject> = []
     // MARK: - GLOBAL VARIABLES
     var googlePlacesClient = GooglePlacesAPIClient()
-    var customSearchController: CustomSearchController!
+    //var customSearchController: CustomSearchController!
     let cache = Shared.imageCache
     var dataHandler = APIDataHandler()
     var locationManager = CLLocationManager()
@@ -79,10 +78,10 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
             }else if segue.identifier == "unwindToSearchCancel"{
                 print("unwindToSearchCancel")
                 if let pagerTabVC = self.parent as? SearchPagerTabStrip{
-                    UIView.animateWithDuration(0.2, animations: {
+                    UIView.animate(withDuration: 0.2, animations: {
                         pagerTabVC.navigationController?.navigationBar.alpha = 1
                     })
-                    pagerTabVC.dim(.Out, alpha: dimLevel, speed: dimSpeed)
+                    pagerTabVC.dim(.out, alpha: dimLevel, speed: dimSpeed)
                 }else{
                     UIView.animate(withDuration: 0.2, animations: {
                         self.navigationController?.navigationBar.alpha = 1
@@ -98,10 +97,10 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         if (segue.identifier != nil) {
             if segue.identifier == "unwindToSearch" {
                 if let pagerTabVC = self.parent as? SearchPagerTabStrip{
-                    UIView.animateWithDuration(0.2, animations: {
+                    UIView.animate(withDuration: 0.2, animations: {
                         pagerTabVC.navigationController?.navigationBar.alpha = 1
                     })
-                    pagerTabVC.dim(.Out, alpha: dimLevel, speed: dimSpeed)
+                    pagerTabVC.dim(.out, alpha: dimLevel, speed: dimSpeed)
                 }else{
                     UIView.animate(withDuration: 0.2, animations: {
                         self.navigationController?.navigationBar.alpha = 1
@@ -377,12 +376,12 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
         self.view.endEditing(true)
     }
     
-    func configureCustomSearchController() {
-        customSearchController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRect(x: 0.0, y: 0.0, width: self.tableView.frame.size.width, height: 50.0), searchBarFont: UIFont(name: "Futura", size: 16.0)!, searchBarTextColor: UIColor.orange, searchBarTintColor: UIColor.black)
-        
-        customSearchController.customSearchBar.placeholder = "Search in this awesome bar..."
-        self.tableView.tableHeaderView = customSearchController.customSearchBar
-    }
+//    func configureCustomSearchController() {
+//        customSearchController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRect(x: 0.0, y: 0.0, width: self.tableView.frame.size.width, height: 50.0), searchBarFont: UIFont(name: "Futura", size: 16.0)!, searchBarTextColor: UIColor.orange, searchBarTintColor: UIColor.black)
+//        
+//        customSearchController.customSearchBar.placeholder = "Search in this awesome bar..."
+//        self.tableView.tableHeaderView = customSearchController.customSearchBar
+//    }
     func configureSwipeButtons(_ cell: MGSwipeTableCell){
         
         let routeButton = MGSwipeButton(title: "ROUTE", icon: UIImage(named: "swipe_route"),backgroundColor: appDefaults.color, padding: 25)
@@ -595,7 +594,7 @@ extension SearchBusinessViewController: UITableViewDelegate, UITableViewDataSour
         let cell  = tableView.cellForRow(at: indexPath) as! BusinessTableViewCell
         cell.mainView.backgroundColor = UIColor.white
         cell.businessBackgroundImage.alpha = 1
-        cell.BusinessRating.backgroundColor = UIColor.clearColor()
+        cell.BusinessRating.backgroundColor = UIColor.clear
     }
     
     

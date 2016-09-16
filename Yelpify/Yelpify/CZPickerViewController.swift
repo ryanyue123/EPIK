@@ -18,7 +18,7 @@ protocol ModalViewControllerDelegate
 
 class CZPickerViewController: UIViewController {
     
-    var fruits = []
+    var fruits: [String] = []
     var fruitImages = [UIImage]()
     var pickerWithImage: CZPickerView?
     var item = String()

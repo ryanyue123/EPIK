@@ -28,7 +28,7 @@ class GooglePlacesAPIClient: NSObject {
     
     func searchPlacesWithParameters(_ searchParameters: Dictionary<String, String>, completion: @escaping (_ result: Data) -> Void){
         
-        Alamofire.request(.GET, buildURLString(searchParameters))
+        Alamofire.request(buildURLString(searchParameters))
             .responseJSON { response in
 //                print(self.parameters)
 //                print(response.request)  // original URL request
@@ -36,7 +36,7 @@ class GooglePlacesAPIClient: NSObject {
 //                print(response.data)     // server data
 //                print(response.result)   // result of response serialization
                 
-                completion(result: response.data!)
+                completion(response.data!)
                 
 //                do { let data = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
 //                    completion(result: data!)
@@ -47,9 +47,9 @@ class GooglePlacesAPIClient: NSObject {
     func searchPlaceWithID(_ id: String, completion: @escaping (_ data: Data) -> Void){
         let parameters = ["key": googleAPIKey, "placeid": id]
         
-        Alamofire.request(.GET, self.buildDetailedURLString(parameters))
+        Alamofire.request(self.buildDetailedURLString(parameters))
             .responseJSON { response in
-                completion(data: response.data!)
+                completion(response.data!)
         }
         
     }
@@ -76,10 +76,10 @@ class GooglePlacesAPIClient: NSObject {
             "location" : location,
             "radius" : "50" ]
         
-        Alamofire.request(.GET, buildURLString(parameters))
+        Alamofire.request(buildURLString(parameters))
             .responseJSON { response in
-                do { let data = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
-                    completion(JSONdata: data!)
+                do { let data = try JSONSerialization.jsonObject(with: response.data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary
+                    completion(data!)
                     
                     if debugPrint.RAW_GOOGLE_JSON == true{
                         print("GOOGLE JSON")
@@ -89,7 +89,7 @@ class GooglePlacesAPIClient: NSObject {
             }
     }
     
-    func getImageFromPhotoReference(_ photoReference: String, completion: @escaping (_ key: String) -> Void){
+    func getImageFromPhotoReference(photoReference: String, completion: @escaping (_ key: String) -> Void){
         
         let photoParameters = [
             "key" : googleAPIKey,
@@ -98,31 +98,34 @@ class GooglePlacesAPIClient: NSObject {
         ]
         
         let URLString = self.buildPlacePhotoURLString(photoParameters)
-        let URL = Foundation.URL(string: URLString)!
+
         
-        let fetcher = NetworkFetcher<UIImage>(URL: URL)
-        cache.fetch(fetcher: fetcher).onSuccess { image in
-            
-            self.cache.set(value: image, key: photoReference)
-            
-            completion(key: photoReference)
+        Alamofire.download(URLString).responseData { response in
+            if let data = response.result.value {
+                let image = UIImage(data: data)!
+                
+                self.cache.set(value: image, key: photoReference)
+                completion(photoReference)
+            }
         }
     }
+
     
-    func getImage(_ ref: String, completion: (_ image: UIImage) -> Void){
+    func getImage(_ ref: String, completion: @escaping (_ image: UIImage) -> Void){
         let photoParameters = [ "key" : googleAPIKey, "photoreference" : ref, "maxheight" : "800" ]
         let URL = Foundation.URL(string: self.buildPlacePhotoURLString(photoParameters))!
-        let fetcher = NetworkFetcher<UIImage>(URL: URL)
-        cache.fetch(fetcher: fetcher).onSuccess { image in completion( image: image ) }
+        
+        let fetcher = NetworkFetcher<UIImage>(URL: URL as NSURL)
+        cache.fetch(fetcher: fetcher).onSuccess { image in completion( image ) }
     }
     
-    fileprivate func getDataFromUrl(_ url: URL, completion: @escaping ((_ data: Data?, _ response: URLResponse?, _ error: NSError? ) -> Void)) {
-        URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
-            completion(data, response, error)
-            }) .resume()
-    }
+//    fileprivate func getDataFromUrl(_ url: URL, completion: @escaping ((_ data: Data?, _ response: URLResponse?, _ error: NSError? ) -> Void)) {
+//        URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
+//            completion(data, response, error)
+//            }) .resume()
+//    }
     
-    fileprivate func buildURLString(_ parameters: Dictionary<String, String>) -> String!{
+    private func buildURLString(_ parameters: Dictionary<String, String>) -> String!{
         var result = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
         // "https://maps.googleapis.com/maps/api/place/textsearch/json?"
         for (key, value) in parameters{
@@ -133,7 +136,7 @@ class GooglePlacesAPIClient: NSObject {
     }
     
     
-    fileprivate func buildDetailedURLString(_ parameters: Dictionary<String, String>) -> String!{
+    private func buildDetailedURLString(_ parameters: Dictionary<String, String>) -> String!{
         var result = "https://maps.googleapis.com/maps/api/place/details/json?"
         for (key, value) in parameters{
             let addString = key + "=" + value + "&"

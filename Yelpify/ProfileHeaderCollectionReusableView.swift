@@ -69,13 +69,13 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView, SendCustomI
             titles: ["Lists", "Following"],
             index: 0,
             backgroundColor: appDefaults.color,
-            titleColor: UIColor.whiteColor(),
+            titleColor: UIColor.white,
             indicatorViewBackgroundColor: appDefaults.color,
-            selectedTitleColor: .whiteColor())
-        control.autoresizingMask = [.FlexibleWidth]
+            selectedTitleColor: .white)
+        control.autoresizingMask = [.flexibleWidth]
         control.panningDisabled = true
         control.titleFont = UIFont(name: "Montserrat", size: 12.0)!
-        control.addTarget(self, action: nil, forControlEvents: .ValueChanged)
+        //control.addTarget(self, action: nil, for: .ValueChanged)
         control.alpha = 0
         self.segmentedBarView.addSubview(control)
         UIView.animate(withDuration: 0.3, animations: {

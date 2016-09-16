@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import SwiftPhotoGallery
 
-class ImageCarouselTableViewCell: UITableViewCell, SwiftPhotoGalleryDelegate, SwiftPhotoGalleryDataSource {
+class ImageCarouselTableViewCell: UITableViewCell {
 
     @IBOutlet weak var imageOne: UIImageView!
     @IBOutlet weak var imageTwo: UIImageView!
@@ -44,29 +43,29 @@ class ImageCarouselTableViewCell: UITableViewCell, SwiftPhotoGalleryDelegate, Sw
     }
     
     
-    // MARK: - SwiftPhotoGallery Delegate Methods
-    
-    func configureCarouselGallery(){
-        let gallery = SwiftPhotoGallery(delegate: self, dataSource: self)
-        gallery.backgroundColor = appDefaults.color_bg
-        gallery.pageIndicatorTintColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
-        gallery.currentPageIndicatorTintColor = appDefaults.color_darker
-    }
-    
-    let imageNames = ["face", "temp_profile", "default_restaurant"]
-    
-    func numberOfImagesInGallery(_ gallery: SwiftPhotoGallery) -> Int {
-        return imageNames.count
-    }
-    
-    func imageInGallery(_ gallery: SwiftPhotoGallery, forIndex: Int) -> UIImage? {
-        return UIImage(named: imageNames[forIndex])
-    }
-    
-    func galleryDidTapToClose(_ gallery: SwiftPhotoGallery) {
-        // do something cool like:
-        //dismissViewControllerAnimated(true, completion: nil)
-    }
+//    // MARK: - SwiftPhotoGallery Delegate Methods
+//    
+//    func configureCarouselGallery(){
+//        let gallery = SwiftPhotoGallery(delegate: self, dataSource: self)
+//        gallery.backgroundColor = appDefaults.color_bg
+//        gallery.pageIndicatorTintColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
+//        gallery.currentPageIndicatorTintColor = appDefaults.color_darker
+//    }
+//    
+//    let imageNames = ["face", "temp_profile", "default_restaurant"]
+//    
+//    func numberOfImagesInGallery(_ gallery: SwiftPhotoGallery) -> Int {
+//        return imageNames.count
+//    }
+//    
+//    func imageInGallery(_ gallery: SwiftPhotoGallery, forIndex: Int) -> UIImage? {
+//        return UIImage(named: imageNames[forIndex])
+//    }
+//    
+//    func galleryDidTapToClose(_ gallery: SwiftPhotoGallery) {
+//        // do something cool like:
+//        //dismissViewControllerAnimated(true, completion: nil)
+//    }
 
     
     override func awakeFromNib() {

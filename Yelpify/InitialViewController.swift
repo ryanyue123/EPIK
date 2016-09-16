@@ -21,17 +21,18 @@ class InitialViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        print(PFUser.current())
+        //print(PFUser.current())
         if (PFUser.current() == nil) {
             self.animate()
             Async.main(after: 0.5){
-                self.performSegueWithIdentifier("loginscreen", sender: self)
+                self.performSegue(withIdentifier: "loginscreen", sender: self)
             }
         }else{
             self.animate()
-            Async.main(after: 0.5){
-                self.performSegueWithIdentifier("showHome", sender: self)
-            }
+            self.performSegue(withIdentifier: "showHome", sender: self)
+//            Async.main(after: 0.5){
+//                self.performSegue(withIdentifier: "showHome", sender: self)
+//            }
         }
     }
     
