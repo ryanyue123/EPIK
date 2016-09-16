@@ -116,7 +116,7 @@ class APIDataHandler {
                         for review in reviewArray{
                             if let reviewDict = review.dictionary{
                                 
-                                var resultDict = NSMutableDictionary()
+                                let resultDict = NSMutableDictionary()
                                 if let time = reviewDict["time"]?.int{
                                     resultDict["time"] = time
                                 }

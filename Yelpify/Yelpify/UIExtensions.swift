@@ -13,7 +13,6 @@ import ObjectiveC
 
 private var xoAssociationKey: UInt8 = 0
 
-
 extension UIView {
     var y: CGFloat! {
         get {
@@ -21,6 +20,15 @@ extension UIView {
         }
         set(y) {
             self.frame = CGRect(x: self.frame.origin.x, y: y, width: self.frame.width, height: self.frame.height)
+        }
+    }
+    
+    var centerY: CGFloat! {
+        get {
+            return self.frame.midY
+        }
+        set(newCenterY) {
+            self.frame = CGRect(x: self.frame.origin.x, y: newCenterY - self.frame.height / 2, width: self.frame.width, height: self.frame.height)
         }
     }
     
@@ -64,8 +72,19 @@ extension UIView {
         self.layer.shadowOpacity = opacity
     }
     
-    func fadeIn(_ duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
+    func fadeIn(_ duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat = 1, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
         self.alpha = 0
+        self.layer.frame.origin.y += beginOffsetY
+        self.transform = CGAffineTransform(scaleX: beginScale, y: beginScale)
+        self.clipsToBounds = true
+        UIView.animate(withDuration: duration, animations: {
+            self.layer.frame.origin.y -= endOffsetY
+            self.alpha = endAlpha
+            self.transform = CGAffineTransform(scaleX: endScale, y: endScale)
+        })
+    }
+    
+    func fadeOut(_ duration: Double = 1, endAlpha: CGFloat = 0, beginScale: CGFloat = 1, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
         self.layer.frame.origin.y += beginOffsetY
         self.transform = CGAffineTransform(scaleX: beginScale, y: beginScale)
         self.clipsToBounds = true
@@ -78,7 +97,7 @@ extension UIView {
 }
 
 extension UILabel {
-    func fadeIn(_ textToSet: String, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
+    func fadeIn(_ textToSet: String, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat = 1, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
         self.alpha = 0
         self.layer.frame.origin.y += beginOffsetY
         self.text = textToSet
@@ -95,6 +114,10 @@ extension UILabel {
 extension UIColor {
     public class func selectedGray() -> UIColor{
         return UIColor(netHex: 0xd5d5d5)
+    }
+    
+    public class func backgroundGray() -> UIColor{
+        return UIColor(netHex: 0xe4e4e4)
     }
 }
 
@@ -127,11 +150,11 @@ extension UIImage {
         
         return resizedImage!
     }
-
+    
 }
 
 extension UIImageView {
-    func fadeIn(_ imageToAdd: UIImage, duration: Double = 1,  endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1){
+    func fadeIn(_ imageToAdd: UIImage, duration: Double = 1,  endAlpha: CGFloat = 1, beginScale: CGFloat = 1, endScale: CGFloat = 1){
         
         self.alpha = 0
         self.image = imageToAdd
@@ -155,6 +178,18 @@ extension UINavigationController{
         }
     }
     
+    func setRightBarButton(_ title: String?, image: UIImage?, action: Selector){
+        if title != nil{
+            let rightButton = UIBarButtonItem(title: title, style: .plain , target: self, action: action)
+            navigationItem.rightBarButtonItem = rightButton
+        }
+        
+        if image != nil{
+            let rightButton = UIBarButtonItem(image: image, style: .plain, target: self, action: action)
+            navigationItem.rightBarButtonItem = rightButton
+        }
+    }
+    
     func changeTopBarColor(_ color: UIColor){
         self.navigationController?.navigationBar.backgroundColor = color.withAlphaComponent((1))
         self.statusBar?.backgroundColor = color
@@ -165,7 +200,7 @@ extension UINavigationController{
         self.configureStatusBar(color)
     }
     
-    func configureStatusBar(_ color: UIColor){
+    func configureStatusBar(_ color: UIColor = appDefaults.color){
         let statusBarRect = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 20.0)
         let statusBarView = UIView(frame: statusBarRect)
         statusBarView.backgroundColor = color
@@ -193,7 +228,10 @@ extension UINavigationController{
         self.navigationBar.titleTextAttributes = [
             NSForegroundColorAttributeName: UIColor.white.withAlphaComponent(alpha) ]
         self.navigationBar.backgroundColor = appDefaults.color.withAlphaComponent(alpha)
-        self.statusBar?.alpha = alpha
+        if self.statusBar == nil{
+            self.configureStatusBar()
+        }
+        self.statusBar!.alpha = alpha
     }
     
     func resetNavigationBar(_ alpha: CGFloat){
@@ -217,6 +255,11 @@ extension UINavigationController{
     }
     
     func updateStatusBarForFade(_ headerHeight: CGFloat, bottomScrollView: UIScrollView){
+        if self.statusBar == nil{
+            print("Status bar is nil, reconfiguring...")
+            self.configureStatusBar()
+        }
+        self.statusBar?.backgroundColor = appDefaults.color
         let yOffset = bottomScrollView.contentOffset.y
         if yOffset < 0{
             let newAlpha = 1 - abs(yOffset) / 64.0
@@ -226,7 +269,7 @@ extension UINavigationController{
         }
         
     }
-
+    
 }
 
 extension UITextField {
@@ -238,7 +281,7 @@ extension UITextField {
         self.isUserInteractionEnabled = false
     }
     
-    func fadeIn(_ textToSet: String, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
+    func fadeIn(_ textToSet: String, duration: Double = 1, endAlpha: CGFloat = 1, beginScale: CGFloat = 1, endScale: CGFloat = 1, beginOffsetY: CGFloat = 0, endOffsetY: CGFloat = 0){
         self.alpha = 0
         self.layer.frame.origin.y += beginOffsetY
         self.text = textToSet

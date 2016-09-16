@@ -29,9 +29,9 @@ import XLActionController
     import XLActionController
 #endif
 
-public class YoutubeCell: ActionCell {
+open class YoutubeCell: ActionCell {
     
-    public lazy var animatableBackgroundView: UIView = { [weak self] in
+    open lazy var animatableBackgroundView: UIView = { [weak self] in
         let view = UIView(frame: self?.frame ?? CGRect.zero)
         view.backgroundColor = UIColor.red.withAlphaComponent(0.40)
         return view
@@ -46,7 +46,7 @@ public class YoutubeCell: ActionCell {
         super.init(coder: aDecoder)
     }
     
-    public override func awakeFromNib() {
+    open override func awakeFromNib() {
         super.awakeFromNib()
         initialize()
     }
@@ -59,7 +59,7 @@ public class YoutubeCell: ActionCell {
         selectedBackgroundView = backgroundView
     }
     
-    public override var isHighlighted: Bool {
+    open override var isHighlighted: Bool {
         didSet {
             if isHighlighted {
                 animatableBackgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.0)
@@ -81,7 +81,7 @@ public class YoutubeCell: ActionCell {
     }
 }
 
-public class YoutubeActionController: ActionController<YoutubeCell, ActionData, UICollectionReusableView, Void, UICollectionReusableView, Void> {
+open class YoutubeActionController: ActionController<YoutubeCell, ActionData, UICollectionReusableView, Void, UICollectionReusableView, Void> {
     
 //    public init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle = nil) {
 //        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)

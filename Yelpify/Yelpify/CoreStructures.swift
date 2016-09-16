@@ -11,3 +11,8 @@ import Foundation
 enum ContentTypes {
     case places, comments
 }
+
+enum BusinessCellMode {
+    case add
+    case more
+}

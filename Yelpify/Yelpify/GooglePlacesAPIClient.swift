@@ -89,7 +89,7 @@ class GooglePlacesAPIClient: NSObject {
             }
     }
     
-    func getImageFromPhotoReference(photoReference: String, completion: @escaping (_ key: String) -> Void){
+    func getImageFromPhotoReference(_ photoReference: String, completion: @escaping (_ key: String) -> Void){
         
         let photoParameters = [
             "key" : googleAPIKey,
@@ -125,7 +125,7 @@ class GooglePlacesAPIClient: NSObject {
 //            }) .resume()
 //    }
     
-    private func buildURLString(_ parameters: Dictionary<String, String>) -> String!{
+    fileprivate func buildURLString(_ parameters: Dictionary<String, String>) -> String!{
         var result = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
         // "https://maps.googleapis.com/maps/api/place/textsearch/json?"
         for (key, value) in parameters{
@@ -136,7 +136,7 @@ class GooglePlacesAPIClient: NSObject {
     }
     
     
-    private func buildDetailedURLString(_ parameters: Dictionary<String, String>) -> String!{
+    fileprivate func buildDetailedURLString(_ parameters: Dictionary<String, String>) -> String!{
         var result = "https://maps.googleapis.com/maps/api/place/details/json?"
         for (key, value) in parameters{
             let addString = key + "=" + value + "&"

@@ -116,8 +116,8 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
     }
     
     func setupBarButtonItems(){
-        let leftButton =  UIBarButtonItem(image: UIImage(named: "sort_icon"), style: .plain, target: self, action: "pressedSearchBy:")
-        let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .plain, target: self, action: "pressedLocation:")
+        let leftButton =  UIBarButtonItem(image: UIImage(named: "sort_icon"), style: .plain, target: self, action: #selector(SearchPagerTabStrip.pressedSearchBy(_:)))
+        let rightButton = UIBarButtonItem(image: UIImage(named: "location_icon"), style: .plain, target: self, action: #selector(SearchPagerTabStrip.pressedLocation(_:)))
         
         navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton

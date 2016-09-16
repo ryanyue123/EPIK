@@ -564,7 +564,7 @@ extension SearchBusinessViewController: UITableViewDelegate, UITableViewDataSour
         
         let business = self.businessObjects[(indexPath as NSIndexPath).row]
         
-        cell.configureCellWith(business, mode: .add) { (place) -> Void in
+        cell.configure(with: business, mode: .add) { (place) -> Void in
             
         }
         

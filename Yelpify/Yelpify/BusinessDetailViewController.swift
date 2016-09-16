@@ -464,7 +464,7 @@ class BusinessDetailViewController: UIViewController, UITableViewDelegate, UITab
         control.autoresizingMask = [.flexibleWidth]
         control.panningDisabled = true
         control.titleFont = UIFont(name: "Montserrat", size: 12.0)!
-        control.addTarget(self, action: "switchContentType", for: .valueChanged)
+        control.addTarget(self, action: #selector(BusinessDetailViewController.switchContentType), for: .valueChanged)
         control.alpha = 0
         self.segmentedView.addSubview(control)
         UIView.animate(withDuration: 0.3, animations: {

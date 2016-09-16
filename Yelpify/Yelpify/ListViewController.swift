@@ -26,11 +26,12 @@ class ListViewController: UIViewController, Dimmable {
     @IBOutlet var indicatorView: UIView!
     @IBOutlet var pullDownBar: UIView!
     
+    @IBOutlet var bannerView: UIView!
     @IBOutlet var bannerImageView: UIImageView!
     @IBOutlet var listTypeLabel: UILabel!
     @IBOutlet var titleTextField: UITextField!
     @IBOutlet var numPlacesLabel: UILabel!
-    @IBOutlet var placesLabel: UILabel!
+    @IBOutlet var citiesLabel: UILabel!
     
     @IBOutlet var mapView: MKMapView!
     
@@ -38,6 +39,11 @@ class ListViewController: UIViewController, Dimmable {
     
     @IBOutlet var addPlaceButton: UIButton!
     
+    @IBOutlet var bottomViewHeight: NSLayoutConstraint!
+    
+    
+    let topMapProportion: CGFloat = 1/5
+    let bottomMapProportion: CGFloat = 7/10
     
     var object: PFObject!
     var playlistArray = [Business]()
@@ -54,6 +60,7 @@ class ListViewController: UIViewController, Dimmable {
     let imagePicker = UIImagePickerController()
     
     var mode: ListMode! = .view
+    var mapScroll: Bool! = false
     
     @IBAction func unwindToSinglePlaylist(_ segue: UIStoryboardSegue)
     {
@@ -71,16 +78,16 @@ class ListViewController: UIViewController, Dimmable {
                     }
                     
                     // Update Info
-//                    self.numOfPlacesLabel.text = "\(placeIDs.count)"
-//                    self.getAveragePrice({ (avg) in
-//                        self.setPriceRating(avg)
-//                    })
+                    //                    self.numOfPlacesLabel.text = "\(placeIDs.count)"
+                    //                    self.getAveragePrice({ (avg) in
+                    //                        self.setPriceRating(avg)
+                    //                    })
                     self.listTableView.reloadData()
                 }
             }
         }
     }
-
+    
     
     @IBAction func pressedAddPlacesButton(_ sender: AnyObject) {
         performSegue(withIdentifier: "tapImageButton", sender: self)
@@ -93,8 +100,10 @@ class ListViewController: UIViewController, Dimmable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //self.listTableView.scrollEnabled = false
+        
         self.mapView.delegate = self
-        self.bannerImageView.addShadow(offset: CGSize(width: 0, height: 5))
+        self.bannerView.addShadow()
         self.addPlaceButton.addShadow()
         self.bottomView.addShadow()
         self.indicatorView.addShadow(opacity: 0.2, offset: CGSize(width: 0, height: 5))
@@ -103,28 +112,42 @@ class ListViewController: UIViewController, Dimmable {
         self.pullDownBar.addShadow()
         
         self.loadData()
-
+        
         configureRecognizers()
         
         self.listTableView.delegate = self
         self.listTableView.dataSource = self
-        
         let rightButton = UIBarButtonItem(image: UIImage(named: "more_icon"), style: .plain, target: self, action: #selector(self.showActionsMenu(_:)))
         navigationItem.rightBarButtonItem = rightButton
     }
     
-
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.bottomView.translatesAutoresizingMaskIntoConstraints = true
+    }
+    
+    
     func loadData(){
+        func getCities(){
+            let coordArray = self.placeArray.map({CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude)})
+            self.mapView.getCitiesFromCoordinates(coordArray) { (cities) in
+                let sortedCities = cities.sorted(by: {$0 < $1})
+                let citiesString = sortedCities.map({$0.0}).joined(separator: ", ")
+                self.citiesLabel.fadeIn(citiesString, beginScale: 1)
+            }
+        }
+        
         func updateBusinessesFromIDs(_ ids:[String], reloadIndex: Int = 0){
             if ids.count > 0{
                 apiClient.performDetailedSearch(ids[0]) { (detailedGPlace) in
-                    self.mapView.addMarker(detailedGPlace.latitude, long: detailedGPlace.longitude)
+                    self.mapView.addMarker(detailedGPlace.latitude, long: detailedGPlace.longitude, title: detailedGPlace.name, row: reloadIndex)
                     
                     self.placeArray[reloadIndex] = detailedGPlace
                     self.playlistArray[reloadIndex] = detailedGPlace.convertToBusiness()
                     
                     if reloadIndex == self.placeArray.count - 1 {
                         self.mapView.initializeMap()
+                        getCities()
                     }
                     
                     let idsSlice = Array(ids[1..<ids.count])
@@ -135,7 +158,7 @@ class ListViewController: UIViewController, Dimmable {
                 }
             }
         }
-
+        
         
         // Register Nibs
         self.listTableView.register(UINib(nibName: "BusinessCell", bundle: Bundle.main), forCellReuseIdentifier: "businessCell")
@@ -184,9 +207,15 @@ class ListViewController: UIViewController, Dimmable {
         // Set Number of Places
         self.numPlacesLabel.text = String(self.placeIDs.count) + " Places"
     }
-
+    
+    //    func configureReorderControl(){
+    //        self.reorderControlHandler = ReorderControl(tableView: self.listTableView, arrayToReorder: self.playlistArray, outerView: self.view)
+    //    }
+    
     
     func activateEditMode() {
+        
+        //configureReorderControl()
         
         // Make Title Text Editable
         self.titleTextField.enable()
@@ -200,14 +229,16 @@ class ListViewController: UIViewController, Dimmable {
         
         // Animate and Show Add Place Button
         self.addPlaceButton.isHidden = false
-        UIView.animate(withDuration: 0.3,delay: 0.0,options: UIViewAnimationOptions.beginFromCurrentState,animations: {
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.beginFromCurrentState,animations: {
             self.addPlaceButton.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)},
                                    completion: { finish in
-                                    UIView.animate(withDuration: 0.6, animations: {self.addPlaceButton.transform = CGAffineTransform.identity})
+                                    UIView.animate(withDuration: 0.6){self.addPlaceButton.transform = CGAffineTransform.identity}
         })
         
         // Set Editing to True
-        self.setEditing(true, animated: true)
+        self.listTableView.setEditing(true, animated: true)
+        let bottomPanGR = self.bottomView.gestureRecognizers![1] as! UIPanGestureRecognizer
+        self.bottomView.removeGestureRecognizer(bottomPanGR)
         
         // Set Edit Mode
         self.mode = .edit
@@ -236,14 +267,15 @@ class ListViewController: UIViewController, Dimmable {
         self.navigationItem.leftBarButtonItem = nil
         
         // Set Editing to False
-        self.setEditing(false, animated: true)
+        self.listTableView.setEditing(false, animated: true)
+        self.addPanGR()
         
         // Hide Add Place Button
         self.addPlaceButton.isHidden = true
         // Change to View Mode
         self.mode = .view
     }
-
+    
     
     
     // MARK: - SAVE PLAYLIST
@@ -265,26 +297,26 @@ class ListViewController: UIViewController, Dimmable {
                 completion(-1)
             }
         }
-
+        
         self.deactivateEditMode()
         
-        let saveobject = object!
+        let saveobject = object
         
         Async.main{
-//            // Save Background Image
-//            if self.customImage != nil{
-//                let imageData: NSData! = UIImageJPEGRepresentation(self.customImage, 1.0)
-//                
-//                let fileName = self.playlistInfoName.text
-//                
-//                let imageFile: PFFile! = PFFile(name: fileName, data: imageData)
-//                do{ try imageFile.save() }catch{}
-//                
-//                saveobject["custom_bg"] = imageFile
-//            }
+            //            // Save Background Image
+            //            if self.customImage != nil{
+            //                let imageData: NSData! = UIImageJPEGRepresentation(self.customImage, 1.0)
+            //
+            //                let fileName = self.playlistInfoName.text
+            //
+            //                let imageFile: PFFile! = PFFile(name: fileName, data: imageData)
+            //                do{ try imageFile.save() }catch{}
+            //
+            //                saveobject["custom_bg"] = imageFile
+            //            }
             
             // Saves List Name
-            saveobject["playlistName"] = self.titleTextField.text
+            saveobject?["playlistName"] = self.titleTextField.text
             
             if self.placeIDs.count > 0{
                 
@@ -293,26 +325,26 @@ class ListViewController: UIViewController, Dimmable {
                 {
                     if let long = self.playlistArray[0].businessLongitude
                     {
-                        saveobject["location"] = PFGeoPoint(latitude: lat, longitude: long)
+                        saveobject?["location"] = PFGeoPoint(latitude: lat, longitude: long)
                     }
                 }
                 
                 // Saves Number of Places
-                saveobject["num_places"] = self.placeIDs.count
+                saveobject?["num_places"] = self.placeIDs.count
                 
                 
                 // Saves Average Price
                 getAveragePrice({ (avg) in
-                    saveobject["average_price"] = avg
+                    saveobject?["average_price"] = avg
                 })
                 
                 
                 // Saves Businesses to Parse as [String] Ids
-                saveobject["place_id_list"] = self.placeIDs
+                saveobject?["place_id_list"] = self.placeIDs
             }
             
             }.utility{
-                saveobject.saveInBackground { (success, error)  -> Void in
+                saveobject?.saveInBackground { (success, error)  -> Void in
                     if (error == nil){
                         print("saved")
                     }
@@ -327,57 +359,69 @@ class ListViewController: UIViewController, Dimmable {
         self.navigationItem.leftBarButtonItem = nil
         self.listTableView.reloadData()
     }
-
+    
     func configureRecognizers(){
         self.originalFrame = self.bottomView.frame
+        //let tapGR = UITapGestureRecognizer(target: self, action: #selector(self.handleTapGR(_:)))
+        //tapGR.delegate = self
+        //self.bottomView.addGestureRecognizer(tapGR)
+        self.addPanGR()
+    }
+    
+    func addPanGR(){
         let panGR = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGR(_:)))
-        let tapGR = UITapGestureRecognizer(target: self, action: #selector(self.handleTapGR(_:)))
-        tapGR.delegate = self
         self.bottomView.addGestureRecognizer(panGR)
-        self.bottomView.addGestureRecognizer(tapGR)
     }
     
     var originalFrame: CGRect!
     
-    func handleTapGR(_ recognizer: UITapGestureRecognizer){
-        if self.bottomView.y != (self.view.frame.height * 7/10){
-    
-        }
-    }
+    //    func handleTapGR(recognizer: UITapGestureRecognizer){
+    //        if self.bottomView.y != (self.view.frame.height * 7/10){
+    //
+    //        }
+    //    }
     
     func handlePanGR(_ recognizer: UIPanGestureRecognizer){
         let translation = recognizer.translation(in: self.view)
         
         let viewTranslation = originalFrame.origin.y + translation.y
         
-        if (viewTranslation > (self.view.height * 1/5)) && (viewTranslation < (self.view.height * 7/10)) {
-            self.bottomView.y = originalFrame.origin.y + translation.y
-        }
-        
-        if recognizer.state == .ended{
+        if recognizer.state == .changed {
+            if (viewTranslation > (self.view.height * topMapProportion)) && (viewTranslation < (self.view.height * bottomMapProportion)) {
+                self.bottomView.y = originalFrame.origin.y + translation.y
+            }
+            let height = self.tabBarController!.tabBar.frame.maxY - self.bottomView.frame.minY + self.indicatorView.height
+            self.bottomView.layoutIfNeeded()
+            self.bottomViewHeight.constant = height
+            self.bottomView.layoutIfNeeded()
+            
+            print(bottomView.height)
+            
+        }else if recognizer.state == .ended{
             
             let velocity = recognizer.velocity(in: self.view)
             let slideMultiplier = velocity.y / 200
             
-            let slideFactor: CGFloat = 4 //Increase for more of a slide
+            let slideFactor: CGFloat = 4 // Increase for more of a slide
             
             var finalY = self.bottomView.y + (slideFactor * slideMultiplier)
-            //print(slideFactor * slideMultiplier)
             
-            if finalY < (self.view.frame.height * 1/5) || velocity.y < -2000{
-                finalY = (self.view.frame.height * 1/5)
+            let topBound = (self.view.frame.height * topMapProportion)
+            let bottomBound = (self.view.frame.height * bottomMapProportion)
+            
+            if finalY < topBound || velocity.y < -1500{
+                finalY = topBound
             }
             
-            if finalY > (self.view.frame.height * 7/10) || velocity.y > 2000{
-                finalY = (self.view.frame.height * 7/10)
+            if finalY > bottomBound || velocity.y > 1500{
+                finalY = bottomBound
             }
             
-            if finalY > self.view.frame.height * 1/5 {
-                self.listTableView.isScrollEnabled = false
-            }else{
-                self.listTableView.isScrollEnabled = true
+            if finalY < topBound + 0.25 * self.mapView.height {
+                finalY = topBound
+            }else if finalY > bottomBound - 0.25 * self.mapView.height {
+                finalY = bottomBound
             }
-            
             
             UIView.animate(withDuration: Double(slideFactor/10), delay: 0, usingSpringWithDamping: 3, initialSpringVelocity: 4, options: .curveEaseOut, animations: {
                 recognizer.view!.y = finalY
@@ -386,10 +430,6 @@ class ListViewController: UIViewController, Dimmable {
             })
         }
         
-        //print("location", location)
-        //print("translation", translation)
-        
-        //print("velocity", velocity, "magnitude", magnitude)
     }
     
     func handleTouchRemoved(_ view: UIView){
@@ -398,17 +438,17 @@ class ListViewController: UIViewController, Dimmable {
     
     func configureSwipeButtons(_ cell: MGSwipeTableCell, mode: ListMode){
         if mode == .view{
-            let routeButton = MGSwipeButton(title: "ROUTE", icon: UIImage(named: "swipe_route")!.imageWithColor(appDefaults.color),backgroundColor: UIColor.clear, padding: 25)!
-            routeButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 0))
-            routeButton.centerIconOverText()
-            routeButton.titleLabel?.font = appDefaults.font
-            routeButton.titleLabel?.textColor = appDefaults.color
+            let routeButton = MGSwipeButton(title: "ROUTE", icon: UIImage(named: "swipe_route")!.imageWithColor(appDefaults.color),backgroundColor: UIColor.clear, padding: 25)
+            routeButton?.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 0))
+            routeButton?.centerIconOverText()
+            routeButton?.titleLabel?.font = appDefaults.font
+            routeButton?.titleLabel?.textColor = appDefaults.color
             
-            let addButton = MGSwipeButton(title: "ADD", icon: UIImage(named: "swipe_add")!.imageWithColor(appDefaults.color) ,backgroundColor: UIColor.clear, padding: 25)!
-            addButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 15))
-            addButton.centerIconOverText()
-            addButton.titleLabel?.font = appDefaults.font
-            addButton.titleLabel?.textColor = appDefaults.color
+            let addButton = MGSwipeButton(title: "ADD", icon: UIImage(named: "swipe_add")!.imageWithColor(appDefaults.color) ,backgroundColor: UIColor.clear, padding: 25)
+            addButton?.setEdgeInsets(UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 15))
+            addButton?.centerIconOverText()
+            addButton?.titleLabel?.font = appDefaults.font
+            addButton?.titleLabel?.textColor = appDefaults.color
             
             cell.rightButtons = [addButton]
             cell.rightSwipeSettings.transition = MGSwipeTransition.clipCenter
@@ -462,7 +502,7 @@ class ListViewController: UIViewController, Dimmable {
             upcoming.searchTextField = upcoming.addPlaceSearchTextField
         }
     }
-
+    
     func getIDsFromArrayOfBusiness(_ business: [Business], completion: (_ result:[String])->Void){
         var result:[String] = []
         for b in business{
@@ -491,7 +531,7 @@ class ListViewController: UIViewController, Dimmable {
         return sortedBusinesses
         
     }
-
+    
     
 }
 
@@ -517,12 +557,12 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         configureSwipeButtons(businessCell, mode: .view)
         
         DispatchQueue.main.async(execute: {
-            businessCell.configureCellWith(self.playlistArray[(indexPath as NSIndexPath).row], mode: .more) {
+            businessCell.configure(with: self.playlistArray[indexPath.row], mode: .more) {
                 return businessCell
             }
         })
         return businessCell
-
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -583,8 +623,6 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
     }
-
-    
 }
 
 extension ListViewController: UIScrollViewDelegate {
@@ -594,10 +632,20 @@ extension ListViewController: UIScrollViewDelegate {
         }else{
             self.indicatorView.hideShadow()
         }
+        
     }
+    
     
     func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
         self.indicatorView.hideShadow()
+    }
+    
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        if mapScroll == true{
+            self.indicatorView.hideShadow()
+            self.mapScroll = false
+        }
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -610,7 +658,6 @@ extension ListViewController: UIScrollViewDelegate {
 extension ListViewController: MKMapViewDelegate{
     
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-        print("done finished loading")
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -640,17 +687,21 @@ extension ListViewController: MKMapViewDelegate{
         
         return annotationView
     }
-
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        self.listTableView.scrollToRow(at: IndexPath(row: (view.annotation!.cellRow)!, section: 0), at: .top, animated: true)
+        self.mapScroll = true
+    }
 }
 
 extension ListViewController: UIGestureRecognizerDelegate{
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if gestureRecognizer is UITapGestureRecognizer {
-            let location = touch.location(in: self.listTableView)
-            return (self.listTableView.indexPathForRow(at: location) == nil)
-        }
-        return true
-    }
+    //    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+    //        if gestureRecognizer is UITapGestureRecognizer {
+    //            let location = touch.locationInView(self.listTableView)
+    //            return (self.listTableView.indexPathForRowAtPoint(location) == nil)
+    //        }
+    //        return true
+    //    }
 }
 
 extension ListViewController: UITextFieldDelegate {
@@ -704,30 +755,30 @@ extension ListViewController: ModalViewControllerDelegate{
         
         
     }
-
+    
     func showActionsMenu(_ sender: AnyObject) {
         let actionController = YoutubeActionController()
         let pickerController = CZPickerViewController()
         //let randomController = RandomPlaceController()
         
-//        actionController.addAction(Action(ActionData(title: "Randomize", image: UIImage(named: "action_random")!), style: .Default, handler: { action in
-//            if self.playlistArray.count != 0{
-//                self.performSegueWithIdentifier("randomPlace", sender: self)
-//            }
-//            
-//        }))
+        //        actionController.addAction(Action(ActionData(title: "Randomize", image: UIImage(named: "action_random")!), style: .Default, handler: { action in
+        //            if self.playlistArray.count != 0{
+        //                self.performSegueWithIdentifier("randomPlace", sender: self)
+        //            }
+        //
+        //        }))
         actionController.addAction(Action(ActionData(title: "Edit", image: UIImage(named: "action_edit")!), style: .default, handler: { action in
             print("Edit pressed")
             self.activateEditMode()
             self.listTableView.reloadData()
         }))
-//        actionController.addAction(Action(ActionData(title: "Make Collaborative", image: UIImage(named: "action_collab")!), style: .Default, handler: { action in
-//            self.makeCollaborative()
-//        }))
+        //        actionController.addAction(Action(ActionData(title: "Make Collaborative", image: UIImage(named: "action_collab")!), style: .Default, handler: { action in
+        //            self.makeCollaborative()
+        //        }))
         actionController.addAction(Action(ActionData(title: "Sort", image: UIImage(named: "action_sort")!), style: .cancel, handler: { action in
             pickerController.headerTitle = "Sort Options"
             pickerController.fruits = ["Alphabetical","Rating"]
-            pickerController.showWithFooter(UIViewController)
+            pickerController.showWithFooter(UIViewController.self)
             pickerController.delegate = self
         }))
         actionController.addAction(Action(ActionData(title: "Cancel", image: UIImage(named: "yt-cancel-icon")!), style: .cancel, handler: nil))
@@ -735,3 +786,4 @@ extension ListViewController: ModalViewControllerDelegate{
         present(actionController, animated: true, completion: nil)
     }
 }
+

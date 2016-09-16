@@ -11,11 +11,6 @@ import Haneke
 import Cosmos
 import MGSwipeTableCell
 
-enum BusinessCellMode {
-    case add
-    case more
-}
-
 class BusinessTableViewCell: MGSwipeTableCell {
     
     @IBOutlet weak var BusinessRating: CosmosView!
@@ -39,10 +34,12 @@ class BusinessTableViewCell: MGSwipeTableCell {
     
     @IBOutlet weak var actionButtonView: UIView!
     
-    func configureCellWith(_ business: Business, mode: BusinessCellMode, completion:() -> Void){
-        
+    override func draw(_ rect: CGRect) {
         mainView.addShadow(4, opacity: 0.2, offset: CGSize(width: 0, height: 4), path: true)
-
+    }
+    
+    func configure(with business: Business, mode: BusinessCellMode, completion:() -> Void){
+        
         switch mode {
         case .add:
             self.configureButton(UIImage(named: "checkMark")!)
@@ -102,33 +99,34 @@ class BusinessTableViewCell: MGSwipeTableCell {
             businessOpenLabel.text = "No Hours Availible"
         }
         
-        // Set Background Image
-        self.businessBackgroundImage.backgroundColor = appDefaults.color
-        self.businessBackgroundImage.image = nil
-        
-        func buildPlacePhotoURLString(_ photoReference: String) -> String{
-            let photoParameters = [
-                "key" : "AIzaSyDkxzICx5QqztP8ARvq9z0DxNOF_1Em8Qc",
-                "photoreference" : photoReference,
-                "maxheight" : "800"
-            ]
-            var result = "https://maps.googleapis.com/maps/api/place/photo?"
-            for (key, value) in photoParameters{
-                let addString = key + "=" + value + "&"
-                result += addString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
-            }
-            return result
-        }
-        if business.businessPhotoReference != ""{
-            let PhotoURL = buildPlacePhotoURLString(business.businessPhotoReference)
-            //let URLString = self.items[indexPath.row]
-            let URL = Foundation.URL(string:PhotoURL)!
-            businessBackgroundImage.hnk_setImageFromURL(URL: URL as NSURL)
-        }
-        else{
-            businessBackgroundImage.image =  UIImage(named: "default_business_bg")
-                
-        }
+//        // Set Background Image
+//        self.businessBackgroundImage.backgroundColor = appDefaults.color
+//        self.businessBackgroundImage.image = nil
+//        
+//        func buildPlacePhotoURLString(_ photoReference: String) -> String{
+//            let photoParameters = [
+//                "key" : "AIzaSyDkxzICx5QqztP8ARvq9z0DxNOF_1Em8Qc",
+//                "photoreference" : photoReference,
+//                "maxheight" : "800"
+//            ]
+//            var result = "https://maps.googleapis.com/maps/api/place/photo?"
+//            for (key, value) in photoParameters{
+//                let addString = key + "=" + value + "&"
+//                result += addString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+//            }
+//            return result
+//        }
+//        
+//        if business.businessPhotoReference != ""{
+//            let PhotoURL = buildPlacePhotoURLString(business.businessPhotoReference)
+//            //let URLString = self.items[indexPath.row]
+//            let URL = Foundation.URL(string:PhotoURL)!
+//            businessBackgroundImage.hnk_setImageFromURL(URL: URL as NSURL)
+//        }
+//        else{
+//            businessBackgroundImage.image =  UIImage(named: "default_business_bg")
+//                
+//        }
     }
     
     func configureButton(_ image: UIImage){

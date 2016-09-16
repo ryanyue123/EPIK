@@ -17,10 +17,7 @@ class InitialViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = true
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = true
         //print(PFUser.current())
         if (PFUser.current() == nil) {
             self.animate()
@@ -29,11 +26,14 @@ class InitialViewController: UIViewController {
             }
         }else{
             self.animate()
-            self.performSegue(withIdentifier: "showHome", sender: self)
-//            Async.main(after: 0.5){
-//                self.performSegue(withIdentifier: "showHome", sender: self)
-//            }
+            Async.main(after: 0.5){
+                self.performSegue(withIdentifier: "showHome", sender: self)
+            }
         }
+
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
     }
     
     func animate(){

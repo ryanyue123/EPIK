@@ -104,7 +104,7 @@ extension CZPickerViewController: CZPickerViewDelegate, CZPickerViewDataSource {
     
     func czpickerView(_ pickerView: CZPickerView!, titleForRow row: Int) -> String! {
         //print(fruits[row])
-        return fruits[row] as! String
+        return fruits[row] 
     }
     
     func czpickerView(_ pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int) {

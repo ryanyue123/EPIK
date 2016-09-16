@@ -39,14 +39,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIBarButtonItem.appearance().setTitleTextAttributes([
             NSFontAttributeName: UIFont(name: "Montserrat-Regular", size: 14)!,
             NSForegroundColorAttributeName: UIColor.white   ], for: UIControlState())
-        
     
         // UITabBar Configuration
-//        UITabBar.appearance().translucent = false
-//        //UITabBar.appearance().tintColor = appDefaults.color
-//        UITabBar.appearance().backgroundColor = appDefaults.color
-//        
-//        UITabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName: appDefaults.font!], forState: .Normal)
+        UITabBar.appearance().isTranslucent = false
+        //UITabBar.appearance().tintColor = appDefaults.color
+        UITabBar.appearance().backgroundColor = appDefaults.color
+        
+        UITabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName: appDefaults.font!], for: .normal)
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions:
             launchOptions)

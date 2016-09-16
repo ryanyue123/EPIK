@@ -281,7 +281,6 @@
 				90B6D69D1CD49888006928E8 /* SearchPagerTabStripVC.swift */,
 				905F87931CD741BB004046CD /* SearchPlaylistCollectionViewController.swift */,
 				3CE1DEF71CDC831A007B08C2 /* SearchPeopleTableViewController.swift */,
-				90E505DE1C8E375200F47285 /* LocationSearchViewController.swift */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -299,15 +298,15 @@
 		3CA6CFFB1CC05A880004B989 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */,
+				3CB8D45B1CBB575F00870F38 /* ListCollectionViewCell.swift */,
 				9001FEEA1CEAEBC500A863C1 /* ImageCarouselTableViewCell.swift */,
 				90DC43211CE95D3B007F312B /* InfoTableViewCell.swift */,
 				ED55870F1CE6ED560049CF93 /* SettingsTableViewCell.swift */,
 				3CBFD89C1CD4355900290F25 /* SearchPlaylistCell.swift */,
 				3CD814DD1CDD659F00D2BEC6 /* SearchPeopleCell.swift */,
-				9084817F1C7504AF009B6099 /* BusinessTableViewCell.swift */,
 				90A943791CD2CDE8004ACE78 /* ReviewTableViewCell.swift */,
 				3CD0344E1CBA121300675F88 /* TableViewCell.swift */,
-				3CB8D45B1CBB575F00870F38 /* ListCollectionViewCell.swift */,
 			);
 			name = Cells;
 			path = ..;
@@ -402,18 +401,11 @@
 				3CA5CB3C1CE7D4F800D1F278 /* Login/Signup */,
 				3CA5CB3B1CE7D4D100D1F278 /* Search */,
 				905F879C1CD99E3C004046CD /* ProfileCollectionViewController.swift */,
+				90E505DE1C8E375200F47285 /* LocationSearchViewController.swift */,
 				908278AC1D70302700B77822 /* ListViewController.swift */,
 				90DC57BB1C72A1D0001F1891 /* SearchBusinessViewController.swift */,
-				ED55870D1CE6EA590049CF93 /* SettingsViewController.swift */,
-				3CD034501CBA122A00675F88 /* HomeViewController.swift */,
-				90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */,
-				3CA5CB3D1CE7D63800D1F278 /* AddCommentViewController.swift */,
 				90B9B7D81C8A696F002D4BB1 /* BusinessDetailViewController.swift */,
-				EDD44DAC1CB4BA31008DC4AB /* RandomPlaceController.swift */,
-				9038B75D1CBCD041004B220B /* ActionsViewController.swift */,
-				905F879B1CD99A03004046CD /* Yelpify-Bridging-Header.h */,
-				EDD4DCCC1CDD666C00376DF8 /* CZPickerViewController.swift */,
-				903FC9D41D7677BB00AE312E /* ProfileCollectionViewController-old.swift */,
+				9053D1961D8BB836007B1670 /* Unused */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -429,6 +421,22 @@
 				90BAD1C21C86639E0047277E /* TestTableViewCell.swift */,
 			);
 			name = "Testing VCs";
+			sourceTree = "<group>";
+		};
+		9053D1961D8BB836007B1670 /* Unused */ = {
+			isa = PBXGroup;
+			children = (
+				ED55870D1CE6EA590049CF93 /* SettingsViewController.swift */,
+				3CD034501CBA122A00675F88 /* HomeViewController.swift */,
+				90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */,
+				3CA5CB3D1CE7D63800D1F278 /* AddCommentViewController.swift */,
+				EDD44DAC1CB4BA31008DC4AB /* RandomPlaceController.swift */,
+				9038B75D1CBCD041004B220B /* ActionsViewController.swift */,
+				905F879B1CD99A03004046CD /* Yelpify-Bridging-Header.h */,
+				EDD4DCCC1CDD666C00376DF8 /* CZPickerViewController.swift */,
+				903FC9D41D7677BB00AE312E /* ProfileCollectionViewController-old.swift */,
+			);
+			name = Unused;
 			sourceTree = "<group>";
 		};
 		905F87A21CD9D5A2004046CD /* Header Views */ = {

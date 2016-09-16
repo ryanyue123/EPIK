@@ -25,6 +25,10 @@ class ListCollectionViewCell: UICollectionViewCell {
     
     var gpAPIClient = GooglePlacesAPIClient()
     
+    override func draw(_ rect: CGRect) {
+        self.mainView.addShadow(4, opacity: 0.2, offset: CGSize(width: 0, height: 4), path: true)
+    }
+    
     func configureCellLayout(){
         
         //addShadowToCell()
@@ -46,7 +50,6 @@ class ListCollectionViewCell: UICollectionViewCell {
     
     func configureCell(_ cellobject: PFObject){
         
-        self.mainView.addShadow(4, opacity: 0.2, offset: CGSize(width: 0, height: 4), path: true)
         self.listName.text = cellobject["playlistName"] as? String
         let createdByUser = cellobject["createdBy"] as! PFUser
         createdByUser.fetchIfNeededInBackground { (object, error) in

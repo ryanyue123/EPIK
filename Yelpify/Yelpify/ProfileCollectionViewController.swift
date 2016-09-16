@@ -11,7 +11,8 @@ import Parse
 import XLActionController
 
 import BetterSegmentedControl
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+
+private func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
     return l < r
@@ -22,7 +23,7 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+private func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
     return l > r
@@ -87,6 +88,7 @@ class ProfileCollectionViewController: UICollectionViewController, UICollectionV
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("loading ProfileView")
         self.imagePicker.delegate = self
         
         self.navigationController?.configureTopBar()
