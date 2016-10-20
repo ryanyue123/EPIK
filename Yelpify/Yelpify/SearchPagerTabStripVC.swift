@@ -168,8 +168,7 @@ class SearchPagerTabStrip: ButtonBarPagerTabStripViewController, ModalViewContro
 //        searchTextField.resignFirstResponder()
 //    }
     
-    override func viewControllersForPagerTabStrip(_ pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
-        
+    override public func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         let searchPlaylistVC = storyboard.instantiateViewController(withIdentifier: "searchPlaylistVC") as! SearchPlaylistCollectionViewController

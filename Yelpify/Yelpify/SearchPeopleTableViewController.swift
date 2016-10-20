@@ -47,10 +47,10 @@ class SearchPeopleTableViewController: UITableViewController, UITextFieldDelegat
     
     var locationUpdated = false
     
-    func indicatorInfoForPagerTabStrip(_ pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return itemInfo
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -439,16 +439,16 @@ class ListViewController: UIViewController, Dimmable {
     func configureSwipeButtons(_ cell: MGSwipeTableCell, mode: ListMode){
         if mode == .view{
             let routeButton = MGSwipeButton(title: "ROUTE", icon: UIImage(named: "swipe_route")!.imageWithColor(appDefaults.color),backgroundColor: UIColor.clear, padding: 25)
-            routeButton?.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 0))
-            routeButton?.centerIconOverText()
-            routeButton?.titleLabel?.font = appDefaults.font
-            routeButton?.titleLabel?.textColor = appDefaults.color
+            routeButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 0))
+            routeButton.centerIconOverText()
+            routeButton.titleLabel?.font = appDefaults.font
+            routeButton.titleLabel?.textColor = appDefaults.color
             
             let addButton = MGSwipeButton(title: "ADD", icon: UIImage(named: "swipe_add")!.imageWithColor(appDefaults.color) ,backgroundColor: UIColor.clear, padding: 25)
-            addButton?.setEdgeInsets(UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 15))
-            addButton?.centerIconOverText()
-            addButton?.titleLabel?.font = appDefaults.font
-            addButton?.titleLabel?.textColor = appDefaults.color
+            addButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 15))
+            addButton.centerIconOverText()
+            addButton.titleLabel?.font = appDefaults.font
+            addButton.titleLabel?.textColor = appDefaults.color
             
             cell.rightButtons = [addButton]
             cell.rightSwipeSettings.transition = MGSwipeTransition.clipCenter
@@ -466,7 +466,7 @@ class ListViewController: UIViewController, Dimmable {
             cell.rightButtons.removeAll()
             cell.leftButtons.removeAll()
             let deleteButton = MGSwipeButton(title: "Delete",icon: UIImage(named: "location_icon"),backgroundColor: UIColor.red,padding: 25)
-            deleteButton?.centerIconOverText()
+            deleteButton.centerIconOverText()
             cell.leftButtons = [deleteButton]
             cell.leftSwipeSettings.transition = MGSwipeTransition.clipCenter
             cell.leftExpansion.buttonIndex = 0

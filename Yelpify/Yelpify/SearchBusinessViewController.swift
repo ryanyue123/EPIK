@@ -61,7 +61,7 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     
     // MARK: - OUTLETS
     
-    func indicatorInfoForPagerTabStrip(_ pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return itemInfo
     }
     
@@ -385,14 +385,14 @@ class SearchBusinessViewController: UIViewController, CLLocationManagerDelegate,
     func configureSwipeButtons(_ cell: MGSwipeTableCell){
         
         let routeButton = MGSwipeButton(title: "ROUTE", icon: UIImage(named: "swipe_route"),backgroundColor: appDefaults.color, padding: 25)
-        routeButton?.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
-        routeButton?.centerIconOverText()
-        routeButton?.titleLabel?.font = appDefaults.font
+        routeButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
+        routeButton.centerIconOverText()
+        routeButton.titleLabel?.font = appDefaults.font
         
         let addButton = MGSwipeButton(title: "ADD", icon: UIImage(named: "swipe_add"),backgroundColor: UIColor.green, padding: 25)
-        addButton?.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
-        addButton?.centerIconOverText()
-        addButton?.titleLabel?.font = appDefaults.font
+        addButton.setEdgeInsets(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 15))
+        addButton.centerIconOverText()
+        addButton.titleLabel?.font = appDefaults.font
         
         
         cell.rightButtons = [addButton]
