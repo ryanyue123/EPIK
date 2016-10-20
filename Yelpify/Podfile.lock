@@ -1,6 +1,6 @@
 PODS:
-  - Alamofire (4.0.0)
-  - AsyncSwift (1.7.2)
+  - Alamofire (4.0.1)
+  - AsyncSwift (2.0.0)
   - BetterSegmentedControl (0.5)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
@@ -8,29 +8,29 @@ PODS:
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
-  - Cosmos (6.0.1)
+  - Cosmos (7.0.0)
   - CZPicker (0.4.3)
-  - FBSDKCoreKit (4.15.1):
+  - FBSDKCoreKit (4.16.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.15.1):
+  - FBSDKLoginKit (4.16.1):
     - FBSDKCoreKit
-  - GoogleMaps (2.0.1):
-    - GoogleMaps/Maps (= 2.0.1)
-  - GoogleMaps/Base (2.0.1)
-  - GoogleMaps/Maps (2.0.1):
-    - GoogleMaps/Base (= 2.0.1)
-  - GooglePlaces (2.0.1):
-    - GoogleMaps/Base (= 2.0.1)
+  - GoogleMaps (2.1.0):
+    - GoogleMaps/Maps (= 2.1.0)
+  - GoogleMaps/Base (2.1.0)
+  - GoogleMaps/Maps (2.1.0):
+    - GoogleMaps/Base (= 2.1.0)
+  - GooglePlaces (2.1.0):
+    - GoogleMaps/Base (= 2.1.0)
   - HanekeSwift (0.10.1)
-  - MGSwipeTableCell (1.5.5)
+  - MGSwipeTableCell (1.5.6)
   - Parse (1.14.2):
     - Bolts/Tasks (~> 1.8)
   - SwiftLocation (1.1.0)
   - SwiftyJSON (3.0.0)
-  - XLActionController (2.1.0):
-    - XLActionController/Core (= 2.1.0)
-  - XLActionController/Core (2.1.0)
-  - XLPagerTabStrip (5.1.0)
+  - XLActionController (3.0.1):
+    - XLActionController/Core (= 3.0.1)
+  - XLActionController/Core (3.0.1)
+  - XLPagerTabStrip (6.0.0)
 
 DEPENDENCIES:
   - Alamofire
@@ -47,10 +47,8 @@ DEPENDENCIES:
   - Parse
   - SwiftLocation
   - SwiftyJSON (from `https://github.com/appsailor/SwiftyJSON.git`, branch `swift3`)
-  - XLActionController (from `https://github.com/mohpor/XLActionController.git`, commit
-    `43b6f93`)
-  - XLPagerTabStrip (from `https://github.com/xmartlabs/XLPagerTabStrip.git`, branch
-    `Swift3`)
+  - XLActionController
+  - XLPagerTabStrip
 
 EXTERNAL SOURCES:
   AsyncSwift:
@@ -62,47 +60,35 @@ EXTERNAL SOURCES:
   SwiftyJSON:
     :branch: swift3
     :git: https://github.com/appsailor/SwiftyJSON.git
-  XLActionController:
-    :commit: 43b6f93
-    :git: https://github.com/mohpor/XLActionController.git
-  XLPagerTabStrip:
-    :branch: Swift3
-    :git: https://github.com/xmartlabs/XLPagerTabStrip.git
 
 CHECKOUT OPTIONS:
   AsyncSwift:
-    :commit: a12cda2fb96c0cd0c845ab8a8277df60af8f506f
+    :commit: 7251f43b5552fc2aca2d026b68d7d2049928616c
     :git: https://github.com/duemunk/Async.git
   HanekeSwift:
     :commit: 6cd8bb556ac65f18d2521ac344ae2bc743ecccc8
     :git: https://github.com/beta-uy/HanekeSwift.git
   SwiftyJSON:
-    :commit: 2571377e49e6c653a92d993a2bff7a9ca2d71591
+    :commit: de73429b38b8994f614fb27c5ec094bb8a4833f2
     :git: https://github.com/appsailor/SwiftyJSON.git
-  XLActionController:
-    :commit: 43b6f93
-    :git: https://github.com/mohpor/XLActionController.git
-  XLPagerTabStrip:
-    :commit: 1e73449c467e4dfada4eb6d8f3aac9750f1dff29
-    :git: https://github.com/xmartlabs/XLPagerTabStrip.git
 
 SPEC CHECKSUMS:
-  Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
-  AsyncSwift: 15c496983f752a3ab8d1be17e64dd4c6f2a31239
+  Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
+  AsyncSwift: d5b7e10134039732f1d28964ea42b75e530023da
   BetterSegmentedControl: db74c56602e418e9eca8f6340e0ed0a7215f5f7c
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  Cosmos: 374de9804e382a23662908688ab15c8f473977fe
+  Cosmos: 2c8299147138758f6ebbb247cf1aeed77998bdf9
   CZPicker: 55aa1751ea26e209814552da1a9a08cba8bbf72a
-  FBSDKCoreKit: fc7fa53d16b095ee3fd53f0cd59f1df8bcbb634d
-  FBSDKLoginKit: 073f79b3b2e762fc6f54a283fe15f45372d59f5f
-  GoogleMaps: f09da64fc987c1aa29394567c3cab5a3df83c402
-  GooglePlaces: 72fab1d1651c6df0322f2aad245ffb15b80d3c56
+  FBSDKCoreKit: 7a6baaed4a2b2a244ba253346713bdbc74df135b
+  FBSDKLoginKit: 469a56cebe2e1ed62b1621d0b155970fd6aac2d8
+  GoogleMaps: 06589b9a38097bce0cd6e90f0fd9b5e4b4a9344c
+  GooglePlaces: 16e96266483b8010e9f275399403647978523c86
   HanekeSwift: 4113367892828e7700d24a384027de6ebc79aad1
-  MGSwipeTableCell: bafeb5f351124544c9364ecbdf24c7b06a37d340
+  MGSwipeTableCell: 616700eb0ffd1c611ba909066cb7fd739790a0a7
   Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
   SwiftLocation: f1bf5acb7992dd96c6f773c383f9c0479f07727d
   SwiftyJSON: f57b2b44bc166617372d1c70773591fe9f0f5fd4
-  XLActionController: 085f4baf9246c6e54c6e337f88d045e2e7b3c0bb
-  XLPagerTabStrip: 9191deaa2336735b7c47beb21e42be537fa4242a
+  XLActionController: 57fe0ce1642e2eed971b188b490762345fdbf963
+  XLPagerTabStrip: c46e802a8dcac29edbcea573de8fe920e052455b
 
 COCOAPODS: 0.39.0
