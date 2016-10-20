@@ -155,6 +155,7 @@
 		3CE2EE9E1C6C5EC8000C9088 /* YelpifyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpifyUITests.swift; sourceTree = "<group>"; };
 		3CE2EEA01C6C5EC8000C9088 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68ACAEFF88A59BB74B411CE0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		801A44C2C5C1C8119CB90BF0 /* Pods-Yelpify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yelpify.release.xcconfig"; path = "Pods/Target Support Files/Pods-Yelpify/Pods-Yelpify.release.xcconfig"; sourceTree = "<group>"; };
 		8910656046707AAF0FABD43D /* Pods_Yelpify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yelpify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9001FEE61CEAB7B000A863C1 /* ProfileLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileLayout.swift; sourceTree = "<group>"; };
 		9001FEE81CEAEADC00A863C1 /* ImageCarousel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageCarousel.xib; sourceTree = "<group>"; };
@@ -233,8 +234,7 @@
 		90E64B701D7A601D005F3C3C /* MapTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTestViewController.swift; sourceTree = "<group>"; };
 		90E64B741D7B7BDA005F3C3C /* MapMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapMethods.swift; sourceTree = "<group>"; };
 		90F34CDE1CB0893300CC0870 /* SinglePlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePlaylistViewController.swift; sourceTree = "<group>"; };
-		981001A34CAB5A147D7CB122 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		B140D093A1A89D68777F3561 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		C755C2DD32C777272949FCE4 /* Pods-Yelpify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yelpify.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Yelpify/Pods-Yelpify.debug.xcconfig"; sourceTree = "<group>"; };
 		ED405A0F1CC1D03C0017A9AB /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		ED52E64A1CCB2E0300CEBAE2 /* YoutubeActionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeActionController.swift; sourceTree = "<group>"; };
 		ED52E64B1CCB2E0300CEBAE2 /* YoutubeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YoutubeCell.xib; sourceTree = "<group>"; };
@@ -556,8 +556,8 @@
 		BD0319CE145C96AE11FDB9B3 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				B140D093A1A89D68777F3561 /* Pods.debug.xcconfig */,
-				981001A34CAB5A147D7CB122 /* Pods.release.xcconfig */,
+				C755C2DD32C777272949FCE4 /* Pods-Yelpify.debug.xcconfig */,
+				801A44C2C5C1C8119CB90BF0 /* Pods-Yelpify.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -767,7 +767,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Yelpify/Pods-Yelpify-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		52B8E3617F849EA48C20C496 /* Check Pods Manifest.lock */ = {
@@ -1011,7 +1011,7 @@
 		};
 		3CE2EEA41C6C5EC8000C9088 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B140D093A1A89D68777F3561 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = C755C2DD32C777272949FCE4 /* Pods-Yelpify.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1024,7 +1024,7 @@
 				INFOPLIST_FILE = Yelpify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Limitless.Yelpify;
+				PRODUCT_BUNDLE_IDENTIFIER = com.LimitlessStudios.EPIK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Yelpify/Yelpify-Bridging-Header.h";
@@ -1034,7 +1034,7 @@
 		};
 		3CE2EEA51C6C5EC8000C9088 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 981001A34CAB5A147D7CB122 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 801A44C2C5C1C8119CB90BF0 /* Pods-Yelpify.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1047,7 +1047,7 @@
 				INFOPLIST_FILE = Yelpify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Limitless.Yelpify;
+				PRODUCT_BUNDLE_IDENTIFIER = com.LimitlessStudios.EPIK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Yelpify/Yelpify-Bridging-Header.h";
