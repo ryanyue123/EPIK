@@ -32,7 +32,6 @@ class BusinessTableViewCell: MGSwipeTableCell {
     
     let googlePlacesClient = GooglePlacesAPIClient()
         
-    
     @IBOutlet weak var actionButtonView: UIView!
     
     override func draw(_ rect: CGRect) {
